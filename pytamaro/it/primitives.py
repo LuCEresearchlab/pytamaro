@@ -2,6 +2,8 @@
 Funzioni per creare grafiche primitive (forme e testo)
 """
 
+from __future__ import annotations
+
 from pytamaro.it.color import Colore
 from pytamaro.it.graphic import Grafica
 from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,

@@ -2,6 +2,8 @@
 Funzioni per operazioni con grafiche (principlamente per combinarle).
 """
 
+from __future__ import annotations
+
 from pytamaro.it.graphic import Grafica
 from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)

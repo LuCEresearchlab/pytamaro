@@ -2,6 +2,7 @@
 Tipo `Colore` e funzioni per produrre colori.
 """
 
+from __future__ import annotations
 
 from pytamaro.color import Color, rgb_color, rgba_color
 

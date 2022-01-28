@@ -2,7 +2,7 @@
 Funzioni per I/O con grafiche, come visualizzarle oppure salvarle.
 """
 
-from typing import List
+from __future__ import annotations
 
 from pytamaro.io import save_gif, save_graphic, show_graphic
 from pytamaro.it.graphic import Grafica
@@ -45,7 +45,7 @@ def salva_grafica(nome_file: str, grafica: Grafica, debug: bool = False):
     save_graphic(nome_file, grafica, debug)
 
 
-def salva_gif(nome_file: str, grafiche: List[Grafica], durata: int = 40):
+def salva_gif(nome_file: str, grafiche: list[Grafica], durata: int = 40):
     """
     Salva una sequenza di grafiche come una GIF animata.
 

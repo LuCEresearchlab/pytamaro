@@ -2,6 +2,8 @@
 Classe `Grafica`, che racchiude un'immagine Pillow e una posizione per fissare.
 """
 
+from __future__ import annotations
+
 from pytamaro.graphic import Graphic
 
 Grafica = Graphic
