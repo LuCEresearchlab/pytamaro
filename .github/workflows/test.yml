@@ -1,0 +1,39 @@
+name: Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.10"]  # 3.7 is Thonny's latest, 3.10 is the latest Python
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Load cached $HOME/.local
+      uses: actions/cache@v2
+      with:
+        path: ~/.local
+        key: dotlocal-${{ runner.os }}-${{ hashFiles('.github/workflows/lint.yml') }}
+    - name: Python Poetry Action
+      uses: abatilo/actions-poetry@v2.1.3
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v2
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+    - name: Install dependencies
+      run: poetry install
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+    - name: Test
+      run: poetry run pytest tests --cov=./ --cov-report=xml
+#    - name: "Upload coverage to Codecov"
+#      uses: codecov/codecov-action@v2
+#      with:
+#        fail_ci_if_error: true
+#        token: ${{ secrets.CODECOV_TOKEN }}
