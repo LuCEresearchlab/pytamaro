@@ -9,3 +9,4 @@ Use the menu on the left to select a language and then explore the available fun
 
    English/index
    Italian/index
+   German/index
