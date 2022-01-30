@@ -2,6 +2,8 @@
 Funktionen zum Erzeugen primitiver Grafiken (Figuren und Texte)
 """
 
+from __future__ import annotations
+
 from pytamaro.de.color import Farbe
 from pytamaro.de.graphic import Grafik
 from pytamaro.primitives import (circular_sector, empty_graphic,

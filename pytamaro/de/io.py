@@ -2,7 +2,7 @@
 Funktionen zur Ausgabe (Anzeigen oder Speichern) von Grafiken.
 """
 
-from typing import List
+from __future__ import annotations
 
 from pytamaro.io import save_gif, save_graphic, show_graphic
 from pytamaro.de.graphic import Grafik
@@ -49,7 +49,7 @@ def speichere_grafik(datei_name: str, grafik: Grafik, debug: bool = False):
     save_graphic(datei_name, grafik, debug)
 
 
-def speichere_gif(datei_name: str, grafiken: List[Grafik], dauer: int = 40):
+def speichere_gif(datei_name: str, grafiken: list[Grafik], dauer: int = 40):
     """
     Speichere die gegebene Sequenz von Grafiken als animierte GIF-Datei.
 

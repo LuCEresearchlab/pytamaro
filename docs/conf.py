@@ -71,4 +71,7 @@ autodoc_type_aliases = {
     # it
     'Colore': 'Colore',
     'Grafica': 'Grafica',
+    # de
+    'Farbe': 'Farbe',
+    'Grafik': 'Grafik',
 }

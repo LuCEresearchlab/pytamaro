@@ -2,6 +2,8 @@
 Klasse `Grafik`, kombiniert ein Pillow Bild und eine Fixier-Position.
 """
 
+from __future__ import annotations
+
 from pytamaro.graphic import Graphic
 
 Grafik = Graphic

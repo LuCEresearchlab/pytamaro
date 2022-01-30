@@ -1,7 +1,9 @@
 """
-Typ `Farbe` und Funktionen, die Farben erzeugen.
+Der Typ `Farbe`, Funktionen, die Farben erzeugen
+und Konstanten für wichtige Farben.
 """
 
+from __future__ import annotations
 
 from pytamaro.color import Color, rgb_color, rgba_color
 

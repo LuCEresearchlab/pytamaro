@@ -3,32 +3,71 @@ Die folgenden nennenswerten Farben sind bereits definiert:
 Farben an den Ecken des RGB Würfels, komplett durchsichtige Farbe.
 """
 
+from __future__ import annotations
+
 from pytamaro.color_names import (black, blue, cyan, green, magenta, red,
                                   transparent, white, yellow)
+from pytamaro.de.color import Farbe
 
-schwarz = black
-"""schwarze Farbe"""
+schwarz: Farbe = black
+"""
+Die Farbe Schwarz.
 
-rot = red
-"""rote Farbe"""
+:meta hide-value:
+"""
 
-gruen = green
-"""grüne Farbe"""
+rot: Farbe = red
+"""
+Die Farbe Rot.
 
-blau = blue
-"""blaue Farbe"""
+:meta hide-value:
+"""
 
-gelb = yellow
-"""gelbe Farbe"""
+gruen: Farbe = green
+"""
+Die Farbe Grün.
 
-magenta = magenta  # pylint: disable=self-assigning-variable
-"""magenta Farbe"""
+:meta hide-value:
+"""
 
-cyan = cyan  # pylint: disable=self-assigning-variable
-"""cyan Farbe"""
+blau: Farbe = blue
+"""
+Die Farbe Blau.
 
-weiss = white
-"""weisse Farbe"""
+:meta hide-value:
+"""
 
-transparent = transparent  # pylint: disable=self-assigning-variable
-"""komplett durchsichtige Farbe"""
+gelb: Farbe = yellow
+"""
+Die Farbe Gelb.
+
+:meta hide-value:
+"""
+
+magenta: Farbe = magenta  # pylint: disable=self-assigning-variable
+"""
+Die Farbe Magenta.
+
+:meta hide-value:
+"""
+
+cyan: Farbe = cyan  # pylint: disable=self-assigning-variable
+"""
+Die Farbe Cyan.
+
+:meta hide-value:
+"""
+
+weiss: Farbe = white
+"""
+Die Farbe Weiss.
+
+:meta hide-value:
+"""
+
+transparent: Farbe = transparent  # pylint: disable=self-assigning-variable
+"""
+Die komplett durchsichtige Farbe.
+
+:meta hide-value:
+"""
