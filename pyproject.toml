@@ -7,7 +7,6 @@ authors = ["Luca Chiodini <luca@chiodini.org>"]
 [tool.poetry.dependencies]
 python = "^3.7"
 Pillow = "^9.0.0"
-Sphinx = "^4.4.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -15,7 +14,7 @@ pytest-watch = "^4.2.0"
 pytest-cov = "^3.0.0"
 pylint = "^2.12.2"
 pycodestyle = "^2.8.0"
-Sphinx = "^4.3.2"
+Sphinx = "^4.4.0"
 sphinx-rtd-theme = "^1.0.0"
 pyright = "^0.0.13"
 
