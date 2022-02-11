@@ -10,7 +10,7 @@ from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
                                  rectangle, text, triangle)
 
 
-def rettangolo(larghezza: int, altezza: int, colore: Colore) -> Grafica:
+def rettangolo(larghezza: float, altezza: float, colore: Colore) -> Grafica:
     """
     Crea un rettangolo delle dimensioni indicate, riempito con un colore.
 
@@ -35,7 +35,7 @@ def grafica_vuota() -> Grafica:
     return empty_graphic()
 
 
-def ellisse(larghezza: int, altezza: int, colore: Colore) -> Grafica:
+def ellisse(larghezza: float, altezza: float, colore: Colore) -> Grafica:
     """
     Crea un ellisse delle dimensioni indicate, riempito con un colore.
 
@@ -50,7 +50,7 @@ def ellisse(larghezza: int, altezza: int, colore: Colore) -> Grafica:
     return ellipse(larghezza, altezza, colore)
 
 
-def settore_circolare(raggio: int, angolo: int, colore: Colore) -> Grafica:
+def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
     """
     Crea un settore circolare appartenente a un cerchio del raggio indicato,
     riempito con un colore.
@@ -70,7 +70,7 @@ def settore_circolare(raggio: int, angolo: int, colore: Colore) -> Grafica:
     return circular_sector(raggio, angolo, colore)
 
 
-def triangolo(lato: int, colore: Colore) -> Grafica:
+def triangolo(lato: float, colore: Colore) -> Grafica:
     """
     Crea un triangolo equilatero del lato indicato con la punta verso l'alto,
     riempito con un colore.
@@ -82,7 +82,7 @@ def triangolo(lato: int, colore: Colore) -> Grafica:
     return triangle(lato, colore)
 
 
-def testo(contenuto: str, font: str, punti: int, colore: Colore) -> Grafica:
+def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:
     """
     Crea una grafica con il testo renderizzato usando font, dimensione e colore
     indicati.

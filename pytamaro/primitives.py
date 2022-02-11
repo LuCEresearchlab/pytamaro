@@ -10,7 +10,7 @@ from pytamaro.utils import export
 
 
 @export
-def rectangle(width: int, height: int, color: Color) -> Graphic:
+def rectangle(width: float, height: float, color: Color) -> Graphic:
     """
     Creates a rectangle of the given size, filled with a color.
 
@@ -39,7 +39,7 @@ def empty_graphic() -> Graphic:
 
 
 @export
-def ellipse(width: int, height: int, color: Color) -> Graphic:
+def ellipse(width: float, height: float, color: Color) -> Graphic:
     """
     Creates an ellipse with the given width and height, filled with a color.
 
@@ -57,7 +57,7 @@ def ellipse(width: int, height: int, color: Color) -> Graphic:
 
 
 @export
-def circular_sector(radius: int, angle: int, color: Color) \
+def circular_sector(radius: float, angle: float, color: Color) \
         -> Graphic:
     """
     Creates a circular sector belonging to a circle of the given radius, filled
@@ -80,7 +80,7 @@ def circular_sector(radius: int, angle: int, color: Color) \
 
 
 @export
-def triangle(side: int, color: Color) -> Graphic:
+def triangle(side: float, color: Color) -> Graphic:
     """
     Creates an equilateral triangle pointing upwards of the given side, filled
     with a color.
@@ -94,7 +94,7 @@ def triangle(side: int, color: Color) -> Graphic:
 
 
 @export
-def text(content: str, font: str, points: int, color: Color) \
+def text(content: str, font: str, points: float, color: Color) \
         -> Graphic:
     """
     Creates a graphic with the text rendered using the specified font, size and

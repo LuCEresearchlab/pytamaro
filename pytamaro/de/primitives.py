@@ -11,7 +11,7 @@ from pytamaro.primitives import (circular_sector, empty_graphic,
 from pytamaro.primitives import (ellipse as ellipse_e, text as text_e)
 
 
-def rechteck(breite: int, hoehe: int, farbe: Farbe) -> Grafik:
+def rechteck(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
     """
     Erzeugt ein Rechteck mit der gegebenen Breite und Höhe,
     gefüllt in der gegebenen Farbe.
@@ -38,7 +38,7 @@ def leere_grafik() -> Grafik:
     return empty_graphic()
 
 
-def ellipse(breite: int, hoehe: int, farbe: Farbe) -> Grafik:
+def ellipse(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
     """
     Erzeugt eine Ellipse mit der gegebenen Breite und Höhe,
     gefüllt in der gegebenen Farbe.
@@ -54,7 +54,7 @@ def ellipse(breite: int, hoehe: int, farbe: Farbe) -> Grafik:
     return ellipse_e(breite, hoehe, farbe)
 
 
-def kreis_sektor(radius: int, winkel: int, farbe: Farbe) -> Grafik:
+def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
     """
     Erzeugt einen Kreissektor mit dem gegebenen Radius,
     der den gegebenen Winkel umspannt,
@@ -75,7 +75,7 @@ def kreis_sektor(radius: int, winkel: int, farbe: Farbe) -> Grafik:
     return circular_sector(radius, winkel, farbe)
 
 
-def dreieck(seite: int, farbe: Farbe) -> Grafik:
+def dreieck(seite: float, farbe: Farbe) -> Grafik:
     """
     Erzeugt ein gleichseitiges Dreieck mit der gegebenen Seitenlänge
     und einer nach oben zeigenden Ecke,
@@ -88,7 +88,7 @@ def dreieck(seite: int, farbe: Farbe) -> Grafik:
     return triangle(seite, farbe)
 
 
-def text(inhalt: str, schriftart: str, punkte: int, farbe: Farbe) -> Grafik:
+def text(inhalt: str, schriftart: str, punkte: float, farbe: Farbe) -> Grafik:
     """
     Erzeugt einen Text in der gegebenen Schriftart und Schriftgrösse,
     gefüllt in der gegebenen Farbe.

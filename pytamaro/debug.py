@@ -27,7 +27,7 @@ def add_debug_info(graphic: Graphic) -> Graphic:
     return show_pin_position(img_with_border)
 
 
-def add_border(graphic: Graphic, width: int, color: Color) -> Graphic:
+def add_border(graphic: Graphic, width: float, color: Color) -> Graphic:
     """
     Adds a border with the given width (thickness) around the
     (bounding box of the) graphic.

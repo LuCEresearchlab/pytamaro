@@ -118,7 +118,7 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
 
 
 @export
-def rotate(degrees: int, graphic: Graphic) -> Graphic:
+def rotate(degrees: float, graphic: Graphic) -> Graphic:
     """
     Rotates an graphic by a given amount of degrees counterclockwise around
     its pinning position.

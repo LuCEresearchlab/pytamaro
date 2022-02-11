@@ -267,7 +267,7 @@ class Rotate(Graphic):
     """
     Represents the rotation of a graphic by a certain angle clockwise.
     """
-    def __init__(self, graphic: Graphic, deg: int):
+    def __init__(self, graphic: Graphic, deg: float):
         self.graphic = graphic
         self.rot_matrix = Matrix.RotateDeg(deg, self.graphic.pin_position)
         self.path = Path()

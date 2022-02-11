@@ -124,7 +124,7 @@ def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
     return above(obere_grafik, untere_grafik)
 
 
-def drehe(grad: int, grafik: Grafik) -> Grafik:
+def drehe(grad: float, grafik: Grafik) -> Grafik:
     """
     Erzeugt eine neue Grafik, die einer Rotation der gegebenen Grafik
     um ihre Fixierungsposition im Gegenuhrzeigersinn

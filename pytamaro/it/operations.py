@@ -121,7 +121,7 @@ def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
     return above(grafica_alto, grafica_basso)
 
 
-def ruota(gradi: int, grafica: Grafica) -> Grafica:
+def ruota(gradi: float, grafica: Grafica) -> Grafica:
     """
     Ruota una grafica di un certo numero di gradi in senso antiorario attorno
     alla sua posizione di fissaggio.
