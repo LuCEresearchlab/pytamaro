@@ -1,6 +1,10 @@
 Deutsche Version
 =======================================
 
+.. image:: ../images/PyTamaro-horizontal.png
+  :width: 700
+  :alt: PyTamaro logo
+
 .. toctree::
    :caption: Index:
 
