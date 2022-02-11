@@ -8,9 +8,8 @@ from tests.testing_utils import HEIGHT, WIDTH
 def test_pin_position():
     semiwidth = 10
     semiheight = 5
-    # odd sizes, no rounding errors expected
-    img = rectangle(semiwidth * 2 + 1, semiheight * 2 + 1, red)
-    assert img.get_pin_position() == (semiwidth, semiheight)
+    img = rectangle(semiwidth * 2, semiheight * 2, red)
+    assert tuple(img.pin_position) == (semiwidth, semiheight)
 
 
 def test_equality():
@@ -25,13 +24,7 @@ def test_equality_empty_graphic():
     assert i1 == i2
 
 
-def test_equality_different_pin_positions():
-    r1 = rectangle(WIDTH, HEIGHT, red)
-    r2 = pin("left", "top", r1)
-    assert r1 != r2
-
-
-def test_equality_not_an_graphic():
+def test_equality_not_a_graphic():
     graphic = rectangle(WIDTH, HEIGHT, red)
     assert graphic != 42
 

@@ -60,8 +60,6 @@ def settore_circolare(raggio: int, angolo: int, colore: Colore) -> Grafica:
     Considerando il cerchio come un orologio, il primo raggio "punta" in
     direzione delle ore 3. L'`angolo` determina la posizione del secondo
     raggio, calcolata a partire dalla posizione del primo in senso orario.
-    Quando `angolo` è 360 gradi, il settore circolare è a tutti gli effetti un
-    cerchio intero.
 
     :param raggio: raggio del cerchio da cui è preso il settore circolare, in
                    pixel

@@ -5,6 +5,8 @@
 from dataclasses import dataclass
 from typing import Tuple
 
+from skia import Color4f
+
 
 @dataclass
 class Color:
@@ -12,10 +14,10 @@ class Color:
     Represents a color in the RGBA color space (using integers between 0 and
     255).
     """
-    rgba: Tuple[int, int, int, int]
+    color: Color4f
 
     def __init__(self, red: int, green: int, blue: int, alpha: int):
-        self.rgba = (red, green, blue, alpha)
+        self.color = Color4f(red / 255, green / 255, blue / 255, alpha / 255)
 
     def as_tuple(self) -> Tuple[int, int, int, int]:
         """
@@ -25,7 +27,7 @@ class Color:
         :returns: a tuple with four components (0 -- 255) that identifies this
                   color
         """
-        return self.rgba
+        return tuple(val * 255 for val in tuple(self.color))
 
 
 def rgb_color(red: int, green: int, blue: int) -> Color:

@@ -2,15 +2,10 @@
 Functions to create primitive graphics (shapes and text)
 """
 
-from math import sqrt
-
-from PIL import Image as PILImageMod
-from PIL import ImageFont
-
 from pytamaro.color import Color
-from pytamaro.graphic import Graphic
-from pytamaro.graphic_utils import (IMAGE_MODE, canvas, crop_to_bounding_box,
-                                    ensure_size, half_position)
+from pytamaro.graphic import (CircularSector, Ellipse, Empty, Graphic,
+                              Rectangle, Text, Triangle)
+from pytamaro.graphic_utils import ensure_size
 from pytamaro.utils import export
 
 
@@ -26,8 +21,7 @@ def rectangle(width: int, height: int, color: Color) -> Graphic:
     """
     ensure_size(width)
     ensure_size(height)
-    return Graphic(PILImageMod.new(IMAGE_MODE, (width, height),
-                                   color.as_tuple()))
+    return Rectangle(width, height, color)
 
 
 @export
@@ -41,7 +35,7 @@ def empty_graphic() -> Graphic:
 
     :returns: an empty graphic (width and height 0 pixels)
     """
-    return Graphic(PILImageMod.new(IMAGE_MODE, (0, 0)))
+    return Empty()
 
 
 @export
@@ -59,9 +53,7 @@ def ellipse(width: int, height: int, color: Color) -> Graphic:
     """
     ensure_size(width)
     ensure_size(height)
-    image, draw = canvas((width, height))
-    draw.ellipse([(0, 0), image.size], fill=color.as_tuple())
-    return Graphic(image)
+    return Ellipse(width, height, color)
 
 
 @export
@@ -76,8 +68,6 @@ def circular_sector(radius: int, angle: int, color: Color) \
     Considering a circle as a clock, the first radius is supposed to "point"
     towards 3 o'clock. The `angle` determines the position of the second
     radius, computed starting from the first one in the clockwise direction.
-    When `angle` is 360 degrees, the circular sector is effectively the full
-    circle.
 
     :param radius: radius of the circle from which the circular sector is
                    taken, in pixel
@@ -86,10 +76,7 @@ def circular_sector(radius: int, angle: int, color: Color) \
     :returns: the specified circular sector as a graphic
     """
     ensure_size(radius)
-    side = radius * 2
-    image, draw = canvas((side, side))
-    draw.pieslice(((0, 0), image.size), 0, angle, fill=color.as_tuple())
-    return Graphic(crop_to_bounding_box(image))
+    return CircularSector(radius, angle, color)
 
 
 @export
@@ -103,14 +90,7 @@ def triangle(side: int, color: Color) -> Graphic:
     :returns: the specified triangle as a graphic
     """
     ensure_size(side)
-    height = half_position(side * sqrt(3))
-    image, draw = canvas((side, height))
-    bottom_left = (0, height)
-    top_middle = (half_position(side), 0)
-    bottom_right = (side, height)
-    draw.polygon([bottom_left, top_middle, bottom_right],
-                 fill=color.as_tuple())
-    return Graphic(image)
+    return Triangle(side, color)
 
 
 @export
@@ -131,10 +111,4 @@ def text(content: str, font: str, points: int, color: Color) \
     :param color: the color to be used to render the text
     :returns: the specified text as a graphic
     """
-    try:
-        loadedfont = ImageFont.truetype(f"{font}.ttf", size=points)
-    except OSError:
-        loadedfont = ImageFont.load_default()
-    image, draw = canvas(loadedfont.getsize(content))
-    draw.text((0, 0), content, fill=color.as_tuple(), font=loadedfont)
-    return Graphic(image)
+    return Text(content, font, points, color)

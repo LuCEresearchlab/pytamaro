@@ -18,13 +18,13 @@ def add_debug_info(graphic: Graphic) -> Graphic:
     :returns: a graphic with debugging information
     :meta private:
     """
-    pin_pos = graphic.get_pin_position()
+    pin_pos = graphic.pin_position
     border_width = 5
     border_color = rgb_color(240, 16, 16)
     img_with_border = add_border(graphic, border_width, border_color)
-    img_with_border.change_pin_position((pin_pos[0] + border_width,
-                                         pin_pos[1] + border_width))
-    return show_pin_position(graphic)
+    img_with_border.set_pin_position(pin_pos.x() + border_width,
+                                     pin_pos.y() + border_width)
+    return show_pin_position(img_with_border)
 
 
 def add_border(graphic: Graphic, width: int, color: Color) -> Graphic:

@@ -37,38 +37,34 @@ def test_rotate_45():
 
 def test_rotate_pin_left_top():
     r = pin("left", "top", rectangle(WIDTH, HEIGHT, red))
-    rot = rotate(90, r)
-    assert_pin_tolerance(rot, (0, WIDTH))
+    bottomleft = rotate(90, r)
+    topright = rotate(180, bottomleft)
+    assert_size(compose(bottomleft, topright), (2*HEIGHT, 2*WIDTH))
 
 
 def test_rotate_pin_left_bottom_negative():
     r = pin("left", "bottom", rectangle(WIDTH, HEIGHT, red))
-    rot = rotate(-90, r)
-    assert_pin_tolerance(rot, (0, 0))
+    bottomright = rotate(-90, r)
+    topleft = rotate(180, bottomright)
+    assert_size(compose(bottomright, topleft), (2*HEIGHT, 2*WIDTH))
 
 
 def test_rotate_pin_right_bottom():
     r = pin("right", "bottom", rectangle(WIDTH, HEIGHT, red))
     rot = rotate(180, r)
-    assert_pin_tolerance(rot, (0, 0))
+    assert_size(compose(r, rot), (2*WIDTH, 2*HEIGHT))
 
 
 def test_rotate_pin_triangle():
     t = pin("middle", "top", triangle(WIDTH, red))
-    assert_pin_tolerance(
-        rotate(180, t), (graphic_width(t) // 2, graphic_height(t)))
+    assert_size(
+        compose(t, rotate(180, t)), (graphic_width(t), 2*graphic_height(t)))
 
 
 def test_rotate_pin_circle():
     c = ellipse(2 * RADIUS, 2 * RADIUS, red)
     assert_pin_tolerance(rotate(90, c), (RADIUS, RADIUS))
 
-
-def test_cross_pin():
-    # odd size, no rounding errors expected
-    arm = rectangle(WIDTH * 2 + 1, 1, red)
-    cross = overlay(arm, rotate(90, arm))
-    assert cross.get_pin_position() == (WIDTH, WIDTH)
 
 # Beside
 

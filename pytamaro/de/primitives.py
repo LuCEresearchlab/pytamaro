@@ -66,8 +66,6 @@ def kreis_sektor(radius: int, winkel: int, farbe: Farbe) -> Grafik:
     dann zeigt der erste Radius in Richtung 3 Uhr.
     Der Winkel bestimmt die Position des zweiten Radius,
     ausgehend vom ersten Radius im Uhrzeigersinn.
-    Ein Kreissektor mit einem `winkel` von 360 Grad
-    entspricht einem ganzen Kreis.
 
     :param radius: Kreisradius, in Pixel
     :param winkel: Winkel des Sektors, in Grad

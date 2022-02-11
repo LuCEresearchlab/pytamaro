@@ -1,12 +1,14 @@
+from collections import Counter
+
 from pytamaro.color_names import red
 from pytamaro.operations import above, graphic_height, graphic_width, rotate
-from pytamaro.primitives import (ellipse, circular_sector, empty_graphic,
+from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
                                  rectangle, text, triangle)
 from pytest import raises
 
 from tests.testing_utils import (HEIGHT, RADIUS, WIDTH,
                                  assert_graphics_equals_tolerance, assert_size,
-                                 assert_unique_color)
+                                 assert_unique_color, pixels_colors)
 
 
 def test_rectangle():
@@ -42,11 +44,6 @@ def test_text():
     assert_unique_color(graphic, red)
 
 
-def test_full_circular_sector():
-    assert circular_sector(RADIUS, 360, red) == ellipse(
-        2 * RADIUS, 2 * RADIUS, red)
-
-
 def test_half_circular_sector():
     s1 = circular_sector(RADIUS, 180, red)
     assert_size(s1, (RADIUS * 2, RADIUS))
@@ -61,6 +58,7 @@ def test_equilateral_triangle():
     assert_unique_color(t, red)
     # Assert that the number of red pixels is almost equal (2%)
     # to the number of transparent pixels.
-    colors = t.get_image().getcolors()
+    colors = Counter(pixels_colors(t))
     pixels = graphic_width(t) * graphic_height(t)
-    assert abs(colors[0][0] - colors[1][0]) <= pixels * 0.02
+    common = colors.most_common(2)
+    assert abs(common[0][1] - common[1][1]) <= pixels * 0.02

@@ -7,6 +7,7 @@ authors = ["Luca Chiodini <luca@chiodini.org>"]
 [tool.poetry.dependencies]
 python = "^3.7"
 Pillow = "^9.0.0"
+skia-python = "^87.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
@@ -27,3 +28,6 @@ include = ["pytamaro", "tests"]
 
 [tool.pytest.ini_options]
 python_functions = "test_*"
+
+[tool.pylint.MASTER]
+extension-pkg-allow-list = "skia"

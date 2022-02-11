@@ -1,49 +1,18 @@
 """
-Various small utilities to deal with a Pillow image and coordinates.
+Small functions used in various places to deal with graphics.
 """
 
-from math import ceil
-from typing import Tuple
+
+import io
 
 from PIL import Image as PILImageMod
-from PIL import ImageDraw as ImageDrawMod
 from PIL.Image import Image as PILImage
-from PIL.ImageDraw import ImageDraw as PILImageDraw
 
-from pytamaro.color_names import transparent
+from pytamaro.graphic import Graphic
 from pytamaro.localization import translate
 
-IMAGE_MODE = "RGBA"  # RGB + Alpha channel
 
-
-def canvas(size: Tuple[int, int]) -> Tuple[PILImage, PILImageDraw]:
-    """
-    Returns an empty "canvas" (transparent rectangle) with an instance
-    of ImageDraw ready to use to draw onto the canvas.
-
-    :param size: width and height of the canvas, in pixel
-    :returns: a tuple containing an image of the requested size and
-              an ImageDraw instance to draw onto it.
-    """
-    image = PILImageMod.new(IMAGE_MODE, size, transparent.as_tuple())
-    return (image, ImageDrawMod.Draw(image))
-
-
-def half_position(pos: float) -> int:
-    """
-    Halves a position, rounding up to the nearest pixel.
-
-    Using the built-in round() function would lead to undesirable
-    results due to the floating-point representation;
-    e.g., round(11/2) = 6 but round(9/2) = 4.
-
-    :param pos: the position of the pixel to be halved
-    :returns the position of the pixel in the middle
-    """
-    return ceil(pos / 2)
-
-
-def ensure_size(value: int):
+def ensure_size(value: float):
     """
     Raises an exception when the provided value is not valid for a
     size in pixel, being negative or equal to zero.
@@ -54,24 +23,14 @@ def ensure_size(value: int):
         raise ValueError(translate("INVALID_SIZE"))
 
 
-def translate_position(position: Tuple[int, int],
-                       delta: Tuple[int, int]) -> Tuple[int, int]:
+def graphic_to_image(graphic: Graphic) -> PILImage:
     """
-    Translates a given 2D point by a certain delta.
+    Renders a graphic and converts it into a Pillow image.
 
-    :param position: the original position
-    :param delta: the translation vector
-    :returns: the translated position
+    :param graphic: graphic to be rendered and converted
+    :returns: an equivalent Pillow image
     """
-    return (position[0] + delta[0], position[1] + delta[1])
-
-
-def crop_to_bounding_box(image: PILImage) -> PILImage:
-    """
-    Crop (cut) the image so that the new size just fits the bounding box.
-    As an effect, potential transparent borders get eliminated.
-
-    :param image: the image to crop
-    :returns: a new cropped image
-    """
-    return image.crop(image.getbbox())
+    with io.BytesIO(graphic.as_image().encodeToData()) as stream:
+        pil_image = PILImageMod.open(stream)
+        pil_image.load()  # Ensure to make a copy of buffer
+        return pil_image

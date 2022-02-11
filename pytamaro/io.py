@@ -3,9 +3,11 @@ Functions to do I/O with graphics, such as showing or saving them.
 """
 
 from typing import List
+from skia import kPNG
 
 from pytamaro.debug import add_debug_info
 from pytamaro.graphic import Graphic
+from pytamaro.graphic_utils import graphic_to_image
 from pytamaro.localization import translate
 from pytamaro.utils import export
 
@@ -26,7 +28,8 @@ def show_graphic(graphic: Graphic, debug: bool = False):
     """
     if not graphic.is_empty_graphic():
         to_show = add_debug_info(graphic) if debug else graphic
-        to_show.get_image().show()
+        pil_image = graphic_to_image(to_show)
+        pil_image.show()
 
 
 @export
@@ -46,7 +49,8 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     """
     if not graphic.is_empty_graphic():
         to_show = add_debug_info(graphic) if debug else graphic
-        to_show.get_image().save(f"{filename}.png")
+        image = to_show.as_image()
+        image.save(f'{filename}.png', kPNG)
 
 
 @export
@@ -64,7 +68,7 @@ def save_gif(filename: str, graphics: List[Graphic], duration: int = 40):
     """
     if len(graphics) == 0:
         raise ValueError(translate("EMPTY_GRAPHICS_LIST"))
-    pil_images = list(map(Graphic.get_image, graphics))
+    pil_images = list(map(graphic_to_image, graphics))
     pil_images[0].save(f"{filename}.gif", save_all=True,
                        append_images=pil_images[1:],
                        duration=duration,
