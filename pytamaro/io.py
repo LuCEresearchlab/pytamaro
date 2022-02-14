@@ -3,13 +3,14 @@ Functions to do I/O with graphics, such as showing or saving them.
 """
 
 from typing import List
+
 from skia import kPNG
 
 from pytamaro.debug import add_debug_info
 from pytamaro.graphic import Graphic
 from pytamaro.graphic_utils import graphic_to_image
 from pytamaro.localization import translate
-from pytamaro.utils import export
+from pytamaro.utils import export, is_notebook
 
 
 @export
@@ -29,7 +30,11 @@ def show_graphic(graphic: Graphic, debug: bool = False):
     if not graphic.is_empty_graphic():
         to_show = add_debug_info(graphic) if debug else graphic
         pil_image = graphic_to_image(to_show)
-        pil_image.show()
+        if is_notebook():
+            # pylint: disable=undefined-variable
+            display(pil_image)  # type: ignore[name-defined]
+        else:
+            pil_image.show()
 
 
 @export
