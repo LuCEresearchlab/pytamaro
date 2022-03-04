@@ -205,12 +205,14 @@ class Text(Primitive):
     def __init__(self, text: str, font_name: str, size: float, color: Color):
         font = Font(Typeface(font_name), size)
         glyphs = font.textToGlyphs(text)
-        paths = font.getPaths(glyphs)
         offsets = [0] + list(accumulate(font.getWidths(glyphs)))
         text_path = Path()
-        for path, x_offset in zip(paths, offsets):
-            path.offset(x_offset, 0)
-            text_path.addPath(path)
+        for glyph, x_offset in zip(glyphs, offsets):
+            path = font.getPath(glyph)
+            # Some glyphs (e.g., the space) have no outline
+            if path is not None:
+                path.offset(x_offset, 0)
+                text_path.addPath(path)
         super().__init__(text_path, color)
 
 
