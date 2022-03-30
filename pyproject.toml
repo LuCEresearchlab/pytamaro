@@ -15,7 +15,7 @@ pytest-watch = "^4.2.0"
 pytest-cov = "^3.0.0"
 pylint = "^2.12.2"
 pycodestyle = "^2.8.0"
-Sphinx = "^4.4.0"
+Sphinx = "^4.5.0"
 sphinx-rtd-theme = "^1.0.0"
 pyright = "^0.0.13"
 

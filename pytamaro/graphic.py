@@ -55,7 +55,7 @@ class Graphic(ABC):
         Computes the (tight) bounds for the path (outline) of this graphic.
 
         :returns: a rectangle that indicates the bounds of the graphic in the 2D
-        space
+                  space
         """
         return self.path.computeTightBounds()
 
