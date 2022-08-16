@@ -49,7 +49,9 @@ def speichere_grafik(datei_name: str, grafik: Grafik, debug: bool = False):
     save_graphic(datei_name, grafik, debug)
 
 
-def speichere_gif(datei_name: str, grafiken: list[Grafik], dauer: int = 40):
+def speichere_gif(
+    datei_name: str, grafiken: list[Grafik], dauer: int = 40, loop: bool = True
+):
     """
     Speichere die gegebene Sequenz von Grafiken als animierte GIF-Datei.
 
@@ -60,5 +62,7 @@ def speichere_gif(datei_name: str, grafiken: list[Grafik], dauer: int = 40):
     :param grafiken: Liste der zu speichernden Grafiken
     :param dauer: Dauer jeder Grafik, in Millisekunden (Default: 40
            millisekunden, enspricht 25 Grafiken pro Sekunde)
+    :param loop: bestimmt ob das GIF in einer unendlichen Schleife abgespielt
+           werden soll (Default: true)
     """
-    save_gif(datei_name, grafiken, dauer)
+    save_gif(datei_name, grafiken, dauer, loop)

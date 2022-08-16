@@ -45,7 +45,9 @@ def salva_grafica(nome_file: str, grafica: Grafica, debug: bool = False):
     save_graphic(nome_file, grafica, debug)
 
 
-def salva_gif(nome_file: str, grafiche: list[Grafica], durata: int = 40):
+def salva_gif(
+    nome_file: str, grafiche: list[Grafica], durata: int = 40, loop: bool = True
+):
     """
     Salva una sequenza di grafiche come una GIF animata.
 
@@ -56,5 +58,6 @@ def salva_gif(nome_file: str, grafiche: list[Grafica], durata: int = 40):
     :param grafiche: lista di grafiche da salvare come GIF
     :param durata: durata in millisecondi di ciascun frame (default a 40
            millisecondi, ovvero 25 frame al secondo)
+    :param loop: determina se la GIF debba riprodursi in loop indefinitamente (default a True)
     """
-    save_gif(nome_file, grafiche, durata)
+    save_gif(nome_file, grafiche, durata, loop)

@@ -55,26 +55,32 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     if not graphic.is_empty_graphic():
         to_show = add_debug_info(graphic) if debug else graphic
         image = to_show.as_image()
-        image.save(f'{filename}.png', kPNG)
+        image.save(f"{filename}.png", kPNG)
 
 
 @export
-def save_gif(filename: str, graphics: List[Graphic], duration: int = 40):
+def save_gif(
+    filename: str, graphics: List[Graphic], duration: int = 40, loop: bool = True
+):
     """
     Save a sequence of graphics as an aminated GIF.
 
     Graphics are sequentially reproduced (normally at 25 frames per second) in
-    a loop.
+    a loop (unless specificied otherwise).
 
     :param filename: name of the file to create (without the extension)
     :param graphics: list of graphics to be saved as a GIF
     :param duration: duration in milliseconds for each frame
            (defaults to 40 milliseconds, which leads to 25 frames per second)
+    :param loop: whether the GIF should loop indefinitely (defaults to true)
     """
     if len(graphics) == 0:
         raise ValueError(translate("EMPTY_GRAPHICS_LIST"))
     pil_images = list(map(graphic_to_image, graphics))
-    pil_images[0].save(f"{filename}.gif", save_all=True,
-                       append_images=pil_images[1:],
-                       duration=duration,
-                       loop=0)  # loop 0 means "loop indefinitely"
+    pil_images[0].save(
+        f"{filename}.gif",
+        save_all=True,
+        append_images=pil_images[1:],
+        duration=duration,
+        loop=0 if loop else 1,  # loop 0 means "indefinitely", 1 means "once"
+    )
