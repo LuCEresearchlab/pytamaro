@@ -12,6 +12,5 @@ Use the menu on the left to select a language and then explore the available fun
    :caption: Index:
 
    Install
-   English/index
-   Italian/index
-   German/index
+   JupyterExamples
+   API
