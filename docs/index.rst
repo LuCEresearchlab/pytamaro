@@ -11,6 +11,7 @@ Use the menu on the left to select a language and then explore the available fun
 .. toctree::
    :caption: Index:
 
+   Install
    English/index
    Italian/index
    German/index
