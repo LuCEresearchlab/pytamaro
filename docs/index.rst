@@ -6,7 +6,6 @@ PyTamaro's documentation
   :alt: PyTamaro logo
 
 Welcome to PyTamaro's documentation!
-Use the menu on the left to select a language and then explore the available functions.
 
 .. toctree::
    :caption: Index:
