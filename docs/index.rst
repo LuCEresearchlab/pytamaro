@@ -8,6 +8,7 @@ PyTamaro's documentation
 Welcome to PyTamaro's documentation!
 
 .. toctree::
+   :titlesonly:
    :caption: Index:
 
    Install
