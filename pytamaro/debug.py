@@ -2,6 +2,8 @@
 Functions to enrich a graphic with information useful for debugging purposes.
 """
 
+from skia import Point
+
 from pytamaro.color import Color, rgb_color
 from pytamaro.graphic import Graphic
 from pytamaro.operations import (
@@ -13,10 +15,9 @@ from pytamaro.operations import (
     rotate,
 )
 from pytamaro.primitives import rectangle
-from skia import Point
 
 
-def top_left(graphic: Graphic) -> Point:
+def top_left_point(graphic: Graphic) -> Point:
     """
     Returns the top left corner of the bounding box of the graphic.
 
@@ -35,12 +36,12 @@ def add_debug_info(graphic: Graphic) -> Graphic:
     :returns: a graphic with debugging information
     :meta private:
     """
-    relative_pin_pos = graphic.pin_position - top_left(graphic)
+    relative_pin_pos = graphic.pin_position - top_left_point(graphic)
     border_thickness = 5
     border_color = rgb_color(240, 16, 16)
     g_with_border = add_border(graphic, border_thickness, border_color)
     new_rel_pin_pos = relative_pin_pos + (border_thickness, border_thickness)
-    new_abs_pin_pos = top_left(g_with_border) + new_rel_pin_pos
+    new_abs_pin_pos = top_left_point(g_with_border) + new_rel_pin_pos
     g_with_border.set_pin_position(new_abs_pin_pos.x(), new_abs_pin_pos.y())
     return show_pin_position(g_with_border)
 
