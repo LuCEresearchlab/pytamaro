@@ -17,5 +17,5 @@ def test_import_types():
 
 
 def test_colors():
-    _assert_names(["rgb_color", "rgba_color"])
+    _assert_names(["rgb_color", "hsv_color", "hsl_color"])
     _assert_names(["red", "transparent"])

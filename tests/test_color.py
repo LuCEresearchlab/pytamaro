@@ -1,6 +1,7 @@
-from pytamaro.color import Color, rgb_color, rgba_color
-from pytamaro.color_names import *
+from pytamaro.color import Color
 from PIL.ImageColor import getrgb
+from pytamaro.color import hsv_color, hsl_color
+from pytamaro.color_names import *
 
 
 def _same_color(color: Color, name: str):
@@ -9,10 +10,6 @@ def _same_color(color: Color, name: str):
 
 def test_rgb_color():
     _same_color(rgb_color(255, 0, 0), "red")
-
-
-def test_rgba_color():
-    assert rgba_color(0, 0, 0, 0).as_tuple() == (0, 0, 0, 0)
 
 
 def test_color_names():
@@ -27,4 +24,18 @@ def test_color_names():
 
 
 def test_transparent_color_name():
-    transparent.as_tuple()[-1] == 0
+    assert transparent.as_tuple()[-1] == 0.0
+
+
+def test_hsl_rgb_conversion():
+    # Check red, green and blue colors
+    assert hsl_color(0, 1, 0.5) == rgb_color(255, 0, 0)
+    assert hsl_color(120, 1, 0.5) == rgb_color(0, 255, 0)
+    assert hsl_color(240, 1, 0.5) == rgb_color(0, 0, 255)
+
+
+def test_hsv_rbg_conversion():
+    # Check red, green and blue colors
+    assert hsv_color(0, 1, 1) == rgb_color(255, 0, 0)
+    assert hsv_color(120, 1, 1) == rgb_color(0, 255, 0)
+    assert hsv_color(240, 1, 1) == rgb_color(0, 0, 255)

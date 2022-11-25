@@ -8,8 +8,14 @@ def test_rgb_color():
     assert rgb_color(255, 0, 0) == rgb_farbe(255, 0, 0)
 
 
+def test_hsv_color():
+    assert hsv_color(255, 0, 0) == hsv_farbe(255, 0, 0)
+
+def test_hsl_color():
+    assert hsl_color(255, 0, 0) == hsl_farbe(255, 0, 0)
+
 def test_rgba_color():
-    assert rgba_color(0, 0, 0, 0) == rgba_farbe(0, 0, 0, 0)
+    assert rgb_color(0, 0, 0, 0.0) == rgb_farbe(0, 0, 0, 0.0)
 
 
 def test_color_names():

@@ -3,7 +3,7 @@ Names of notable colors because they are at the vertices of the RGB cube,
 plus the fully-transparent one.
 """
 
-from pytamaro.color import rgb_color, rgba_color
+from pytamaro.color import rgb_color
 
 black = rgb_color(0, 0, 0)
 """Black color
@@ -53,7 +53,7 @@ white = rgb_color(255, 255, 255)
 :meta hide-value:
 """
 
-transparent = rgba_color(0, 0, 0, 0)
+transparent = rgb_color(0, 0, 0, 0)
 """Fully-transparent color
 
 :meta hide-value:
