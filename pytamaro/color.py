@@ -27,7 +27,7 @@ class Color:
         :returns: a tuple with four components. The first three (0 -- 255) identify the
                   color, the last one (0, 1) identifies the transparency
         """
-        return tuple(self.color[i] * 255 for i in range(3)) + (self.color[3], )
+        return self.color[0] * 255, self.color[1] * 255, self.color[2] * 255, self.color[3]
 
 
 def rgb_color(red: int, green: int, blue: int, alpha: float = 1.0) -> Color:
@@ -60,21 +60,21 @@ def hsv_color(hue: float, saturation: float, value: float, alpha: float = 1.0) -
     """
     chroma = value * saturation
     side = (hue / 60) % 6
-    x = chroma * (1 - abs(side % 2 - 1))
-    bottom_color = (chroma, x, 0)
+    x_value = chroma * (1 - abs(side % 2 - 1))
+    bottom_color = (chroma, x_value, 0)
     if 2 > side >= 1:
-        bottom_color = (x, chroma, 0)
+        bottom_color = (x_value, chroma, 0)
     if 3 > side >= 2:
-        bottom_color = (0, chroma, x)
+        bottom_color = (0, chroma, x_value)
     if 4 > side >= 3:
-        bottom_color = (0, x, chroma)
+        bottom_color = (0, x_value, chroma)
     if 5 > side >= 4:
-        bottom_color = (x, 0, chroma)
+        bottom_color = (x_value, 0, chroma)
     if side >= 5:
-        bottom_color = (chroma, 0, x)
+        bottom_color = (chroma, 0, x_value)
     to_add = value - chroma
     color = tuple(int((x + to_add) * 255) for x in bottom_color)
-    return rgb_color(*color, alpha)
+    return rgb_color(color[0], color[1], color[2], alpha)
 
 
 def hsl_color(hue: float, saturation: float, lightness: float, alpha: float = 1.0) -> Color:
@@ -93,18 +93,18 @@ def hsl_color(hue: float, saturation: float, lightness: float, alpha: float = 1.
     """
     chroma = (1 - abs(2 * lightness - 1)) * saturation
     side = (hue / 60) % 6
-    x = chroma * (1 - abs(side % 2 - 1))
-    bottom_color = (chroma, x, 0)
+    x_value = chroma * (1 - abs(side % 2 - 1))
+    bottom_color = (chroma, x_value, 0)
     if 2 > side >= 1:
-        bottom_color = (x, chroma, 0)
+        bottom_color = (x_value, chroma, 0)
     if 3 > side >= 2:
-        bottom_color = (0, chroma, x)
+        bottom_color = (0, chroma, x_value)
     if 4 > side >= 3:
-        bottom_color = (0, x, chroma)
+        bottom_color = (0, x_value, chroma)
     if 5 > side >= 4:
-        bottom_color = (x, 0, chroma)
+        bottom_color = (x_value, 0, chroma)
     if side >= 5:
-        bottom_color = (chroma, 0, x)
+        bottom_color = (chroma, 0, x_value)
     to_add = lightness - chroma / 2
     color = tuple(int((x + to_add) * 255) for x in bottom_color)
-    return rgb_color(*color, alpha)
+    return rgb_color(color[0], color[1], color[2], alpha)

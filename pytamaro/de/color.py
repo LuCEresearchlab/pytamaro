@@ -5,7 +5,7 @@ und Konstanten für wichtige Farben.
 
 from __future__ import annotations
 
-from pytamaro.color import Color, rgb_color
+from pytamaro.color import Color, rgb_color, hsv_color, hsl_color
 
 Farbe = Color
 """
@@ -45,23 +45,7 @@ def hsv_farbe(hue: float, saturation: float, value: float, alpha: float = 1.0) -
            transparent and 1 fully opaque. By default, all colors are fully opaque
     :returns: a color with the provided HSV components.
     """
-    chroma = value * saturation
-    side = (hue / 60) % 6
-    x = chroma * (1 - abs(side % 2 - 1))
-    bottom_color = (chroma, x, 0)
-    if 2 > side >= 1:
-        bottom_color = (x, chroma, 0)
-    if 3 > side >= 2:
-        bottom_color = (0, chroma, x)
-    if 4 > side >= 3:
-        bottom_color = (0, x, chroma)
-    if 5 > side >= 4:
-        bottom_color = (x, 0, chroma)
-    if side >= 5:
-        bottom_color = (chroma, 0, x)
-    to_add = value - chroma
-    color = tuple((x + to_add) * 255 for x in bottom_color)
-    return rgb_color(*color, alpha)
+    return hsv_color(hue, saturation, value, alpha)
 
 
 def hsl_farbe(hue: float, saturation: float, lightness: float, alpha: float = 1.0) -> Color:
@@ -78,20 +62,4 @@ def hsl_farbe(hue: float, saturation: float, lightness: float, alpha: float = 1.
            transparent and 1 fully opaque. By default, all colors are fully opaque
     :returns: a color with the provided HSL components.
     """
-    chroma = (1 - abs(2 * lightness - 1)) * saturation
-    side = (hue / 60) % 6
-    x = chroma * (1 - abs(side % 2 - 1))
-    bottom_color = (chroma, x, 0)
-    if 2 > side >= 1:
-        bottom_color = (x, chroma, 0)
-    if 3 > side >= 2:
-        bottom_color = (0, chroma, x)
-    if 4 > side >= 3:
-        bottom_color = (0, x, chroma)
-    if 5 > side >= 4:
-        bottom_color = (x, 0, chroma)
-    if side >= 5:
-        bottom_color = (chroma, 0, x)
-    to_add = lightness - chroma / 2
-    color = tuple((x + to_add) * 255 for x in bottom_color)
-    return rgb_color(*color, alpha)
+    return hsl_color(hue, saturation, lightness, alpha)

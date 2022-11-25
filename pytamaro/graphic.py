@@ -34,8 +34,6 @@ class Graphic(ABC):
     def set_pin_position(self, x: float, y: float):  # pylint: disable=invalid-name
         """
         Changes the pinning position of this graphic.
-
-            nrow = beside(row, overlay(rectangle(100, 100, hsl_color(180, 1 - 1 / 4 * saturation, 1 - 1 / 8 * lightness)),
         :param x: x coordinate
         :param y: y coordinate
         """
