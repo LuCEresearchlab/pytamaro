@@ -11,9 +11,11 @@ def test_rgb_color():
 def test_hsv_color():
     assert hsv_color(255, 0, 0) == colore_hsv(255, 0, 0)
 
+    
 def test_hsl_color():
     assert hsl_color(255, 0, 0) == colore_hsl(255, 0, 0)
 
+    
 def test_rgba_color():
     assert rgb_color(0, 0, 0, 0.0) == colore_rgb(0, 0, 0, 0.0)
 
