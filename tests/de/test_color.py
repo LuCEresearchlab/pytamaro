@@ -11,7 +11,7 @@ def test_rgb_color():
 def test_hsv_color():
     assert hsv_color(255, 0, 0) == hsv_farbe(255, 0, 0)
 
-    
+
 def test_hsl_color():
     assert hsl_color(255, 0, 0) == hsl_farbe(255, 0, 0)
 
