@@ -21,9 +21,9 @@ def rgb_farbe(rot: int, gruen: int, blau: int, alpha: float = 1.0) -> Farbe:
     Erzeugt eine Farbe mit den gegebenen Komponenten für Rot, Grün, Blau,
     und die Opazität (Undurchsichtigkeit) `alpha` (RGBA).
 
-    :param rot: die rote Farb-Komponente (0 -- 255)
-    :param gruen: die grüne Farb-Komponente (0 -- 255)
-    :param blau: die blaue Farb-Komponente (0 -- 255)
+    :param rot: die rote Farb-Komponente [0-255]
+    :param gruen: die grüne Farb-Komponente [0-255]
+    :param blau: die blaue Farb-Komponente [0-255]
     :param alpha: die alpha-Komponente (Undurchsichtigkeit, Opazität),
                   wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
                   entspricht
@@ -32,15 +32,14 @@ def rgb_farbe(rot: int, gruen: int, blau: int, alpha: float = 1.0) -> Farbe:
     return rgb_color(rot, gruen, blau, alpha)
 
 
-def hsv_farbe(hue: float, saturation: float, value: float, alpha: float = 1.0) -> Color:
+def hsv_farbe(hue: float, saturation: float, value: float, alpha: float = 1.0) -> Farbe:
     """
     Returns a color with the provided hue, saturation, value and a
     certain degree of transparency controlled by `alpha`.
-    The parameters are converted to RGB and used to get the color with rgb_color().
 
-    :param hue: hue of the color (0 - 360)
-    :param saturation: saturation of the color (0, 1)
-    :param value: the amount of light that is applied (0, 1)
+    :param hue: hue of the color [0-360]
+    :param saturation: saturation of the color [0-1]
+    :param value: the amount of light that is applied [0-1]
     :param alpha: alpha (transparency) component where 0 means fully
            transparent and 1 fully opaque. By default, all colors are fully opaque
     :returns: a color with the provided HSV components.
@@ -48,15 +47,14 @@ def hsv_farbe(hue: float, saturation: float, value: float, alpha: float = 1.0) -
     return hsv_color(hue, saturation, value, alpha)
 
 
-def hsl_farbe(hue: float, saturation: float, lightness: float, alpha: float = 1.0) -> Color:
+def hsl_farbe(hue: float, saturation: float, lightness: float, alpha: float = 1.0) -> Farbe:
     """
-    Returns a color with the provided hue, saturation, lightness  and a
+    Returns a color with the provided hue, saturation, lightness and a
     certain degree of transparency controlled by `alpha`.
-    The parameters are converted to RGB and used to get the color with rgb_color().
 
-    :param hue: hue of the color (0 - 360)
-    :param saturation: saturation of the color (0, 1)
-    :param lightness: the amount of white or black applied (0, 1).
+    :param hue: hue of the color [0-360]
+    :param saturation: saturation of the color [0-1]
+    :param lightness: the amount of white or black applied [0-1].
             Fully saturated colors have a lightness value of 1/2
     :param alpha: alpha (transparency) component where 0 means fully
            transparent and 1 fully opaque. By default, all colors are fully opaque
