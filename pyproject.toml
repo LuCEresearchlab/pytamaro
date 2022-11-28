@@ -31,3 +31,5 @@ python_functions = "test_*"
 
 [tool.pylint.MASTER]
 extension-pkg-allow-list = "skia"
+
+[tool.poetry_bumpversion.file."pytamaro/__init__.py"]

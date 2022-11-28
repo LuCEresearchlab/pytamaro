@@ -17,3 +17,5 @@ from pytamaro.operations import *
 from pytamaro.primitives import *
 
 LANGUAGE = "en"
+
+__version__ = "0.2.4"
