@@ -18,46 +18,53 @@ bis komplett durchsichtig, wie die Farbe `transparent`.
 
 def rgb_farbe(rot: int, gruen: int, blau: int, alpha: float = 1.0) -> Farbe:
     """
-    Erzeugt eine Farbe mit den gegebenen Komponenten für Rot, Grün, Blau,
-    und die Opazität (Undurchsichtigkeit) `alpha` (RGBA).
+    Erzeugt eine Farbe mit den gegebenen Anteilen Rot (R), Grün (G), Blau (B)
+    und der Opazität (Undurchsichtigkeit) `alpha`.
 
-    :param rot: die rote Farb-Komponente [0-255]
-    :param gruen: die grüne Farb-Komponente [0-255]
-    :param blau: die blaue Farb-Komponente [0-255]
-    :param alpha: die alpha-Komponente (Undurchsichtigkeit, Opazität),
-                  wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
-                  entspricht
+    :param rot: der rote Farbanteil [0-255]
+    :param gruen: der grüne Farbanteil [0-255]
+    :param blau: der blaue Farbanteil [0-255]
+    :param alpha: die Opazität (Undurchsichtigkeit),
+           wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
+           entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig
     :returns: eine Farbe mit den gegebenen RGBA-Komponenten
     """
     return rgb_color(rot, gruen, blau, alpha)
 
 
-def hsv_farbe(hue: float, saturation: float, value: float, alpha: float = 1.0) -> Farbe:
+def hsv_farbe(farbton: float, saettigung: float, hellwert: float, alpha: float = 1.0) -> Farbe:
     """
-    Returns a color with the provided hue, saturation, value and a
-    certain degree of transparency controlled by `alpha`.
+    Erzeugt eine Farbe mit dem gegebenen Farbton (H), der Sättigung (S),
+    dem Hellwert (V) und der Opazität (Undurchsichtigkeit) `alpha`.
 
-    :param hue: hue of the color [0-360]
-    :param saturation: saturation of the color [0-1]
-    :param value: the amount of light that is applied [0-1]
-    :param alpha: alpha (transparency) component where 0 means fully
-           transparent and 1 fully opaque. By default, all colors are fully opaque
-    :returns: a color with the provided HSV components.
+    :param farbton: der Farbton (hue) [0-360] als Farbwinkel, in Grad,
+           auf dem Farbkreis (0 für Rot, 120 für Grün, 240 für Blau)
+    :param saettigung: Farbsättigung (saturation) [0-1]
+           (0 = Grau, 0.5 = wenig gesättigte Farbe, 1 = gesättigte, reine Farbe)
+    :param hellwert: Hellwert (value) der Farbe [0-1]
+           (0 = dunkel, 1 = hell)
+    :param alpha: die Opazität (Undurchsichtigkeit),
+           wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
+           entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig
+    :returns: eine Farbe mit den gegebenen HSVA-Komponenten
     """
-    return hsv_color(hue, saturation, value, alpha)
+    return hsv_color(farbton, saettigung, hellwert, alpha)
 
 
-def hsl_farbe(hue: float, saturation: float, lightness: float, alpha: float = 1.0) -> Farbe:
+def hsl_farbe(farbton: float, saettigung: float, helligkeit: float, alpha: float = 1.0) -> Farbe:
     """
-    Returns a color with the provided hue, saturation, lightness and a
-    certain degree of transparency controlled by `alpha`.
+    Erzeugt eine Farbe mit dem gegebenen Farbton (H), der Sättigung (S),
+    dem Helligkeit (L) und der Opazität (Undurchsichtigkeit) `alpha`.
 
-    :param hue: hue of the color [0-360]
-    :param saturation: saturation of the color [0-1]
-    :param lightness: the amount of white or black applied [0-1].
-            Fully saturated colors have a lightness value of 1/2
-    :param alpha: alpha (transparency) component where 0 means fully
-           transparent and 1 fully opaque. By default, all colors are fully opaque
-    :returns: a color with the provided HSL components.
+    :param farbton: der Farbton (hue) [0-360] als Farbwinkel, in Grad,
+           auf dem Farbkreis (0 für Rot, 120 für Grün, 240 für Blau)
+    :param saettigung: Farbsättigung (saturation) [0-1]
+           (0 = Grau, 0.5 = wenig gesättigte Farbe, 1 = gesättigte, reine Farbe)
+    :param helligkeit: der Anteil Schwarz oder Weiss [0-1].
+           (0 = Schwarz, 0.5 = weder abgedunkelt noch aufgehellt, 1 = Weiss)
+    :param alpha: die Opazität (Undurchsichtigkeit),
+           wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
+           entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig
+    :returns: eine Farbe mit den gegebenen HSLA-Komponenten
     """
-    return hsl_color(hue, saturation, lightness, alpha)
+    return hsl_color(farbton, saettigung, helligkeit, alpha)
