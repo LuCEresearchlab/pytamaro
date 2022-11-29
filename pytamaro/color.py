@@ -1,5 +1,5 @@
 """
-`Color` type and functions to produce colors.
+`Color` type, functions to produce colors, and constants for important colors.
 """
 
 from dataclasses import dataclass
