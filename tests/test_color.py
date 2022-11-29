@@ -28,14 +28,24 @@ def test_transparent_color_name():
 
 
 def test_hsl_rgb_conversion():
-    # Check red, green and blue colors
-    assert hsl_color(0, 1, 0.5) == rgb_color(255, 0, 0)
-    assert hsl_color(120, 1, 0.5) == rgb_color(0, 255, 0)
-    assert hsl_color(240, 1, 0.5) == rgb_color(0, 0, 255)
+    # Check corners of RGB / CMY color cube
+    assert hsl_color(0, 1, 0.5) == rgb_color(255, 0, 0) # red
+    assert hsl_color(60, 1, 0.5) == rgb_color(255, 255, 0) # yellow
+    assert hsl_color(120, 1, 0.5) == rgb_color(0, 255, 0) # green
+    assert hsl_color(180, 1, 0.5) == rgb_color(0, 255, 255) # cyan
+    assert hsl_color(240, 1, 0.5) == rgb_color(0, 0, 255) # blue
+    assert hsl_color(300, 1, 0.5) == rgb_color(255, 0, 255) # magenta
+    assert hsl_color(0, 0, 1) == rgb_color(255, 255, 255) # white
+    assert hsl_color(0, 0, 0) == rgb_color(0, 0, 0) # black
 
 
 def test_hsv_rbg_conversion():
-    # Check red, green and blue colors
-    assert hsv_color(0, 1, 1) == rgb_color(255, 0, 0)
-    assert hsv_color(120, 1, 1) == rgb_color(0, 255, 0)
-    assert hsv_color(240, 1, 1) == rgb_color(0, 0, 255)
+    # Check corners of RGB / CMY color cube
+    assert hsv_color(0, 1, 1) == rgb_color(255, 0, 0) # red
+    assert hsv_color(60, 1, 1) == rgb_color(255, 255, 0) # yellow
+    assert hsv_color(120, 1, 1) == rgb_color(0, 255, 0) # green
+    assert hsv_color(180, 1, 1) == rgb_color(0, 255, 255) # cyan
+    assert hsv_color(240, 1, 1) == rgb_color(0, 0, 255) # blue
+    assert hsv_color(300, 1, 1) == rgb_color(255, 0, 255) # magenta
+    assert hsv_color(0, 0, 1) == rgb_color(255, 255, 255) # white
+    assert hsv_color(0, 0, 0) == rgb_color(0, 0, 0) # black
