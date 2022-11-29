@@ -11,8 +11,10 @@ from skia import Color4f
 @dataclass
 class Color:
     """
-    Represents a color in the RGBA color space (using integers between 0 and
-    255).
+    Represents a color.
+    A color also has a degree of opacity,
+    from completely transparent (like the color `transparent`)
+    to completely opaque (like the color `red`).
     """
     color: Color4f
 
@@ -30,32 +32,44 @@ class Color:
         return self.color[0] * 255, self.color[1] * 255, self.color[2] * 255, self.color[3]
 
 
-def rgb_color(red: int, green: int, blue: int, alpha: float = 1.0) -> Color:
+def rgb_color(red: int, green: int, blue: int, opacity: float = 1.0) -> Color:
     """
-    Returns a color with the provided components for red, green and blue and a
-    certain degree of transparency controlled by `alpha`.
+    Returns a color with the provided components for red (R), green (G) and blue (B) and a
+    certain degree of opacity (alpha, A).
+
+    .. figure:: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/524px-RGBCube_a.svg.png
+       :height: 120px
+       :align: center
+
+       `RGB cube (SharkD via Wikimedia Commons) <https://commons.wikimedia.org/wiki/File:RGBCube_a.svg>`_
 
     :param red: red component [0-255]
     :param green: green component [0-255]
     :param blue: blue component [0-255]
-    :param alpha: alpha (transparency) component where 0 means fully
+    :param opacity: opacity (alpha) of the color, where 0 means fully
            transparent and 1 fully opaque. By default, all colors are fully opaque
     :returns: a color with the provided RGBA components
     """
-    return Color(red, green, blue, alpha)
+    return Color(red, green, blue, opacity)
 
 
-def hsv_color(hue: float, saturation: float, value: float, alpha: float = 1.0) -> Color:
+def hsv_color(hue: float, saturation: float, value: float, opacity: float = 1.0) -> Color:
     """
-    Returns a color with the provided hue, saturation, value and a
-    certain degree of transparency controlled by `alpha`.
+    Returns a color with the provided hue (H), saturation (S), value (V) and a
+    certain degree of opacity (alpha, A).
+
+    .. figure:: https://upload.wikimedia.org/wikipedia/commons/4/4e/HSV_color_solid_cylinder.png
+       :height: 120px
+       :align: center
+
+       `HSV cylinder (SharkD via Wikimedia Commons) <https://commons.wikimedia.org/wiki/File:HSV_color_solid_cylinder.png>`_
 
     :param hue: hue of the color [0-360]
     :param saturation: saturation of the color [0-1]
     :param value: the amount of light that is applied [0-1]
-    :param alpha: alpha (transparency) component where 0 means fully
+    :param opacity: opacity (alpha) of the color, where 0 means fully
            transparent and 1 fully opaque. By default, all colors are fully opaque
-    :returns: a color with the provided HSV components.
+    :returns: a color with the provided HSVA components.
     """
     chroma = value * saturation
     side = (hue / 60) % 6
@@ -73,19 +87,25 @@ def hsv_color(hue: float, saturation: float, value: float, alpha: float = 1.0) -
         bottom_color = (chroma, 0, x_value)
     to_add = value - chroma
     color = tuple(int((x + to_add) * 255) for x in bottom_color)
-    return rgb_color(color[0], color[1], color[2], alpha)
+    return rgb_color(color[0], color[1], color[2], opacity)
 
 
-def hsl_color(hue: float, saturation: float, lightness: float, alpha: float = 1.0) -> Color:
+def hsl_color(hue: float, saturation: float, lightness: float, opacity: float = 1.0) -> Color:
     """
-    Returns a color with the provided hue, saturation, lightness and a
-    certain degree of transparency controlled by `alpha`.
+    Returns a color with the provided hue (H), saturation (S), lightness (L) and a
+    certain degree of opacity (alpha, A).
+
+    .. figure:: https://upload.wikimedia.org/wikipedia/commons/3/35/HSL_color_solid_cylinder.png
+       :height: 120px
+       :align: center
+
+       `HSL cylinder: SharkD via Wikimedia Commons <https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder.png>`_
 
     :param hue: hue of the color [0-360]
     :param saturation: saturation of the color [0-1]
     :param lightness: the amount of white or black applied [0-1].
             Fully saturated colors have a lightness value of 1/2
-    :param alpha: alpha (transparency) component where 0 means fully
+    :param opacity: opacity (alpha) of the color, where 0 means fully
            transparent and 1 fully opaque. By default, all colors are fully opaque
     :returns: a color with the provided HSL components.
     """
@@ -105,4 +125,4 @@ def hsl_color(hue: float, saturation: float, lightness: float, alpha: float = 1.
         bottom_color = (chroma, 0, x_value)
     to_add = lightness - chroma / 2
     color = tuple(int((x + to_add) * 255) for x in bottom_color)
-    return rgb_color(color[0], color[1], color[2], alpha)
+    return rgb_color(color[0], color[1], color[2], opacity)
