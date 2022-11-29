@@ -63,7 +63,8 @@ def hsv_farbe(farbton: float, saettigung: float, hellwert: float, opazitaet: flo
     return hsv_color(farbton, saettigung, hellwert, opazitaet)
 
 
-def hsl_farbe(farbton: float, saettigung: float, helligkeit: float, opazitaet: float = 1.0) -> Farbe:
+def hsl_farbe(farbton: float, saettigung: float, helligkeit: float, 
+              opazitaet: float = 1.0) -> Farbe:
     """
     Erzeugt eine Farbe mit dem gegebenen Farbton (H), der Sättigung (S),
     dem Helligkeit (L) und der Opazität (Undurchsichtigkeit, alpha, A).
