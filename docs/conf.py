@@ -53,6 +53,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 add_module_names = False
 python_use_unqualified_type_names = True
 autodoc_typehints_format = "short"
+autodoc_class_signature = "separated"
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -72,8 +73,12 @@ autodoc_type_aliases = {
     # it
     "Colore": "Colore",
     "Grafica": "Grafica",
-    "List[Grafica]": "List[Grafica]",
     # de
     "Farbe": "Farbe",
     "Grafik": "Grafik",
+}
+
+autodoc_default_options = {
+    "class-doc-from": "class",
+    "exclude-members": "__init__, __new__",
 }
