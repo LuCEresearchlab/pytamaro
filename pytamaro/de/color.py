@@ -10,32 +10,32 @@ from pytamaro.color import Color, rgb_color, hsv_color, hsl_color
 Farbe = Color
 """
 Repräsentiert eine Farbe.
-Eine Farbe hat auch eine gewisse Durchsichtigkeit,
-von komplett undurchsichtig, wie die Farbe `rot`,
-bis komplett durchsichtig, wie die Farbe `transparent`.
+Eine Farbe hat auch eine gewisse Opazität,
+von komplett durchsichtig, wie die Farbe `transparent`,
+bis komplett undurchsichtig, wie die Farbe `rot`.
 """
 
 
-def rgb_farbe(rot: int, gruen: int, blau: int, alpha: float = 1.0) -> Farbe:
+def rgb_farbe(rot: int, gruen: int, blau: int, opazitaet: float = 1.0) -> Farbe:
     """
-    Erzeugt eine Farbe mit den gegebenen Anteilen Rot (R), Grün (G), Blau (B)
-    und der Opazität (Undurchsichtigkeit) `alpha`.
+    Erzeugt eine Farbe mit den gegebenen Anteilen Rot (R), Grün (G) und Blau (B)
+    und der gegebenen Opazität (Undurchsichtigkeit, alpha, A).
 
     :param rot: der rote Farbanteil [0-255]
     :param gruen: der grüne Farbanteil [0-255]
     :param blau: der blaue Farbanteil [0-255]
-    :param alpha: die Opazität (Undurchsichtigkeit),
+    :param opazitaet: die Undurchsichtigkeit (alpha),
            wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
            entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig
     :returns: eine Farbe mit den gegebenen RGBA-Komponenten
     """
-    return rgb_color(rot, gruen, blau, alpha)
+    return rgb_color(rot, gruen, blau, opazitaet)
 
 
-def hsv_farbe(farbton: float, saettigung: float, hellwert: float, alpha: float = 1.0) -> Farbe:
+def hsv_farbe(farbton: float, saettigung: float, hellwert: float, opazitaet: float = 1.0) -> Farbe:
     """
     Erzeugt eine Farbe mit dem gegebenen Farbton (H), der Sättigung (S),
-    dem Hellwert (V) und der Opazität (Undurchsichtigkeit) `alpha`.
+    dem Hellwert (V) und der Opazität (Undurchsichtigkeit, alpha, A).
 
     :param farbton: der Farbton (hue) [0-360] als Farbwinkel, in Grad,
            auf dem Farbkreis (0 für Rot, 120 für Grün, 240 für Blau)
@@ -43,18 +43,18 @@ def hsv_farbe(farbton: float, saettigung: float, hellwert: float, alpha: float =
            (0 = Grau, 0.5 = wenig gesättigte Farbe, 1 = gesättigte, reine Farbe)
     :param hellwert: Hellwert (value) der Farbe [0-1]
            (0 = dunkel, 1 = hell)
-    :param alpha: die Opazität (Undurchsichtigkeit),
+    :param opazitaet: die Undurchsichtigkeit (alpha),
            wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
            entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig
     :returns: eine Farbe mit den gegebenen HSVA-Komponenten
     """
-    return hsv_color(farbton, saettigung, hellwert, alpha)
+    return hsv_color(farbton, saettigung, hellwert, opazitaet)
 
 
-def hsl_farbe(farbton: float, saettigung: float, helligkeit: float, alpha: float = 1.0) -> Farbe:
+def hsl_farbe(farbton: float, saettigung: float, helligkeit: float, opazitaet: float = 1.0) -> Farbe:
     """
     Erzeugt eine Farbe mit dem gegebenen Farbton (H), der Sättigung (S),
-    dem Helligkeit (L) und der Opazität (Undurchsichtigkeit) `alpha`.
+    dem Helligkeit (L) und der Opazität (Undurchsichtigkeit, alpha, A).
 
     :param farbton: der Farbton (hue) [0-360] als Farbwinkel, in Grad,
            auf dem Farbkreis (0 für Rot, 120 für Grün, 240 für Blau)
@@ -62,9 +62,9 @@ def hsl_farbe(farbton: float, saettigung: float, helligkeit: float, alpha: float
            (0 = Grau, 0.5 = wenig gesättigte Farbe, 1 = gesättigte, reine Farbe)
     :param helligkeit: der Anteil Schwarz oder Weiss [0-1].
            (0 = Schwarz, 0.5 = weder abgedunkelt noch aufgehellt, 1 = Weiss)
-    :param alpha: die Opazität (Undurchsichtigkeit),
+    :param opazitaet: die Undurchsichtigkeit (alpha),
            wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
            entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig
     :returns: eine Farbe mit den gegebenen HSLA-Komponenten
     """
-    return hsl_color(farbton, saettigung, helligkeit, alpha)
+    return hsl_color(farbton, saettigung, helligkeit, opazitaet)
