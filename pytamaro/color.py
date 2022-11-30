@@ -16,6 +16,7 @@ class Color:
     from completely transparent (like the color `transparent`)
     to completely opaque (like the color `red`).
     """
+
     color: Color4f
 
     def __init__(self, red: int, green: int, blue: int, alpha: float):
@@ -47,7 +48,7 @@ def rgb_color(red: int, green: int, blue: int, opacity: float = 1.0) -> Color:
     :param green: green component [0-255]
     :param blue: blue component [0-255]
     :param opacity: opacity (alpha) of the color, where 0 means fully
-           transparent and 1 fully opaque. By default, all colors are fully opaque
+           transparent and 1 fully opaque. By default, all colors are fully opaque.
     :returns: a color with the provided RGBA components
     """
     return Color(red, green, blue, opacity)
@@ -68,7 +69,7 @@ def hsv_color(hue: float, saturation: float, value: float, opacity: float = 1.0)
     :param saturation: saturation of the color [0-1]
     :param value: the amount of light that is applied [0-1]
     :param opacity: opacity (alpha) of the color, where 0 means fully
-           transparent and 1 fully opaque. By default, all colors are fully opaque
+           transparent and 1 fully opaque. By default, all colors are fully opaque.
     :returns: a color with the provided HSVA components.
     """
     chroma = value * saturation
@@ -104,10 +105,10 @@ def hsl_color(hue: float, saturation: float, lightness: float, opacity: float = 
     :param hue: hue of the color [0-360]
     :param saturation: saturation of the color [0-1]
     :param lightness: the amount of white or black applied [0-1].
-            Fully saturated colors have a lightness value of 1/2
+            Fully saturated colors have a lightness value of 1/2.
     :param opacity: opacity (alpha) of the color, where 0 means fully
-           transparent and 1 fully opaque. By default, all colors are fully opaque
-    :returns: a color with the provided HSL components.
+           transparent and 1 fully opaque. By default, all colors are fully opaque.
+    :returns: a color with the provided HSLA components
     """
     chroma = (1 - abs(2 * lightness - 1)) * saturation
     side = (hue / 60) % 6

@@ -32,7 +32,7 @@ def rgb_farbe(rot: int, gruen: int, blau: int, opazitaet: float = 1.0) -> Farbe:
     :param blau: der blaue Farbanteil [0-255]
     :param opazitaet: die Undurchsichtigkeit (alpha),
            wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
-           entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig
+           entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig.
     :returns: eine Farbe mit den gegebenen RGBA-Komponenten
     """
     return rgb_color(rot, gruen, blau, opazitaet)
@@ -57,7 +57,7 @@ def hsv_farbe(farbton: float, saettigung: float, hellwert: float, opazitaet: flo
            (0 = dunkel, 1 = hell)
     :param opazitaet: die Undurchsichtigkeit (alpha),
            wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
-           entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig
+           entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig.
     :returns: eine Farbe mit den gegebenen HSVA-Komponenten
     """
     return hsv_color(farbton, saettigung, hellwert, opazitaet)
@@ -83,7 +83,7 @@ def hsl_farbe(farbton: float, saettigung: float, helligkeit: float,
            (0 = Schwarz, 0.5 = weder abgedunkelt noch aufgehellt, 1 = Weiss)
     :param opazitaet: die Undurchsichtigkeit (alpha),
            wobei 0 komplett durchsichtig und 1 komplett undurchsichtig
-           entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig
+           entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig.
     :returns: eine Farbe mit den gegebenen HSLA-Komponenten
     """
     return hsl_color(farbton, saettigung, helligkeit, opazitaet)
