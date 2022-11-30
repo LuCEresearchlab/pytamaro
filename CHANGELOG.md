@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.3.0] - 2022-11-30
 
 ### Added
 
@@ -13,11 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `rgb_color` (and the newly added functions) now takes an optional `alpha` parameter (which defaults to a fully-opaque color)
+- `rgb_color` (and the newly added functions) now takes an optional `opacity` parameter (which defaults to a fully-opaque color)
+- Improved the documentation of colors
 
 ### Removed
 
-- `rgba_color` is now superseeded by `rgb_color` with the `alpha` parameter
+- `rgba_color` is now superseeded by `rgb_color` with the `opacity` parameter
 
 ## [0.2.4] - 2022-10-31
 
