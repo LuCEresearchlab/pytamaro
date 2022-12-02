@@ -16,5 +16,4 @@ Versione Italiana
 Benvenuti nella documentazione di Pytamaro!
 Esplorate le funzioni disponibile usando il menu a sinistra.
 
-.. automodule:: pytamaro.it.graphic
-    :members:
+.. autoclass:: pytamaro.it.graphic.Grafica

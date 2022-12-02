@@ -5,8 +5,7 @@ In aggiunta, il colore completamente trasparente.
 
 from __future__ import annotations
 
-from pytamaro.color_names import (black, blue, cyan, green, magenta, red,
-                                  transparent, white, yellow)
+from pytamaro.color_names import black, blue, cyan, green, magenta, red, transparent, white, yellow
 from pytamaro.it.color import Colore
 
 nero: Colore = black
@@ -58,7 +57,7 @@ bianco: Colore = white
 """
 
 trasparente: Colore = transparent
-"""Colore completament trasparente
+"""Colore completamente trasparente
 
 :meta hide-value:
 """
