@@ -7,6 +7,15 @@ from __future__ import annotations
 from pytamaro.de.graphic import Grafik
 from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
+# Remove this imports after translation
+from pytamaro.de.point_names import (german_top_left, german_top_center, german_top_right,
+                                     german_center_left, german_center, german_center_right,
+                                     german_bottom_left, german_bottom_center, german_bottom_right)
+from pytamaro.point_names import (top_left, top_center, top_right,
+                                  center_left, center, center_right,
+                                  bottom_left, bottom_center, bottom_right)
+from pytamaro.point import Point
+from pytamaro import Graphic
 
 
 def grafik_breite(grafik: Grafik) -> int:
@@ -49,37 +58,39 @@ def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     return compose(vordere_grafik, hintere_grafik)
 
 
-def fixiere(horizontale_position: str, vertikale_position: str,
-            grafik: Grafik) -> Grafik:
+def fixiere(pinning_point: Point, graphic: Graphic) -> Graphic:
     """
-    Erzeugt eine neue Grafik, die der gegebenen Grafik
-    mit einer anderen Fixierungsposition entspricht.
+    Need to translate
+    Changes the pinning position of a graphic, returning a new graphic with
+    the same content but with an updated pinning position.
+    The new pinning position is determined by the parameter `pinning_point`.
 
-    Die neue Fixierungsposition wird mit den Parametern
-    `horizontale_position` und `vertikale_position` bestimmt.
-
-    :param horizontale_position: "links", "mitte" oder "rechts" um
-           die Fixierungsposition auf den linken Rand, in die Mitte,
-           oder auf den rechten Rand der Grafik zu setzen.
-    :param vertikale_position: "oben", "mitte" oder "unten" um
-           die Fixierungsposition auf den oberen Rand, in die Mitte,
-           oder auf den unteren Rand der Grafik zu setzen.
-    :param grafik: die ursprüngliche Grafik
-    :returns: die neue Grafik mit der gegebenen Fixierungsposition
+    :param pinning_point: an object of type `Point` that identifies one of the 9 points of interest.
+    The accepted points are:
+        center = point(0.0, 0.0)
+        top_left = point(-1.0, 1.0)
+        top_center = point(0.0, 1.0)
+        top_right = point(1.0, 1.0)
+        center_left = point(-1.0, 0.0)
+        center_right = point(1.0, 0.0)
+        bottom_left = point(-1.0, -1.0)
+        bottom_center = point(0.0, -1.0)
+        bottom_right = point(1.0, -1.0)
+    :param graphic: original graphic
+    :returns: a new graphic with an updated pinning position
     """
-    h_mapping = {
-        "links": "left",
-        "mitte": "middle",
-        "rechts": "right"
+    mapping = {
+        Point.as_tuple(german_top_left): top_left,
+        Point.as_tuple(german_top_center): top_center,
+        Point.as_tuple(german_top_right): top_right,
+        Point.as_tuple(german_center_left): center_left,
+        Point.as_tuple(german_center): center,
+        Point.as_tuple(german_center_right): center_right,
+        Point.as_tuple(german_bottom_left): bottom_left,
+        Point.as_tuple(german_bottom_center): bottom_center,
+        Point.as_tuple(german_bottom_right): bottom_right
     }
-    v_mapping = {
-        "oben": "top",
-        "mitte": "middle",
-        "unten": "bottom"
-    }
-    return pin(h_mapping[horizontale_position],
-               v_mapping[vertikale_position],
-               grafik)
+    return pin(mapping[Point.as_tuple(pinning_point)], graphic)
 
 
 def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
