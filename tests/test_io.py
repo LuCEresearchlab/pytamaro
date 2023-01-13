@@ -50,3 +50,18 @@ def test_save_empty_graphic():
     # Implicitly assert that it does not throw
     with NamedTemporaryFile() as f:
         save_graphic(f.name, empty_graphic())
+
+
+def test_data_uri_output(capfd):
+    import os
+
+    VAR = "PYTAMARO_OUTPUT_DATA_URI"
+    os.environ[VAR] = "True"
+    r = rectangle(1, 1, red)
+    show_graphic(r)
+    out, _ = capfd.readouterr()
+    assert (
+        out
+        == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg=="
+    )
+    del os.environ[VAR]

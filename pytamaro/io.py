@@ -2,6 +2,9 @@
 Functions to do I/O with graphics, such as showing or saving them.
 """
 
+import base64
+import io
+import os
 from typing import List
 
 from skia import kPNG
@@ -33,6 +36,11 @@ def show_graphic(graphic: Graphic, debug: bool = False):
         if is_notebook():
             # pylint: disable=undefined-variable
             display(pil_image)  # type: ignore[name-defined]
+        elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
+            buffer = io.BytesIO()
+            pil_image.save(buffer, format="PNG")
+            b64_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
+            print(f"data:image/png;base64,{b64_str}", end="")
         else:
             pil_image.show()
 
@@ -59,9 +67,7 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
 
 
 @export
-def save_gif(
-    filename: str, graphics: List[Graphic], duration: int = 40, loop: bool = True
-):
+def save_gif(filename: str, graphics: List[Graphic], duration: int = 40, loop: bool = True):
     """
     Save a sequence of graphics as an aminated GIF.
 
