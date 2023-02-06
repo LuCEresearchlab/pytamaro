@@ -6,5 +6,6 @@ from pytamaro.point import Point
 
 GermanPoint = Point
 """
-    Rappresenta un punto nello spazio 2-dimensionale
+    Need to translate
+    Represents a point in the space
 """

@@ -21,6 +21,6 @@ def test_colors():
     _assert_names(["red", "transparent"])
 
 
-def test_positions():
+def test_points():
     _assert_names(["top_left", "top_center", "top_right", "center_left",
                    "center", "center_right", "bottom_left", "bottom_center", "bottom_right"])

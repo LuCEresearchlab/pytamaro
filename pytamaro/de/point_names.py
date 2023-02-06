@@ -12,7 +12,7 @@ from pytamaro.de.point import GermanPoint
 
 
 german_center: GermanPoint = center
-"""Il punto centrale di una grafica
+"""Central point of a graphic
 Add German translation
 :meta hide-value:
 """

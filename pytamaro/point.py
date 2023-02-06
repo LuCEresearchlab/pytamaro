@@ -1,6 +1,7 @@
 """
-`Point` type and functions to represent a point int he 2 dimensional space.
+`Point` type and functions to represent a point in the 2 dimensional space.
 """
+from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Tuple
@@ -14,10 +15,6 @@ class Point:
     x: float    # pylint: disable=invalid-name
     y: float    # pylint: disable=invalid-name
 
-    def __init__(self, x: float, y: float):  # pylint: disable=invalid-name
-        self.x = x
-        self.y = y
-
     def as_tuple(self) -> Tuple[float, float]:
         """
         Returns the current point as a tuple of two floating point values
@@ -27,18 +24,31 @@ class Point:
         """
         return self.x, self.y
 
+    def translate(self, current_vector: Vector) -> Point:
+        """
+        Returns a point obtained by translating `current_point` using `current_vector`
+
+        :param current_point: the point to be translated
+        :param current_vector: the vector used for translation
+        :returns: a new point, the result of the translation
+        """
+        return Point(self.x + current_vector.terminal_point.x,
+                     self.y + current_vector.terminal_point.y)
+
+
+# Center of the 2-dimensional space
+zero = Point(0.0, 0.0)
+
 
 @dataclass
 class Vector:
     """
-    Represents a vector in 2-dimensional space storing its terminal point.
+    Represents a vector in 2-dimensional space storing its terminal point,
+    assuming it starts at the origin (0, 0).
     """
     terminal_point: Point
 
-    def __init__(self, terminal_point: Point):
-        self.terminal_point = terminal_point
-
-    def __add__(self, other):
+    def __add__(self, other: Vector):
         """
         Returns the vector obtained by adding `other` to the current one
 
@@ -48,7 +58,7 @@ class Vector:
         return Vector(Point(self.terminal_point.x + other.terminal_point.x,
                             self.terminal_point.y + other.terminal_point.y))
 
-    def __mul__(self, other):
+    def __mul__(self, other: float):
         """
         Applies vector scalar multiplication
 
@@ -67,37 +77,6 @@ class Vector:
         return self.terminal_point.x, self.terminal_point.y
 
 
-def point(x: float, y: float) -> Point:  # pylint: disable=invalid-name
-    """
-    Returns a 2-dimensional point given its coordinates
-
-    :param x: coordinate along the x-axis
-    :param y: coordinate along the y-axis
-    """
-    return Point(x, y)
-
-
-def vector(current_point: Point) -> Vector:
-    """
-    Returns a 2-dimensional vector given the terminal point
-
-    :param current_point: terminal point of the vector
-    :returns: a vector given the terminal point
-    """
-    return Vector(current_point)
-
-
-def translate(current_point: Point, current_vector: Vector) -> Point:
-    """
-    Returns a point obtained by translating `current_point` using `current_vector`
-
-    :param current_point: the point to be translated
-    :param current_vector: the vector used for translation
-    :returns: a new point, the result of the translation
-    """
-    return point(current_point.x + current_vector.terminal_point.x,
-                 current_point.y + current_vector.terminal_point.y)
-
-
-i_hat = vector(Point(1.0, 0.0))
-j_hat = vector(Point(0.0, 1.0))
+# Canonical basis of R2
+i_hat = Vector(Point(1.0, 0.0))
+j_hat = Vector(Point(0.0, 1.0))

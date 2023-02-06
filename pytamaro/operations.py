@@ -49,27 +49,21 @@ def compose(foreground_graphic: Graphic, background_graphic: Graphic) \
 
 
 @export
-def pin(pinning_point: Point, graphic: Graphic) -> Graphic:
+def pin(point: Point, graphic: Graphic) -> Graphic:
     """
     Changes the pinning position of a graphic, returning a new graphic with
     the same content but with an updated pinning position.
-    The new pinning position is determined by the parameter `pinning_point`.
+    The new pinning position is determined by the parameter `point`.
 
-    :param pinning_point: an object of type `Point` that identifies one of the 9 points of interest.
-    The accepted points are:
-        center = point(0.0, 0.0)
-        top_left = point(-1.0, 1.0)
-        top_center = point(0.0, 1.0)
-        top_right = point(1.0, 1.0)
-        center_left = point(-1.0, 0.0)
-        center_right = point(1.0, 0.0)
-        bottom_left = point(-1.0, -1.0)
-        bottom_center = point(0.0, -1.0)
-        bottom_right = point(1.0, -1.0)
+    :param point: a point that identifies one of the 9 points of interest.
+    Each graphic is contained in a rectangular bounding box, the 9 points corresponds to:
+    the four corners, the middle point of the four edges and the center of the rectangle.
+    The names of these points are: `top_left`, `top_right`, `bottom_left`, `bottom_right`,
+    `top_center`, `center_right`, `bottom_center`, `center_left` and `center`
     :param graphic: original graphic
     :returns: a new graphic with an updated pinning position
     """
-    return Pin(graphic, pinning_point)
+    return Pin(graphic, point)
 
 
 @export

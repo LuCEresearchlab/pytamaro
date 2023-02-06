@@ -6,15 +6,8 @@ from __future__ import annotations
 
 from pytamaro.it.graphic import Grafica
 from pytamaro.it.point import Punto
-from pytamaro.point import Point
 from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
-from pytamaro.point_names import (top_left, top_center, top_right,
-                                  center_left, center, center_right,
-                                  bottom_left, bottom_center, bottom_right)
-from pytamaro.it.point_names import (alto_sinistra, alto_centro, alto_destra,
-                                     centro_sinistra, centro, centro_destra,
-                                     basso_sinistra, basso_centro, basso_destra)
 
 
 def larghezza_grafica(grafica: Grafica) -> int:
@@ -53,39 +46,22 @@ def componi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
     return compose(grafica_primopiano, grafica_secondopiano)
 
 
-def fissa(posizione_di_fissaggio: Punto, grafica: Grafica) -> Grafica:
+def fissa(punto: Punto, grafica: Grafica) -> Grafica:
     """
     Cambia la posizione di fissaggio di una grafica, ritornando una nuova
-    grafica coon lo stesso contenuto ma una posizione di fissaggio aggiornata.
-    La nuova posizione di fissaggio è determinata dal parametro `posizione_di_fissaggio`
+    grafica con lo stesso contenuto ma una posizione di fissaggio aggiornata.
+    La nuova posizione di fissaggio è determinata dal parametro `punto`.
 
-    :param posizione_di_fissaggio: un oggetto di tipo punto che
-    identifica uno dei 9 punti d'interesse:
-    I punti di fissaggio validi sono:
-        centro = point(0.0, 0.0)
-        alto_sinitra = punto(-1.0, 1.0)
-        alto_centro = punto(0.0, 1.0)
-        alto_destra = punto(1.0, 1.0)
-        centro_sinistra = punto(-1.0, 0.0)
-        centro_destra = punto(1.0, 0.0)
-        basso_sinistra = punto(-1.0, -1.0)
-        basso_centro = punto(0.0, -1.0)
-        basso_destra = punto(1.0, -1.0)
+    :param punto: un punto che identifica uno dei 9 punti d'interesse:
+    Ogni grafica è racchiusa in un rettangolo di delimitazione, i punti di fissaggio validi
+    corrispondono a: i quattro angoli, i punti centrali dei quattro lati
+    e al centro di tale rettangolo. I nomi di questi punti sono: `alto_sinistra`, `alto_destra`,
+    `basso_sinistra`, `basso_destra`, `alto_centro`, `centro_destra`, `basso_centro`,
+     `centro_sinistra` e `centro`
     :param grafica: grafica originale
     :returns: una nuova grafica con una posizione di fissaggio aggiornata
     """
-    mapping = {
-        Point.as_tuple(alto_sinistra): top_left,
-        Point.as_tuple(alto_centro): top_center,
-        Point.as_tuple(alto_destra): top_right,
-        Point.as_tuple(centro_sinistra): center_left,
-        Point.as_tuple(centro): center,
-        Point.as_tuple(centro_destra): center_right,
-        Point.as_tuple(basso_sinistra): bottom_left,
-        Point.as_tuple(basso_centro): bottom_center,
-        Point.as_tuple(basso_destra): bottom_right
-    }
-    return pin(mapping[Point.as_tuple(posizione_di_fissaggio)], grafica)
+    return pin(punto, grafica)
 
 
 def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \

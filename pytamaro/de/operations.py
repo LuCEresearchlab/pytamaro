@@ -7,13 +7,6 @@ from __future__ import annotations
 from pytamaro.de.graphic import Grafik
 from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
-# Remove this imports after translation
-from pytamaro.de.point_names import (german_top_left, german_top_center, german_top_right,
-                                     german_center_left, german_center, german_center_right,
-                                     german_bottom_left, german_bottom_center, german_bottom_right)
-from pytamaro.point_names import (top_left, top_center, top_right,
-                                  center_left, center, center_right,
-                                  bottom_left, bottom_center, bottom_right)
 from pytamaro.point import Point
 from pytamaro import Graphic
 
@@ -58,39 +51,22 @@ def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     return compose(vordere_grafik, hintere_grafik)
 
 
-def fixiere(pinning_point: Point, graphic: Graphic) -> Graphic:
+def fixiere(point: Point, graphic: Graphic) -> Graphic:
     """
     Need to translate
     Changes the pinning position of a graphic, returning a new graphic with
     the same content but with an updated pinning position.
-    The new pinning position is determined by the parameter `pinning_point`.
+    The new pinning position is determined by the parameter `point`.
 
-    :param pinning_point: an object of type `Point` that identifies one of the 9 points of interest.
-    The accepted points are:
-        center = point(0.0, 0.0)
-        top_left = point(-1.0, 1.0)
-        top_center = point(0.0, 1.0)
-        top_right = point(1.0, 1.0)
-        center_left = point(-1.0, 0.0)
-        center_right = point(1.0, 0.0)
-        bottom_left = point(-1.0, -1.0)
-        bottom_center = point(0.0, -1.0)
-        bottom_right = point(1.0, -1.0)
+    :param point: a point that identifies one of the 9 points of interest.
+    Each graphic is contained in a rectangular bounding box, the 9 points corresponds to:
+    the four corners, the middle point of the four edges and the center of the rectangle.
+    The names of these points are: `top_left`, `top_right`, `bottom_left`, `bottom_right`,
+    `top_center`, `center_right`, `bottom_center`, `center_left` and `center`
     :param graphic: original graphic
     :returns: a new graphic with an updated pinning position
     """
-    mapping = {
-        Point.as_tuple(german_top_left): top_left,
-        Point.as_tuple(german_top_center): top_center,
-        Point.as_tuple(german_top_right): top_right,
-        Point.as_tuple(german_center_left): center_left,
-        Point.as_tuple(german_center): center,
-        Point.as_tuple(german_center_right): center_right,
-        Point.as_tuple(german_bottom_left): bottom_left,
-        Point.as_tuple(german_bottom_center): bottom_center,
-        Point.as_tuple(german_bottom_right): bottom_right
-    }
-    return pin(mapping[Point.as_tuple(pinning_point)], graphic)
+    return pin(point, graphic)
 
 
 def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
