@@ -11,3 +11,7 @@ def test_exported_points():
     assert center_right == Point(1.0, 0.0)
     assert bottom_left == Point(-1.0, -1.0)
     assert bottom_right == Point(1.0, -1.0)
+
+
+def test_add():
+    assert center.translate(i_hat + j_hat) == top_right

@@ -52,12 +52,14 @@ def fissa(punto: Punto, grafica: Grafica) -> Grafica:
     grafica con lo stesso contenuto ma una posizione di fissaggio aggiornata.
     La nuova posizione di fissaggio è determinata dal parametro `punto`.
 
-    :param punto: un punto che identifica uno dei 9 punti d'interesse:
-    Ogni grafica è racchiusa in un rettangolo di delimitazione, i punti di fissaggio validi
-    corrispondono a: i quattro angoli, i punti centrali dei quattro lati
-    e al centro di tale rettangolo. I nomi di questi punti sono: `alto_sinistra`, `alto_destra`,
+    Ogni grafica è racchiusa in un rettangolo di delimitazione (bounding box).
+    Ci sono 9 punti notevoli, corrispondenti ai quattro angoli di questo rettangolo,
+    ai punti centrali dei quattro lati e al centro del rettangolo.
+    Ci si può riferire a questi punti usando i nomi `alto_sinistra`, `alto_destra`,
     `basso_sinistra`, `basso_destra`, `alto_centro`, `centro_destra`, `basso_centro`,
-     `centro_sinistra` e `centro`
+    `centro_sinistra` e `centro`.
+
+    :param punto: il punto indicante la nuova posizione di fissaggio
     :param grafica: grafica originale
     :returns: una nuova grafica con una posizione di fissaggio aggiornata
     """

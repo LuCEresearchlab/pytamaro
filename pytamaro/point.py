@@ -1,10 +1,9 @@
 """
-`Point` type and functions to represent a point in the 2 dimensional space.
+`Point` type.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Tuple
 
 
 @dataclass
@@ -15,19 +14,11 @@ class Point:
     x: float    # pylint: disable=invalid-name
     y: float    # pylint: disable=invalid-name
 
-    def as_tuple(self) -> Tuple[float, float]:
-        """
-        Returns the current point as a tuple of two floating point values
-
-        :meta private:
-        :returns: a tuple with 2 float components that represent a point in the 2-dimensional space
-        """
-        return self.x, self.y
-
     def translate(self, current_vector: Vector) -> Point:
         """
         Returns a point obtained by translating `current_point` using `current_vector`
 
+        :meta private:
         :param current_point: the point to be translated
         :param current_vector: the vector used for translation
         :returns: a new point, the result of the translation
@@ -45,6 +36,8 @@ class Vector:
     """
     Represents a vector in 2-dimensional space storing its terminal point,
     assuming it starts at the origin (0, 0).
+
+    :meta private:
     """
     terminal_point: Point
 
@@ -58,23 +51,14 @@ class Vector:
         return Vector(Point(self.terminal_point.x + other.terminal_point.x,
                             self.terminal_point.y + other.terminal_point.y))
 
-    def __mul__(self, other: float):
+    def __mul__(self, factor: float):
         """
-        Applies vector scalar multiplication
+        Returns this vector multiplied by a given scalar
 
-        :param other: scalar used in the multiplication
+        :param factor: scalar used in the multiplication
         :returns: a new vector, the result of scalar-vector multiplication
         """
-        return Vector(Point(self.terminal_point.x * other, self.terminal_point.y * other))
-
-    def as_tuple(self) -> Tuple[float, float]:
-        """
-        Returns the current vector as a tuple of two floating point values
-
-        :meta private:
-        :returns: a tuple with 2 float components that represent a vector in the 2-dimensional space
-        """
-        return self.terminal_point.x, self.terminal_point.y
+        return Vector(Point(self.terminal_point.x * factor, self.terminal_point.y * factor))
 
 
 # Canonical basis of R2

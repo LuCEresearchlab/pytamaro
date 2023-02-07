@@ -13,7 +13,7 @@ def test_operations_primitives_io():
 
 
 def test_import_types():
-    _assert_names(["Graphic", "Color"])
+    _assert_names(["Graphic", "Color", "Point"])
 
 
 def test_colors():

@@ -12,6 +12,7 @@ English Version
    operations
    io
    colors
+   points
 
 Welcome to PyTamaro's documentation!
 Use the menu on the left to browse the available functions.

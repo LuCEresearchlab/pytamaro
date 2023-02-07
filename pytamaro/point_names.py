@@ -1,5 +1,5 @@
 """
-Names of notable points (point of interest) that can be used as pinning positions of a graphic
+Names of notable points ("Points of Interest") that can be used as pinning positions of a graphic.
 """
 
 from pytamaro.point import zero, i_hat, j_hat, Point
