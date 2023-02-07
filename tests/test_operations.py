@@ -6,6 +6,7 @@ from pytamaro.primitives import ellipse, rectangle, triangle
 from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_pin_tolerance,
                                  assert_size, assert_size_tolerance,
                                  assert_unique_color)
+from pytamaro.point_names import bottom_left, bottom_right, top_center, top_left
 
 
 def test_width():
@@ -36,27 +37,27 @@ def test_rotate_45():
 
 
 def test_rotate_pin_left_top():
-    r = pin("left", "top", rectangle(WIDTH, HEIGHT, red))
+    r = pin(top_left, rectangle(WIDTH, HEIGHT, red))
     bottomleft = rotate(90, r)
     topright = rotate(180, bottomleft)
     assert_size(compose(bottomleft, topright), (2*HEIGHT, 2*WIDTH))
 
 
 def test_rotate_pin_left_bottom_negative():
-    r = pin("left", "bottom", rectangle(WIDTH, HEIGHT, red))
+    r = pin(bottom_left, rectangle(WIDTH, HEIGHT, red))
     bottomright = rotate(-90, r)
     topleft = rotate(180, bottomright)
     assert_size(compose(bottomright, topleft), (2*HEIGHT, 2*WIDTH))
 
 
 def test_rotate_pin_right_bottom():
-    r = pin("right", "bottom", rectangle(WIDTH, HEIGHT, red))
+    r = pin(bottom_right, rectangle(WIDTH, HEIGHT, red))
     rot = rotate(180, r)
     assert_size(compose(r, rot), (2*WIDTH, 2*HEIGHT))
 
 
 def test_rotate_pin_triangle():
-    t = pin("middle", "top", triangle(WIDTH, red))
+    t = pin(top_center, triangle(WIDTH, red))
     assert_size(
         compose(t, rotate(180, t)), (graphic_width(t), 2*graphic_height(t)))
 

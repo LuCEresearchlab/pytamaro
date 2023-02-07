@@ -5,6 +5,8 @@ Functions to do operations on graphics (mainly, to combine them).
 
 from pytamaro.graphic import Compose, Graphic, Pin, Rotate
 from pytamaro.utils import export
+from pytamaro.point import Point
+from pytamaro.point_names import center, top_center, bottom_center, center_right, center_left
 
 
 @export
@@ -30,8 +32,7 @@ def graphic_height(graphic: Graphic) -> int:
 
 
 @export
-def compose(foreground_graphic: Graphic, background_graphic: Graphic) \
-        -> Graphic:
+def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
     """
     Composes two graphics keeping the first one in the foreground and the
     second one in background, aligning them using their pin positions.
@@ -47,30 +48,28 @@ def compose(foreground_graphic: Graphic, background_graphic: Graphic) \
 
 
 @export
-def pin(horizontal_place: str, vertical_place: str, graphic: Graphic) \
-        -> Graphic:
+def pin(point: Point, graphic: Graphic) -> Graphic:
     """
     Changes the pinning position of a graphic, returning a new graphic with
     the same content but with an updated pinning position.
+    The new pinning position is determined by the parameter `point`.
 
-    The new pinning position is determined by the parameters `horizontal_place`
-    and `vertical_place`.
+    Each graphic is contained in a rectangular bounding box.
+    There are 9 notable points, corresponding to the four corners of this rectangle,
+    the middle points of the four edges and the center of the rectangle.
+    These points can be referred to using these names: `top_left`, `top_right`,
+    `bottom_left`, `bottom_right`, `top_center`, `center_right`,
+    `bottom_center`, `center_left` and `center`.
 
-    :param horizontal_place: one of "left", "middle" or "right" that
-           respectively indicate to move the new pinning positon to the left
-           border, the (horizontal) center, or the right border of the graphic
-    :param vertical_place: one of "top", "middle" or "bottom" that
-           respectively indicate to move the new pinning positon to the top
-           border, the (vertical) center, or the bottom border of the graphic
+    :param point: the point indicating the new pinning position
     :param graphic: original graphic
     :returns: a new graphic with an updated pinning position
     """
-    return Pin(graphic, horizontal_place, vertical_place)
+    return Pin(graphic, point)
 
 
 @export
-def overlay(foreground_graphic: Graphic, background_graphic: Graphic) \
-        -> Graphic:
+def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
     """
     Overlays two graphics keeping the first one in the foreground and the
     second one in background, aligning them on their centers.
@@ -79,9 +78,7 @@ def overlay(foreground_graphic: Graphic, background_graphic: Graphic) \
     :param background_graphic: graphic to keep in the background
     :returns: the resulting graphic after overlaying the two provided ones
     """
-    return compose(
-        pin("middle", "middle", foreground_graphic),
-        pin("middle", "middle", background_graphic))
+    return compose(pin(center, foreground_graphic), pin(center, background_graphic))
 
 
 @export
@@ -95,9 +92,7 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
     :returns: the resulting graphic after placing the two graphics one besides
               the other
     """
-    return compose(
-        pin("right", "middle", left_graphic),
-        pin("left", "middle", right_graphic))
+    return compose(pin(center_right, left_graphic), pin(center_left, right_graphic))
 
 
 @export
@@ -112,9 +107,7 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
     :returns: the resulting graphic after placing the two graphics one above
               the other
     """
-    return compose(
-        pin("middle", "bottom", top_graphic),
-        pin("middle", "top", bottom_graphic))
+    return compose(pin(bottom_center, top_graphic), pin(top_center, bottom_graphic))
 
 
 @export

@@ -14,6 +14,8 @@ from pytamaro.color_names import *
 from pytamaro.graphic import *
 from pytamaro.io import *
 from pytamaro.operations import *
+from pytamaro.point import *
+from pytamaro.point_names import *
 from pytamaro.primitives import *
 
 LANGUAGE = "en"

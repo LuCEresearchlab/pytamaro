@@ -6,6 +6,7 @@ from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
 from pytamaro.primitives import rectangle
 from tests.testing_utils import HEIGHT, WIDTH
+from pytamaro.de.point_names import *
 
 g = rectangle(WIDTH, HEIGHT, red)
 
@@ -39,6 +40,7 @@ def test_compose():
 
 
 def test_fissa():
-    assert pin("left", "top", g) == fixiere("links", "oben", g)
-    assert pin("middle", "middle", g) == fixiere("mitte", "mitte", g)
-    assert pin("right", "bottom", g) == fixiere("rechts", "unten", g)
+
+    assert pin(top_left, g) == fixiere(german_top_left, g)
+    assert pin(center, g) == fixiere(german_center, g)
+    assert pin(bottom_right, g) == fixiere(german_bottom_right, g)

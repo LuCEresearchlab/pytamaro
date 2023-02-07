@@ -15,6 +15,7 @@ from pytamaro.operations import (
     rotate,
 )
 from pytamaro.primitives import rectangle
+from pytamaro.point_names import top_left, bottom_left
 
 
 def top_left_point(graphic: Graphic) -> Point:
@@ -58,9 +59,9 @@ def add_border(graphic: Graphic, width: float, color: Color) -> Graphic:
     """
     horizontal = rectangle(graphic_width(graphic) + 2 * width, width, color)
     vertical = rectangle(width, graphic_height(graphic) + 2 * width, color)
-    top_left = compose(pin("left", "top", horizontal), pin("left", "top", vertical))
+    top_left_g = compose(pin(top_left, horizontal), pin(top_left, vertical))
     border = compose(
-        pin("left", "bottom", top_left), pin("left", "bottom", rotate(180, top_left))
+        pin(bottom_left, top_left_g), pin(bottom_left, rotate(180, top_left_g))
     )
     return overlay(graphic, border)
 

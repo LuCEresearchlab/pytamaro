@@ -13,6 +13,7 @@ from skia import (Canvas, Font, Image, Matrix, Paint, Path, Point, Rect, Size,
 
 from pytamaro.color import Color
 from pytamaro.color_names import black
+from pytamaro.point import Point as PyTamaroPoint
 
 # pylint: disable=super-init-not-called
 
@@ -244,21 +245,21 @@ class Pin(Graphic):
     """
     Represents the pinning of a graphic in a certain position on its bounds.
     """
-    def __init__(self, graphic: Graphic, horizontal_place: str, vertical_place: str):
+    def __init__(self, graphic: Graphic, pinning_point: PyTamaroPoint):
         self.graphic = graphic
         bounds = self.graphic.bounds()
         h_mapping = {
-            "left": bounds.left(),
-            "middle": bounds.centerX(),
-            "right": bounds.right()
+            -1.0: bounds.left(),
+            0.0: bounds.centerX(),
+            1.0: bounds.right()
         }
         v_mapping = {
-            "top": bounds.top(),
-            "middle": bounds.centerY(),
-            "bottom": bounds.bottom()
+            1.0: bounds.top(),
+            0.0: bounds.centerY(),
+            -1.0: bounds.bottom()
         }
         self.set_pin_position(
-            h_mapping[horizontal_place], v_mapping[vertical_place])
+            h_mapping[pinning_point.x], v_mapping[pinning_point.y])
         self.path = Path(self.graphic.path)
 
     def render(self, canvas: Canvas):
