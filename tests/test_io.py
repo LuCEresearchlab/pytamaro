@@ -14,9 +14,11 @@ def test_show_graphic():
     show_graphic(rectangle(WIDTH, HEIGHT, red))
 
 
-def test_show_empty_graphic():
+def test_show_empty_graphic(capfd):
     # Implicitly assert that it does not throw
     show_graphic(empty_graphic())
+    out, _ = capfd.readouterr()
+    assert "0x0" in out
 
 
 def test_show_debug_graphic():
@@ -46,10 +48,12 @@ def test_save_graphic():
         assert graphic.size == (WIDTH, HEIGHT)
 
 
-def test_save_empty_graphic():
+def test_save_empty_graphic(capfd):
     # Implicitly assert that it does not throw
     with NamedTemporaryFile() as f:
         save_graphic(f.name, empty_graphic())
+        out, _ = capfd.readouterr()
+        assert "0x0" in out
 
 
 def test_data_uri_output(capfd):

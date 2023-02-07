@@ -16,6 +16,18 @@ from pytamaro.localization import translate
 from pytamaro.utils import export, is_notebook
 
 
+def _warning_no_area(graphic: Graphic):
+    """
+    Emits a warning indicating that the graphic cannot be shown or saved
+    because it has no area.
+
+    :param graphic: graphic that cannot be shown or saved
+    """
+    size = graphic.bounds().round()
+    # pylint: disable-next=line-too-long
+    print(f'{translate("EMPTY_AREA_OUTPUT_PREFIX")} {size.width()}x{size.height()} {translate("EMPTY_AREA_OUTPUT_SUFFIX")}')
+
+
 @export
 def show_graphic(graphic: Graphic, debug: bool = False):
     """
@@ -43,6 +55,8 @@ def show_graphic(graphic: Graphic, debug: bool = False):
             print(f"data:image/png;base64,{b64_str}", end="")
         else:
             pil_image.show()
+    else:
+        _warning_no_area(graphic)
 
 
 @export
@@ -64,6 +78,8 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
         to_show = add_debug_info(graphic) if debug else graphic
         image = to_show.as_image()
         image.save(f"{filename}.png", kPNG)
+    else:
+        _warning_no_area(graphic)
 
 
 @export

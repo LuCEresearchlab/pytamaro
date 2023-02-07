@@ -12,7 +12,17 @@ translations = {
         "en": "The list of graphics cannot be empty",
         "it": "La lista delle grafiche non può essere vuota",
         "de": ""
-    }
+    },
+    "EMPTY_AREA_OUTPUT_PREFIX": {
+        "en": "Cannot show/save a graphic of size",
+        "it": "Impossibile mostrare/salvare una grafica di dimensione",
+        "de": ""
+    },
+    "EMPTY_AREA_OUTPUT_SUFFIX": {
+        "en": "as it has no area",
+        "it": "poiché non ha area",
+        "de": ""
+    },
 }
 
 
