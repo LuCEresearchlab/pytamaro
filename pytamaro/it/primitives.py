@@ -1,5 +1,7 @@
 """
-Funzioni per creare grafiche primitive (forme e testo)
+Funzioni per creare grafiche primitive (forme e testo).
+Tranne quando specificato diversamente, la posizione di fissaggio iniziale è al
+centro del rettangolo di delimitazione (bounding box) della grafica.
 """
 
 from __future__ import annotations
@@ -61,6 +63,9 @@ def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
     direzione delle ore 3. L'`angolo` determina la posizione del secondo
     raggio, calcolata a partire dalla posizione del primo in senso orario.
 
+    La posizione di fissaggio è al centro del cerchio da cui è preso il settore
+    circolare.
+
     :param raggio: raggio del cerchio da cui è preso il settore circolare, in
                    pixel
     :param angolo: angolo al centro, in gradi
@@ -91,6 +96,9 @@ def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:
     posto viene usato un font estremamente basilare e sempre disponibile. La
     grafica risultante ha la dimensione minima in modo da racchiudere l'intero
     testo.
+
+    La posizione di fissaggio è allineata orizzontalmente a sinistra e
+    verticalmente sulla linea di base (baseline) del testo.
 
     :param contenuto: il testo di cui fare rendering
     :param font: il nome del font (ad esempio "arial" su Windows, "Arial" su

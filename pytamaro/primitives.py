@@ -1,5 +1,7 @@
 """
-Functions to create primitive graphics (shapes and text)
+Functions to create primitive graphics (shapes and text).
+Unless specified otherwise, the initial pinning position is at the center of the
+graphic's bounding box.
 """
 
 from pytamaro.color import Color
@@ -69,6 +71,9 @@ def circular_sector(radius: float, angle: float, color: Color) \
     towards 3 o'clock. The `angle` determines the position of the second
     radius, computed starting from the first one in the clockwise direction.
 
+    The pinning position is at the center of the circle from which the circular
+    sector is taken.
+
     :param radius: radius of the circle from which the circular sector is
                    taken, in pixel
     :param angle: central angle, in degrees
@@ -103,6 +108,9 @@ def text(content: str, font: str, points: float, color: Color) \
     When the indicated True-Type Font is not found in the system, a very
     basilar font that is always available is used instead. The resulting
     graphic has the minimal size that still fits the whole text.
+
+    The pinning position is horizontally aligned on the left and vertically on
+    the baseline of the text.
 
     :param content: the text to render
     :param font: the name of the font (e.g., "arial" on Windows, "Arial" on

@@ -1,10 +1,9 @@
 """
-Graphic class, which wraps a Pillow image with a position for pinning.
+Type `Graphic`, that includes a graphic with a pinning position.
 """
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from itertools import accumulate
 from math import sqrt
 from typing import List
 
@@ -177,6 +176,7 @@ class Ellipse(Primitive):
 class CircularSector(Primitive):
     """
     A circular sector (with an angle between 1 and 359).
+    Its pinning position is the center of the circle from which it is taken.
     """
     def __init__(self, radius: float, angle: float, color: Color):
         circle = Rect.MakeWH(2 * radius, 2 * radius)
@@ -185,6 +185,7 @@ class CircularSector(Primitive):
         path.arcTo(circle, 0, angle, False)
         path.close()
         super().__init__(path, color)
+        self.set_pin_position(radius, radius)
 
 
 class Triangle(Primitive):
@@ -201,11 +202,13 @@ class Triangle(Primitive):
 class Text(Primitive):
     """
     Graphic containing text, using a given font with a given typographic size.
+    Its pinning position is horizontally aligned on the left and vertically on
+    the baseline of the text.
     """
     def __init__(self, text: str, font_name: str, size: float, color: Color):
         font = Font(Typeface(font_name), size)
         glyphs = font.textToGlyphs(text)
-        offsets = [0] + list(accumulate(font.getWidths(glyphs)))
+        offsets = font.getXPos(glyphs)
         text_path = Path()
         for glyph, x_offset in zip(glyphs, offsets):
             path = font.getPath(glyph)
@@ -213,7 +216,13 @@ class Text(Primitive):
             if path is not None:
                 path.offset(x_offset, 0)
                 text_path.addPath(path)
+
         super().__init__(text_path, color)
+        # Set the pinning position at baseline level (0) on the very left (which
+        # might be slightly after 0, given that the bounding box is computed
+        # very tightly around the glyphs, cutting some space before the first
+        # one).
+        self.set_pin_position(self.bounds().left(), 0)
 
 
 class Compose(Graphic):

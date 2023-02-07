@@ -1,7 +1,7 @@
 from collections import Counter
 
 from pytamaro.color_names import red
-from pytamaro.operations import above, graphic_height, graphic_width, rotate
+from pytamaro.operations import above, compose, graphic_height, graphic_width, rotate
 from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
                                  rectangle, text, triangle)
 from pytest import raises
@@ -49,6 +49,13 @@ def test_half_circular_sector():
     assert_size(s1, (RADIUS * 2, RADIUS))
     s2 = rotate(180, s1)
     s12 = above(s2, s1)
+    assert_graphics_equals_tolerance(s12, ellipse(2 * RADIUS, 2 * RADIUS, red))
+
+
+def test_circular_sector_pin_position():
+    s1 = circular_sector(RADIUS, 180, red)  # pin at top_center
+    s2 = rotate(180, s1)  # pin at bottom_center
+    s12 = compose(s1, s2)
     assert_graphics_equals_tolerance(s12, ellipse(2 * RADIUS, 2 * RADIUS, red))
 
 
