@@ -5,6 +5,7 @@ Funzioni per operazioni con grafiche (principlamente per combinarle).
 from __future__ import annotations
 
 from pytamaro.it.graphic import Grafica
+from pytamaro.it.point import Punto
 from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
 
@@ -45,39 +46,24 @@ def componi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
     return compose(grafica_primopiano, grafica_secondopiano)
 
 
-def fissa(posizione_orizzontale: str, posizione_verticale: str,
-          grafica: Grafica) -> Grafica:
+def fissa(punto: Punto, grafica: Grafica) -> Grafica:
     """
     Cambia la posizione di fissaggio di una grafica, ritornando una nuova
     grafica con lo stesso contenuto ma una posizione di fissaggio aggiornata.
+    La nuova posizione di fissaggio è determinata dal parametro `punto`.
 
-    La nuova posizione di fissaggio è determinata dai parametri
-    `posizione_orizzontale` e `posizione_orizzontale`.
+    Ogni grafica è racchiusa in un rettangolo di delimitazione (bounding box).
+    Ci sono 9 punti notevoli, corrispondenti ai quattro angoli di questo rettangolo,
+    ai punti centrali dei quattro lati e al centro del rettangolo.
+    Ci si può riferire a questi punti usando i nomi `alto_sinistra`, `alto_destra`,
+    `basso_sinistra`, `basso_destra`, `alto_centro`, `centro_destra`, `basso_centro`,
+    `centro_sinistra` e `centro`.
 
-    :param posizione_orizzontale: uno tra "sinistra", "centro", "destra" per
-           muovere la nuova posizione di fissaggio rispettivamente al bordo
-           sinistro, al centro (orizzontalmente), o al bordo destro della
-           grafica
-    :param posizione_verticale: uno tra "alto", "centro", "basso" per
-           muovere la nuova posizione di fissaggio rispettivamente al bordo
-           superiore, al centro (verticalmente), o al bordo inferiore della
-           grafica
+    :param punto: il punto indicante la nuova posizione di fissaggio
     :param grafica: grafica originale
     :returns: una nuova grafica con una posizione di fissaggio aggiornata
     """
-    h_mapping = {
-        "sinistra": "left",
-        "centro": "middle",
-        "destra": "right"
-    }
-    v_mapping = {
-        "alto": "top",
-        "centro": "middle",
-        "basso": "bottom"
-    }
-    return pin(h_mapping[posizione_orizzontale],
-               v_mapping[posizione_verticale],
-               grafica)
+    return pin(punto, grafica)
 
 
 def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \

@@ -6,10 +6,12 @@ translations = {
     "INVALID_SIZE": {
         "en": "Invalid size (must be a positive number)",
         "it": "Dimensione non valida (deve essere un numero positivo)",
+        "de": ""
     },
     "EMPTY_GRAPHICS_LIST": {
         "en": "The list of graphics cannot be empty",
-        "it": "La lista delle grafiche non può essere vuota"
+        "it": "La lista delle grafiche non può essere vuota",
+        "de": ""
     }
 }
 

@@ -17,5 +17,6 @@ from pytamaro.it.graphic import *
 from pytamaro.it.io import *
 from pytamaro.it.operations import *
 from pytamaro.it.primitives import *
+from pytamaro.it.point_names import *
 
 setattr(sys.modules["pytamaro"], "LANGUAGE", "it")

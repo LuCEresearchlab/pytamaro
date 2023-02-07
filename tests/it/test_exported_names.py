@@ -19,3 +19,8 @@ def test_import_types():
 def test_colors():
     _assert_names(["colore_rgb", "colore_hsv", "colore_hsl"])
     _assert_names(["rosso", "trasparente"])
+
+
+def test_points():
+    _assert_names(["alto_sinistra", "alto_centro", "alto_destra", "centro_sinistra",
+                   "centro", "centro_destra", "basso_sinistra", "basso_centro", "basso_destra"])
