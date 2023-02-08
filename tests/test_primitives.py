@@ -74,7 +74,7 @@ def test_equilateral_triangle():
 def test_right_triangle_pinning_position():
     small = 100
     redt = triangle(small, small, 90, red)
-    small_area = small * small / 2 
+    small_area = small * small / 2
     large = 200
     bluet = triangle(large, large, 90, blue)
     large_area = large * large / 2
