@@ -85,17 +85,24 @@ def circular_sector(radius: float, angle: float, color: Color) \
 
 
 @export
-def triangle(side: float, color: Color) -> Graphic:
+def triangle(side1: float, side2: float, angle: float, color: Color) -> Graphic:
     """
-    Creates an equilateral triangle pointing upwards of the given side, filled
+    Creates a triangle specifying two sides and the angle between them, filled
     with a color.
+    The specified angle is at the top-left corner of the triangle, while the
+    first side extends horizontally to the right.
 
-    :param side: length of the side of the triangle, in pixel
+    The pinning position is the centroid of the triangle.
+
+    :param side1: length of the first, horizontal side of the triangle
+    :param side2: length of the second side of the triangle
+    :param angle: angle between the two sides, in degrees
     :param color: the color to be used to fill the triangle
     :returns: the specified triangle as a graphic
     """
-    ensure_size(side)
-    return Triangle(side, color)
+    ensure_size(side1)
+    ensure_size(side2)
+    return Triangle(side1, side2, angle, color)
 
 
 @export

@@ -1,6 +1,6 @@
 from collections import Counter
 
-from pytamaro.color_names import red
+from pytamaro.color_names import blue, red
 from pytamaro.operations import above, compose, graphic_height, graphic_width, rotate
 from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
                                  rectangle, text, triangle)
@@ -8,7 +8,7 @@ from pytest import raises
 
 from tests.testing_utils import (HEIGHT, RADIUS, WIDTH,
                                  assert_graphics_equals_tolerance, assert_size,
-                                 assert_unique_color, pixels_colors)
+                                 assert_unique_color, assert_value_tolerance, pixels_colors)
 
 
 def test_rectangle():
@@ -61,7 +61,7 @@ def test_circular_sector_pin_position():
 
 def test_equilateral_triangle():
     side = 100  # large enough
-    t = triangle(side, red)
+    t = triangle(side, side, 60, red)
     assert_unique_color(t, red)
     # Assert that the number of red pixels is almost equal (2%)
     # to the number of transparent pixels.
@@ -69,3 +69,18 @@ def test_equilateral_triangle():
     pixels = graphic_width(t) * graphic_height(t)
     common = colors.most_common(2)
     assert abs(common[0][1] - common[1][1]) <= pixels * 0.02
+
+
+def test_right_triangle_pinning_position():
+    small = 100
+    redt = triangle(small, small, 90, red)
+    small_area = small * small / 2 
+    large = 200
+    bluet = triangle(large, large, 90, blue)
+    large_area = large * large / 2
+    t = compose(redt, bluet)
+    # Most common expected to be transparent, then blue, then red.
+    colors = Counter(pixels_colors(t))
+    common = colors.most_common(3)
+    assert_value_tolerance(common[1][1], large_area - small_area)
+    assert_value_tolerance(common[2][1], small_area)

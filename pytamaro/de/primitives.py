@@ -75,17 +75,22 @@ def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
     return circular_sector(radius, winkel, farbe)
 
 
-def dreieck(seite: float, farbe: Farbe) -> Grafik:
+def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik:
     """
-    Erzeugt ein gleichseitiges Dreieck mit der gegebenen Seitenlänge
-    und einer nach oben zeigenden Ecke,
-    gefüllt in der gegebenen Farbe.
+    Creates a triangle specifying two sides and the angle between them, filled
+    with a color.
+    The specified angle is at the top-left corner of the triangle, while the
+    first side extends horizontally to the right.
 
-    :param seite: Seitenlänge des Dreiecks, in Pixel
-    :param farbe: Füllfarbe des Dreiecks
-    :returns: eine Grafik mit dem gegebenen Dreieck
+    The pinning position is the centroid of the triangle.
+
+    :param side1: length of the first, horizontal side of the triangle
+    :param side2: length of the second side of the triangle
+    :param angle: angle between the two sides, in degrees
+    :param color: the color to be used to fill the triangle
+    :returns: the specified triangle as a graphic
     """
-    return triangle(seite, farbe)
+    return triangle(seite1, seite2, winkel, farbe)
 
 
 def text(inhalt: str, schriftart: str, punkte: float, farbe: Farbe) -> Grafik:

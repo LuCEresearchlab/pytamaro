@@ -28,4 +28,4 @@ def test_circular_sector():
 
 
 def test_equilateral_triangle():
-    assert triangle(WIDTH, red) == dreieck(WIDTH, red)
+    assert triangle(WIDTH, WIDTH, 60, red) == dreieck(WIDTH, WIDTH, 60, red)

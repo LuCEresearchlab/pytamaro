@@ -30,13 +30,15 @@ def assert_size(g: Graphic, expected_size: Tuple[int, int]):
     assert_size_tolerance(g, expected_size, tolerance=0)
 
 
+def assert_value_tolerance(actual_value: float, expected_value: float, tolerance: float = 0.02):
+    assert expected_value * (1 - tolerance) <= actual_value <= expected_value * (1 + tolerance)
+
+
 def assert_size_tolerance(g: Graphic, expected_size: Tuple[int, int],
-                          tolerance: float = 0.05):
-    # 5% of tolerance by default
-    assert expected_size[0] * (1 - tolerance) <= \
-        graphic_width(g) <= expected_size[0] * (1 + tolerance)
-    assert expected_size[1] * (1 - tolerance) <= \
-        graphic_height(g) <= expected_size[1] * (1 + tolerance)
+                          tolerance: float = 0.02):
+    # 2% of tolerance by default
+    assert_value_tolerance(graphic_width(g), expected_size[0], tolerance)
+    assert_value_tolerance(graphic_height(g), expected_size[1], tolerance)
 
 
 def assert_graphics_equals_tolerance(g1: Graphic, g2: Graphic):

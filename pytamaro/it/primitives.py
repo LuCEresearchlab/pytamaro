@@ -75,16 +75,22 @@ def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
     return circular_sector(raggio, angolo, colore)
 
 
-def triangolo(lato: float, colore: Colore) -> Grafica:
+def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Grafica:
     """
-    Crea un triangolo equilatero del lato indicato con la punta verso l'alto,
+    Crea un triangolo specificando due lati e l'angolo tra essi compreso,
     riempito con un colore.
+    L'angolo specificato è nell'angolo in alto a sinistra del triangolo,
+    mentre il primo lato si estende orizzontalmente verso destra.
 
-    :param lato: lunghezza del lato del triangolo, in pixel
+    La posizione di fissaggio è il centroide del triangolo.
+
+    :param lato1: lunghezza del primo lato (orizzontale) del triangolo
+    :param lato1: lunghezza del secondo lato del triangolo
+    :param angolo: angolo compreso tra i due lati, in gradi
     :param colore: colore da usare per riempire il triangolo
     :returns: una grafica con il triangolo specificato
     """
-    return triangle(lato, colore)
+    return triangle(lato1, lato2, angolo, colore)
 
 
 def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:

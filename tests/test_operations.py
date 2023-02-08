@@ -57,9 +57,9 @@ def test_rotate_pin_right_bottom():
 
 
 def test_rotate_pin_triangle():
-    t = pin(top_center, triangle(WIDTH, red))
+    t = pin(top_left, triangle(WIDTH, WIDTH, 90, red))
     assert_size(
-        compose(t, rotate(180, t)), (graphic_width(t), 2*graphic_height(t)))
+        compose(t, rotate(270, t)), (2*graphic_width(t), graphic_height(t)))
 
 
 def test_rotate_pin_circle():

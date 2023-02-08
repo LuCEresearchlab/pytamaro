@@ -4,7 +4,6 @@ Type `Graphic`, that includes a graphic with a pinning position.
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from math import sqrt
 from typing import List
 
 from skia import (Canvas, Font, Image, Matrix, Paint, Path, Point, Rect, Size,
@@ -191,13 +190,18 @@ class CircularSector(Primitive):
 
 class Triangle(Primitive):
     """
-    An upwards-pointing equilateral triangle.
+    A triangle specified using two sides and the angle between them.
+    The specified angle is at the top-left corner of the triangle,
+    while the first side extends horizontally to the right.
+    Its pinning position is the centroid of the triangle.
     """
-    def __init__(self, side: float, color: Color):
-        height = side * sqrt(3) / 2
-        points = [Point(0, 0), Point(-side/2, height), Point(side/2, height)]
-        path = Path().addPoly(points, close=True)
+    def __init__(self, side1: float, side2: float, angle: float, color: Color):
+        third_point = Matrix.RotateDeg(angle).mapXY(side2, 0)
+        path = Path.Polygon([Point(0, 0), Point(side1, 0), third_point], isClosed=True)
         super().__init__(path, color)
+        # The centroid is the average of the three vertices
+        centroid = Point((side1 + third_point.x()) / 3, third_point.y() / 3)
+        self.pin_position = centroid
 
 
 class Text(Primitive):
