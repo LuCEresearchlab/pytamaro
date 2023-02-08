@@ -66,13 +66,14 @@ class Graphic(ABC):
         :param canvas: canvas onto which to render
         """
 
-    def is_empty_graphic(self) -> bool:  # pylint: disable=no-self-use
+    def empty_area(self) -> bool:
         """
-        Returns whether this graphic is empty or not.
+        Returns whether this graphic has an empty area (width or height 0) or
+        not.
 
-        :returns: True if the graphic is empty, False otherwise
+        :returns: True if the graphic has an empty area, False otherwise
         """
-        return False
+        return self.size().isEmpty()
 
     def as_image(self) -> Image:
         """
@@ -98,7 +99,7 @@ class Graphic(ABC):
 
         :returns: a list with values relevant for equality
         """
-        if self.is_empty_graphic():
+        if self.empty_area():
             return [None]
 
         bitmap = self.as_image().bitmap()
@@ -151,9 +152,6 @@ class Empty(Primitive):
     def __init__(self):
         super().__init__(Path(), black)
 
-    def is_empty_graphic(self) -> bool:
-        return True
-
 
 class Rectangle(Primitive):
     """
@@ -175,15 +173,18 @@ class Ellipse(Primitive):
 
 class CircularSector(Primitive):
     """
-    A circular sector (with an angle between 1 and 359).
+    A circular sector (with an angle between 0 and 360).
     Its pinning position is the center of the circle from which it is taken.
     """
     def __init__(self, radius: float, angle: float, color: Color):
-        circle = Rect.MakeWH(2 * radius, 2 * radius)
-        path = Path()
-        path.moveTo(radius, radius)
-        path.arcTo(circle, 0, -angle, False)
-        path.close()
+        if angle == 360:
+            path = Path.Circle(0, 0, radius)
+        else:
+            diameter = 2 * radius
+            path = Path()
+            path.moveTo(radius, radius)
+            path.arcTo(Rect.MakeWH(diameter, diameter), 0, -angle, False)
+            path.close()
         super().__init__(path, color)
         self.set_pin_position(radius, radius)
 

@@ -66,6 +66,10 @@ def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
     dann zeigt der erste Radius in Richtung 3 Uhr.
     Der Winkel bestimmt die Position des zweiten Radius,
     ausgehend vom ersten Radius im Gegenuhrzeigersinn.
+    An angle of 360 degrees corresponds to a full circle.
+
+    The pinning position is at the center of the circle from which the circular
+    sector is taken.
 
     :param radius: Kreisradius, in Pixel
     :param winkel: Winkel des Sektors, in Grad

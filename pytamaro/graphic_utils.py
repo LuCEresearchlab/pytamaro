@@ -15,11 +15,11 @@ from pytamaro.localization import translate
 def ensure_size(value: float):
     """
     Raises an exception when the provided value is not valid for a
-    size in pixel, being negative or equal to zero.
+    size in pixel, being negative.
 
     :param value: the value (in pixel) to be checked
     """
-    if value <= 0:
+    if value < 0:
         raise ValueError(translate("INVALID_SIZE"))
 
 

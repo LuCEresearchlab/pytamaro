@@ -70,6 +70,7 @@ def circular_sector(radius: float, angle: float, color: Color) \
     Considering a circle as a clock, the first radius is supposed to "point"
     towards 3 o'clock. The `angle` determines the position of the second
     radius, computed starting from the first one in counterclockwise direction.
+    An angle of 360 degrees corresponds to a full circle.
 
     The pinning position is at the center of the circle from which the circular
     sector is taken.

@@ -22,11 +22,6 @@ def test_negative_size():
         rectangle(WIDTH, -1, red)
 
 
-def test_zero_size():
-    with raises(ValueError):
-        rectangle(0, HEIGHT, red)
-
-
 def test_empty_graphic():
     empty = empty_graphic()
     assert_size(empty, (0, 0))
@@ -42,6 +37,17 @@ def test_text():
     graphic = text("hello", "", 12, red)
     assert graphic_width(graphic) > 0 and graphic_height(graphic) > 0
     assert_unique_color(graphic, red)
+
+
+def test_circular_sector_0_deg():
+    s = circular_sector(RADIUS, 0, red)
+    assert_size(s, (RADIUS, 0))
+
+
+def test_circular_sector_360_deg():
+    s = circular_sector(RADIUS, 360, red)
+    c = ellipse(2 * RADIUS, 2 * RADIUS, red)
+    assert_graphics_equals_tolerance(s, c)
 
 
 def test_half_circular_sector():

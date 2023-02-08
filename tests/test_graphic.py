@@ -45,3 +45,8 @@ def test_hash_empty_graphic():
     s.add(i1)
     s.add(i2)
     assert len(s) == 1
+
+
+def test_empty_area_not_empty_graphic():
+    g = rectangle(0, HEIGHT, red)
+    assert g.empty_area()

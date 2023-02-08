@@ -42,7 +42,9 @@ def show_graphic(graphic: Graphic, debug: bool = False):
     :param debug: can be optionally set to `True` to overlay debugging
            information
     """
-    if not graphic.is_empty_graphic():
+    if graphic.empty_area():
+        _warning_no_area(graphic)
+    else:
         to_show = add_debug_info(graphic) if debug else graphic
         pil_image = graphic_to_image(to_show)
         if is_notebook():
@@ -55,8 +57,6 @@ def show_graphic(graphic: Graphic, debug: bool = False):
             print(f"data:image/png;base64,{b64_str}", end="")
         else:
             pil_image.show()
-    else:
-        _warning_no_area(graphic)
 
 
 @export
@@ -74,12 +74,12 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     :param debug: can be optionally set to `True` to overlay debugging
            information
     """
-    if not graphic.is_empty_graphic():
+    if graphic.empty_area():
+        _warning_no_area(graphic)
+    else:
         to_show = add_debug_info(graphic) if debug else graphic
         image = to_show.as_image()
         image.save(f"{filename}.png", kPNG)
-    else:
-        _warning_no_area(graphic)
 
 
 @export
