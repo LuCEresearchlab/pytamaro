@@ -61,7 +61,7 @@ def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
     arco.
     Considerando il cerchio come un orologio, il primo raggio "punta" in
     direzione delle ore 3. L'`angolo` determina la posizione del secondo
-    raggio, calcolata a partire dalla posizione del primo in senso orario.
+    raggio, calcolata a partire dalla posizione del primo in senso antiorario.
 
     La posizione di fissaggio è al centro del cerchio da cui è preso il settore
     circolare.

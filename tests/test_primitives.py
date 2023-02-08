@@ -48,7 +48,7 @@ def test_half_circular_sector():
     s1 = circular_sector(RADIUS, 180, red)
     assert_size(s1, (RADIUS * 2, RADIUS))
     s2 = rotate(180, s1)
-    s12 = above(s2, s1)
+    s12 = above(s1, s2)
     assert_graphics_equals_tolerance(s12, ellipse(2 * RADIUS, 2 * RADIUS, red))
 
 

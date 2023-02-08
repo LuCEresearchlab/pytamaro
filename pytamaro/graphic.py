@@ -182,7 +182,7 @@ class CircularSector(Primitive):
         circle = Rect.MakeWH(2 * radius, 2 * radius)
         path = Path()
         path.moveTo(radius, radius)
-        path.arcTo(circle, 0, angle, False)
+        path.arcTo(circle, 0, -angle, False)
         path.close()
         super().__init__(path, color)
         self.set_pin_position(radius, radius)

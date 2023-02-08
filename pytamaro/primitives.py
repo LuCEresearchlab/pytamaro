@@ -69,7 +69,7 @@ def circular_sector(radius: float, angle: float, color: Color) \
     an arc.
     Considering a circle as a clock, the first radius is supposed to "point"
     towards 3 o'clock. The `angle` determines the position of the second
-    radius, computed starting from the first one in the clockwise direction.
+    radius, computed starting from the first one in counterclockwise direction.
 
     The pinning position is at the center of the circle from which the circular
     sector is taken.

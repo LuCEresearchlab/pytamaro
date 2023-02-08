@@ -65,7 +65,7 @@ def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
     Wenn man den Kreis als Uhr betrachtet
     dann zeigt der erste Radius in Richtung 3 Uhr.
     Der Winkel bestimmt die Position des zweiten Radius,
-    ausgehend vom ersten Radius im Uhrzeigersinn.
+    ausgehend vom ersten Radius im Gegenuhrzeigersinn.
 
     :param radius: Kreisradius, in Pixel
     :param winkel: Winkel des Sektors, in Grad
