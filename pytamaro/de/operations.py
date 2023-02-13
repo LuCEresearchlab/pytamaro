@@ -78,6 +78,8 @@ def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     und die zweite im Hintergrund,
     und ihre Fixierungspositionen liegen übereinander im Zentrum.
 
+    The pinning position of the resulting graphic is at its center.
+
     :param vordere_grafik: Grafik im Vordergrund
     :param hintere_grafik: Grafik im Hintergrund
     :returns: die zusammengesetzte Grafik
@@ -91,6 +93,8 @@ def neben(linke_grafik: Grafik, rechte_grafik: Grafik) -> Grafik:
     die aus dem Nebeneinanderlegen der zwei gegebenen Grafiken besteht.
     Die zwei Grafiken sind vertikal zentriert.
 
+    The pinning position of the resulting graphic is at its center.
+
     :param linke_grafik: linke Grafik (im Westen)
     :param rechte_grafik: rechte Grafik (im Osten)
     :returns: die zusammengesetzte Grafik
@@ -103,6 +107,8 @@ def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
     Erzeugt eine neue Grafik,
     die aus dem Übereinanderlegen der zwei gegebenen Grafiken besteht.
     Die zwei Grafiken sind horizontal zentriert.
+
+    The pinning position of the resulting graphic is at its center.
 
     :param obere_grafik: obere Grafik (im Norden)
     :param untere_grafik: untere Grafik (im Süden)

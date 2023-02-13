@@ -68,17 +68,35 @@ def pin(point: Point, graphic: Graphic) -> Graphic:
     return Pin(graphic, point)
 
 
+def _compose_pin_center(graphic1: Graphic, graphic2: Graphic,
+                        point1: Point, point2: Point) -> Graphic:
+    """
+    Composes the two graphics, pinning the first one at `point1` and the second one
+    at `point2`. The composed graphic is then pinned at its center.
+
+    :param graphic1: first graphic to compose
+    :param graphic2: second graphic to compose
+    :param point1: pinning position for the first graphic
+    :param point2: pinning position for the second graphic
+
+    :returns: the combined graphic, pinned at its center
+    """
+    return pin(center, compose(pin(point1, graphic1), pin(point2, graphic2)))
+
+
 @export
 def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
     """
     Overlays two graphics keeping the first one in the foreground and the
     second one in background, aligning them on their centers.
 
+    The pinning position of the resulting graphic is at its center.
+
     :param foreground_graphic: graphic to keep in the foreground
     :param background_graphic: graphic to keep in the background
     :returns: the resulting graphic after overlaying the two provided ones
     """
-    return compose(pin(center, foreground_graphic), pin(center, background_graphic))
+    return _compose_pin_center(foreground_graphic, background_graphic, center, center)
 
 
 @export
@@ -87,12 +105,14 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
     Composes two graphics placing the first on the left and the second on the
     right.  The two graphics are aligned vertically on their centers.
 
+    The pinning position of the resulting graphic is at its center.
+
     :param left_graphic: graphic to place on the left
     :param right_graphic: graphic to place on the right
     :returns: the resulting graphic after placing the two graphics one besides
               the other
     """
-    return compose(pin(center_right, left_graphic), pin(center_left, right_graphic))
+    return _compose_pin_center(left_graphic, right_graphic, center_right, center_left)
 
 
 @export
@@ -102,12 +122,14 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
     bottom.
     The two graphics are aligned horizontally on their centers.
 
+    The pinning position of the resulting graphic is at its center.
+
     :param top_graphic: graphic to place on the top
     :param bottom_graphic: graphic to place on the bottom
     :returns: the resulting graphic after placing the two graphics one above
               the other
     """
-    return compose(pin(bottom_center, top_graphic), pin(top_center, bottom_graphic))
+    return _compose_pin_center(top_graphic, bottom_graphic, bottom_center, top_center)
 
 
 @export

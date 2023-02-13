@@ -72,6 +72,8 @@ def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
     Sovrappone due grafiche tenendo la prima in primo piano e la seconda sullo
     sfondo, allineandole sui loro centri.
 
+    La posizione di fissaggio della grafica risultante è il suo centro.
+
     :param grafica_primopiano: grafica da tenere in primo piano
     :param grafica_secondopiano: grafica da tenere sullo sfondo
     :returns: grafica risultante dalla sovrapposizione delle due fornite
@@ -84,6 +86,8 @@ def accanto(grafica_sinistra: Grafica, grafica_destra: Grafica) -> Grafica:
     Compone due grafiche affiancandole, posizionando la prima a sinistra e la
     seconda a destra. Le due grafiche vengono allineate verticalmente al
     centro.
+
+    La posizione di fissaggio della grafica risultante è il suo centro.
 
     :param grafica_sinistra: grafica da posizionare a sinistra
     :param grafica_destra: grafica da posizionare a destra
@@ -98,6 +102,8 @@ def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
     Compone due grafiche affiancandole verticalmente, posizionando la prima in
     alto e la seconda in basso. Le due grafiche vengono allineate
     orizzontalmente al centro.
+
+    La posizione di fissaggio della grafica risultante è il suo centro.
 
     :param grafica_sopra: grafica da posizionare sopra
     :param grafica_sotto: grafica da posizionare sotto

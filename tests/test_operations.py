@@ -85,6 +85,15 @@ def test_beside_different_height():
     assert_size(joined, (3 * WIDTH, 2 * HEIGHT))
     assert_unique_color(joined, red)
 
+
+def test_beside_pinning_position():
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(2 * WIDTH, HEIGHT, red)
+    joined = beside(r1, r2)
+    # Joined should have the pinning position at its center
+    assert graphic_width(compose(rectangle(3 * WIDTH, HEIGHT, red), joined)) == 3 * WIDTH
+
+
 # Above
 
 
@@ -102,6 +111,15 @@ def test_above_different_width():
     joined = above(r1, r2)
     assert_size(joined, (2 * WIDTH, 3 * HEIGHT))
     assert_unique_color(joined, red)
+
+
+def test_above_pinning_position():
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(WIDTH, HEIGHT * 2, red)
+    joined = above(r1, r2)
+    # Joined should have the pinning position at its center
+    assert graphic_height(compose(rectangle(WIDTH, 3 * HEIGHT, red), joined)) == 3 * HEIGHT
+
 
 # Overlay
 
