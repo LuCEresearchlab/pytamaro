@@ -117,17 +117,18 @@ def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
     return above(obere_grafik, untere_grafik)
 
 
-def drehe(grad: float, grafik: Grafik) -> Grafik:
+def drehe(winkel: float, grafik: Grafik) -> Grafik:
     """
     Erzeugt eine neue Grafik, die einer Rotation der gegebenen Grafik
     um ihre Fixierungsposition im Gegenuhrzeigersinn
     um den gegebenen Winkel entspricht.
+    Negative angles rotate the graphic clockwise.
 
     Es kann wegen der Approximation auf die nächstgelegenen Pixel
     zu kleinen Rundungsfehlern kommen.
 
-    :param grad: Drehwinkel, in Grad im Gegenuhrzeigersinn
+    :param winkel: Drehwinkel, in Grad im Gegenuhrzeigersinn
     :param grafik: zu rotierende Grafik
     :returns: die neue, rotierte Grafik
     """
-    return rotate(grad, grafik)
+    return rotate(winkel, grafik)

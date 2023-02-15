@@ -31,6 +31,11 @@ def test_empty_save_gif():
         save_gif("foo", [])
 
 
+def test_show_wrong_type():
+    with raises(TypeError, match="NoneType"):
+        show_graphic(None)
+
+
 def test_save_gif():
     r1 = rectangle(WIDTH, HEIGHT, red)
     r2 = rectangle(WIDTH, HEIGHT, blue)

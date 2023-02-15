@@ -65,6 +65,11 @@ def test_circular_sector_pin_position():
     assert_graphics_equals_tolerance(s12, ellipse(2 * RADIUS, 2 * RADIUS, red))
 
 
+def test_circular_sector_negative_angle():
+    with raises(ValueError, match='[0, 360]'):
+        circular_sector(RADIUS, -1, red)
+
+
 def test_equilateral_triangle():
     side = 100  # large enough
     t = triangle(side, side, 60, red)

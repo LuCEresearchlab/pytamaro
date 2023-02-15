@@ -5,7 +5,8 @@ und Konstanten für wichtige Farben.
 
 from __future__ import annotations
 
-from pytamaro.color import Color, rgb_color, hsv_color, hsl_color
+from pytamaro.color import Color
+from pytamaro.color_functions import rgb_color, hsl_color, hsv_color
 
 Farbe = Color
 """

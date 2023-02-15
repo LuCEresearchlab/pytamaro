@@ -7,7 +7,7 @@ graphic's bounding box.
 from pytamaro.color import Color
 from pytamaro.graphic import (CircularSector, Ellipse, Empty, Graphic,
                               Rectangle, Text, Triangle)
-from pytamaro.graphic_utils import ensure_size
+from pytamaro.graphic_utils import check_angle, check_color, check_length, check_number, check_type
 from pytamaro.utils import export
 
 
@@ -21,8 +21,9 @@ def rectangle(width: float, height: float, color: Color) -> Graphic:
     :param color: the color to be used to fill the rectangle
     :returns: the specified rectangle as a graphic
     """
-    ensure_size(width)
-    ensure_size(height)
+    check_length(width, "width")
+    check_length(height, "height")
+    check_color(color)
     return Rectangle(width, height, color)
 
 
@@ -53,8 +54,9 @@ def ellipse(width: float, height: float, color: Color) -> Graphic:
     :param color: the color to be used to fill the circle
     :returns: the specified circle as a graphic
     """
-    ensure_size(width)
-    ensure_size(height)
+    check_length(width, "width")
+    check_length(height, "height")
+    check_color(color)
     return Ellipse(width, height, color)
 
 
@@ -81,7 +83,9 @@ def circular_sector(radius: float, angle: float, color: Color) \
     :param color: the color to be used to fill the circular sector
     :returns: the specified circular sector as a graphic
     """
-    ensure_size(radius)
+    check_length(radius, "radius")
+    check_angle(angle, 0, 360)
+    check_color(color)
     return CircularSector(radius, angle, color)
 
 
@@ -101,8 +105,9 @@ def triangle(side1: float, side2: float, angle: float, color: Color) -> Graphic:
     :param color: the color to be used to fill the triangle
     :returns: the specified triangle as a graphic
     """
-    ensure_size(side1)
-    ensure_size(side2)
+    check_length(side1, "side1")
+    check_length(side2, "side2")
+    check_angle(angle, 0, 180)
     return Triangle(side1, side2, angle, color)
 
 
@@ -127,4 +132,8 @@ def text(content: str, font: str, points: float, color: Color) \
     :param color: the color to be used to render the text
     :returns: the specified text as a graphic
     """
+    check_type(content, str, "content")
+    check_type(font, str, "font")
+    check_number(points, "points")
+    check_color(color)
     return Text(content, font, points, color)

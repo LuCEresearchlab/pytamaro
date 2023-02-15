@@ -113,17 +113,18 @@ def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
     return above(grafica_alto, grafica_basso)
 
 
-def ruota(gradi: float, grafica: Grafica) -> Grafica:
+def ruota(angolo: float, grafica: Grafica) -> Grafica:
     """
     Ruota una grafica di un certo numero di gradi in senso antiorario attorno
     alla sua posizione di fissaggio.
+    Angoli negativi ruotano la grafica in senso orario.
 
     È possibile che si verifichino piccoli errori di arrotondamento (a causa
     dell'approssimazione al pixel più vicino).
 
-    :param gradi: numero di gradi di cui ruotare la grafica
+    :param angolo: angolo di rotazione in senso antiorario, in gradi
     :param grafica: grafica da ruotare
     :returns: la grafica originale ruotata attorno alla sua posizione di
               fissaggio
     """
-    return rotate(gradi, grafica)
+    return rotate(angolo, grafica)

@@ -10,7 +10,6 @@ from skia import (Canvas, Font, Image, Matrix, Paint, Path, Point, Rect, Size,
                   Surface, Typeface)
 
 from pytamaro.color import Color
-from pytamaro.color_names import black
 from pytamaro.point import Point as PyTamaroPoint
 
 # pylint: disable=super-init-not-called
@@ -145,12 +144,15 @@ class Primitive(Graphic):
         canvas.drawPath(self.path, self.paint)
 
 
-class Empty(Primitive):
+class Empty(Graphic):
     """
     An empty graphic.
     """
     def __init__(self):
-        super().__init__(Path(), black)
+        super().__init__(Point(0, 0), Path())
+
+    def render(self, canvas: Canvas):
+        pass
 
 
 class Rectangle(Primitive):

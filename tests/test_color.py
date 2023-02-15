@@ -1,6 +1,6 @@
 from pytamaro.color import Color
 from PIL.ImageColor import getrgb
-from pytamaro.color import hsv_color, hsl_color
+from pytamaro.color_functions import hsv_color, hsl_color
 from pytamaro.color_names import *
 
 

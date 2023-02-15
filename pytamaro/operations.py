@@ -4,6 +4,7 @@ Functions to do operations on graphics (mainly, to combine them).
 
 
 from pytamaro.graphic import Compose, Graphic, Pin, Rotate
+from pytamaro.graphic_utils import check_angle, check_graphic, check_point
 from pytamaro.utils import export
 from pytamaro.point import Point
 from pytamaro.point_names import center, top_center, bottom_center, center_right, center_left
@@ -17,6 +18,7 @@ def graphic_width(graphic: Graphic) -> int:
     :param graphic: graphic to calculate the width of
     :returns: width of the graphic
     """
+    check_graphic(graphic)
     return graphic.size().toCeil().width()
 
 
@@ -28,6 +30,7 @@ def graphic_height(graphic: Graphic) -> int:
     :param graphic: graphic to calculate the height of
     :returns: height of the graphic
     """
+    check_graphic(graphic)
     return graphic.size().toCeil().height()
 
 
@@ -44,6 +47,8 @@ def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
     :param background_graphic: graphic to keep in the background
     :returns: the resulting graphic after combining the two provided ones
     """
+    check_graphic(foreground_graphic, "foreground_graphic")
+    check_graphic(background_graphic, "background_graphic")
     return Compose(foreground_graphic, background_graphic)
 
 
@@ -65,6 +70,8 @@ def pin(point: Point, graphic: Graphic) -> Graphic:
     :param graphic: original graphic
     :returns: a new graphic with an updated pinning position
     """
+    check_point(point)
+    check_graphic(graphic)
     return Pin(graphic, point)
 
 
@@ -96,6 +103,8 @@ def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
     :param background_graphic: graphic to keep in the background
     :returns: the resulting graphic after overlaying the two provided ones
     """
+    check_graphic(foreground_graphic, "foreground_graphic")
+    check_graphic(background_graphic, "background_graphic")
     return _compose_pin_center(foreground_graphic, background_graphic, center, center)
 
 
@@ -112,6 +121,8 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
     :returns: the resulting graphic after placing the two graphics one besides
               the other
     """
+    check_graphic(left_graphic, "left_graphic")
+    check_graphic(right_graphic, "right_graphic")
     return _compose_pin_center(left_graphic, right_graphic, center_right, center_left)
 
 
@@ -129,21 +140,26 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
     :returns: the resulting graphic after placing the two graphics one above
               the other
     """
+    check_graphic(top_graphic, "top_graphic")
+    check_graphic(bottom_graphic, "bottom_graphic")
     return _compose_pin_center(top_graphic, bottom_graphic, bottom_center, top_center)
 
 
 @export
-def rotate(degrees: float, graphic: Graphic) -> Graphic:
+def rotate(angle: float, graphic: Graphic) -> Graphic:
     """
     Rotates an graphic by a given amount of degrees counterclockwise around
     its pinning position.
+    Negative angles rotate the graphic clockwise.
 
     Small rounding errors (due to approximations to the nearest pixel) may
     occur.
 
-    :param degrees: amount of degrees the graphic needs to be rotated
+    :param angle: angle of counterclockwise rotation, in degrees
     :param graphic: the graphic to rotate
     :returns: the original graphic rotated around its pinning position
     """
+    check_angle(angle)
+    check_graphic(graphic)
     # Negate the angle given that Rotate is clockwise.
-    return Rotate(graphic, -degrees)
+    return Rotate(graphic, -angle)

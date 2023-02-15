@@ -11,7 +11,7 @@ from skia import kPNG
 
 from pytamaro.debug import add_debug_info
 from pytamaro.graphic import Graphic
-from pytamaro.graphic_utils import graphic_to_image
+from pytamaro.graphic_utils import check_graphic, check_type, graphic_to_image
 from pytamaro.localization import translate
 from pytamaro.utils import export, is_notebook
 
@@ -25,7 +25,7 @@ def _warning_no_area(graphic: Graphic):
     """
     size = graphic.bounds().round()
     # pylint: disable-next=line-too-long
-    print(f'{translate("EMPTY_AREA_OUTPUT_PREFIX")} {size.width()}x{size.height()} {translate("EMPTY_AREA_OUTPUT_SUFFIX")}')
+    print(translate("EMPTY_AREA_OUTPUT", f"{size.width()}x{size.height()}"))
 
 
 @export
@@ -42,6 +42,7 @@ def show_graphic(graphic: Graphic, debug: bool = False):
     :param debug: can be optionally set to `True` to overlay debugging
            information
     """
+    check_graphic(graphic)
     if graphic.empty_area():
         _warning_no_area(graphic)
     else:
@@ -74,6 +75,8 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     :param debug: can be optionally set to `True` to overlay debugging
            information
     """
+    check_type(filename, str, "filename")
+    check_graphic(graphic)
     if graphic.empty_area():
         _warning_no_area(graphic)
     else:
@@ -96,6 +99,8 @@ def save_gif(filename: str, graphics: List[Graphic], duration: int = 40, loop: b
            (defaults to 40 milliseconds, which leads to 25 frames per second)
     :param loop: whether the GIF should loop indefinitely (defaults to true)
     """
+    check_type(filename, str, "filename")
+    check_type(graphics, list, "graphics")
     if len(graphics) == 0:
         raise ValueError(translate("EMPTY_GRAPHICS_LIST"))
     pil_images = list(map(graphic_to_image, graphics))

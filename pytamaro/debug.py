@@ -4,7 +4,8 @@ Functions to enrich a graphic with information useful for debugging purposes.
 
 from skia import Point
 
-from pytamaro.color import Color, rgb_color
+from pytamaro.color import Color
+from pytamaro.color_functions import rgb_color
 from pytamaro.graphic import Graphic
 from pytamaro.operations import (
     compose,

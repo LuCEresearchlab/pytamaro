@@ -10,6 +10,7 @@ from this top-level module.
 
 
 from pytamaro.color import *
+from pytamaro.color_functions import *
 from pytamaro.color_names import *
 from pytamaro.graphic import *
 from pytamaro.io import *
