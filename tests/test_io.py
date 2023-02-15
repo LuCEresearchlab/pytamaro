@@ -33,7 +33,7 @@ def test_empty_save_gif():
 
 def test_show_wrong_type():
     with raises(TypeError, match="NoneType"):
-        show_graphic(None)
+        show_graphic(None)  # type: ignore
 
 
 def test_save_gif():
