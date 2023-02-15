@@ -194,12 +194,13 @@ class CircularSector(Primitive):
 class Triangle(Primitive):
     """
     A triangle specified using two sides and the angle between them.
-    The specified angle is at the top-left corner of the triangle,
-    while the first side extends horizontally to the right.
+    The first side extends horizontally to the right.
+    The second side is rotated counterclockwise by the specified angle.
+    
     Its pinning position is the centroid of the triangle.
     """
     def __init__(self, side1: float, side2: float, angle: float, color: Color):
-        third_point = Matrix.RotateDeg(angle).mapXY(side2, 0)
+        third_point = Matrix.RotateDeg(-angle).mapXY(side2, 0)
         path = Path.Polygon([Point(0, 0), Point(side1, 0), third_point], isClosed=True)
         super().__init__(path, color)
         # The centroid is the average of the three vertices

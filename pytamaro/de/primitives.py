@@ -83,8 +83,12 @@ def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik
     """
     Creates a triangle specifying two sides and the angle between them, filled
     with a color.
-    The specified angle is at the top-left corner of the triangle, while the
-    first side extends horizontally to the right.
+    The first side extends horizontally to the right. The angle specifies how
+    much the second side is rotated, counterclockwise, from the first one.
+    
+    For all triangles, except obtuse ones, the bottom-left corner of the
+    resulting graphic concides with the vertex of the triangle for which the
+    angle is specified.
 
     The pinning position is the centroid of the triangle.
 

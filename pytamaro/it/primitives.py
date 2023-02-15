@@ -80,8 +80,12 @@ def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Graf
     """
     Crea un triangolo specificando due lati e l'angolo tra essi compreso,
     riempito con un colore.
-    L'angolo specificato è nell'angolo in alto a sinistra del triangolo,
-    mentre il primo lato si estende orizzontalmente verso destra.
+    Il primo lato si estende orizzontalmente verso destra. L'angolo specifica
+    di quanto il secondo lato è ruotato, in senso antiorario, rispetto al primo.
+
+    Per tutti i triangoli, eccetto quelli ottusi, il punto in basso a sinistra
+    della grafica risultante coincide con il vertice del triangolo di cui si è
+    specificato l'angolo.
 
     La posizione di fissaggio è il centroide del triangolo.
 
