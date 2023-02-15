@@ -85,7 +85,7 @@ def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik
     with a color.
     The first side extends horizontally to the right. The angle specifies how
     much the second side is rotated, counterclockwise, from the first one.
-    
+
     For all triangles, except obtuse ones, the bottom-left corner of the
     resulting graphic concides with the vertex of the triangle for which the
     angle is specified.

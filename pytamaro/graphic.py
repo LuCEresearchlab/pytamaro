@@ -196,7 +196,7 @@ class Triangle(Primitive):
     A triangle specified using two sides and the angle between them.
     The first side extends horizontally to the right.
     The second side is rotated counterclockwise by the specified angle.
-    
+
     Its pinning position is the centroid of the triangle.
     """
     def __init__(self, side1: float, side2: float, angle: float, color: Color):
