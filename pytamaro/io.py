@@ -88,7 +88,7 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
 @export
 def save_gif(filename: str, graphics: List[Graphic], duration: int = 40, loop: bool = True):
     """
-    Save a sequence of graphics as an aminated GIF.
+    Save a sequence of graphics as an animated GIF.
 
     Graphics are sequentially reproduced (normally at 25 frames per second) in
     a loop (unless specificied otherwise).
