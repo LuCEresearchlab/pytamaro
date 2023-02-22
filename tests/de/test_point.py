@@ -2,12 +2,12 @@ from pytamaro.de.point_names import *
 
 
 def test_point_names():
-    assert top_left == german_top_left
-    assert top_center == german_top_center
-    assert top_right == german_top_right
-    assert center_left == german_center_left
-    assert center == german_center
-    assert center_right == german_center_right
-    assert bottom_left == german_bottom_left
-    assert bottom_center == german_bottom_center
-    assert bottom_right == german_bottom_right
+    assert top_left == oben_links
+    assert top_center == oben_mitte
+    assert top_right == oben_rechts
+    assert center_left == mitte_links
+    assert center == mitte
+    assert center_right == mitte_rechts
+    assert bottom_left == unten_links
+    assert bottom_center == unten_mitte
+    assert bottom_right == unten_rechts

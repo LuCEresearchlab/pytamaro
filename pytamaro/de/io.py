@@ -30,18 +30,19 @@ def zeige_grafik(grafik: Grafik, debug: bool = False):
 
 def speichere_grafik(datei_name: str, grafik: Grafik, debug: bool = False):
     """
-    Speichere die gegebene Grafik als PNG-Datei.
+    Speichere die gegebene Grafik in einer Datei.
 
-    Eine leere Grafik kann nicht gespeichert werden;
-    deshalb hat der Aufruf dieser Funktion mit einer leeren Grafik
-    keinen Effekt.
+    Zwei Dateiformate werden unterstützt: PNG (Rastergrafik) und SVG (Vektorgrafik).
+    Die Dateinamenerweiterung (entweder ".png" oder ".svg") bestimmt das Dateiformat.
+
+    Grafiken ohne Fläche können nicht als PNG-Datei gespeichert werden.
 
     Falls `debug` `True` ist werden auf der Grafik zusätzliche Informationen
     dargestellt, welche für das Debugging nützlich sein können.
     Ein roter Rahmen markiert die Bounding Box der Grafik,
     und ein gelbliches Kreuz gibt den Fixierpunkt an.
 
-    :param datei_name: Name der zu kreierenden Datei (ohne Erweiterung)
+    :param datei_name: Name der zu kreierenden Datei (mit Erweiterung)
     :param grafik: zu speichernde Grafik
     :param debug: kann optional auf `True` gesetzt werden, um über der Grafik
                   Debug-Informationen darzustellen

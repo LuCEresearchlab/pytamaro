@@ -1,6 +1,5 @@
 """
-Add German translation
-Names of notable points (point of interest) that can be used as pinning positions of a graphic
+Namen nennenswerter Punkte, die als Fixierungspositionen für ein Grafik verwendet werden können
 """
 
 from __future__ import annotations
@@ -8,62 +7,62 @@ from __future__ import annotations
 from pytamaro.point_names import (top_left, top_center, top_right,
                                   center_left, center, center_right,
                                   bottom_left, bottom_center, bottom_right)
-from pytamaro.de.point import GermanPoint
+from pytamaro.de.point import Punkt
 
 
-german_center: GermanPoint = center
-"""Central point of a graphic
-Add German translation
+mitte: Punkt = center
+"""Der Mittelpunkt des Begrenzungsrahmens
+
 :meta hide-value:
 """
 
 
-german_top_center: GermanPoint = top_center
-"""The middle point of the top edge of the bounding box
-Add German translation
+oben_mitte: Punkt = top_center
+"""Der Mittelpunkt der oberen Kante des Begrenzungsrahmens
+
 :meta hide-value:
 """
 
-german_bottom_center: GermanPoint = bottom_center
-"""The middle point of the bottom edge of the bounding box
-Add German translation
+unten_mitte: Punkt = bottom_center
+"""Der Mittelpunkt der unteren Kante des Begrenzungsrahmens
+
 :meta hide-value:
 """
 
-german_center_left: GermanPoint = center_left
-"""The middle point of the left edge of the bounding box
-Add German translation
-:meta hide-value:
-"""
+mitte_links: Punkt = center_left
+"""Der Mittelpunkt der linken Kante des Begrenzungsrahmens
 
-
-german_center_right: GermanPoint = center_right
-"""The middle point of the right edge of the bounding box
-Add German translation
 :meta hide-value:
 """
 
 
-german_top_left: GermanPoint = top_left
-"""The top left corner of the bounding box
-Add German translation
+mitte_rechts: Punkt = center_right
+"""Der Mittelpunkt der rechten Kante des Begrenzungsrahmens
+
 :meta hide-value:
 """
 
-german_top_right: GermanPoint = top_right
-"""The top right corner of the bounding box
-Add German translation
+
+oben_links: Punkt = top_left
+"""Die obere linke Ecke des Begrenzungsrahmens
+
 :meta hide-value:
 """
 
-german_bottom_left: GermanPoint = bottom_left
-"""The bottom left corner of the bounding box
-Add German translation
+oben_rechts: Punkt = top_right
+"""Die obere rechte Ecke des Begrenzungsrahmens
+
 :meta hide-value:
 """
 
-german_bottom_right: GermanPoint = bottom_right
-"""The bottom right corner of the bounding box
-Add German translation
+unten_links: Punkt = bottom_left
+"""Die untere linke Ecke des Begrenzungsrahmens
+
+:meta hide-value:
+"""
+
+unten_rechts: Punkt = bottom_right
+"""Die untere rechte Ecke des Begrenzungsrahmens
+
 :meta hide-value:
 """

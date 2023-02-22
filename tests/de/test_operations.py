@@ -39,8 +39,7 @@ def test_compose():
     assert compose(g, g) == kombiniere(g, g)
 
 
-def test_fissa():
-
-    assert pin(top_left, g) == fixiere(german_top_left, g)
-    assert pin(center, g) == fixiere(german_center, g)
-    assert pin(bottom_right, g) == fixiere(german_bottom_right, g)
+def test_fixiere():
+    assert pin(top_left, g) == fixiere(oben_links, g)
+    assert pin(center, g) == fixiere(mitte, g)
+    assert pin(bottom_right, g) == fixiere(unten_rechts, g)

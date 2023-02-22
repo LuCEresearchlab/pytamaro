@@ -1,5 +1,5 @@
 """
-Klasse `Grafik`, kombiniert ein Pillow Bild und eine Fixier-Position.
+Der Typ `Grafik`, kombiniert ein Pillow Bild und eine Fixier-Position.
 """
 
 from __future__ import annotations

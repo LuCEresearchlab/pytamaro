@@ -4,8 +4,7 @@ Tipo `Punto`.
 
 from pytamaro.point import Point
 
-GermanPoint = Point
+Punkt = Point
 """
-    Need to translate
-    Represents a point in the space
+Repräsentiert einen Punkt im 2-dimensionalen Raum.
 """

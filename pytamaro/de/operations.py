@@ -5,10 +5,9 @@ Funktionen für Operationen mit Grafiken (hauptsächlich für deren Komposition)
 from __future__ import annotations
 
 from pytamaro.de.graphic import Grafik
+from pytamaro.de.point import Punkt
 from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
-from pytamaro.point import Point
-from pytamaro import Graphic
 
 
 def grafik_breite(grafik: Grafik) -> int:
@@ -51,7 +50,7 @@ def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     return compose(vordere_grafik, hintere_grafik)
 
 
-def fixiere(point: Point, graphic: Graphic) -> Graphic:
+def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
     """
     Need to translate
     Changes the pinning position of a graphic, returning a new graphic with
@@ -66,7 +65,7 @@ def fixiere(point: Point, graphic: Graphic) -> Graphic:
     :param graphic: original graphic
     :returns: a new graphic with an updated pinning position
     """
-    return pin(point, graphic)
+    return pin(punkt, grafik)
 
 
 def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
