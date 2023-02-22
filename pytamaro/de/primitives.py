@@ -1,5 +1,7 @@
 """
-Funktionen zum Erzeugen primitiver Grafiken (Figuren und Texte)
+Funktionen zum Erzeugen primitiver Grafiken (Figuren und Texte).
+Falls nicht anders angegeben befindet sich die Fixierungsposition
+in der Mitte des Begrenzungsrahmens der erzeugten Grafik.
 """
 
 from __future__ import annotations
@@ -49,7 +51,7 @@ def ellipse(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
     :param breite: Breite der Ellipse, in Pixel
     :param hoehe: Höhe der Ellipse, in Pixel
     :param farbe: Füllfarbe der Ellipse
-    :returns: eine Grafik mit dem gegebenen Rechteck
+    :returns: eine Grafik mit der gegebenen Ellipse
     """
     return ellipse_e(breite, hoehe, farbe)
 
@@ -68,8 +70,8 @@ def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
     ausgehend vom ersten Radius im Gegenuhrzeigersinn.
     An angle of 360 degrees corresponds to a full circle.
 
-    The pinning position is at the center of the circle from which the circular
-    sector is taken.
+    Die Fixierungsposition liegt in der Mitte des Kreises,
+    aus dem der Kreissektor ausgeschnitten wurde.
 
     :param radius: Kreisradius, in Pixel
     :param winkel: Winkel des Sektors, in Grad
@@ -81,22 +83,23 @@ def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
 
 def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik:
     """
-    Creates a triangle specifying two sides and the angle between them, filled
-    with a color.
-    The first side extends horizontally to the right. The angle specifies how
-    much the second side is rotated, counterclockwise, from the first one.
+    Erzeugt ein Dreieck mit den gegebenen Seitenlängen und dem gegebenen Winkel,
+    gefüllt in der gegebenen Farbe.
+    Die erste Seite verläuft horizontal nach rechts.
+    Der Winkel gibt an, wie viel die zweite Seite
+    gegen den Uhrzeigersinn von der ersten Seite abweicht.
 
-    For all triangles, except obtuse ones, the bottom-left corner of the
-    resulting graphic concides with the vertex of the triangle for which the
-    angle is specified.
+    Für alle Dreiecke, ausser für stumpfe Dreiecke,
+    liegt die untere linke Ecke des Begrenzungsrahmens
+    auf dem Eckpunkt des Dreiecks, für das der Winkel angegeben ist.
 
-    The pinning position is the centroid of the triangle.
+    Die Fixierungsposition liegt auf dem Schwerpunkt des Dreiecks.
 
-    :param side1: length of the first, horizontal side of the triangle
-    :param side2: length of the second side of the triangle
-    :param angle: angle between the two sides, in degrees
-    :param color: the color to be used to fill the triangle
-    :returns: the specified triangle as a graphic
+    :param seite1: Länge der ersten, horizontal Seite
+    :param seite2: Länge der zweiten Seite
+    :param winkel: Winkel zwischen den beiden Seiten, in Grad
+    :param farbe: Farbe des Dreiecks
+    :returns: eine Grafik mit dem gegebenen Dreieck
     """
     return triangle(seite1, seite2, winkel, farbe)
 
@@ -110,6 +113,9 @@ def text(inhalt: str, schriftart: str, punkte: float, farbe: Farbe) -> Grafik:
     zur Verfügung steht, wird eine einfache Standardschriftart verwendet.
     Die resultierende Grafik hat die minimale Grösse,
     die den gesamten Text umschliesst.
+
+    Die Fixierungsposition liegt auf der linken Kante des Begrenzungsrahmens,
+    auf der Höhe der Grundlinie des Textes.
 
     :param inhalt: der Text, der dargestellt werden soll
     :param schriftart: der Name der Schriftart

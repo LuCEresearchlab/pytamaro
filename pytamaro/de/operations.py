@@ -75,7 +75,7 @@ def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     die aus der zentrierten Überlagerung der zwei gegebenen Grafiken besteht.
     Die erste gegebene Grafik liegt im Vordergrund
     und die zweite im Hintergrund.
-    
+
     Die Fixierungsposition der neuen Grafik liegt in deren Mitte.
 
     :param vordere_grafik: Grafik im Vordergrund
