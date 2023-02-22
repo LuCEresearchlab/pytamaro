@@ -12,7 +12,7 @@ def zeige_grafik(grafik: Grafik, debug: bool = False):
     """
     Zeige die gegebene Grafik in einem neuen Fenster an.
 
-    Eine leere Grafik kann nicht angezeigt werden;
+    Eine Grafik ohne Fläche kann nicht angezeigt werden;
     deshalb hat der Aufruf dieser Funktion mit einer leeren Grafik
     keinen Effekt.
 
@@ -59,7 +59,7 @@ def speichere_gif(
     Beim Anzeigen des GIFs werden die Grafiken in einer unendlichen Schleife
     animiert (normalerweise mit 25 Grafiken pro Sekunde).
 
-    :param datei_name: Name der zu kreierenden Datei (ohne Erweiterung)
+    :param datei_name: Name der zu kreierenden Datei (mit Erweiterung '.gif')
     :param grafiken: Liste der zu speichernden Grafiken
     :param dauer: Dauer jeder Grafik, in Millisekunden (Default: 40
            millisekunden, enspricht 25 Grafiken pro Sekunde)

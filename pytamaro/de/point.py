@@ -1,10 +1,10 @@
 """
-Tipo `Punto`.
+Typ `Punkt`.
 """
 
 from pytamaro.point import Point
 
 Punkt = Point
 """
-Repräsentiert einen Punkt im 2-dimensionalen Raum.
+Repräsentiert einen Punkt in der Ebene.
 """

@@ -52,18 +52,18 @@ def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
 
 def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
     """
-    Need to translate
-    Changes the pinning position of a graphic, returning a new graphic with
-    the same content but with an updated pinning position.
-    The new pinning position is determined by the parameter `point`.
+    Erzeugt eine neue Grafik,
+    die der gegebenen Grafik mit einer neuen Fixierungsposition entspricht.
 
-    :param point: a point that identifies one of the 9 points of interest.
-    Each graphic is contained in a rectangular bounding box, the 9 points corresponds to:
-    the four corners, the middle point of the four edges and the center of the rectangle.
-    The names of these points are: `top_left`, `top_right`, `bottom_left`, `bottom_right`,
-    `top_center`, `center_right`, `bottom_center`, `center_left` and `center`
-    :param graphic: original graphic
-    :returns: a new graphic with an updated pinning position
+    Jede Grafik liegt in einem rechteckigen Begrenzungsrahmen.
+    Der Rahmen definiert 9 nennenswerte Punkte:
+    die vier Ecken, die Mittelpunkte der vier Kanten und die Mitte des Rahmens.
+    Die Namen dieser Punkte sind: `oben_links`, `oben_mitte`, `oben_rechts`,
+    `mitte_links`, `mitte`, `mitte_rechts`, `unten_links`, `unten_mitte` und `unten_rechts`.
+
+    :param point: ein Punkt welcher die neue Fixierungsposition bestimmt
+    :param graphic: die ursprüngliche Grafik
+    :returns: eine neue Grafik mit der gegebenen Fixierungsposition
     """
     return pin(punkt, grafik)
 
@@ -74,10 +74,9 @@ def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     Erzeugt eine neue Grafik,
     die aus der zentrierten Überlagerung der zwei gegebenen Grafiken besteht.
     Die erste gegebene Grafik liegt im Vordergrund
-    und die zweite im Hintergrund,
-    und ihre Fixierungspositionen liegen übereinander im Zentrum.
-
-    The pinning position of the resulting graphic is at its center.
+    und die zweite im Hintergrund.
+    
+    Die Fixierungsposition der neuen Grafik liegt in deren Mitte.
 
     :param vordere_grafik: Grafik im Vordergrund
     :param hintere_grafik: Grafik im Hintergrund
@@ -92,7 +91,7 @@ def neben(linke_grafik: Grafik, rechte_grafik: Grafik) -> Grafik:
     die aus dem Nebeneinanderlegen der zwei gegebenen Grafiken besteht.
     Die zwei Grafiken sind vertikal zentriert.
 
-    The pinning position of the resulting graphic is at its center.
+    Die Fixierungsposition der neuen Grafik liegt in deren Mitte.
 
     :param linke_grafik: linke Grafik (im Westen)
     :param rechte_grafik: rechte Grafik (im Osten)
@@ -107,7 +106,7 @@ def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
     die aus dem Übereinanderlegen der zwei gegebenen Grafiken besteht.
     Die zwei Grafiken sind horizontal zentriert.
 
-    The pinning position of the resulting graphic is at its center.
+    Die Fixierungsposition der neuen Grafik liegt in deren Mitte.
 
     :param obere_grafik: obere Grafik (im Norden)
     :param untere_grafik: untere Grafik (im Süden)
@@ -121,7 +120,7 @@ def drehe(winkel: float, grafik: Grafik) -> Grafik:
     Erzeugt eine neue Grafik, die einer Rotation der gegebenen Grafik
     um ihre Fixierungsposition im Gegenuhrzeigersinn
     um den gegebenen Winkel entspricht.
-    Negative angles rotate the graphic clockwise.
+    Negative Winkel entsprechen einer Rotation um Uhrzeigersinn.
 
     Es kann wegen der Approximation auf die nächstgelegenen Pixel
     zu kleinen Rundungsfehlern kommen.

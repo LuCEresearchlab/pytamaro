@@ -141,7 +141,7 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     for debugging: a red border around the bounding box and a yellowish cross
     around the pinning position.
 
-    :param filename: name of the file to create (without the extension)
+    :param filename: name of the file to create (with the extension)
     :param graphic: graphic to be saved
     :param debug: can be optionally set to `True` to overlay debugging
            information
