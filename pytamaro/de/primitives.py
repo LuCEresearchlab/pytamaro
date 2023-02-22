@@ -1,6 +1,6 @@
 """
 Funktionen zum Erzeugen primitiver Grafiken (Figuren und Texte).
-Falls nicht anders angegeben befindet sich die Fixierungsposition
+Falls nicht anders angegeben befindet sich die Fixierposition
 in der Mitte des Begrenzungsrahmens der erzeugten Grafik.
 """
 
@@ -32,8 +32,6 @@ def leere_grafik() -> Grafik:
     Wenn eine leere Grafik mit einer anderen Grafik kombiniert wird
     verhält sie sich als neutrales Element:
     das Ergebnis der Komposition ist einfach gleich der anderen Grafik.
-
-    Eine leere Grafik kann weder angezeigt noch gespeichert werden.
 
     :returns: eine leere Grafik (Breite und Höhe sind 0 Pixel)
     """
@@ -68,9 +66,9 @@ def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
     dann zeigt der erste Radius in Richtung 3 Uhr.
     Der Winkel bestimmt die Position des zweiten Radius,
     ausgehend vom ersten Radius im Gegenuhrzeigersinn.
-    An angle of 360 degrees corresponds to a full circle.
+    Ein Winkel von 360 Grad entspricht einem ganzen Kreis.
 
-    Die Fixierungsposition liegt in der Mitte des Kreises,
+    Die Fixierposition liegt in der Mitte des Kreises,
     aus dem der Kreissektor ausgeschnitten wurde.
 
     :param radius: Kreisradius, in Pixel
@@ -87,17 +85,17 @@ def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik
     gefüllt in der gegebenen Farbe.
     Die erste Seite verläuft horizontal nach rechts.
     Der Winkel gibt an, wie viel die zweite Seite
-    gegen den Uhrzeigersinn von der ersten Seite abweicht.
+    im Gegenuhrzeigersinn von der ersten Seite abweicht.
 
     Für alle Dreiecke, ausser für stumpfe Dreiecke,
     liegt die untere linke Ecke des Begrenzungsrahmens
     auf dem Eckpunkt des Dreiecks, für das der Winkel angegeben ist.
 
-    Die Fixierungsposition liegt auf dem Schwerpunkt des Dreiecks.
+    Die Fixierposition liegt auf dem Schwerpunkt des Dreiecks.
 
-    :param seite1: Länge der ersten, horizontal Seite
+    :param seite1: Länge der ersten, horizontalen Seite
     :param seite2: Länge der zweiten Seite
-    :param winkel: Winkel zwischen den beiden Seiten, in Grad
+    :param winkel: Winkel von der ersten zu der zweiten Seiten, in Grad
     :param farbe: Farbe des Dreiecks
     :returns: eine Grafik mit dem gegebenen Dreieck
     """
@@ -114,7 +112,7 @@ def text(inhalt: str, schriftart: str, punkte: float, farbe: Farbe) -> Grafik:
     Die resultierende Grafik hat die minimale Grösse,
     die den gesamten Text umschliesst.
 
-    Die Fixierungsposition liegt auf der linken Kante des Begrenzungsrahmens,
+    Die Fixierposition liegt auf der linken Kante des Begrenzungsrahmens,
     auf der Höhe der Grundlinie des Textes.
 
     :param inhalt: der Text, der dargestellt werden soll

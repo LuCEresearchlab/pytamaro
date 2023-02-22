@@ -38,9 +38,9 @@ def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     Die erste gegebene Grafik liegt im Vordergrund
     und die zweite im Hintergrund.
     Die Grafiken werden so ausgerichtet,
-    dass ihre Fixierungspositionen übereinanderliegen.
+    dass ihre Fixierpositionen übereinanderliegen.
 
-    Die überlappenden Fixierungspositionen werden zur Fixierungsposition der
+    Die überlappenden Fixierpositionen werden zur Fixierposition der
     resultierenden Grafik.
 
     :param vordere_grafik: Grafik im Vordergrund
@@ -53,7 +53,7 @@ def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
 def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
     """
     Erzeugt eine neue Grafik,
-    die der gegebenen Grafik mit einer neuen Fixierungsposition entspricht.
+    die der gegebenen Grafik mit einer neuen Fixierposition entspricht.
 
     Jede Grafik liegt in einem rechteckigen Begrenzungsrahmen.
     Der Rahmen definiert 9 nennenswerte Punkte:
@@ -61,9 +61,9 @@ def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
     Die Namen dieser Punkte sind: `oben_links`, `oben_mitte`, `oben_rechts`,
     `mitte_links`, `mitte`, `mitte_rechts`, `unten_links`, `unten_mitte` und `unten_rechts`.
 
-    :param point: ein Punkt welcher die neue Fixierungsposition bestimmt
+    :param point: ein Punkt welcher die neue Fixierposition bestimmt
     :param graphic: die ursprüngliche Grafik
-    :returns: eine neue Grafik mit der gegebenen Fixierungsposition
+    :returns: eine neue Grafik mit der gegebenen Fixierposition
     """
     return pin(punkt, grafik)
 
@@ -76,7 +76,7 @@ def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     Die erste gegebene Grafik liegt im Vordergrund
     und die zweite im Hintergrund.
 
-    Die Fixierungsposition der neuen Grafik liegt in deren Mitte.
+    Die Fixierposition der neuen Grafik liegt in deren Mitte.
 
     :param vordere_grafik: Grafik im Vordergrund
     :param hintere_grafik: Grafik im Hintergrund
@@ -91,7 +91,7 @@ def neben(linke_grafik: Grafik, rechte_grafik: Grafik) -> Grafik:
     die aus dem Nebeneinanderlegen der zwei gegebenen Grafiken besteht.
     Die zwei Grafiken sind vertikal zentriert.
 
-    Die Fixierungsposition der neuen Grafik liegt in deren Mitte.
+    Die Fixierposition der neuen Grafik liegt in deren Mitte.
 
     :param linke_grafik: linke Grafik (im Westen)
     :param rechte_grafik: rechte Grafik (im Osten)
@@ -106,7 +106,7 @@ def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
     die aus dem Übereinanderlegen der zwei gegebenen Grafiken besteht.
     Die zwei Grafiken sind horizontal zentriert.
 
-    Die Fixierungsposition der neuen Grafik liegt in deren Mitte.
+    Die Fixierposition der neuen Grafik liegt in deren Mitte.
 
     :param obere_grafik: obere Grafik (im Norden)
     :param untere_grafik: untere Grafik (im Süden)
@@ -118,7 +118,7 @@ def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
 def drehe(winkel: float, grafik: Grafik) -> Grafik:
     """
     Erzeugt eine neue Grafik, die einer Rotation der gegebenen Grafik
-    um ihre Fixierungsposition im Gegenuhrzeigersinn
+    um ihre Fixierposition im Gegenuhrzeigersinn
     um den gegebenen Winkel entspricht.
     Negative Winkel entsprechen einer Rotation um Uhrzeigersinn.
 

@@ -1,5 +1,5 @@
 """
-Namen nennenswerter Punkte, die als Fixierungspositionen für ein Grafik verwendet werden können
+Namen nennenswerter Punkte, die als Fixierpositionen für eine Grafik verwendet werden können
 """
 
 from __future__ import annotations

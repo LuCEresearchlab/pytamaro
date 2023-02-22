@@ -18,8 +18,8 @@ def zeige_grafik(grafik: Grafik, debug: bool = False):
 
     Falls `debug` `True` ist werden auf der Grafik zusätzliche Informationen
     dargestellt, welche für das Debugging nützlich sein können.
-    Ein roter Rahmen markiert die Bounding Box der Grafik,
-    und ein gelbliches Kreuz gibt den Fixierpunkt an.
+    Ein roter Rahmen markiert den Begrenzungsrahmen der Grafik,
+    und ein gelbliches Kreuz gibt die Fixierposition an.
 
     :param grafik: die anzuzeigende Grafik
     :param debug: kann optional auf `True` gesetzt werden, um über der Grafik
@@ -39,8 +39,8 @@ def speichere_grafik(datei_name: str, grafik: Grafik, debug: bool = False):
 
     Falls `debug` `True` ist werden auf der Grafik zusätzliche Informationen
     dargestellt, welche für das Debugging nützlich sein können.
-    Ein roter Rahmen markiert die Bounding Box der Grafik,
-    und ein gelbliches Kreuz gibt den Fixierpunkt an.
+    Ein roter Rahmen markiert den Begrenzungsrahmen der Grafik,
+    und ein gelbliches Kreuz gibt die Fixierposition an.
 
     :param datei_name: Name der zu kreierenden Datei (mit Erweiterung)
     :param grafik: zu speichernde Grafik
@@ -62,7 +62,7 @@ def speichere_gif(
     :param datei_name: Name der zu kreierenden Datei (mit Erweiterung '.gif')
     :param grafiken: Liste der zu speichernden Grafiken
     :param dauer: Dauer jeder Grafik, in Millisekunden (Default: 40
-           millisekunden, enspricht 25 Grafiken pro Sekunde)
+           Millisekunden, enspricht 25 Grafiken pro Sekunde)
     :param loop: bestimmt ob das GIF in einer unendlichen Schleife abgespielt
            werden soll (Default: true)
     """
