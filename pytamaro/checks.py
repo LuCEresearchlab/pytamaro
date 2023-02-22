@@ -1,14 +1,11 @@
 """
-Small functions used in various places to deal with graphics.
+Checks to be performed on the parameters of user-facing functions.
 """
 
-import io
 from math import inf
 from numbers import Number
 from typing import Any
 
-from PIL import Image as PILImageMod
-from PIL.Image import Image as PILImage
 from pytamaro.color import Color
 from pytamaro.graphic import Graphic
 
@@ -113,16 +110,3 @@ def check_range(value: Any, lower_bound: float, upper_bound: float, parameter_na
                                    translate(parameter_name),
                                    lower_bound,
                                    upper_bound))
-
-
-def graphic_to_image(graphic: Any) -> PILImage:
-    """
-    Renders a graphic and converts it into a Pillow image.
-
-    :param graphic: graphic to be rendered and converted
-    :returns: an equivalent Pillow image
-    """
-    with io.BytesIO(graphic.as_image().encodeToData()) as stream:
-        pil_image = PILImageMod.open(stream)
-        pil_image.load()  # Ensure to make a copy of buffer
-        return pil_image

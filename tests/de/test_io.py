@@ -16,14 +16,16 @@ def test_save_gif():
     r1 = rectangle(WIDTH, HEIGHT, red)
     r2 = rectangle(WIDTH, HEIGHT, blue)
     with NamedTemporaryFile() as f:
-        speichere_gif(f.name, [r1, r2])
-        gif = ImageMod.open(f"{f.name}.gif")
+        filename = f"{f.name}.gif"
+        speichere_gif(filename, [r1, r2])
+        gif = ImageMod.open(filename)
         assert gif.n_frames == 2
 
 
 def test_save_graphic():
     r = rectangle(WIDTH, HEIGHT, red)
     with NamedTemporaryFile() as f:
-        speichere_grafik(f.name, r)
-        graphic = ImageMod.open(f"{f.name}.png")
+        filename = f"{f.name}.png"
+        speichere_grafik(filename, r)
+        graphic = ImageMod.open(filename)
         assert graphic.size == (WIDTH, HEIGHT)

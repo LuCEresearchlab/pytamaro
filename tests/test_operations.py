@@ -3,7 +3,7 @@ from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
 from pytamaro.primitives import ellipse, rectangle, triangle
 
-from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_pin_tolerance,
+from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_equals_pixels, assert_pin_tolerance,
                                  assert_size, assert_size_tolerance,
                                  assert_unique_color)
 from pytamaro.point_names import bottom_left, bottom_right, top_center, top_left
@@ -157,7 +157,7 @@ def test_compose():
     assert_unique_color(composed, blue)
 
 
-def test_compose_equals_overlay():
+def test_compose_visually_equals_overlay():
     s1 = rectangle(WIDTH, WIDTH, blue)
     s2 = rectangle(WIDTH, WIDTH, red)
-    assert compose(s1, s2) == overlay(s1, s2)
+    assert_equals_pixels(compose(s1, s2), overlay(s1, s2))

@@ -2,7 +2,7 @@
 # Separated from color.py only in the main English version to avoid circular imports
 
 from pytamaro.color import Color
-from pytamaro.graphic_utils import check_range
+from pytamaro.checks import check_range
 
 
 def rgb_color(red: int, green: int, blue: int, opacity: float = 1.0) -> Color:

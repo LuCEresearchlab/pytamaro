@@ -4,7 +4,7 @@ from PIL import ImageChops, ImageFilter
 from pytamaro.color import Color
 from pytamaro.color_names import transparent
 from pytamaro.graphic import Graphic
-from pytamaro.graphic_utils import graphic_to_image
+from pytamaro.io import graphic_to_image, graphic_to_pillow_image
 from pytamaro.operations import graphic_height, graphic_width
 
 WIDTH = 10
@@ -13,7 +13,7 @@ RADIUS = 20
 
 
 def pixels_colors(g: Graphic) -> List[int]:
-    bitmap = g.as_image().bitmap()
+    bitmap = graphic_to_image(g).bitmap()
     return [bitmap.getColor(x, y)
             for y in range(bitmap.height()) for x in range(bitmap.width())]
 
@@ -42,7 +42,7 @@ def assert_size_tolerance(g: Graphic, expected_size: Tuple[int, int],
 
 
 def assert_graphics_equals_tolerance(g1: Graphic, g2: Graphic):
-    diff = ImageChops.difference(graphic_to_image(g1), graphic_to_image(g2))
+    diff = ImageChops.difference(graphic_to_pillow_image(g1), graphic_to_pillow_image(g2))
     filtered_diff = diff.filter(ImageFilter.MinFilter())
     colors = filtered_diff.getcolors()
     assert len(colors) == 1
@@ -53,3 +53,15 @@ def assert_pin_tolerance(g: Graphic, expected_pin: Tuple[int, int]):
     x_pin, y_pin = g.pin_position
     assert expected_pin[0] - 1 <= x_pin <= expected_pin[0] + 1
     assert expected_pin[1] - 1 <= y_pin <= expected_pin[1] + 1
+
+
+def assert_equals_pixels(g1: Graphic, g2: Graphic):
+    assert graphic_to_image(g1).tobytes() == graphic_to_image(g2).tobytes()
+
+
+def assert_SVG_file_width_height(filename: str, width: float, height: float):
+    with open(filename) as f:
+        content = f.read()
+        print(content)
+        assert f"width=\"{width}\"" in content
+        assert f"height=\"{height}\"" in content

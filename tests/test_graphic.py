@@ -1,5 +1,4 @@
-from pytamaro.color_names import red
-from pytamaro.operations import pin
+from pytamaro.color_names import blue, red
 from pytamaro.primitives import empty_graphic, rectangle
 
 from tests.testing_utils import HEIGHT, WIDTH
@@ -36,6 +35,15 @@ def test_hash():
     s.add(r1)
     s.add(r2)
     assert len(s) == 1
+
+
+def test_hash_same_path_different_color():
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(WIDTH, HEIGHT, blue)
+    s = set()
+    s.add(r1)
+    s.add(r2)
+    assert len(s) == 2
 
 
 def test_hash_empty_graphic():

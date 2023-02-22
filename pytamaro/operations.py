@@ -4,7 +4,7 @@ Functions to do operations on graphics (mainly, to combine them).
 
 
 from pytamaro.graphic import Compose, Graphic, Pin, Rotate
-from pytamaro.graphic_utils import check_angle, check_graphic, check_point
+from pytamaro.checks import check_angle, check_graphic, check_point
 from pytamaro.utils import export
 from pytamaro.point import Point
 from pytamaro.point_names import center, top_center, bottom_center, center_right, center_left

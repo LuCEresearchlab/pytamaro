@@ -4,10 +4,9 @@ Type `Graphic`, that includes a graphic with a pinning position.
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List
 
-from skia import (Canvas, Font, Image, Matrix, Paint, Path, Point, Rect, Size,
-                  Surface, Typeface)
+from skia import (Canvas, Font, Matrix, Paint, Path, Point, Rect, Size,
+                  Typeface)
 
 from pytamaro.color import Color
 from pytamaro.point import Point as PyTamaroPoint
@@ -58,11 +57,11 @@ class Graphic(ABC):
         return self.path.computeTightBounds()
 
     @abstractmethod
-    def render(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):
         """
-        Renders the current graphic onto the provided canvas.
+        Draws the current graphic onto the provided canvas.
 
-        :param canvas: canvas onto which to render
+        :param canvas: canvas onto which to draw
         """
 
     def empty_area(self) -> bool:
@@ -74,59 +73,12 @@ class Graphic(ABC):
         """
         return self.size().isEmpty()
 
-    def as_image(self) -> Image:
-        """
-        Renders this graphic as an image.
-
-        The image has the minimal size required to fit the graphic.
-
-        :returns: an image with the rendered graphic
-        """
-        int_size = self.size().toCeil()
-        surface = Surface(int_size.width(), int_size.height())
-        with surface as canvas:
-            bounds = self.bounds()
-            canvas.translate(-bounds.left(), -bounds.top())
-            self.render(canvas)
-        return surface.makeImageSnapshot()
-
-    def _key(self) -> List:
-        """
-        Returns the fields relevant for __eq__ and __hash__ as a list.
-        The resulting list must contain comparable and hashable values.
-        For this reason, we carefully manage the case with the empty image.
-
-        :returns: a list with values relevant for equality
-        """
-        if self.empty_area():
-            return [None]
-
-        bitmap = self.as_image().bitmap()
-        pixels = [bitmap.getColor(x, y)
-                  for y in range(bitmap.height()) for x in range(bitmap.width())]
-        return [tuple(pixels)]
-
-    def __eq__(self, other: object) -> bool:
-        """
-        Compares a graphic with another graphic.
-        Two graphics are considered equal if they are both empty or if they
-        have exactly the same content when rendered (pixel by pixel)/
-
-        :returns: True if the two graphics are considered equal, False
-                  otherwise
-        """
-        if not isinstance(other, Graphic):
-            return NotImplemented
-        return self._key() == other._key()
-
     def __hash__(self) -> int:
-        """
-        Computes the hash of this graphic, relying on _key() and the built-in
-        hash().
+        return hash(self._key())
 
-        :returns hash for this graphic
-        """
-        return hash(tuple(self._key()))
+    def _key(self):
+        return ((self.pin_position.fX, self.pin_position.fY),
+                self.path.serialize().bytes())
 
 
 class Primitive(Graphic):
@@ -140,8 +92,11 @@ class Primitive(Graphic):
         bounds = self.path.computeTightBounds()
         self.set_pin_position(bounds.width() / 2, bounds.height() / 2)
 
-    def render(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):
         canvas.drawPath(self.path, self.paint)
+
+    def _key(self):
+        return (super()._key(), self.paint.getHash())
 
 
 class Empty(Graphic):
@@ -151,7 +106,7 @@ class Empty(Graphic):
     def __init__(self):
         super().__init__(Point(0, 0), Path())
 
-    def render(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):
         pass
 
 
@@ -249,12 +204,12 @@ class Compose(Graphic):
         self.path.addPath(self.foreground.path,
                           bg_pin.x() - fg_pin.x(), bg_pin.y() - fg_pin.y())
 
-    def render(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):
         canvas.save()
-        self.background.render(canvas)
+        self.background.draw(canvas)
         canvas.translate(self.background.pin_position.x() - self.foreground.pin_position.x(),
                          self.background.pin_position.y() - self.foreground.pin_position.y())
-        self.foreground.render(canvas)
+        self.foreground.draw(canvas)
         canvas.restore()
 
 
@@ -279,8 +234,8 @@ class Pin(Graphic):
             h_mapping[pinning_point.x], v_mapping[pinning_point.y])
         self.path = Path(self.graphic.path)
 
-    def render(self, canvas: Canvas):
-        self.graphic.render(canvas)
+    def draw(self, canvas: Canvas):
+        self.graphic.draw(canvas)
 
 
 class Rotate(Graphic):
@@ -294,8 +249,8 @@ class Rotate(Graphic):
         self.graphic.path.transform(self.rot_matrix, self.path)  # updates self.path
         self.pin_position = graphic.pin_position
 
-    def render(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):
         canvas.save()
         canvas.concat(self.rot_matrix)
-        self.graphic.render(canvas)
+        self.graphic.draw(canvas)
         canvas.restore()

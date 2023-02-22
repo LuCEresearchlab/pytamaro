@@ -7,7 +7,7 @@ graphic's bounding box.
 from pytamaro.color import Color
 from pytamaro.graphic import (CircularSector, Ellipse, Empty, Graphic,
                               Rectangle, Text, Triangle)
-from pytamaro.graphic_utils import check_angle, check_color, check_length, check_number, check_type
+from pytamaro.checks import check_angle, check_color, check_length, check_number, check_type
 from pytamaro.utils import export
 
 

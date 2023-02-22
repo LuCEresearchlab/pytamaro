@@ -1,4 +1,5 @@
 """Localization utilities to translate error messages"""
+# pylint: disable=line-too-long
 
 import sys
 
@@ -17,6 +18,16 @@ translations = {
     "INVALID_RANGE": {
         "en": "Value for parameter {} out of the allowed range [{}, {}]",
         "it": "Valore per il parametro {} fuori dall'intervallo consentito [{}, {}]",
+        "de": "",
+    },
+    "INVALID_FILENAME_EXTENSION": {
+        "en": "Invalid or missing extension for filename: only .png and .svg are supported",
+        "it": "Estensione non valida o mancante per il nome del file: sono supportati solo .png e .svg",
+        "de": "",
+    },
+    "INVALID_FILENAME_GIF": {
+        "en": "Invalid or missing extension for a GIF file: needs to end with `.gif`",
+        "it": "Estensione non valida o mancante per un file GIF: deve terminare con `.gif`",
         "de": "",
     },
     "EMPTY_GRAPHICS_LIST": {
