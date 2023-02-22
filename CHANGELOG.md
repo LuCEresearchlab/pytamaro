@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - Unreleased
+
+This version introduces a number of API breaking changes. [The documentation of the old version is still available under the `version_2022` tag.](https://pytamaro.readthedocs.io/en/version_2022/).
+
+### Changed
+
+- Functions' parameters (their types and values) are now explicitly checked at runtime to provide less confusing error messages when the supplied values are not valid
+- `pin` now takes a parameter of type `Point` to specify the pinning position, instead of two strings; the usual nine notable points on the bounding box are available as constants (e.g., `top_left`, `center`, `bottom_right`
+- The initial pinning position for certain primitive graphics is no longer at the center of the bounding box, but at a custom documented point of interest (e.g., the centroid for triangles, or the leftmost point on the baseline for text)
+- `triangle` can now create arbitrary triangles, not just equilateral ones, by specifying two sides and the angle between them
+- `circular_sector` now allows only for degrees in the range [0, 360] (where 360 effectively produces a full circle)
+- Counterclockwise rotation is consistently used throughout the library (e.g., for rotation, `circular_sector`, `triangle`)
+- `save_graphic` now allows saving a graphic using the SVG format; both `save_graphic` and `save_gif` now require the extension of the desired file to be specified as part of the filename 
+- `beside`, `above` and `overlay` now pin the resulting graphic at its center (this makes them truly associative, and allows to explain their behavior without the need to explain the pinning position in the beginning)
+- Showing or saving as a PNG a graphic with no area now produces a warning
+- Equality of graphics is now based on the equality of their scene graphs and their pinning positions, instead of the rendered bitmaps
+
 ## [0.3.1] - 2023-01-13
 
 ### Added

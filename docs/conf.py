@@ -19,11 +19,11 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "PyTamaro"
-copyright = "2021-2022, LuCE Research Lab"
-author = "Luca Chiodini"
+copyright = "2021-2023, LuCE Research Lab"
+author = "LuCE Research Lab"
 
 # The full version, including alpha/beta/rc tags
-release = "0.2"
+release = "0.4.0"
 
 
 # -- General configuration ---------------------------------------------------
