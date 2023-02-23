@@ -12,9 +12,7 @@ def zeige_grafik(grafik: Grafik, debug: bool = False):
     """
     Zeige die gegebene Grafik in einem neuen Fenster an.
 
-    Eine Grafik ohne Fläche kann nicht angezeigt werden;
-    deshalb hat der Aufruf dieser Funktion mit einer leeren Grafik
-    keinen Effekt.
+    Eine Grafik ohne Fläche kann nicht angezeigt werden.
 
     Falls `debug` `True` ist werden auf der Grafik zusätzliche Informationen
     dargestellt, welche für das Debugging nützlich sein können.

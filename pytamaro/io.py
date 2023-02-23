@@ -99,8 +99,7 @@ def _save_as_PNG(filename: str, graphic: Graphic):
 @export
 def show_graphic(graphic: Graphic, debug: bool = False):
     """
-    Show a graphic in a window. Graphics with no area cannot be shown and produce no
-    effect when passed to this function.
+    Show a graphic in a window. Graphics with no area cannot be shown.
 
     When `debug` is `True`, adorns the visualization with useful information
     for debugging: a red border around the bounding box and a yellowish cross
@@ -169,7 +168,7 @@ def save_gif(filename: str, graphics: List[Graphic], duration: int = 40, loop: b
     Graphics are sequentially reproduced (normally at 25 frames per second) in
     a loop (unless specificied otherwise).
 
-    :param filename: name of the file to create, ending in '.gif'
+    :param filename: name of the file to create, including the extension '.gif'
     :param graphics: list of graphics to be saved as a GIF
     :param duration: duration in milliseconds for each frame
            (defaults to 40 milliseconds, which leads to 25 frames per second)
