@@ -9,7 +9,7 @@ from dataclasses import dataclass
 @dataclass
 class Point:
     """
-    Represents a point in 2-dimensional space.
+    Represents a point on a plane.
     """
     x: float    # pylint: disable=invalid-name
     y: float    # pylint: disable=invalid-name
