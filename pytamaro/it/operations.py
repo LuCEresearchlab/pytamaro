@@ -33,24 +33,24 @@ def altezza_grafica(grafica: Grafica) -> int:
 def componi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
         -> Grafica:
     """
-    Compone due grafiche tenendo la prima in primo piano e la seconda sullo
-    sfondo, allineandole usando le loro posizioni di fissaggio.
+    Crea una nuova grafica componendo le due grafiche fornite.
+    La prima grafica viene tenuta in primo piano, la seconda sullo sfondo.
+    Le grafiche vengono allineate superimponendo le loro posizioni di fissaggio.
 
     La posizione di fissaggio usata per comporre diventa la posizione di
     fissaggio della grafica risultante.
 
-    :param grafica_primopiano: grafica da tenere in primo piano
-    :param grafica_secondopiano: grafica da tenere sullo sfondo
-    :returns: grafica risultante dalla composizione delle due fornite
+    :param grafica_primopiano: grafica in primo piano
+    :param grafica_secondopiano: grafica sullo sfondo
+    :returns: la grafica risultante composta
     """
     return compose(grafica_primopiano, grafica_secondopiano)
 
 
 def fissa(punto: Punto, grafica: Grafica) -> Grafica:
     """
-    Cambia la posizione di fissaggio di una grafica, ritornando una nuova
-    grafica con lo stesso contenuto ma una posizione di fissaggio aggiornata.
-    La nuova posizione di fissaggio è determinata dal parametro `punto`.
+    Crea una nuova grafica che corrisponde alla grafica fornita,
+    con una nuova posizione di fissaggio.
 
     Ogni grafica è racchiusa in un rettangolo di delimitazione (bounding box).
     Ci sono 9 punti notevoli, corrispondenti ai quattro angoli di questo rettangolo,
@@ -69,13 +69,14 @@ def fissa(punto: Punto, grafica: Grafica) -> Grafica:
 def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
         -> Grafica:
     """
-    Sovrappone due grafiche tenendo la prima in primo piano e la seconda sullo
-    sfondo, allineandole sui loro centri.
+    Crea una nuova grafica sovrapponendo le due grafiche fornite,
+    tenendo la prima in primo piano e la seconda sullo sfondo.
+    Le due grafiche vengono sovrapposte sui loro centri.
 
-    La posizione di fissaggio della grafica risultante è il suo centro.
+    La posizione di fissaggio della grafica risultante è nel suo centro.
 
-    :param grafica_primopiano: grafica da tenere in primo piano
-    :param grafica_secondopiano: grafica da tenere sullo sfondo
+    :param grafica_primopiano: grafica in primo piano
+    :param grafica_secondopiano: grafica sullo sfondo
     :returns: grafica risultante dalla sovrapposizione delle due fornite
     """
     return overlay(grafica_primopiano, grafica_secondopiano)
@@ -83,11 +84,10 @@ def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
 
 def accanto(grafica_sinistra: Grafica, grafica_destra: Grafica) -> Grafica:
     """
-    Compone due grafiche affiancandole, posizionando la prima a sinistra e la
-    seconda a destra. Le due grafiche vengono allineate verticalmente al
-    centro.
+    Crea una nuova grafica affiancando orizzontalmente le due grafiche fornite.
+    Le due grafiche vengono centrate verticalmente.
 
-    La posizione di fissaggio della grafica risultante è il suo centro.
+    La posizione di fissaggio della grafica risultante è nel suo centro.
 
     :param grafica_sinistra: grafica da posizionare a sinistra
     :param grafica_destra: grafica da posizionare a destra
@@ -99,11 +99,10 @@ def accanto(grafica_sinistra: Grafica, grafica_destra: Grafica) -> Grafica:
 
 def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
     """
-    Compone due grafiche affiancandole verticalmente, posizionando la prima in
-    alto e la seconda in basso. Le due grafiche vengono allineate
-    orizzontalmente al centro.
+    Crea una nuova grafica posizionando le due grafiche fornite una sopra l'altra.
+    Le due grafiche vengono centrate orizzontalmente.
 
-    La posizione di fissaggio della grafica risultante è il suo centro.
+    La posizione di fissaggio della grafica risultante è nel suo centro.
 
     :param grafica_sopra: grafica da posizionare sopra
     :param grafica_sotto: grafica da posizionare sotto
@@ -115,16 +114,15 @@ def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
 
 def ruota(angolo: float, grafica: Grafica) -> Grafica:
     """
-    Ruota una grafica di un certo numero di gradi in senso antiorario attorno
-    alla sua posizione di fissaggio.
-    Angoli negativi ruotano la grafica in senso orario.
+    Crea una nuova grafica ruotando dell'angolo indicato, in senso antiorario,
+    una grafica attorno alla sua posizione di fissaggio.
+    Un angolo negativo corrisponde a una rotazione in senso orario.
 
     È possibile che si verifichino piccoli errori di arrotondamento (a causa
     dell'approssimazione al pixel più vicino).
 
     :param angolo: angolo di rotazione in senso antiorario, in gradi
     :param grafica: grafica da ruotare
-    :returns: la grafica originale ruotata attorno alla sua posizione di
-              fissaggio
+    :returns: una nuova grafica, ruotata
     """
     return rotate(angolo, grafica)

@@ -34,8 +34,6 @@ def empty_graphic() -> Graphic:
     When an empty graphic is composed with any other graphic, it behaves
     as a neutral element: the result is always identical to the other graphic.
 
-    An empty graphic cannot be shown nor saved.
-
     :returns: an empty graphic (width and height 0 pixels)
     """
     return Empty()

@@ -1,6 +1,6 @@
 """
-Nomi di punti notevoli ("punti d'interesse") che possono essere usati
-come posizione di fissaggio di una grafica.
+Nomi di punti notevoli, che possono essere usati come posizioni di fissaggio per
+una grafica.
 """
 
 from __future__ import annotations

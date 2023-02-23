@@ -30,8 +30,6 @@ def grafica_vuota() -> Grafica:
     Quando una grafica vuota viene composta con ogni altra grafica, si comporta
     da elemento neutro: il risultato è sempre uguale all'altra grafica.
 
-    Una grafica vuota non può essere visualizzata né salvata.
-
     :returns: una grafica vuota (larghezza e altezza 0 pixel)
     """
     return empty_graphic()

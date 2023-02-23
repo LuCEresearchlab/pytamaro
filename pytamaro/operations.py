@@ -37,15 +37,17 @@ def graphic_height(graphic: Graphic) -> int:
 @export
 def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
     """
-    Composes two graphics keeping the first one in the foreground and the
-    second one in background, aligning them using their pin positions.
+    Creates a new graphic by composing the two provided graphics.
+    The first graphic is kept in the foreground, the second one in the
+    background.
+    The graphics are aligned by superimposing their pinning positions.
 
-    The pin location used to compose becomes the pin location of the resulting
-    graphic.
+    The pinning position used to compose becomes the pinning position of the
+    resulting graphic.
 
-    :param foreground_graphic: graphic to keep in the foreground
-    :param background_graphic: graphic to keep in the background
-    :returns: the resulting graphic after combining the two provided ones
+    :param foreground_graphic: graphic in the foreground
+    :param background_graphic: graphic in the background
+    :returns: the resulting composed graphic
     """
     check_graphic(foreground_graphic, "foreground_graphic")
     check_graphic(background_graphic, "background_graphic")
@@ -55,9 +57,8 @@ def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
 @export
 def pin(point: Point, graphic: Graphic) -> Graphic:
     """
-    Changes the pinning position of a graphic, returning a new graphic with
-    the same content but with an updated pinning position.
-    The new pinning position is determined by the parameter `point`.
+    Creates a new graphic that corresponds to the provided graphic,
+    with a new pinning position.
 
     Each graphic is contained in a rectangular bounding box.
     There are 9 notable points, corresponding to the four corners of this rectangle,
@@ -68,7 +69,7 @@ def pin(point: Point, graphic: Graphic) -> Graphic:
 
     :param point: the point indicating the new pinning position
     :param graphic: original graphic
-    :returns: a new graphic with an updated pinning position
+    :returns: a new graphic with the specified pinning position
     """
     check_point(point)
     check_graphic(graphic)
@@ -94,13 +95,14 @@ def _compose_pin_center(graphic1: Graphic, graphic2: Graphic,
 @export
 def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
     """
-    Overlays two graphics keeping the first one in the foreground and the
-    second one in background, aligning them on their centers.
+    Creates a new graphic by overlaying the two provided graphics,
+    keeping the first one in the foreground and the second one in background.
+    The two graphics are overlaid on their centers.
 
-    The pinning position of the resulting graphic is at its center.
+    The pinning position of the new graphic is at its center.
 
-    :param foreground_graphic: graphic to keep in the foreground
-    :param background_graphic: graphic to keep in the background
+    :param foreground_graphic: graphic in the foreground
+    :param background_graphic: graphic in the background
     :returns: the resulting graphic after overlaying the two provided ones
     """
     check_graphic(foreground_graphic, "foreground_graphic")
@@ -111,10 +113,10 @@ def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
 @export
 def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
     """
-    Composes two graphics placing the first on the left and the second on the
-    right.  The two graphics are aligned vertically on their centers.
+    Creates a new graphic by placing the two graphics one besides the other.
+    The two graphics are vertically centered.
 
-    The pinning position of the resulting graphic is at its center.
+    The pinning position of the new graphic is at its center.
 
     :param left_graphic: graphic to place on the left
     :param right_graphic: graphic to place on the right
@@ -129,11 +131,10 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
 @export
 def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
     """
-    Composes two graphics placing the first on the top and the second on the
-    bottom.
-    The two graphics are aligned horizontally on their centers.
+    Creates a new graphic by placing the two graphics one above the other.
+    The two graphics are horizontally centered.
 
-    The pinning position of the resulting graphic is at its center.
+    The pinning position of the new graphic is at its center.
 
     :param top_graphic: graphic to place on the top
     :param bottom_graphic: graphic to place on the bottom
@@ -148,16 +149,16 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
 @export
 def rotate(angle: float, graphic: Graphic) -> Graphic:
     """
-    Rotates an graphic by a given amount of degrees counterclockwise around
-    its pinning position.
-    Negative angles rotate the graphic clockwise.
+    Creates a new graphic by rotating counterclockwise the provided graphic
+    around its pinning position by the given angle.
+    A negative angle corresponds to a clockwise rotation.
 
     Small rounding errors (due to approximations to the nearest pixel) may
     occur.
 
     :param angle: angle of counterclockwise rotation, in degrees
     :param graphic: the graphic to rotate
-    :returns: the original graphic rotated around its pinning position
+    :returns: a new, rotated graphic
     """
     check_angle(angle)
     check_graphic(graphic)
