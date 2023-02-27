@@ -5,12 +5,17 @@ PyTamaro's documentation
   :width: 700
   :alt: PyTamaro logo
 
-Welcome to PyTamaro's documentation!
+This site contains the API documentation of the PyTamaro Python library.
+
+For more information about the library,
+including examples of activities
+and installation instructions,
+please visit the `project's website at https://pytamaro.si.usi.ch <https://pytamaro.si.usi.ch>`_.
+
+
 
 .. toctree::
    :titlesonly:
    :caption: Index:
 
-   Install
-   JupyterExamples
    API
