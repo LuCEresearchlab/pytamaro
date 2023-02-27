@@ -16,8 +16,8 @@ def rettangolo(larghezza: float, altezza: float, colore: Colore) -> Grafica:
     """
     Crea un rettangolo delle dimensioni indicate, riempito con un colore.
 
-    :param larghezza: larghezza del rettangolo, in pixel
-    :param altezza: altezza del rettangolo, in pixel
+    :param larghezza: larghezza del rettangolo
+    :param altezza: altezza del rettangolo
     :param colore: colore da usare per riempire il rettangolo
     :returns: una grafica con il rettangolo specificato
     """
@@ -30,7 +30,7 @@ def grafica_vuota() -> Grafica:
     Quando una grafica vuota viene composta con ogni altra grafica, si comporta
     da elemento neutro: il risultato è sempre uguale all'altra grafica.
 
-    :returns: una grafica vuota (larghezza e altezza 0 pixel)
+    :returns: una grafica vuota (larghezza e altezza 0)
     """
     return empty_graphic()
 
@@ -42,8 +42,8 @@ def ellisse(larghezza: float, altezza: float, colore: Colore) -> Grafica:
     Quando larghezza e altezza coincidono, l'ellisse diventa un cerchio di
     diametro pari alla dimensione indicata.
 
-    :param larghezza: larghezza dell'ellisse, in pixel
-    :param altezza: altezza dell'ellisse, in pixel
+    :param larghezza: larghezza dell'ellisse
+    :param altezza: altezza dell'ellisse
     :param colore: colore da usare per riempire l'ellisse
     :returns: una grafica con l'ellisse specificato
     """
@@ -65,8 +65,7 @@ def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
     La posizione di fissaggio è al centro del cerchio da cui è preso il settore
     circolare.
 
-    :param raggio: raggio del cerchio da cui è preso il settore circolare, in
-                   pixel
+    :param raggio: raggio del cerchio da cui è preso il settore circolare
     :param angolo: angolo al centro, in gradi
     :param colore: colore da usare per riempire il settore circolare
     :returns: una grafica con il settore circolare specificato

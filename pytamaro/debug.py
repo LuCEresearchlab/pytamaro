@@ -54,7 +54,7 @@ def add_border(graphic: Graphic, width: float, color: Color) -> Graphic:
     (bounding box of the) graphic.
 
     :param graphic: original graphic
-    :param width: width of the border in pixel
+    :param width: width of the border
     :param color: color of the border
     :returns: a new graphic with the border
     """

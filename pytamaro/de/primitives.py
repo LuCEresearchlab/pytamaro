@@ -18,8 +18,8 @@ def rechteck(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
     Erzeugt ein Rechteck mit der gegebenen Breite und Höhe,
     gefüllt in der gegebenen Farbe.
 
-    :param breite: die Breite des Rechtecks, in Pixel
-    :param hoehe: die Höhe des Rechtecks, in Pixel
+    :param breite: die Breite des Rechtecks
+    :param hoehe: die Höhe des Rechtecks
     :param farbe: Füllfarbe des Rechtecks
     :returns: eine Grafik mit dem gegebenen Rechteck
     """
@@ -33,7 +33,7 @@ def leere_grafik() -> Grafik:
     verhält sie sich als neutrales Element:
     das Ergebnis der Komposition ist einfach gleich der anderen Grafik.
 
-    :returns: eine leere Grafik (Breite und Höhe sind 0 Pixel)
+    :returns: eine leere Grafik (Breite und Höhe sind 0)
     """
     return empty_graphic()
 
@@ -46,8 +46,8 @@ def ellipse(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
     Wenn Breite und Höhe gleich gross sind wird die Ellipse zum Kreis
     mit dem entsprechenden Durchmesser.
 
-    :param breite: Breite der Ellipse, in Pixel
-    :param hoehe: Höhe der Ellipse, in Pixel
+    :param breite: Breite der Ellipse
+    :param hoehe: Höhe der Ellipse
     :param farbe: Füllfarbe der Ellipse
     :returns: eine Grafik mit der gegebenen Ellipse
     """
@@ -71,7 +71,7 @@ def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
     Die Fixierposition liegt in der Mitte des Kreises,
     aus dem der Kreissektor ausgeschnitten wurde.
 
-    :param radius: Kreisradius, in Pixel
+    :param radius: Kreisradius
     :param winkel: Winkel des Sektors, in Grad
     :param farbe: Füllfarbe des Kreissektors
     :returns: eine Grafik mit dem gegebenen Kreissektor

@@ -16,8 +16,8 @@ def rectangle(width: float, height: float, color: Color) -> Graphic:
     """
     Creates a rectangle of the given size, filled with a color.
 
-    :param width: width of the rectangle, in pixel
-    :param height: height of the rectangle, in pixel
+    :param width: width of the rectangle
+    :param height: height of the rectangle
     :param color: the color to be used to fill the rectangle
     :returns: the specified rectangle as a graphic
     """
@@ -34,7 +34,7 @@ def empty_graphic() -> Graphic:
     When an empty graphic is composed with any other graphic, it behaves
     as a neutral element: the result is always identical to the other graphic.
 
-    :returns: an empty graphic (width and height 0 pixels)
+    :returns: an empty graphic (width and height 0)
     """
     return Empty()
 
@@ -47,8 +47,8 @@ def ellipse(width: float, height: float, color: Color) -> Graphic:
     When width and height are the same, the ellipse becomes a circle with a
     diameter equal to the provided size.
 
-    :param width: width of the ellipse, in pixel
-    :param height: height of the ellipse, in pixel
+    :param width: width of the ellipse
+    :param height: height of the ellipse
     :param color: the color to be used to fill the circle
     :returns: the specified circle as a graphic
     """
@@ -76,7 +76,7 @@ def circular_sector(radius: float, angle: float, color: Color) \
     sector is taken.
 
     :param radius: radius of the circle from which the circular sector is
-                   taken, in pixel
+                   taken
     :param angle: central angle, in degrees
     :param color: the color to be used to fill the circular sector
     :returns: the specified circular sector as a graphic

@@ -12,7 +12,7 @@ from pytamaro.operations import (above, beside, compose, graphic_height,
 
 def grafik_breite(grafik: Grafik) -> int:
     """
-    Gibt die Breite (in Pixel) der gegebenen Grafik zurück.
+    Gibt die Breite der gegebenen Grafik zurück.
 
     :param grafik: Grafik deren Breite gesucht ist
     :returns: Breite der Grafik
@@ -22,7 +22,7 @@ def grafik_breite(grafik: Grafik) -> int:
 
 def grafik_hoehe(grafik: Grafik) -> int:
     """
-    Gibt die Höhe (in Pixel) der gegebenen Grafik zurück.
+    Gibt die Höhe der gegebenen Grafik zurück.
 
     :param grafik: Grafik deren Höhe gesucht ist
     :returns: Höhe der Grafik
@@ -121,9 +121,6 @@ def drehe(winkel: float, grafik: Grafik) -> Grafik:
     um ihre Fixierposition im Gegenuhrzeigersinn
     um den gegebenen Winkel entspricht.
     Negative Winkel entsprechen einer Rotation um Uhrzeigersinn.
-
-    Es kann wegen der Approximation auf die nächstgelegenen Pixel
-    zu kleinen Rundungsfehlern kommen.
 
     :param winkel: Drehwinkel, in Grad im Gegenuhrzeigersinn
     :param grafik: zu rotierende Grafik

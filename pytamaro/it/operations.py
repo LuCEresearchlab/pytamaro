@@ -12,7 +12,7 @@ from pytamaro.operations import (above, beside, compose, graphic_height,
 
 def larghezza_grafica(grafica: Grafica) -> int:
     """
-    Ritorna la larghezza di una grafica, in pixel.
+    Ritorna la larghezza di una grafica.
 
     :param grafica: grafica di cui calcolare la larghezza
     :returns: larghezza della grafica
@@ -22,7 +22,7 @@ def larghezza_grafica(grafica: Grafica) -> int:
 
 def altezza_grafica(grafica: Grafica) -> int:
     """
-    Ritorna l'altezza di una grafica, in pixel.
+    Ritorna l'altezza di una grafica.
 
     :param grafica: grafica di cui calcolare l'altezza
     :returns: altezza della grafica
@@ -117,9 +117,6 @@ def ruota(angolo: float, grafica: Grafica) -> Grafica:
     Crea una nuova grafica ruotando dell'angolo indicato, in senso antiorario,
     una grafica attorno alla sua posizione di fissaggio.
     Un angolo negativo corrisponde a una rotazione in senso orario.
-
-    È possibile che si verifichino piccoli errori di arrotondamento (a causa
-    dell'approssimazione al pixel più vicino).
 
     :param angolo: angolo di rotazione in senso antiorario, in gradi
     :param grafica: grafica da ruotare

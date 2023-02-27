@@ -55,7 +55,7 @@ def assert_pin_tolerance(g: Graphic, expected_pin: Tuple[int, int]):
     assert expected_pin[1] - 1 <= y_pin <= expected_pin[1] + 1
 
 
-def assert_equals_pixels(g1: Graphic, g2: Graphic):
+def assert_equals_rendered(g1: Graphic, g2: Graphic):
     assert graphic_to_image(g1).tobytes() == graphic_to_image(g2).tobytes()
 
 

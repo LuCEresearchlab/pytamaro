@@ -13,7 +13,7 @@ from pytamaro.point_names import center, top_center, bottom_center, center_right
 @export
 def graphic_width(graphic: Graphic) -> int:
     """
-    Returns the width of a graphic, in pixel.
+    Returns the width of a graphic.
 
     :param graphic: graphic to calculate the width of
     :returns: width of the graphic
@@ -25,7 +25,7 @@ def graphic_width(graphic: Graphic) -> int:
 @export
 def graphic_height(graphic: Graphic) -> int:
     """
-    Returns the height of a graphic, in pixel.
+    Returns the height of a graphic.
 
     :param graphic: graphic to calculate the height of
     :returns: height of the graphic
@@ -152,9 +152,6 @@ def rotate(angle: float, graphic: Graphic) -> Graphic:
     Creates a new graphic by rotating counterclockwise the provided graphic
     around its pinning position by the given angle.
     A negative angle corresponds to a clockwise rotation.
-
-    Small rounding errors (due to approximations to the nearest pixel) may
-    occur.
 
     :param angle: angle of counterclockwise rotation, in degrees
     :param graphic: the graphic to rotate
