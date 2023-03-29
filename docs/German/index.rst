@@ -12,6 +12,7 @@ Deutsche Version
    operations
    io
    colors
+   points
 
 Willkommen in der Pytamaro Dokumentation!
 Erkunden Sie die verfügbaren Funktionen mit dem Menu auf der linken Seite.
