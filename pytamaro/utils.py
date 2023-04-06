@@ -29,11 +29,12 @@ def is_notebook() -> bool:
     :returns: True if running inside a notebook, False otherwise
     """
     try:
-        shell = get_ipython().__class__.__name__  # type: ignore[name-defined]
-        if shell == 'ZMQInteractiveShell':
-            return True   # Jupyter notebook or qtconsole
-        if shell == 'TerminalInteractiveShell':
-            return False  # Terminal running IPython
-        return False  # Other type (?)
-    except NameError:
-        return False      # Probably standard Python interpreter
+        # pylint: disable=import-outside-toplevel
+        from IPython import get_ipython  # type: ignore[import]
+        if 'IPKernelApp' not in get_ipython().config:
+            return False
+    except ImportError:
+        return False
+    except AttributeError:
+        return False
+    return True
