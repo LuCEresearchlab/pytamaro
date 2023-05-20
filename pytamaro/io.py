@@ -5,6 +5,7 @@ Functions to do I/O with graphics, such as showing or saving them.
 import base64
 import io
 import os
+import re
 from pathlib import Path
 from typing import List
 
@@ -57,6 +58,15 @@ def _save_as_SVG(filename: str, graphic: Graphic):
     _draw_to_canvas(canvas, graphic)
     del canvas
     stream.flush()
+    # Manually add shape-rendering="crispEdges" to the SVG file.
+    # We don't use the XML parser from the standard library because,
+    # among other aspects, it does not properly maintain the doctype.
+    with open(filename, "r", encoding="utf-8") as file:
+        content = file.read()
+    # `svg` tag may be self-closing
+    new_content = re.sub("<svg(.*?)(/?)>", r'<svg\1 shape-rendering="crispEdges"\2>', content)
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(new_content)
 
 
 def graphic_to_image(graphic: Graphic) -> Image:

@@ -60,6 +60,13 @@ def test_save_graphic_PNG():
         assert graphic.size == (WIDTH, HEIGHT)
 
 
+def test_save_empty_graphic_SVG():
+    with NamedTemporaryFile() as f:
+        filename = f"{f.name}.svg"
+        save_graphic(filename, empty_graphic())
+        assert_SVG_file_width_height(filename, 0, 0)
+
+
 def test_save_graphic_SVG():
     r = rectangle(WIDTH, HEIGHT, red)
     with NamedTemporaryFile() as f:

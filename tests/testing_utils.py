@@ -1,6 +1,8 @@
+import xml.etree.ElementTree as ET
 from typing import List, Tuple
 
 from PIL import ImageChops, ImageFilter
+
 from pytamaro.color import Color
 from pytamaro.color_names import transparent
 from pytamaro.graphic import Graphic
@@ -60,8 +62,8 @@ def assert_equals_rendered(g1: Graphic, g2: Graphic):
 
 
 def assert_SVG_file_width_height(filename: str, width: float, height: float):
-    with open(filename) as f:
-        content = f.read()
-        print(content)
-        assert f"width=\"{width}\"" in content
-        assert f"height=\"{height}\"" in content
+    tree = ET.parse(filename)
+    root = tree.getroot()
+    assert root.attrib["width"] == str(width)
+    assert root.attrib["height"] == str(height)
+    assert root.attrib["shape-rendering"] == "crispEdges"
