@@ -2,7 +2,7 @@ from tempfile import NamedTemporaryFile
 
 from PIL import Image as ImageMod
 from pytamaro.color_names import blue, red
-from pytamaro.io import save_gif, save_graphic, show_graphic
+from pytamaro.io import save_animation, save_graphic, show_animation, show_graphic
 from pytamaro.primitives import empty_graphic, rectangle
 from pytest import raises
 
@@ -12,6 +12,11 @@ from tests.testing_utils import HEIGHT, WIDTH, assert_SVG_file_width_height
 def test_show_graphic():
     # Implicitly assert that it does not throw
     show_graphic(rectangle(WIDTH, HEIGHT, red))
+
+
+def test_show_animation():
+    # Implicitly assert that it does not throw
+    show_animation([rectangle(WIDTH, HEIGHT, red)])
 
 
 def test_show_empty_graphic(capfd):
@@ -28,12 +33,12 @@ def test_show_debug_graphic():
 
 def test_gif_no_ext():
     with raises(ValueError, match=".gif"):
-        save_gif("foo", [rectangle(WIDTH, HEIGHT, red)])
+        save_animation("foo", [rectangle(WIDTH, HEIGHT, red)])
 
 
-def test_empty_save_gif():
+def test_empty_save_animation():
     with raises(ValueError):
-        save_gif("foo.gif", [])
+        save_animation("foo.gif", [])
 
 
 def test_show_wrong_type():
@@ -41,12 +46,12 @@ def test_show_wrong_type():
         show_graphic(None)  # type: ignore
 
 
-def test_save_gif():
+def test_save_animation():
     r1 = rectangle(WIDTH, HEIGHT, red)
     r2 = rectangle(WIDTH, HEIGHT, blue)
     with NamedTemporaryFile() as f:
         filename = f"{f.name}.gif"
-        save_gif(filename, [r1, r2])
+        save_animation(filename, [r1, r2])
         gif = ImageMod.open(filename)
         assert gif.n_frames == 2
 
@@ -102,5 +107,20 @@ def test_data_uri_output(capfd):
     assert (
         out
         == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg=="
+    )
+    del os.environ[VAR]
+
+
+def test_data_uri_gif_output(capfd):
+    import os
+
+    VAR = "PYTAMARO_OUTPUT_DATA_URI"
+    os.environ[VAR] = "True"
+    r = rectangle(1, 1, red)
+    show_animation([r])
+    out, _ = capfd.readouterr()
+    assert (
+        out
+        == "data:image/gif;base64,R0lGODlhAQABAIEAAP8AAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBBAABACwAAAAAAQABAAAIBAABBAQAOw=="
     )
     del os.environ[VAR]

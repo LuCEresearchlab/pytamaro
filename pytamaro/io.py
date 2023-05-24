@@ -1,5 +1,5 @@
 """
-Functions to do I/O with graphics, such as showing or saving them.
+Functions for output (show or save) of graphics.
 """
 
 import base64
@@ -7,6 +7,9 @@ import io
 import os
 import re
 from pathlib import Path
+import subprocess
+import sys
+from tempfile import NamedTemporaryFile
 from typing import List
 
 from PIL import Image as PILImageMod
@@ -109,7 +112,7 @@ def _save_as_PNG(filename: str, graphic: Graphic):
 @export
 def show_graphic(graphic: Graphic, debug: bool = False):
     """
-    Show a graphic in a window. Graphics with no area cannot be shown.
+    Show a graphic. Graphics with no area cannot be shown.
 
     When `debug` is `True`, adorns the visualization with useful information
     for debugging: a red border around the bounding box and a yellowish cross
@@ -171,15 +174,15 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
 
 
 @export
-def save_gif(filename: str, graphics: List[Graphic], duration: int = 40, loop: bool = True):
+def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, loop: bool = True):
     """
-    Save a sequence of graphics as an animated GIF.
+    Save a sequence of graphics as an animation (GIF).
 
     Graphics are sequentially reproduced (normally at 25 frames per second) in
     a loop (unless specificied otherwise).
 
     :param filename: name of the file to create, including the extension '.gif'
-    :param graphics: list of graphics to be saved as a GIF
+    :param graphics: list of graphics to be saved as an animation
     :param duration: duration in milliseconds for each frame
            (defaults to 40 milliseconds, which leads to 25 frames per second)
     :param loop: whether the GIF should loop indefinitely (defaults to true)
@@ -198,3 +201,35 @@ def save_gif(filename: str, graphics: List[Graphic], duration: int = 40, loop: b
         duration=duration,
         loop=0 if loop else 1,  # loop 0 means "indefinitely", 1 means "once"
     )
+
+
+@export
+def show_animation(graphics: List[Graphic], duration: int = 40, loop: bool = True):
+    """
+    Show a sequence of graphics as an animation (GIF).
+
+    Graphics are sequentially reproduced (normally at 25 frames per second) in
+    a loop (unless specificied otherwise).
+
+    :param graphics: list of graphics to be shown as an animation
+    :param duration: duration in milliseconds for each frame
+           (defaults to 40 milliseconds, which leads to 25 frames per second)
+    :param loop: whether the animation should loop indefinitely (defaults to true)
+    """
+    with NamedTemporaryFile(suffix=".gif", delete=False) as file:
+        save_animation(file.name, graphics, duration, loop)
+        if is_notebook():
+            # pylint: disable=undefined-variable, import-outside-toplevel
+            from IPython.display import Image as IPythonImage  # type: ignore[import]
+            with open(file.name, "rb") as stream:
+                display(IPythonImage(stream.read()))  # type: ignore[name-defined]
+        elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
+            with open(file.name, "rb") as stream:
+                b64_str = base64.b64encode(stream.read()).decode("utf-8")
+                print(f"data:image/gif;base64,{b64_str}", end="")
+        elif sys.platform == "win32":
+            os.startfile(file.name)
+        elif sys.platform == "darwin":
+            subprocess.call(["open", "-a", "Safari", file.name])
+        else:
+            subprocess.call(["xdg-open", file.name])

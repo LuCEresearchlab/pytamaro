@@ -2,7 +2,7 @@ from tempfile import NamedTemporaryFile
 
 from PIL import Image as ImageMod
 from pytamaro.color_names import blue, red
-from pytamaro.it.io import salva_gif, salva_grafica, visualizza_grafica
+from pytamaro.it.io import salva_animazione, salva_grafica, visualizza_animazione, visualizza_grafica
 from pytamaro.primitives import rectangle
 from tests.testing_utils import HEIGHT, WIDTH
 
@@ -12,12 +12,17 @@ def test_show_graphic():
     visualizza_grafica(rectangle(WIDTH, HEIGHT, red))
 
 
-def test_save_gif():
+def test_show_animation():
+    # Implicitly assert that it does not throw
+    visualizza_animazione([rectangle(WIDTH, HEIGHT, red)])
+
+
+def test_save_animation():
     r1 = rectangle(WIDTH, HEIGHT, red)
     r2 = rectangle(WIDTH, HEIGHT, blue)
     with NamedTemporaryFile() as f:
         filename = f"{f.name}.gif"
-        salva_gif(filename, [r1, r2])
+        salva_animazione(filename, [r1, r2])
         gif = ImageMod.open(filename)
         assert gif.n_frames == 2
 

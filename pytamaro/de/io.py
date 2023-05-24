@@ -4,13 +4,13 @@ Funktionen zur Ausgabe (Anzeigen oder Speichern) von Grafiken.
 
 from __future__ import annotations
 
-from pytamaro.io import save_gif, save_graphic, show_graphic
+from pytamaro.io import save_animation, save_graphic, show_animation, show_graphic
 from pytamaro.de.graphic import Grafik
 
 
 def zeige_grafik(grafik: Grafik, debug: bool = False):
     """
-    Zeige die gegebene Grafik in einem neuen Fenster an.
+    Zeige die gegebene Grafik.
 
     Eine Grafik ohne Fläche kann nicht angezeigt werden.
 
@@ -48,11 +48,11 @@ def speichere_grafik(datei_name: str, grafik: Grafik, debug: bool = False):
     save_graphic(datei_name, grafik, debug)
 
 
-def speichere_gif(
+def speichere_animation(
     datei_name: str, grafiken: list[Grafik], dauer: int = 40, loop: bool = True
 ):
     """
-    Speichere die gegebene Sequenz von Grafiken als animierte GIF-Datei.
+    Speichere eine Sequenz von Grafiken als Animation (GIF).
 
     Beim Anzeigen des GIFs werden die Grafiken in einer unendlichen Schleife
     animiert (normalerweise mit 25 Grafiken pro Sekunde).
@@ -64,4 +64,20 @@ def speichere_gif(
     :param loop: bestimmt ob das GIF in einer unendlichen Schleife abgespielt
            werden soll (Default: true)
     """
-    save_gif(datei_name, grafiken, dauer, loop)
+    save_animation(datei_name, grafiken, dauer, loop)
+
+
+def zeige_animation(grafiken: list[Grafik], dauer: int = 40, loop: bool = True):
+    """
+    Zeige eine Sequenz von Grafiken als Animation (GIF).
+
+    Beim Anzeigen des GIFs werden die Grafiken in einer unendlichen Schleife
+    animiert (normalerweise mit 25 Grafiken pro Sekunde).
+
+    :param grafiken: Liste der anzuzeigenden Grafiken
+    :param dauer: Dauer jeder Grafik, in Millisekunden (Default: 40
+           Millisekunden, enspricht 25 Grafiken pro Sekunde)
+    :param loop: bestimmt ob das GIF in einer unendlichen Schleife abgespielt
+           werden soll (Default: true)
+    """
+    show_animation(grafiken, dauer, loop)
