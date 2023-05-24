@@ -5,7 +5,7 @@ description = "Educational library for teaching problem decompositon using graph
 authors = ["Luca Chiodini <luca@chiodini.org>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.8"
 Pillow = "^9.0.0"
 skia-python = "^87.4"
 
