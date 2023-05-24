@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.10"]  # 3.7 is Thonny's latest, 3.10 is the latest Python
+        python-version: ["3.7", "3.11"]  # 3.7 is Thonny's latest, 3.11 is the latest Python
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}

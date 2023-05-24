@@ -219,9 +219,10 @@ def show_animation(graphics: List[Graphic], duration: int = 40, loop: bool = Tru
     with NamedTemporaryFile(suffix=".gif", delete=False) as file:
         save_animation(file.name, graphics, duration, loop)
         if is_notebook():
-            # pylint: disable=undefined-variable, import-outside-toplevel
+            # pylint: disable=import-outside-toplevel
             from IPython.display import Image as IPythonImage  # type: ignore[import]
             with open(file.name, "rb") as stream:
+                # pylint: disable=undefined-variable
                 display(IPythonImage(stream.read()))  # type: ignore[name-defined]
         elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
             with open(file.name, "rb") as stream:
