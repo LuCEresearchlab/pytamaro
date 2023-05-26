@@ -10,7 +10,7 @@ from pytamaro.de.graphic import Grafik
 
 def zeige_grafik(grafik: Grafik, debug: bool = False):
     """
-    Zeige die gegebene Grafik.
+    Zeige die gegebene Grafik an.
 
     Eine Grafik ohne Fläche kann nicht angezeigt werden.
 
@@ -69,7 +69,7 @@ def speichere_animation(
 
 def zeige_animation(grafiken: list[Grafik], dauer: int = 40, loop: bool = True):
     """
-    Zeige eine Sequenz von Grafiken als Animation (GIF).
+    Zeige eine Sequenz von Grafiken als Animation (GIF) an.
 
     Beim Anzeigen des GIFs werden die Grafiken in einer unendlichen Schleife
     animiert (normalerweise mit 25 Grafiken pro Sekunde).
