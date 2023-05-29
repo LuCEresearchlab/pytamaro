@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2023-05-29
+
+### Added
+
+- New function `show_animation` to show an animation (without having to explicitly save it to a file) in an appropriate viewer (e.g., a Jupyter notebook, Safari on macOS, ...). Multi-OS support is still experimental.
+
+### Changed
+
+- The function `save_gif` has been renamed to `save_animation` to decouple the concept (an animation) from the format (GIF). There is now a nice symmetry between `show_graphic`, `save_graphic`, `show_animation` and `save_animation`.
+- SVG files are now saved with an extra attribute (`shape-rendering="crispEdges"`) to achieve a better rendering for our use case and avoid the occasional tiny gaps between adjacent shapes. 
+
 ## [0.4.1] - 2023-04-06
 
 ### Fixed
