@@ -5,6 +5,7 @@ from pytamaro.color_names import blue, red
 from pytamaro.io import save_animation, save_graphic, show_animation, show_graphic
 from pytamaro.primitives import empty_graphic, rectangle
 from pytest import raises
+from pytamaro.operations import beside
 
 from tests.testing_utils import HEIGHT, WIDTH, assert_SVG_file_width_height
 
@@ -124,3 +125,11 @@ def test_data_uri_gif_output(capfd):
         == "data:image/gif;base64,R0lGODlhAQABAIEAAP8AAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBBAABACwAAAAAAQABAAAIBAABBAQAOw=="
     )
     del os.environ[VAR]
+
+
+def test_show_deeply_nested_graphic():
+    element = rectangle(WIDTH, HEIGHT, red)
+    from functools import reduce
+    graphic = reduce(beside, [element] * 1000, empty_graphic())
+    # Implicitly assert that it does not throw
+    show_graphic(graphic)

@@ -44,7 +44,12 @@ def _draw_to_canvas(canvas: Canvas, graphic: Graphic):
     """
     bounds = graphic.bounds()
     canvas.translate(-bounds.left(), -bounds.top())
+    # Temporarily set the recursion limit to a high value so that we can
+    # traverse the (potentially deeply nested) tree that represents the graphic.
+    current_recursion_limit = sys.getrecursionlimit()
+    sys.setrecursionlimit(100000)
     graphic.draw(canvas)
+    sys.setrecursionlimit(current_recursion_limit)
 
 
 # pylint: disable-next=invalid-name
