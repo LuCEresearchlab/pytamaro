@@ -114,6 +114,20 @@ def _save_as_PNG(filename: str, graphic: Graphic):
     graphic_to_image(graphic).save(filename, kPNG)
 
 
+def _print_data_uri(mime_type: str, b64_content: str):
+    """
+    Prints a data URI to standard output with a special prefix and suffix so
+    that it can be recognized in the context of a larger output.
+
+    :param mime_type: MIME type of the data (e.g., "image/png")
+    :param b64_content: base64-encoded content
+    """
+    prefix = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
+    suffix = "@@@PYTAMARO_DATA_URI_END@@@"
+    uri = f"data:{mime_type};base64,{b64_content}"
+    print(f"{prefix}{uri}{suffix}", end="")
+
+
 @export
 def show_graphic(graphic: Graphic, debug: bool = False):
     """
@@ -140,7 +154,7 @@ def show_graphic(graphic: Graphic, debug: bool = False):
             buffer = io.BytesIO()
             pil_image.save(buffer, format="PNG")
             b64_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
-            print(f"data:image/png;base64,{b64_str}", end="")
+            _print_data_uri("image/png", b64_str)
         else:
             pil_image.show()
 
@@ -232,7 +246,7 @@ def show_animation(graphics: List[Graphic], duration: int = 40, loop: bool = Tru
         elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
             with open(file.name, "rb") as stream:
                 b64_str = base64.b64encode(stream.read()).decode("utf-8")
-                print(f"data:image/gif;base64,{b64_str}", end="")
+                _print_data_uri("image/gif", b64_str)
         elif sys.platform == "win32":
             os.startfile(file.name)
         elif sys.platform == "darwin":

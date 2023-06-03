@@ -97,6 +97,12 @@ def test_save_empty_graphic_as_PNG(capfd):
         assert "0x0" in out
 
 
+DATA_URI_11RED_RECT = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg=="
+DATA_URI_11RED_RECT_GIF = "data:image/gif;base64,R0lGODlhAQABAIEAAP8AAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBBAABACwAAAAAAQABAAAIBAABBAQAOw=="
+PREFIX = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
+SUFFIX = "@@@PYTAMARO_DATA_URI_END@@@"
+
+
 def test_data_uri_output(capfd):
     import os
 
@@ -106,8 +112,25 @@ def test_data_uri_output(capfd):
     show_graphic(r)
     out, _ = capfd.readouterr()
     assert (
-        out
-        == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg=="
+        out == f"{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}"
+    )
+    del os.environ[VAR]
+
+
+def test_multiple_data_uri_mixed_output(capfd):
+    import os
+
+    VAR = "PYTAMARO_OUTPUT_DATA_URI"
+    os.environ[VAR] = "True"
+    r = rectangle(1, 1, red)
+    print(42)
+    show_graphic(r)
+    print(42)
+    show_graphic(r)
+    print(42)
+    out, _ = capfd.readouterr()
+    assert (
+        out == f"42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n"
     )
     del os.environ[VAR]
 
@@ -122,7 +145,7 @@ def test_data_uri_gif_output(capfd):
     out, _ = capfd.readouterr()
     assert (
         out
-        == "data:image/gif;base64,R0lGODlhAQABAIEAAP8AAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBBAABACwAAAAAAQABAAAIBAABBAQAOw=="
+        == f"{PREFIX}{DATA_URI_11RED_RECT_GIF}{SUFFIX}"
     )
     del os.environ[VAR]
 
