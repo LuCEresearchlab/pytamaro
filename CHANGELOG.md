@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1] - 2023-06-03
+
+### Changed
+
+- Data URIs (used in one of the output modes) are now wrapped in special markers so that they can be recognized within a larger output.
+
+### Fixed
+
+- Fix rendering of reasonably big graphics (by increasing the recursion limit)
+
+## [0.4.1] - 2023-04-06
+
+### Fixed
+
+- Improve Jupyter notebook detection to include Google Colab
+
 ## [0.5.0] - 2023-05-29
 
 ### Added
