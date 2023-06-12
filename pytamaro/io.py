@@ -66,6 +66,7 @@ def _save_as_SVG(filename: str, graphic: Graphic):
     _draw_to_canvas(canvas, graphic)
     del canvas
     stream.flush()
+    stream.fsync()
     # Manually add shape-rendering="crispEdges" to the SVG file.
     # We don't use the XML parser from the standard library because,
     # among other aspects, it does not properly maintain the doctype.
