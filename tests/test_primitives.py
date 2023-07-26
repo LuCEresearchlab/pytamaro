@@ -1,14 +1,16 @@
 from collections import Counter
 
-from pytamaro.color_names import blue, red
-from pytamaro.operations import above, compose, graphic_height, graphic_width, rotate
-from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
-                                 rectangle, text, triangle)
 from pytest import raises
 
+from pytamaro.color_names import blue, red
+from pytamaro.operations import (above, compose, graphic_height, graphic_width,
+                                 rotate)
+from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
+                                 rectangle, text, triangle)
 from tests.testing_utils import (HEIGHT, RADIUS, WIDTH,
                                  assert_graphics_equals_tolerance, assert_size,
-                                 assert_unique_color, assert_value_tolerance, pixels_colors)
+                                 assert_unique_color, assert_value_tolerance,
+                                 pixels_colors)
 
 
 def test_rectangle():
@@ -56,6 +58,17 @@ def test_half_circular_sector():
     s2 = rotate(180, s1)
     s12 = above(s1, s2)
     assert_graphics_equals_tolerance(s12, ellipse(2 * RADIUS, 2 * RADIUS, red))
+
+
+def test_circular_sector_original_pin_position():
+    s359 = circular_sector(RADIUS, 359, red)
+    s360 = circular_sector(RADIUS, 360, red)
+    circle = ellipse(2 * RADIUS, 2 * RADIUS, red)
+    # When the pinning position is correctly set to the center,
+    # composing it with a circle of the same radius should
+    # result in a graphic of the same size.
+    assert_size(compose(circle, s359), (2 * RADIUS, 2 * RADIUS))
+    assert_size(compose(circle, s360), (2 * RADIUS, 2 * RADIUS))
 
 
 def test_circular_sector_pin_position():

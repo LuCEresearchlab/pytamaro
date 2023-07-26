@@ -135,7 +135,7 @@ class CircularSector(Primitive):
     """
     def __init__(self, radius: float, angle: float, color: Color):
         if angle == 360:
-            path = Path.Circle(0, 0, radius)
+            path = Path.Circle(radius, radius, radius)
         else:
             diameter = 2 * radius
             path = Path()
