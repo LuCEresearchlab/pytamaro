@@ -5,7 +5,7 @@ description = "Educational library for teaching problem decompositon using graph
 authors = ["Luca Chiodini <luca@chiodini.org>"]
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = ">=3.8,<4.0"
 Pillow = "^9.0.0"
 skia-python = "^87.4"
 
@@ -18,6 +18,9 @@ pycodestyle = "^2.8.0"
 Sphinx = "^5.2.3"
 sphinx-rtd-theme = "^1.0.0"
 pyright = "^0.0.13"
+
+[tool.poetry.group.dev.dependencies]
+sphinx-toolbox = "^3.5.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

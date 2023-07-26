@@ -31,7 +31,7 @@ release = "0.4.0"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc"]
+extensions = ["sphinx.ext.autodoc", "sphinx_toolbox"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -82,3 +82,6 @@ autodoc_default_options = {
     "class-doc-from": "class",
     "exclude-members": "__init__, __new__",
 }
+
+github_username = 'LuCEresearchlab'
+github_repository = 'pytamaro'
