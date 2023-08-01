@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.2] - 2023-08-01
+
+### Fixed
+
+- Fix SVG files' transparent background rendered as black in edge cases
+- Fix the pinning position for a `circular_sector` of 360 degrees
+- Attempt to prevent a rare condition in which saving an SVG file could fail
+
 ## [0.5.1] - 2023-06-03
 
 ### Changed
