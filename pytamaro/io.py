@@ -6,9 +6,9 @@ import base64
 import io
 import os
 import re
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import List
 
@@ -70,10 +70,14 @@ def _save_as_SVG(filename: str, graphic: Graphic):
     # Manually add shape-rendering="crispEdges" to the SVG file.
     # We don't use the XML parser from the standard library because,
     # among other aspects, it does not properly maintain the doctype.
+    # We also manually add `fill="none"` to the root `svg` element to ensure
+    # that renderers always use a transparent background.
     with open(filename, "r", encoding="utf-8") as file:
         content = file.read()
     # `svg` tag may be self-closing
-    new_content = re.sub("<svg(.*?)(/?)>", r'<svg\1 shape-rendering="crispEdges"\2>', content)
+    new_content = re.sub("<svg(.*?)(/?)>",
+                         r'<svg\1 shape-rendering="crispEdges" fill="none"\2>',
+                         content)
     with open(filename, "w", encoding="utf-8") as file:
         file.write(new_content)
 
