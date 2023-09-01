@@ -4,12 +4,15 @@ Type `Graphic`, that includes a graphic with a pinning position.
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Any
 
 from skia import (Canvas, Font, Matrix, Paint, Path, Point, Rect, Size,
                   Typeface)
 
 from pytamaro.color import Color
 from pytamaro.point import Point as PyTamaroPoint
+from pytamaro.point_names import get_point_name
+
 
 # pylint: disable=super-init-not-called
 
@@ -86,23 +89,30 @@ class Primitive(Graphic):
     Represents a primitive graphic, which has a path and a uniform color.
     Geometric shapes and text are primitive graphics.
     """
-    def __init__(self, path: Path, color: Color):
+
+    def __init__(self, path: Path, color: Color, data: str, color_info: str):
         self.path = path
         self.paint = Paint(color.color)
         bounds = self.path.computeTightBounds()
         self.set_pin_position(bounds.width() / 2, bounds.height() / 2)
+        # The definition of left_node and right_node is just used for print graphic tree
+        # in terminal. And the printing of the tree is not essential to accessing of the tree structure,
+        # it is just used for testing.
+        self.left_node = data  # left_node contains all the information of graphic except color
+        self.right_node = color_info  # right_node contains the color information of graphic
 
     def draw(self, canvas: Canvas):
         canvas.drawPath(self.path, self.paint)
 
     def _key(self):
-        return (super()._key(), self.paint.getHash())
+        return super()._key(), self.paint.getHash()
 
 
 class Empty(Graphic):
     """
     An empty graphic.
     """
+
     def __init__(self):
         super().__init__(Point(0, 0), Path())
 
@@ -114,18 +124,29 @@ class Rectangle(Primitive):
     """
     A rectangle.
     """
+
     def __init__(self, width: float, height: float, color: Color):
         path = Path().addRect(Rect.MakeWH(width, height))
-        super().__init__(path, color)
+        data = "w:" + str(width) + ",h:" + str(height)
+        super().__init__(path, color, data, color.as_string())
+        # For graphic tree comparison
+        self.width = width
+        self.height = height
+        self.color = color
 
 
 class Ellipse(Primitive):
     """
     An ellipse.
     """
+
     def __init__(self, width: float, height: float, color: Color):
         path = Path().addOval(Rect.MakeWH(width, height))
-        super().__init__(path, color)
+        data = "w:" + str(width) + ",h:" + str(height)
+        super().__init__(path, color, data, color.as_string())
+        # For graphic tree comparison
+        self.width = width
+        self.height = height
 
 
 class CircularSector(Primitive):
@@ -133,6 +154,7 @@ class CircularSector(Primitive):
     A circular sector (with an angle between 0 and 360).
     Its pinning position is the center of the circle from which it is taken.
     """
+
     def __init__(self, radius: float, angle: float, color: Color):
         if angle == 360:
             path = Path.Circle(radius, radius, radius)
@@ -142,8 +164,13 @@ class CircularSector(Primitive):
             path.moveTo(radius, radius)
             path.arcTo(Rect.MakeWH(diameter, diameter), 0, -angle, False)
             path.close()
-        super().__init__(path, color)
+        data = "r:" + str(radius) + ",a:" + str(angle)
+        super().__init__(path, color, data, color.as_string())
         self.set_pin_position(radius, radius)
+        # For graphic tree comparison
+        self.color = color
+        self.radius = radius
+        self.angle = angle
 
 
 class Triangle(Primitive):
@@ -154,13 +181,19 @@ class Triangle(Primitive):
 
     Its pinning position is the centroid of the triangle.
     """
+
     def __init__(self, side1: float, side2: float, angle: float, color: Color):
         third_point = Matrix.RotateDeg(-angle).mapXY(side2, 0)
         path = Path.Polygon([Point(0, 0), Point(side1, 0), third_point], isClosed=True)
-        super().__init__(path, color)
+        data = "s1:" + str(side1) + ",s2:" + str(side2) + ",a:" + str(angle)
+        super().__init__(path, color, data, color.as_string())
         # The centroid is the average of the three vertices
         centroid = Point((side1 + third_point.x()) / 3, third_point.y() / 3)
         self.pin_position = centroid
+        # For graphic tree comparison
+        self.side1 = side1
+        self.side2 = side2
+        self.angle = angle
 
 
 class Text(Primitive):
@@ -169,6 +202,7 @@ class Text(Primitive):
     Its pinning position is horizontally aligned on the left and vertically on
     the baseline of the text.
     """
+
     def __init__(self, text: str, font_name: str, size: float, color: Color):
         font = Font(Typeface(font_name), size)
         glyphs = font.textToGlyphs(text)
@@ -181,19 +215,30 @@ class Text(Primitive):
                 path.offset(x_offset, 0)
                 text_path.addPath(path)
 
-        super().__init__(text_path, color)
+        data = "t:" + text + ",f:" + font_name + ",s:" + str(size)
+        super().__init__(text_path, color, data, color.as_string())
         # Set the pinning position at baseline level (0) on the very left (which
         # might be slightly after 0, given that the bounding box is computed
         # very tightly around the glyphs, cutting some space before the first
         # one).
         self.set_pin_position(self.bounds().left(), 0)
+        # For graphic tree comparison
+        self.text = text
+        self.font_name = font_name
+        self.size = size
 
 
-class Compose(Graphic):
+class Operation(ABC):
+    left_node: Graphic | str
+    right_node: Graphic
+
+
+class Compose(Operation, Graphic):
     """
     Represents the composition of two graphics, one in the foreground and the
     other in the background, joined on their pinning positions.
     """
+
     def __init__(self, foreground: Graphic, background: Graphic):
         self.foreground = foreground
         self.background = background
@@ -203,6 +248,9 @@ class Compose(Graphic):
         self.path = Path(self.background.path)
         self.path.addPath(self.foreground.path,
                           bg_pin.x() - fg_pin.x(), bg_pin.y() - fg_pin.y())
+        # For graphic tree comparison
+        self.left_node = foreground
+        self.right_node = background
 
     def draw(self, canvas: Canvas):
         canvas.save()
@@ -213,10 +261,11 @@ class Compose(Graphic):
         canvas.restore()
 
 
-class Pin(Graphic):
+class Pin(Operation, Graphic):
     """
     Represents the pinning of a graphic in a certain position on its bounds.
     """
+
     def __init__(self, graphic: Graphic, pinning_point: PyTamaroPoint):
         self.graphic = graphic
         bounds = self.graphic.bounds()
@@ -233,21 +282,28 @@ class Pin(Graphic):
         self.set_pin_position(
             h_mapping[pinning_point.x], v_mapping[pinning_point.y])
         self.path = Path(self.graphic.path)
+        # For graphic tree comparison
+        self.left_node = get_point_name(pinning_point)
+        self.right_node = graphic
 
     def draw(self, canvas: Canvas):
         self.graphic.draw(canvas)
 
 
-class Rotate(Graphic):
+class Rotate(Operation, Graphic):
     """
     Represents the rotation of a graphic by a certain angle clockwise.
     """
+
     def __init__(self, graphic: Graphic, deg: float):
         self.graphic = graphic
         self.rot_matrix = Matrix.RotateDeg(deg, self.graphic.pin_position)
         self.path = Path()
         self.graphic.path.transform(self.rot_matrix, self.path)  # updates self.path
         self.pin_position = graphic.pin_position
+        # For graphic tree comparison
+        self.left_node = str(- deg)
+        self.right_node = graphic
 
     def draw(self, canvas: Canvas):
         canvas.save()

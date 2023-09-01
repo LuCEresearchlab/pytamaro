@@ -31,3 +31,8 @@ class Color:
                   color, the last one [0-1] identifies the transparency
         """
         return self.color[0] * 255, self.color[1] * 255, self.color[2] * 255, self.color[3]
+
+    # Convert a Color object to a string which is used to indicate the color information in graphic tree
+    def as_string(self) -> str:
+        return "rgb:" + str(self.color[0] * 255) + "_" + str(self.color[1] * 255) + "_" + str(self.color[2] * 255) \
+            + "_" + str(self.color[3])

@@ -63,3 +63,25 @@ bottom_right: Point = center_right.translate(j_hat * -1)
 
 :meta hide-value:
 """
+
+
+# Used for graphic tree comparison
+def get_point_name(point: Point) -> str:
+    if point == center:
+        return "center"
+    elif point == bottom_right:
+        return "bottom_right"
+    elif point == bottom_left:
+        return "bottom_left"
+    elif point == bottom_center:
+        return "bottom_center"
+    elif point == center_right:
+        return "center_right"
+    elif point == center_left:
+        return "center_left"
+    elif point == top_right:
+        return "top_right"
+    elif point == top_left:
+        return "top_left"
+    elif point == top_center:
+        return "top_center"
