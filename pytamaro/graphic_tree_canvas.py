@@ -1,6 +1,11 @@
 from pytamaro.graphic import *
 import sys
 
+"""
+    This whole file is used for printing tree structure. And the print algorithm is adapted from 
+    Algorithms and Data Structures, Spring 2023 in-class solution.
+"""
+
 
 class Canvas:
     def __init__(self, width):
