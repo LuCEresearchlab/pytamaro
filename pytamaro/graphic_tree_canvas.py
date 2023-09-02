@@ -7,7 +7,7 @@ import sys
 """
 
 
-class Canvas:
+class TreeCanvas:
     def __init__(self, width):
         self.line_width = width
         self.canvas = []
@@ -77,6 +77,6 @@ def print_tree(t):
 
 
 def print_tree_w(t, width):
-    canvas = Canvas(width)
+    canvas = TreeCanvas(width)
     print_binary_tree_r(t, 0, 0, canvas)
     canvas.print_out()
