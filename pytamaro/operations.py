@@ -2,8 +2,7 @@
 Functions to do operations on graphics (mainly, to combine them).
 """
 
-
-from pytamaro.graphic import Compose, Graphic, Pin, Rotate
+from pytamaro.graphic import Compose, Graphic, Pin, Rotate, Beside
 from pytamaro.checks import check_angle, check_graphic, check_point
 from pytamaro.utils import export
 from pytamaro.point import Point
@@ -123,9 +122,9 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
     :returns: the resulting graphic after placing the two graphics one besides
               the other
     """
-    check_graphic(left_graphic, "left_graphic")
-    check_graphic(right_graphic, "right_graphic")
-    return _compose_pin_center(left_graphic, right_graphic, center_right, center_left)
+    check_graphic(left_graphic)
+    check_graphic(right_graphic)
+    return Beside(left_graphic, right_graphic)
 
 
 @export
