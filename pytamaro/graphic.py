@@ -4,7 +4,6 @@ Type `Graphic`, that includes a graphic with a pinning position.
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any
 
 from skia import (Canvas, Font, Matrix, Paint, Path, Point, Rect, Size,
                   Typeface)
@@ -309,4 +308,37 @@ class Rotate(Operation, Graphic):
         canvas.save()
         canvas.concat(self.rot_matrix)
         self.graphic.draw(canvas)
+        canvas.restore()
+
+
+class Beside(Operation, Graphic):
+    def __init__(self, left_graphic: Graphic, right_graphic: Graphic):
+        self.left_graphic = left_graphic
+        self.right_graphic = right_graphic
+        lg_pin_center_right_x = left_graphic.bounds().right()
+        lg_pin_center_left_x = left_graphic.bounds().left()
+        lg_pin_center_right_y = left_graphic.bounds().centerY()
+        rg_pin_center_left_x = right_graphic.bounds().left()
+        rg_pin_center_right_x = right_graphic.bounds().right()
+        rg_pin_center_left_y = right_graphic.bounds().centerY()
+        above_center_x = (lg_pin_center_left_x + rg_pin_center_right_x
+                          + rg_pin_center_left_x - lg_pin_center_right_x) / 2
+        self.path = Path(right_graphic.path)
+        self.path.addPath(left_graphic.path, rg_pin_center_left_x - lg_pin_center_right_x,
+                          rg_pin_center_left_y - lg_pin_center_right_y)
+        self.set_pin_position(above_center_x, rg_pin_center_left_y)
+        # For graphic tree comparison
+        self.left_node = left_graphic
+        self.right_node = right_graphic
+
+    def draw(self, canvas: Canvas):
+        lg_pin_center_right_x = self.left_graphic.bounds().right()
+        lg_pin_center_right_y = self.left_graphic.bounds().centerY()
+        rg_pin_center_left_x = self.right_graphic.bounds().left()
+        rg_pin_center_left_y = self.right_graphic.bounds().centerY()
+        canvas.save()
+        self.left_graphic.draw(canvas)
+        canvas.translate(lg_pin_center_right_x - rg_pin_center_left_x,
+                         lg_pin_center_right_y - rg_pin_center_left_y)
+        self.right_graphic.draw(canvas)
         canvas.restore()
