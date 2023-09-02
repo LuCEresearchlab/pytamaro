@@ -1,4 +1,6 @@
+from pytamaro import beside, center_right, center_left
 from pytamaro.color_names import blue, red
+from pytamaro.operations import _compose_pin_center
 from pytamaro.primitives import empty_graphic, rectangle
 
 from tests.testing_utils import HEIGHT, WIDTH
@@ -58,3 +60,16 @@ def test_hash_empty_graphic():
 def test_empty_area_not_empty_graphic():
     g = rectangle(0, HEIGHT, red)
     assert g.empty_area()
+
+
+def test_beside():
+    r1 = rectangle(100, 100, red)
+    r2 = rectangle(200, 50, blue)
+    # The original beside function
+    e_graphic = _compose_pin_center(r1, r2, center_right, center_left)
+    # The new beside function
+    a_graphic = beside(r1, r2)
+    assert e_graphic.path == a_graphic.path
+    assert e_graphic.bounds() == a_graphic.bounds()
+    assert e_graphic.pin_position == a_graphic.pin_position
+
