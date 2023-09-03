@@ -224,7 +224,7 @@ class Text(Primitive):
         # For graphic tree comparison
         self.text = text
         self.font_name = font_name
-        self.size = size
+        self.text_size = size
 
 
 class Operation(ABC):
