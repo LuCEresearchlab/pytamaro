@@ -1,6 +1,6 @@
-from pytamaro import beside, center_right, center_left, bottom_center, top_center
+from pytamaro import beside, center_right, center_left, bottom_center, top_center, center
 from pytamaro.color_names import blue, red
-from pytamaro.operations import _compose_pin_center, above
+from pytamaro.operations import _compose_pin_center, above, overlay
 from pytamaro.primitives import empty_graphic, rectangle, ellipse
 
 from tests.testing_utils import HEIGHT, WIDTH
@@ -81,6 +81,18 @@ def test_above():
     e_graphic = _compose_pin_center(r1, r2, bottom_center, top_center)
     # The new above function
     a_graphic = above(r1, r2)
+    assert e_graphic.path == a_graphic.path
+    assert e_graphic.bounds() == a_graphic.bounds()
+    assert e_graphic.pin_position == a_graphic.pin_position
+
+
+def test_overlay():
+    r1 = ellipse(100, 100, red)
+    r2 = rectangle(200, 200, blue)
+    # The original overlay function
+    e_graphic = _compose_pin_center(r1, r2, center, center)
+    # The new overlay function
+    a_graphic = overlay(r1, r2)
     assert e_graphic.path == a_graphic.path
     assert e_graphic.bounds() == a_graphic.bounds()
     assert e_graphic.pin_position == a_graphic.pin_position
