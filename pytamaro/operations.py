@@ -2,7 +2,7 @@
 Functions to do operations on graphics (mainly, to combine them).
 """
 
-from pytamaro.graphic import Compose, Graphic, Pin, Rotate, Beside, Above
+from pytamaro.graphic import Compose, Graphic, Pin, Rotate, Beside, Above, Overlay
 from pytamaro.checks import check_angle, check_graphic, check_point
 from pytamaro.utils import export
 from pytamaro.point import Point
@@ -106,7 +106,7 @@ def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
     """
     check_graphic(foreground_graphic, "foreground_graphic")
     check_graphic(background_graphic, "background_graphic")
-    return _compose_pin_center(foreground_graphic, background_graphic, center, center)
+    return Overlay(foreground_graphic, background_graphic)
 
 
 @export
@@ -122,8 +122,8 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
     :returns: the resulting graphic after placing the two graphics one besides
               the other
     """
-    check_graphic(left_graphic)
-    check_graphic(right_graphic)
+    check_graphic(left_graphic, "left_graphic")
+    check_graphic(right_graphic, "right_graphic")
     return Beside(left_graphic, right_graphic)
 
 
@@ -140,8 +140,8 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
     :returns: the resulting graphic after placing the two graphics one above
               the other
     """
-    check_graphic(top_graphic)
-    check_graphic(bottom_graphic)
+    check_graphic(top_graphic, "top_graphic")
+    check_graphic(bottom_graphic, "bottom_graphic")
     return Above(top_graphic, bottom_graphic)
 
 
