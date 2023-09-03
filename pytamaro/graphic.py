@@ -247,7 +247,7 @@ class Compose(Operation, Graphic):
         self.path = Path(self.background.path)
         self.path.addPath(self.foreground.path,
                           bg_pin.x() - fg_pin.x(), bg_pin.y() - fg_pin.y())
-        # For graphic tree comparison
+        # For graphic tree printing
         self.left_node = foreground
         self.right_node = background
 
@@ -282,6 +282,8 @@ class Pin(Operation, Graphic):
             h_mapping[pinning_point.x], v_mapping[pinning_point.y])
         self.path = Path(self.graphic.path)
         # For graphic tree comparison
+        self.pinning_point = pinning_point
+        # For graphic tree printing
         self.left_node = get_point_name(pinning_point)
         self.right_node = graphic
 
@@ -301,6 +303,8 @@ class Rotate(Operation, Graphic):
         self.graphic.path.transform(self.rot_matrix, self.path)  # updates self.path
         self.pin_position = graphic.pin_position
         # For graphic tree comparison
+        self.degree = - deg
+        # For graphic tree printing
         self.left_node = str(- deg)
         self.right_node = graphic
 
@@ -312,33 +316,85 @@ class Rotate(Operation, Graphic):
 
 
 class Beside(Operation, Graphic):
+    """
+    Represent the composition of two graphics that beside with each other,
+    the center of the two graphics are on the same horizontal level.
+    """
+
     def __init__(self, left_graphic: Graphic, right_graphic: Graphic):
         self.left_graphic = left_graphic
         self.right_graphic = right_graphic
         lg_pin_center_right_x = left_graphic.bounds().right()
         lg_pin_center_left_x = left_graphic.bounds().left()
         lg_pin_center_right_y = left_graphic.bounds().centerY()
+
         rg_pin_center_left_x = right_graphic.bounds().left()
         rg_pin_center_right_x = right_graphic.bounds().right()
         rg_pin_center_left_y = right_graphic.bounds().centerY()
-        above_center_x = (lg_pin_center_left_x + rg_pin_center_right_x
-                          + rg_pin_center_left_x - lg_pin_center_right_x) / 2
+
+        beside_center_x = (lg_pin_center_left_x + rg_pin_center_right_x
+                           + rg_pin_center_left_x - lg_pin_center_right_x) / 2
+
         self.path = Path(right_graphic.path)
         self.path.addPath(left_graphic.path, rg_pin_center_left_x - lg_pin_center_right_x,
                           rg_pin_center_left_y - lg_pin_center_right_y)
-        self.set_pin_position(above_center_x, rg_pin_center_left_y)
-        # For graphic tree comparison
+        self.set_pin_position(beside_center_x, rg_pin_center_left_y)
+        # For graphic tree printing
         self.left_node = left_graphic
         self.right_node = right_graphic
 
     def draw(self, canvas: Canvas):
         lg_pin_center_right_x = self.left_graphic.bounds().right()
         lg_pin_center_right_y = self.left_graphic.bounds().centerY()
+
         rg_pin_center_left_x = self.right_graphic.bounds().left()
         rg_pin_center_left_y = self.right_graphic.bounds().centerY()
         canvas.save()
-        self.left_graphic.draw(canvas)
-        canvas.translate(lg_pin_center_right_x - rg_pin_center_left_x,
-                         lg_pin_center_right_y - rg_pin_center_left_y)
         self.right_graphic.draw(canvas)
+        canvas.translate(rg_pin_center_left_x - lg_pin_center_right_x,
+                         rg_pin_center_left_y - lg_pin_center_right_y)
+        self.left_graphic.draw(canvas)
+        canvas.restore()
+
+
+class Above(Operation, Graphic):
+    """
+    Represent the composition of two graphics that one above other,
+    the center of the two graphics are on the same vertical level.
+    """
+
+    def __init__(self, top_graphic: Graphic, bottom_graphic: Graphic):
+        self.top_graphic = top_graphic
+        self.bottom_graphic = bottom_graphic
+        tg_pin_bottom_center_x = top_graphic.bounds().centerX()
+        tg_pin_top_center_y = top_graphic.bounds().top()
+        tg_pin_bottom_center_y = top_graphic.bounds().bottom()
+
+        bg_pin_top_center_x = bottom_graphic.bounds().centerX()
+        bg_pin_bottom_center_y = bottom_graphic.bounds().bottom()
+        bg_pin_top_center_y = bottom_graphic.bounds().top()
+
+        above_center_y = (tg_pin_top_center_y + bg_pin_bottom_center_y +
+                          bg_pin_top_center_y - tg_pin_bottom_center_y) / 2
+
+        self.path = Path(bottom_graphic.path)
+        self.path.addPath(top_graphic.path, bg_pin_top_center_x - tg_pin_bottom_center_x,
+                          bg_pin_top_center_y - tg_pin_bottom_center_y)
+        self.set_pin_position(bg_pin_top_center_x, above_center_y)
+        # For graphic tree printing
+        self.left_node = top_graphic
+        self.right_node = bottom_graphic
+
+    def draw(self, canvas: Canvas):
+        tg_pin_bottom_center_x = self.top_graphic.bounds().centerX()
+        tg_pin_bottom_center_y = self.top_graphic.bounds().bottom()
+
+        bg_pin_top_center_x = self.bottom_graphic.bounds().centerX()
+        bg_pin_top_center_y = self.bottom_graphic.bounds().top()
+
+        canvas.save()
+        self.bottom_graphic.draw(canvas)
+        canvas.translate(bg_pin_top_center_x - tg_pin_bottom_center_x,
+                         bg_pin_top_center_y - tg_pin_bottom_center_y)
+        self.top_graphic.draw(canvas)
         canvas.restore()
