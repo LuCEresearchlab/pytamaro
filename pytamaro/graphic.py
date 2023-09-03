@@ -398,3 +398,41 @@ class Above(Operation, Graphic):
                          bg_pin_top_center_y - tg_pin_bottom_center_y)
         self.top_graphic.draw(canvas)
         canvas.restore()
+
+
+class Overlay(Operation, Graphic):
+    """
+    Represent the composition of two graphics that one overlay other,
+    the center of the two graphics are at the same position
+    """
+
+    def __init__(self, front_graphic: Graphic, back_graphic: Graphic):
+        self.front_graphic = front_graphic
+        self.back_graphic = back_graphic
+        fg_pin_center_x = front_graphic.bounds().centerX()
+        fg_pin_center_y = front_graphic.bounds().centerY()
+
+        bg_pin_center_x = back_graphic.bounds().centerX()
+        bg_pin_center_y = back_graphic.bounds().centerY()
+
+        self.path = Path(back_graphic.path)
+        self.path.addPath(front_graphic.path, bg_pin_center_x - fg_pin_center_x,
+                          bg_pin_center_y - fg_pin_center_y)
+        self.set_pin_position(bg_pin_center_x, bg_pin_center_y)
+        # For graphic tree printing
+        self.left_node = front_graphic
+        self.right_node = back_graphic
+
+    def draw(self, canvas: Canvas):
+        fg_pin_center_x = self.front_graphic.bounds().centerX()
+        fg_pin_center_y = self.front_graphic.bounds().centerY()
+
+        bg_pin_center_x = self.back_graphic.bounds().centerX()
+        bg_pin_center_y = self.back_graphic.bounds().centerY()
+
+        canvas.save()
+        self.back_graphic.draw(canvas)
+        canvas.translate(bg_pin_center_x - fg_pin_center_x,
+                         bg_pin_center_y - fg_pin_center_y)
+        self.front_graphic.draw(canvas)
+        canvas.restore()
