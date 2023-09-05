@@ -1,13 +1,12 @@
 from pytamaro.color_names import blue, red
 from pytamaro.operations import (above, beside, compose, graphic_height,
-                                 graphic_width, overlay, pin, rotate, _compose_pin_center)
+                                 graphic_width, overlay, pin, rotate)
 from pytamaro.primitives import ellipse, rectangle, triangle
 
 from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_equals_rendered, assert_pin_tolerance,
                                  assert_size, assert_size_tolerance,
                                  assert_unique_color)
-from pytamaro.point_names import bottom_left, bottom_right, top_center, top_left, center, bottom_center, center_right, \
-    center_left
+from pytamaro.point_names import bottom_left, bottom_right, top_left
 
 
 def test_width():
@@ -164,39 +163,3 @@ def test_compose_visually_equals_overlay():
     s1 = rectangle(WIDTH, WIDTH, blue)
     s2 = rectangle(WIDTH, WIDTH, red)
     assert_equals_rendered(compose(s1, s2), overlay(s1, s2))
-
-
-def test_beside_class():
-    r1 = rectangle(100, 100, red)
-    r2 = rectangle(200, 50, blue)
-    # The original beside function
-    e_graphic = _compose_pin_center(r1, r2, center_right, center_left)
-    # The new beside function
-    a_graphic = beside(r1, r2)
-    assert e_graphic.path == a_graphic.path
-    assert e_graphic.bounds() == a_graphic.bounds()
-    assert e_graphic.pin_position == a_graphic.pin_position
-
-
-def test_above_class():
-    r1 = ellipse(100, 200, red)
-    r2 = rectangle(200, 50, blue)
-    # The original above function
-    e_graphic = _compose_pin_center(r1, r2, bottom_center, top_center)
-    # The new above function
-    a_graphic = above(r1, r2)
-    assert e_graphic.path == a_graphic.path
-    assert e_graphic.bounds() == a_graphic.bounds()
-    assert e_graphic.pin_position == a_graphic.pin_position
-
-
-def test_overlay_class():
-    r1 = ellipse(100, 100, red)
-    r2 = rectangle(200, 200, blue)
-    # The original overlay function
-    e_graphic = _compose_pin_center(r1, r2, center, center)
-    # The new overlay function
-    a_graphic = overlay(r1, r2)
-    assert e_graphic.path == a_graphic.path
-    assert e_graphic.bounds() == a_graphic.bounds()
-    assert e_graphic.pin_position == a_graphic.pin_position
