@@ -10,7 +10,7 @@ from skia import (Canvas, Font, Matrix, Paint, Path, Point, Rect, Size,
 
 from pytamaro.color import Color
 from pytamaro.point import Point as PyTamaroPoint
-from pytamaro.point_names import get_point_name
+from pytamaro.point_names import center, center_right, center_left, bottom_center, top_center
 
 
 # pylint: disable=super-init-not-called
@@ -89,16 +89,11 @@ class Primitive(Graphic):
     Geometric shapes and text are primitive graphics.
     """
 
-    def __init__(self, path: Path, color: Color, data: str, color_info: str):
+    def __init__(self, path: Path, color: Color):
         self.path = path
         self.paint = Paint(color.color)
         bounds = self.path.computeTightBounds()
         self.set_pin_position(bounds.width() / 2, bounds.height() / 2)
-        # The definition of left_node and right_node is just used for print graphic tree
-        # in terminal. And the printing of the tree is not essential to accessing of the tree structure,
-        # it is just used for testing.
-        self.left_node = data  # left_node contains all the information of graphic except color
-        self.right_node = color_info  # right_node contains the color information of graphic
 
     def draw(self, canvas: Canvas):
         canvas.drawPath(self.path, self.paint)
@@ -126,8 +121,7 @@ class Rectangle(Primitive):
 
     def __init__(self, width: float, height: float, color: Color):
         path = Path().addRect(Rect.MakeWH(width, height))
-        data = "w:" + str(width) + ",h:" + str(height)
-        super().__init__(path, color, data, color.as_string())
+        super().__init__(path, color)
         # For graphic tree comparison
         self.width = width
         self.height = height
@@ -141,8 +135,7 @@ class Ellipse(Primitive):
 
     def __init__(self, width: float, height: float, color: Color):
         path = Path().addOval(Rect.MakeWH(width, height))
-        data = "w:" + str(width) + ",h:" + str(height)
-        super().__init__(path, color, data, color.as_string())
+        super().__init__(path, color)
         # For graphic tree comparison
         self.width = width
         self.height = height
@@ -163,8 +156,7 @@ class CircularSector(Primitive):
             path.moveTo(radius, radius)
             path.arcTo(Rect.MakeWH(diameter, diameter), 0, -angle, False)
             path.close()
-        data = "r:" + str(radius) + ",a:" + str(angle)
-        super().__init__(path, color, data, color.as_string())
+        super().__init__(path, color)
         self.set_pin_position(radius, radius)
         # For graphic tree comparison
         self.color = color
@@ -184,8 +176,7 @@ class Triangle(Primitive):
     def __init__(self, side1: float, side2: float, angle: float, color: Color):
         third_point = Matrix.RotateDeg(-angle).mapXY(side2, 0)
         path = Path.Polygon([Point(0, 0), Point(side1, 0), third_point], isClosed=True)
-        data = "s1:" + str(side1) + ",s2:" + str(side2) + ",a:" + str(angle)
-        super().__init__(path, color, data, color.as_string())
+        super().__init__(path, color)
         # The centroid is the average of the three vertices
         centroid = Point((side1 + third_point.x()) / 3, third_point.y() / 3)
         self.pin_position = centroid
@@ -214,8 +205,7 @@ class Text(Primitive):
                 path.offset(x_offset, 0)
                 text_path.addPath(path)
 
-        data = "t:" + text + ",f:" + font_name + ",s:" + str(size)
-        super().__init__(text_path, color, data, color.as_string())
+        super().__init__(text_path, color)
         # Set the pinning position at baseline level (0) on the very left (which
         # might be slightly after 0, given that the bounding box is computed
         # very tightly around the glyphs, cutting some space before the first
@@ -227,12 +217,7 @@ class Text(Primitive):
         self.text_size = size
 
 
-class Operation(ABC):
-    left_node: Graphic | str
-    right_node: Graphic
-
-
-class Compose(Operation, Graphic):
+class Compose(Graphic):
     """
     Represents the composition of two graphics, one in the foreground and the
     other in the background, joined on their pinning positions.
@@ -247,9 +232,6 @@ class Compose(Operation, Graphic):
         self.path = Path(self.background.path)
         self.path.addPath(self.foreground.path,
                           bg_pin.x() - fg_pin.x(), bg_pin.y() - fg_pin.y())
-        # For graphic tree printing
-        self.left_node = foreground
-        self.right_node = background
 
     def draw(self, canvas: Canvas):
         canvas.save()
@@ -260,7 +242,7 @@ class Compose(Operation, Graphic):
         canvas.restore()
 
 
-class Pin(Operation, Graphic):
+class Pin(Graphic):
     """
     Represents the pinning of a graphic in a certain position on its bounds.
     """
@@ -283,15 +265,12 @@ class Pin(Operation, Graphic):
         self.path = Path(self.graphic.path)
         # For graphic tree comparison
         self.pinning_point = pinning_point
-        # For graphic tree printing
-        self.left_node = get_point_name(pinning_point)
-        self.right_node = graphic
 
     def draw(self, canvas: Canvas):
         self.graphic.draw(canvas)
 
 
-class Rotate(Operation, Graphic):
+class Rotate(Graphic):
     """
     Represents the rotation of a graphic by a certain angle clockwise.
     """
@@ -304,9 +283,6 @@ class Rotate(Operation, Graphic):
         self.pin_position = graphic.pin_position
         # For graphic tree comparison
         self.degree = - deg
-        # For graphic tree printing
-        self.left_node = str(- deg)
-        self.right_node = graphic
 
     def draw(self, canvas: Canvas):
         canvas.save()
@@ -315,7 +291,7 @@ class Rotate(Operation, Graphic):
         canvas.restore()
 
 
-class Beside(Operation, Graphic):
+class Beside(Graphic):
     """
     Represent the composition of two graphics that beside with each other,
     the center of the two graphics are on the same horizontal level.
@@ -324,40 +300,18 @@ class Beside(Operation, Graphic):
     def __init__(self, left_graphic: Graphic, right_graphic: Graphic):
         self.left_graphic = left_graphic
         self.right_graphic = right_graphic
-        lg_pin_center_right_x = left_graphic.bounds().right()
-        lg_pin_center_left_x = left_graphic.bounds().left()
-        lg_pin_center_right_y = left_graphic.bounds().centerY()
 
-        rg_pin_center_left_x = right_graphic.bounds().left()
-        rg_pin_center_right_x = right_graphic.bounds().right()
-        rg_pin_center_left_y = right_graphic.bounds().centerY()
+        b_g = Pin(Compose(Pin(left_graphic, center_right), Pin(right_graphic, center_left)), center)
 
-        beside_center_x = (lg_pin_center_left_x + rg_pin_center_right_x
-                           + rg_pin_center_left_x - lg_pin_center_right_x) / 2
-
-        self.path = Path(right_graphic.path)
-        self.path.addPath(left_graphic.path, rg_pin_center_left_x - lg_pin_center_right_x,
-                          rg_pin_center_left_y - lg_pin_center_right_y)
-        self.set_pin_position(beside_center_x, rg_pin_center_left_y)
-        # For graphic tree printing
-        self.left_node = left_graphic
-        self.right_node = right_graphic
+        self.path = Path(b_g.path)
+        self.set_pin_position(b_g.pin_position.x(), b_g.pin_position.y())
 
     def draw(self, canvas: Canvas):
-        lg_pin_center_right_x = self.left_graphic.bounds().right()
-        lg_pin_center_right_y = self.left_graphic.bounds().centerY()
-
-        rg_pin_center_left_x = self.right_graphic.bounds().left()
-        rg_pin_center_left_y = self.right_graphic.bounds().centerY()
-        canvas.save()
-        self.right_graphic.draw(canvas)
-        canvas.translate(rg_pin_center_left_x - lg_pin_center_right_x,
-                         rg_pin_center_left_y - lg_pin_center_right_y)
-        self.left_graphic.draw(canvas)
-        canvas.restore()
+        b_g = Pin(Compose(Pin(self.left_graphic, center_right), Pin(self.right_graphic, center_left)), center)
+        b_g.draw(canvas)
 
 
-class Above(Operation, Graphic):
+class Above(Graphic):
     """
     Represent the composition of two graphics that one above other,
     the center of the two graphics are on the same vertical level.
@@ -366,41 +320,18 @@ class Above(Operation, Graphic):
     def __init__(self, top_graphic: Graphic, bottom_graphic: Graphic):
         self.top_graphic = top_graphic
         self.bottom_graphic = bottom_graphic
-        tg_pin_bottom_center_x = top_graphic.bounds().centerX()
-        tg_pin_top_center_y = top_graphic.bounds().top()
-        tg_pin_bottom_center_y = top_graphic.bounds().bottom()
 
-        bg_pin_top_center_x = bottom_graphic.bounds().centerX()
-        bg_pin_bottom_center_y = bottom_graphic.bounds().bottom()
-        bg_pin_top_center_y = bottom_graphic.bounds().top()
+        a_g = Pin(Compose(Pin(top_graphic, bottom_center), Pin(bottom_graphic, top_center)), center)
 
-        above_center_y = (tg_pin_top_center_y + bg_pin_bottom_center_y +
-                          bg_pin_top_center_y - tg_pin_bottom_center_y) / 2
-
-        self.path = Path(bottom_graphic.path)
-        self.path.addPath(top_graphic.path, bg_pin_top_center_x - tg_pin_bottom_center_x,
-                          bg_pin_top_center_y - tg_pin_bottom_center_y)
-        self.set_pin_position(bg_pin_top_center_x, above_center_y)
-        # For graphic tree printing
-        self.left_node = top_graphic
-        self.right_node = bottom_graphic
+        self.path = Path(a_g.path)
+        self.set_pin_position(a_g.pin_position.x(), a_g.pin_position.y())
 
     def draw(self, canvas: Canvas):
-        tg_pin_bottom_center_x = self.top_graphic.bounds().centerX()
-        tg_pin_bottom_center_y = self.top_graphic.bounds().bottom()
-
-        bg_pin_top_center_x = self.bottom_graphic.bounds().centerX()
-        bg_pin_top_center_y = self.bottom_graphic.bounds().top()
-
-        canvas.save()
-        self.bottom_graphic.draw(canvas)
-        canvas.translate(bg_pin_top_center_x - tg_pin_bottom_center_x,
-                         bg_pin_top_center_y - tg_pin_bottom_center_y)
-        self.top_graphic.draw(canvas)
-        canvas.restore()
+        a_b = Pin(Compose(Pin(self.top_graphic, bottom_center), Pin(self.bottom_graphic, top_center)), center)
+        a_b.draw(canvas)
 
 
-class Overlay(Operation, Graphic):
+class Overlay(Graphic):
     """
     Represent the composition of two graphics that one overlay other,
     the center of the two graphics are at the same position
@@ -409,30 +340,12 @@ class Overlay(Operation, Graphic):
     def __init__(self, front_graphic: Graphic, back_graphic: Graphic):
         self.front_graphic = front_graphic
         self.back_graphic = back_graphic
-        fg_pin_center_x = front_graphic.bounds().centerX()
-        fg_pin_center_y = front_graphic.bounds().centerY()
 
-        bg_pin_center_x = back_graphic.bounds().centerX()
-        bg_pin_center_y = back_graphic.bounds().centerY()
+        o_g = Pin(Compose(Pin(front_graphic, center), Pin(back_graphic, center)), center)
 
-        self.path = Path(back_graphic.path)
-        self.path.addPath(front_graphic.path, bg_pin_center_x - fg_pin_center_x,
-                          bg_pin_center_y - fg_pin_center_y)
-        self.set_pin_position(bg_pin_center_x, bg_pin_center_y)
-        # For graphic tree printing
-        self.left_node = front_graphic
-        self.right_node = back_graphic
+        self.path = Path(o_g.path)
+        self.set_pin_position(o_g.pin_position.x(), o_g.pin_position.y())
 
     def draw(self, canvas: Canvas):
-        fg_pin_center_x = self.front_graphic.bounds().centerX()
-        fg_pin_center_y = self.front_graphic.bounds().centerY()
-
-        bg_pin_center_x = self.back_graphic.bounds().centerX()
-        bg_pin_center_y = self.back_graphic.bounds().centerY()
-
-        canvas.save()
-        self.back_graphic.draw(canvas)
-        canvas.translate(bg_pin_center_x - fg_pin_center_x,
-                         bg_pin_center_y - fg_pin_center_y)
-        self.front_graphic.draw(canvas)
-        canvas.restore()
+        o_g = Pin(Compose(Pin(self.front_graphic, center), Pin(self.back_graphic, center)), center)
+        o_g.draw(canvas)
