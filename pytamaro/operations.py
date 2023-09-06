@@ -6,7 +6,6 @@ from pytamaro.graphic import Compose, Graphic, Pin, Rotate, Beside, Above, Overl
 from pytamaro.checks import check_angle, check_graphic, check_point
 from pytamaro.utils import export
 from pytamaro.point import Point
-from pytamaro.point_names import center, top_center, bottom_center, center_right, center_left
 
 
 @export
@@ -73,22 +72,6 @@ def pin(point: Point, graphic: Graphic) -> Graphic:
     check_point(point)
     check_graphic(graphic)
     return Pin(graphic, point)
-
-
-def _compose_pin_center(graphic1: Graphic, graphic2: Graphic,
-                        point1: Point, point2: Point) -> Graphic:
-    """
-    Composes the two graphics, pinning the first one at `point1` and the second one
-    at `point2`. The composed graphic is then pinned at its center.
-
-    :param graphic1: first graphic to compose
-    :param graphic2: second graphic to compose
-    :param point1: pinning position for the first graphic
-    :param point2: pinning position for the second graphic
-
-    :returns: the combined graphic, pinned at its center
-    """
-    return pin(center, compose(pin(point1, graphic1), pin(point2, graphic2)))
 
 
 @export

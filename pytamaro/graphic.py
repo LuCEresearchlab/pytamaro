@@ -94,6 +94,7 @@ class Primitive(Graphic):
         self.paint = Paint(color.color)
         bounds = self.path.computeTightBounds()
         self.set_pin_position(bounds.width() / 2, bounds.height() / 2)
+        self.color = color
 
     def draw(self, canvas: Canvas):
         canvas.drawPath(self.path, self.paint)
@@ -120,12 +121,11 @@ class Rectangle(Primitive):
     """
 
     def __init__(self, width: float, height: float, color: Color):
-        path = Path().addRect(Rect.MakeWH(width, height))
-        super().__init__(path, color)
-        # For graphic tree comparison
         self.width = width
         self.height = height
         self.color = color
+        path = Path().addRect(Rect.MakeWH(width, height))
+        super().__init__(path, color)
 
 
 class Ellipse(Primitive):
@@ -134,11 +134,10 @@ class Ellipse(Primitive):
     """
 
     def __init__(self, width: float, height: float, color: Color):
-        path = Path().addOval(Rect.MakeWH(width, height))
-        super().__init__(path, color)
-        # For graphic tree comparison
         self.width = width
         self.height = height
+        path = Path().addOval(Rect.MakeWH(width, height))
+        super().__init__(path, color)
 
 
 class CircularSector(Primitive):
@@ -148,6 +147,8 @@ class CircularSector(Primitive):
     """
 
     def __init__(self, radius: float, angle: float, color: Color):
+        self.radius = radius
+        self.angle = angle
         if angle == 360:
             path = Path.Circle(radius, radius, radius)
         else:
@@ -158,10 +159,6 @@ class CircularSector(Primitive):
             path.close()
         super().__init__(path, color)
         self.set_pin_position(radius, radius)
-        # For graphic tree comparison
-        self.color = color
-        self.radius = radius
-        self.angle = angle
 
 
 class Triangle(Primitive):
@@ -174,16 +171,15 @@ class Triangle(Primitive):
     """
 
     def __init__(self, side1: float, side2: float, angle: float, color: Color):
+        self.side1 = side1
+        self.side2 = side2
+        self.angle = angle
         third_point = Matrix.RotateDeg(-angle).mapXY(side2, 0)
         path = Path.Polygon([Point(0, 0), Point(side1, 0), third_point], isClosed=True)
         super().__init__(path, color)
         # The centroid is the average of the three vertices
         centroid = Point((side1 + third_point.x()) / 3, third_point.y() / 3)
         self.pin_position = centroid
-        # For graphic tree comparison
-        self.side1 = side1
-        self.side2 = side2
-        self.angle = angle
 
 
 class Text(Primitive):
@@ -194,6 +190,9 @@ class Text(Primitive):
     """
 
     def __init__(self, text: str, font_name: str, size: float, color: Color):
+        self.text = text
+        self.font_name = font_name
+        self.text_size = size
         font = Font(Typeface(font_name), size)
         glyphs = font.textToGlyphs(text)
         offsets = font.getXPos(glyphs)
@@ -211,10 +210,6 @@ class Text(Primitive):
         # very tightly around the glyphs, cutting some space before the first
         # one).
         self.set_pin_position(self.bounds().left(), 0)
-        # For graphic tree comparison
-        self.text = text
-        self.font_name = font_name
-        self.text_size = size
 
 
 class Compose(Graphic):
@@ -276,13 +271,12 @@ class Rotate(Graphic):
     """
 
     def __init__(self, graphic: Graphic, deg: float):
+        self.degree = deg
         self.graphic = graphic
         self.rot_matrix = Matrix.RotateDeg(deg, self.graphic.pin_position)
         self.path = Path()
         self.graphic.path.transform(self.rot_matrix, self.path)  # updates self.path
         self.pin_position = graphic.pin_position
-        # For graphic tree comparison
-        self.degree = - deg
 
     def draw(self, canvas: Canvas):
         canvas.save()
@@ -291,49 +285,54 @@ class Rotate(Graphic):
         canvas.restore()
 
 
-class Beside(Graphic):
+@dataclass
+class SimpleCompose(Graphic):
     """
-    Represent the composition of two graphics that beside with each other,
-    the center of the two graphics are on the same horizontal level.
+    A simple compose with a composed graphic which is defined with different
+    combination of Pin and Compose graphic.
+    """
+    composed_graphic: Graphic
+
+    def __post_init__(self):
+        super().__init__(self.composed_graphic.pin_position,
+                         self.composed_graphic.path)
+
+    def draw(self, canvas: Canvas):
+        self.composed_graphic.draw(canvas)
+
+
+class Beside(SimpleCompose):
+    """
+    Represents the composition of two graphics one beside the other,
+    vertically centered.
     """
 
     def __init__(self, left_graphic: Graphic, right_graphic: Graphic):
         self.left_graphic = left_graphic
         self.right_graphic = right_graphic
-
-        b_g = Pin(Compose(Pin(left_graphic, center_right), Pin(right_graphic, center_left)), center)
-
-        self.path = Path(b_g.path)
-        self.set_pin_position(b_g.pin_position.x(), b_g.pin_position.y())
-
-    def draw(self, canvas: Canvas):
-        b_g = Pin(Compose(Pin(self.left_graphic, center_right), Pin(self.right_graphic, center_left)), center)
-        b_g.draw(canvas)
+        self.composed_graphic = Pin(Compose(Pin(left_graphic, center_right),
+                                            Pin(right_graphic, center_left)), center)
+        super().__post_init__()
 
 
-class Above(Graphic):
+class Above(SimpleCompose):
     """
-    Represent the composition of two graphics that one above other,
-    the center of the two graphics are on the same vertical level.
+    Represents the composition of two graphics one above the other,
+    horizontally centered.
     """
 
     def __init__(self, top_graphic: Graphic, bottom_graphic: Graphic):
         self.top_graphic = top_graphic
         self.bottom_graphic = bottom_graphic
 
-        a_g = Pin(Compose(Pin(top_graphic, bottom_center), Pin(bottom_graphic, top_center)), center)
-
-        self.path = Path(a_g.path)
-        self.set_pin_position(a_g.pin_position.x(), a_g.pin_position.y())
-
-    def draw(self, canvas: Canvas):
-        a_b = Pin(Compose(Pin(self.top_graphic, bottom_center), Pin(self.bottom_graphic, top_center)), center)
-        a_b.draw(canvas)
+        self.composed_graphic = Pin(Compose(Pin(top_graphic, bottom_center),
+                                            Pin(bottom_graphic, top_center)), center)
+        super().__post_init__()
 
 
-class Overlay(Graphic):
+class Overlay(SimpleCompose):
     """
-    Represent the composition of two graphics that one overlay other,
+    Represents the composition of two graphics that one overlay other,
     the center of the two graphics are at the same position
     """
 
@@ -341,11 +340,6 @@ class Overlay(Graphic):
         self.front_graphic = front_graphic
         self.back_graphic = back_graphic
 
-        o_g = Pin(Compose(Pin(front_graphic, center), Pin(back_graphic, center)), center)
-
-        self.path = Path(o_g.path)
-        self.set_pin_position(o_g.pin_position.x(), o_g.pin_position.y())
-
-    def draw(self, canvas: Canvas):
-        o_g = Pin(Compose(Pin(self.front_graphic, center), Pin(self.back_graphic, center)), center)
-        o_g.draw(canvas)
+        self.composed_graphic = Pin(Compose(Pin(front_graphic, center),
+                                            Pin(back_graphic, center)), center)
+        super().__post_init__()
