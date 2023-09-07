@@ -3,7 +3,7 @@ Type `Graphic`, that includes a graphic with a pinning position.
 """
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, InitVar
 
 from skia import (Canvas, Font, Matrix, Paint, Path, Point, Rect, Size,
                   Typeface)
@@ -288,12 +288,17 @@ class Rotate(Graphic):
 @dataclass
 class SimpleCompose(Graphic):
     """
-    A simple compose with a composed graphic which is defined with different
-    combination of Pin and Compose graphic.
+    A simple compose with a composed graphic which is defined with compose of
+    two pinned graphic
     """
-    composed_graphic: Graphic
+    graphic1: InitVar[Graphic]
+    graphic2: InitVar[Graphic]
+    point1: InitVar[PyTamaroPoint]
+    point2: InitVar[PyTamaroPoint]
 
-    def __post_init__(self):
+    def __post_init__(self, graphic1, graphic2, point1, point2):
+        self.composed_graphic = Pin(Compose(Pin(graphic1, point1),
+                                            Pin(graphic2, point2)), center)
         super().__init__(self.composed_graphic.pin_position,
                          self.composed_graphic.path)
 
@@ -306,13 +311,10 @@ class Beside(SimpleCompose):
     Represents the composition of two graphics one beside the other,
     vertically centered.
     """
-
     def __init__(self, left_graphic: Graphic, right_graphic: Graphic):
         self.left_graphic = left_graphic
         self.right_graphic = right_graphic
-        self.composed_graphic = Pin(Compose(Pin(left_graphic, center_right),
-                                            Pin(right_graphic, center_left)), center)
-        super().__post_init__()
+        super().__post_init__(left_graphic, right_graphic, center_right, center_left)
 
 
 class Above(SimpleCompose):
@@ -324,10 +326,7 @@ class Above(SimpleCompose):
     def __init__(self, top_graphic: Graphic, bottom_graphic: Graphic):
         self.top_graphic = top_graphic
         self.bottom_graphic = bottom_graphic
-
-        self.composed_graphic = Pin(Compose(Pin(top_graphic, bottom_center),
-                                            Pin(bottom_graphic, top_center)), center)
-        super().__post_init__()
+        super().__post_init__(top_graphic, bottom_graphic, bottom_center, top_center)
 
 
 class Overlay(SimpleCompose):
@@ -339,7 +338,4 @@ class Overlay(SimpleCompose):
     def __init__(self, front_graphic: Graphic, back_graphic: Graphic):
         self.front_graphic = front_graphic
         self.back_graphic = back_graphic
-
-        self.composed_graphic = Pin(Compose(Pin(front_graphic, center),
-                                            Pin(back_graphic, center)), center)
-        super().__post_init__()
+        super().__post_init__(front_graphic, back_graphic, center, center)
