@@ -1,41 +1,41 @@
-# PyTamaro
+![PyTamaro Logo](https://github.com/LuCEresearchlab/pytamaro/raw/main/docs/images/PyTamaro-horizontal-white-bg.png)
+
 ![Test](https://github.com/LuCEresearchlab/pytamaro/workflows/Test/badge.svg)
 ![Lint](https://github.com/LuCEresearchlab/pytamaro/workflows/Lint/badge.svg)
 ![TypeCheck](https://github.com/LuCEresearchlab/pytamaro/workflows/TypeCheck/badge.svg)
+<a href="https://pypi.org/project/uncertainty-wizard/">
+    <img alt="PyPI" src="https://img.shields.io/pypi/v/pytamaro">
+</a>
 
-PyTamaro is a Python educational library designed for teaching **problem decomposition** using **graphics**.
+**PyTamaro** is an educational library for Python designed to teach programming using graphics.
 
-[API Documentation](https://pytamaro.readthedocs.org)
+### 📃 Background and Design Principles
 
-## Development
+This [SPLASH-E paper](https://www.chiodini.org/publications/splashe23-pytamaro.pdf) describes the design principles underpinning the library.
 
-This project is managed using [Poetry](https://python-poetry.org/).
-After cloning the project, you can install the dependencies with `poetry install`.
+### ✨ Examples and Online Environment
 
-Mention your changes in the `CHANGELOG.md` file.
+[PyTamaro Web](https://pytamaro.si.usi.ch/) is an online platform that provides additional resources for PyTamaro.
 
-## Test, TypeCheck, Style Guidelines
+- Run your Python programs with PyTamaro directly in the browser (without the need to create an account or install something on your computer!)
+- 100+ activities that showcase what is possible to create with PyTamaro
+- A selection of curricula that guide you through a curated sequence of activities
 
-We use `pytest` to execute our test suite (written in the `tests` folder). Verify that all tests pass by calling;
-```bash
-poetry run pytest tests
+### 💻 Installation
+
+As simple as 
+```sh
+pip install pytamaro
 ```
 
-We use `pylint` and `pycodestyle` to uniform our style. Make sure they report no errors by running:
-```bash
-poetry run pylint pytamaro
-poetry run pycodestyle .
-```
+You can install PyTamaro using at least Python 3.7 on all major operating systems and architectures.
 
-We use `pyright` to type check our code. Verify that it reports no errors:
-```bash
-poetry run pyright
-```
+### 📚 Documentation
 
-## Release a new version
+The full documentation of the public API is available on [ReadTheDocs](https://pytamaro.readthedocs.io/).
 
-- Make sure you have installed `bumpversion`: `poetry self add poetry-bumpversion`.
-- Execute the relevant poetry command to bump the version (e.g., `poetry version patch --dry-run`).
-- Move the changes in `CHANGELOG.md` from "unreleased" to the proper version
-- Commit and push the new version
-- Publish the new version on PyPI using `poetry publish`.
+### 🧑‍💻 Contributing
+
+If you find what looks like a bug, please [create an issue](https://github.com/LuCEresearchlab/pytamaro/issues/new) so that we can investigate.
+
+The development process, which contributors should follow, is described in the [CONTRIBUTING.md file](https://github.com/LuCEresearchlab/pytamaro/blob/main/CONTRIBUTING.md). 
