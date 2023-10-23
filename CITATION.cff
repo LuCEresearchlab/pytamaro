@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use PyTamaro, please cite the following."
+title: PyTamaro
+authors:
+  - family-names: Chiodini
+    given-names: Luca
+    orcid: https://orcid.org/0000-0002-2712-9248
+url: "https://github.com/LuCEresearchlab/pytamaro"
+preferred-citation:
+  type: 'conference-paper'
+  authors:
+    - family-names: Chiodini
+      given-names: Luca
+      orcid: https://orcid.org/0000-0002-2712-9248
+    - family-names: Sorva
+      given-names: Juha
+      orcid: https://orcid.org/0009-0003-1727-1317
+    - family-names: Hauswirth
+      given-names: Matthias
+      orcid: https://orcid.org/0000-0001-5527-5931
+  title: "Teaching Programming with Graphics: Pitfalls and a Solution"
+  year: 2023
+  collection-title: "Proceedings of the 2023 ACM SIGPLAN International Symposium on SPLASH-E"
+  conference:
+    - name: SPLASH-E 2023
+  doi: 10.1145/3622780.3623644
