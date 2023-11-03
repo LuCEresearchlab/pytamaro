@@ -1,5 +1,5 @@
 """
-Tipo `Colore`, funzioni per produrre colori e costanti per colori notevoli.
+Type `Couleur`, ainsi des fonctions pour produire des couleurs et constantes représentants des couleurs particulières.
 """
 
 from __future__ import annotations
@@ -7,77 +7,78 @@ from __future__ import annotations
 from pytamaro.color import Color
 from pytamaro.color_functions import rgb_color, hsl_color, hsv_color
 
-Colore = Color
+Couleur = Color
 """
-Rappresenta un colore.
-Un colore ha anche un grado di opacità,
-da completamente trasparente (come il colore `trasparente`)
-a completamente opaco (come il colore `rosso`).
+Represente une couleur.
+Une couleur a aussi un taux d'opacité,
+de complètement transparent (come la couleur `transparent`)
+a complètement opaque (come la couleur `rouge`).
 """
 
 
-def colore_rgb(rosso: int, verde: int, blu: int, opacita: float = 1.0) -> Colore:
+def couleur_rgb(rouge: int, vert: int, bleu: int, opacite: float = 1.0) -> Couleur:
     """
-    Ritorna un colore con le componenti indicate per rosso (R), verde (G) e blu (B) e un
-    certo grado di opacità (alpha, A).
+    Retourne une couleur avec les composantes indiquant le rouge (R), vert (G) et bleu (B)
+    et un certain taux d'opacité (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/524px-RGBCube_a.svg.png
        :height: 120px
        :align: center
 
-       `Cubo RGB (SharkD via Wikimedia Commons) <https://commons.wikimedia.org/wiki/File:RGBCube_a.svg>`_
+       `Cube RGB (SharkD via Wikimedia Commons) <https://commons.wikimedia.org/wiki/File:RGBCube_a.svg>`_
 
-    :param rosso: componente rosso [0-255]
-    :param verde: componente verde [0-255]
-    :param blu: componente blu [0-255]
-    :param opacita: opacità (alpha) del colore, dove 0 significa completamente
-           trasparente e 1 completamente opaco.
-           Di default, tutti i colori sono completamente opachi.
-    :returns: un colore con le componenti RGBA indicate
+    :param rouge: composante rouge [0-255]
+    :param vert: composante verte [0-255]
+    :param bleu: composante bleu [0-255]
+    :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent 
+            et 1 complètement opaque.
+            Par défaut, toutes les couleurs sont complètement opaques.
+    :returns: une couleur avec les composantes RGBA données
     """
-    return rgb_color(rosso, verde, blu, opacita)
+    return rgb_color(rouge, vert, bleu, opacite)
 
 
-def colore_hsv(tonalita: float, saturazione: float, valore: float, opacita: float = 1.0) -> Colore:
+def couleur_hsv(teinte: float, saturation: float, valeur: float, opacite: float = 1.0) -> Couleur:
     """
-    Ritorna un colore con la tonalità (H), saturazione (S) e valore (V) indicati,
-    e un certo grado di opacità (alpha, A).
+    Retourne une couleur avec la teinte (H), saturation (S) et valeur (V) données,
+    ainsi que le taux d'opacité (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/4/4e/HSV_color_solid_cylinder.png
        :height: 120px
        :align: center
 
-       `Cilindro HSV (SharkD via Wikimedia Commons) <https://commons.wikimedia.org/wiki/File:HSV_color_solid_cylinder.png>`_
+       `Cylindre HSV (SharkD via Wikimedia Commons) <https://commons.wikimedia.org/wiki/File:HSV_color_solid_cylinder.png>`_
 
-    :param tonalita: tonalità del colore [0-360]
-    :param saturazione: saturazione del colore [0-1]
-    :param valore: quantità di luce applicata [0-1]
-    :param opacita: opacità (alpha) del colore, dove 0 significa completamente
-           trasparente e 1 completamente opaco.
-           Di default, tutti i colori sono completamente opachi.
-    :returns: un colore con le componenti HSVA indicate
+    :param teinte: teinte de la couleur [0-360]
+    :param saturation: saturation de la couleur [0-1]
+    :param valeur: quantité de lumière appliquée [0-1]
+           Les couleurs complètement saturé ont une quantité de lumière de 1.
+    :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent 
+            et 1 complètement opaque.
+            Par défaut, toutes les couleurs sont complètement opaques.
+    :returns: une couleur avec le composantes HSVA données
     """
-    return hsv_color(tonalita, saturazione, valore, opacita)
+    return hsv_color(teinte, saturation, valeur, opacite)
 
 
-def colore_hsl(tonalita: float, saturazione: float, luce: float, opacita: float = 1.0) -> Colore:
+def couleur_hsl(teinte: float, saturation: float, luminosite: float, opacite: float = 1.0) -> Couleur:
     """
-    Ritorna un colore con la tonalità (H), saturazione (S) e luce (L) indicati,
-    e un certo grado di opacità (alpha, A).
+    Retourne une couleur avec la teinte (H), saturation (S) et luminosité (V) données,
+    ainsi que le taux d'opacité (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/3/35/HSL_color_solid_cylinder.png
        :height: 120px
        :align: center
 
-       `Cilindro HSL: SharkD via Wikimedia Commons <https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder.png>`_
+       `Cylindre HSL: SharkD via Wikimedia Commons <https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder.png>`_
 
-    :param tonalita: tonalità del colore [0-360]
-    :param saturazione: saturazione del colore [0-1]
-    :param luce: quantità di bianco o nero applicata [0-1].
-           Colori completamente saturi hanno un valore di luce di 1/2.
-    :param opacita: opacità (alpha) del colore, dove 0 significa completamente
-           trasparente e 1 completamente opaco.
-           Di default, tutti i colori sono completamente opachi.
-    :returns: un colore con le componenti HSLA indicate
+    :param teinte: teinte de la couleur [0-360]
+    :param saturation: saturation de la couleur [0-1]
+    :param luminosite: quantité de blanc ou noire appliquée [0-1].
+           Les couleurs complètement saturé ont un valeur de luminosité de 1/2.
+    :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent 
+            et 1 complètement opaque.
+            Par défaut, toutes les couleurs sont complètement opaques.
+    :returns: une couleur avec les composantes HSLA données.
     """
-    return hsl_color(tonalita, saturazione, luce, opacita)
+    return hsl_color(teinte, saturation, luminosite, opacite)
