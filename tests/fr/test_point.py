@@ -1,13 +1,13 @@
-from pytamaro.it.point_names import *
+from pytamaro.fr.point_names import *
 
 
 def test_point_names():
-    assert top_left == alto_sinistra
-    assert top_center == alto_centro
-    assert top_right == alto_destra
-    assert center_left == centro_sinistra
-    assert center == centro
-    assert center_right == centro_destra
-    assert bottom_left == basso_sinistra
-    assert bottom_center == basso_centro
-    assert bottom_right == basso_destra
+    assert top_left == haut_gauche
+    assert top_center == haut_centre
+    assert top_right == haut_droite
+    assert center_left == centre_gauche
+    assert center == centre
+    assert center_right == centro_droite
+    assert bottom_left == bas_gauche
+    assert bottom_center == bas_centre
+    assert bottom_right == bas_droite

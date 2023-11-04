@@ -1,7 +1,6 @@
-# pylint:disable=duplicate-code
 """
-Nomi di punti notevoli, che possono essere usati come posizioni di fissaggio per
-una grafica.
+Noms de points particuliers, qui peuvent être utilisé comme des points d'ancrage pour des
+graphiques.
 """
 
 from __future__ import annotations
@@ -9,62 +8,62 @@ from __future__ import annotations
 from pytamaro.point_names import (top_left, top_center, top_right,
                                   center_left, center, center_right,
                                   bottom_left, bottom_center, bottom_right)
-from pytamaro.it.point import Punto
+from pytamaro.fr.point import Point
 
 
-centro: Punto = center
-"""Il punto centrale del rettangolo di delimitazione della grafica
-
-:meta hide-value:
-"""
-
-
-alto_centro: Punto = top_center
-"""Il punto centrale del lato superiore del rettangolo di delimitazione della grafica
-
-:meta hide-value:
-"""
-
-basso_centro: Punto = bottom_center
-"""Il punto centrale del lato inferiore del rettangolo di delimitazione della grafica
-
-:meta hide-value:
-"""
-
-centro_sinistra: Punto = center_left
-"""Il punto centrale del lato sinistro del rettangolo di delimitazione della grafica
+centre: Point = center
+"""Le point centrale du cadre de délimitation du graphique 
 
 :meta hide-value:
 """
 
 
-centro_destra: Punto = center_right
-"""Il punto centrale del lato destro del rettangolo di delimitazione della grafica
+haut_centre: Point = top_center
+"""Le point centrale du côté supérieur du cadre de délimitation du graphique
+
+:meta hide-value:
+"""
+
+bas_centre: Point = bottom_center
+"""Le point centrale du côté inférieur du cadre de délimitation du graphique
+
+:meta hide-value:
+"""
+
+centre_gauche: Point = center_left
+"""Le point centrale du côté gauche du cadre de délimitation du graphique
 
 :meta hide-value:
 """
 
 
-alto_sinistra: Punto = top_left
-"""Il vertice in alto a sinistra del rettangolo di delimitazione della grafica
+centro_droite: Point = center_right
+"""Le point centrale du côté droit du cadre de délimitation du graphique
 
 :meta hide-value:
 """
 
-alto_destra: Punto = top_right
-"""Il vertice in alto a destra del rettangolo di delimitazione della grafica
+
+haut_gauche: Point = top_left
+"""Le coin en haut à gauche du cadre de délimitation du graphique
 
 :meta hide-value:
 """
 
-basso_sinistra: Punto = bottom_left
-"""Il vertice in basso a sinistra del rettangolo di delimitazione della grafica
+haut_droite: Point = top_right
+"""Le coin en haut à droite du cadre de délimitation du graphique
 
 :meta hide-value:
 """
 
-basso_destra: Punto = bottom_right
-"""Il vertice in basso a destra del rettangolo di delimitazione della grafica
+bas_gauche: Point = bottom_left
+"""Le coin en bas à gauche du cadre de délimitation du graphique
+
+:meta hide-value:
+"""
+
+bas_droite: Point = bottom_right
+"""Le coin en bas à droite du cadre de délimitation du graphique
 
 :meta hide-value:
 """

@@ -1,11 +1,10 @@
-# pylint:disable=duplicate-code
 """
-Tipo `Punto`.
+Type `Point`.
 """
 
-from pytamaro.point import Point
+from pytamaro import point
 
-Punto = Point
+Point = point.Point
 """
-Rappresenta un punto nel piano.
+Représente un point sur un plan.
 """
