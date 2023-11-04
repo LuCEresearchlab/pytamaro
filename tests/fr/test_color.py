@@ -1,7 +1,7 @@
 from pytamaro.color import *
-from pytamaro.color_names import *
+import pytamaro.color_names as en
 from pytamaro.fr.color import *
-from pytamaro.fr.color_names import *
+import pytamaro.fr.color_names as fr
 
 
 def test_rgb_color():
@@ -21,15 +21,15 @@ def test_rgba_color():
 
 
 def test_color_names():
-    assert red == rosso
-    assert green == verde
-    assert blue == blu
-    assert magenta == magenta
-    assert cyan == ciano
-    assert yellow == giallo
-    assert black == nero
-    assert white == bianco
+    assert en.red == fr.rouge
+    assert en.green == fr.vert
+    assert en.blue == fr.bleu
+    assert en.magenta == fr.magenta
+    assert en.cyan == fr.cyan
+    assert en.yellow == fr.jaune
+    assert en.black == fr.noir
+    assert en.white == fr.blanc
 
 
 def test_transparent_color_name():
-    assert transparent == trasparente
+    assert en.transparent == fr.transparent

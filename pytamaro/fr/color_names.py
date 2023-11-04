@@ -1,63 +1,63 @@
 """
-Nomi di colori notevoli essendo ai vertici del cubo RGB.
-In aggiunta, il colore completamente trasparente.
+Noms de couleurs particulières qui sont aux coins du cube RGB.
+Ainsi que la couleur complètement transparent.
 """
 
 from __future__ import annotations
 
 from pytamaro.color_names import black, blue, cyan, green, magenta, red, transparent, white, yellow
-from pytamaro.it.color import Colore
+from pytamaro.fr.color import Couleur
 
-nero: Colore = black
-"""Colore nero
-
-:meta hide-value:
-"""
-
-rosso: Colore = red
-"""Colore rosso
+noir: Couleur = black
+"""Couleur noire
 
 :meta hide-value:
 """
 
-verde: Colore = green
-"""Colore verde
+rouge: Couleur = red
+"""Couleur rouge
 
 :meta hide-value:
 """
 
-blu: Colore = blue
-"""Colore blu
+vert: Couleur = green
+"""Couleur verte
 
 :meta hide-value:
 """
 
-giallo: Colore = yellow
-"""Colore giallo
+bleu: Couleur = blue
+"""Couleur bleu
 
 :meta hide-value:
 """
 
-magenta: Colore = magenta  # pylint: disable=self-assigning-variable
-"""Colore magenta
+jaune: Couleur = yellow
+"""Couleur jaune
 
 :meta hide-value:
 """
 
-ciano: Colore = cyan
-"""Colore ciano
+magenta: Couleur = magenta  # pylint: disable=self-assigning-variable
+"""Couleur magenta
 
 :meta hide-value:
 """
 
-bianco: Colore = white
-"""Colore bianco
+cyan: Couleur = cyan
+"""Couleur cyan
 
 :meta hide-value:
 """
 
-trasparente: Colore = transparent
-"""Colore completamente trasparente
+blanc: Couleur = white
+"""Couleur blanc
+
+:meta hide-value:
+"""
+
+transparent: Couleur = transparent  # pylint: disable=self-assigning-variable
+"""Couleur complètement transparente
 
 :meta hide-value:
 """
