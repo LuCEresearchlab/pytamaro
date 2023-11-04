@@ -1,3 +1,4 @@
+# pylint:disable=duplicate-code
 """
 Tipo `Grafica`, che include una grafica con una posizione di fissaggio.
 """

@@ -1,3 +1,4 @@
+# pylint:disable=duplicate-code
 """
 Funzioni per output di grafiche (visualizzare o salvare).
 """

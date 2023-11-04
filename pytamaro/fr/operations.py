@@ -1,3 +1,4 @@
+# pylint:disable=duplicate-code
 """
 Funzioni per operazioni con grafiche (principlamente per combinarle).
 """

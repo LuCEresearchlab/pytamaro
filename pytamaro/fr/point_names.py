@@ -1,3 +1,4 @@
+# pylint:disable=duplicate-code
 """
 Nomi di punti notevoli, che possono essere usati come posizioni di fissaggio per
 una grafica.

@@ -1,3 +1,4 @@
+# pylint:disable=duplicate-code
 """
 Funzioni per creare grafiche primitive (forme e testo).
 Tranne quando specificato diversamente, la posizione di fissaggio iniziale è al
