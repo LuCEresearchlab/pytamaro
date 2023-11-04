@@ -1,5 +1,6 @@
 """
-Type `Couleur`, ainsi des fonctions pour produire des couleurs et constantes représentants des couleurs particulières.
+Type `Couleur`, ainsi des fonctions pour produire des couleurs et constantes représentants des
+couleurs particulières.
 """
 
 from __future__ import annotations
@@ -30,7 +31,7 @@ def couleur_rgb(rouge: int, vert: int, bleu: int, opacite: float = 1.0) -> Coule
     :param rouge: composante rouge [0-255]
     :param vert: composante verte [0-255]
     :param bleu: composante bleu [0-255]
-    :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent 
+    :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent
             et 1 complètement opaque.
             Par défaut, toutes les couleurs sont complètement opaques.
     :returns: une couleur avec les composantes RGBA données
@@ -53,7 +54,7 @@ def couleur_hsv(teinte: float, saturation: float, valeur: float, opacite: float 
     :param saturation: saturation de la couleur [0-1]
     :param valeur: quantité de lumière appliquée [0-1]
            Les couleurs complètement saturé ont une quantité de lumière de 1.
-    :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent 
+    :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent
             et 1 complètement opaque.
             Par défaut, toutes les couleurs sont complètement opaques.
     :returns: une couleur avec le composantes HSVA données
@@ -61,7 +62,8 @@ def couleur_hsv(teinte: float, saturation: float, valeur: float, opacite: float 
     return hsv_color(teinte, saturation, valeur, opacite)
 
 
-def couleur_hsl(teinte: float, saturation: float, luminosite: float, opacite: float = 1.0) -> Couleur:
+def couleur_hsl(teinte: float, saturation: float, luminosite: float, opacite: float = 1.0
+                ) -> Couleur:
     """
     Retourne une couleur avec la teinte (H), saturation (S) et luminosité (V) données,
     ainsi que le taux d'opacité (alpha, A).
@@ -76,7 +78,7 @@ def couleur_hsl(teinte: float, saturation: float, luminosite: float, opacite: fl
     :param saturation: saturation de la couleur [0-1]
     :param luminosite: quantité de blanc ou noire appliquée [0-1].
            Les couleurs complètement saturé ont un valeur de luminosité de 1/2.
-    :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent 
+    :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent
             et 1 complètement opaque.
             Par défaut, toutes les couleurs sont complètement opaques.
     :returns: une couleur avec les composantes HSLA données.
