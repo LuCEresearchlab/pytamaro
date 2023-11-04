@@ -1,19 +1,18 @@
-# pylint:disable=duplicate-code
 """
-Tipo `Grafica`, che include una grafica con una posizione di fissaggio.
+Type `Graphisme`, qui inclue un graphisme avec un point d'ancrage.
 """
 
 from __future__ import annotations
 
 from pytamaro.graphic import Graphic
 
-Grafica = Graphic
+Graphisme = Graphic
 """
-Una grafica (immagine) con una posizione per fissare.
+Un graphisme (image) avec un point à ancrer.
 
-La posizione di fissaggio viene usata nelle seguenti operazioni:
+Le point d'ancrage est utilisé pour les opérations suivantes:
 
-- rotazione (per determinare il centro di rotazione)
-- composizione di grafiche (due grafiche vengono composte allineando le loro
-  posizioni di fissaggio).
+- rotation (pour déterminer le centre de rotation)
+- composition de graphismes (deux graphismes sont composés en alignant leur point
+  d'ancrage).
 """
