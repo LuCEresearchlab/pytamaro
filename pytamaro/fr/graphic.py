@@ -1,18 +1,18 @@
 """
-Type `Graphisme`, qui inclue un graphisme avec un point d'ancrage.
+Type `Graphique`, qui inclue un graphique avec un point d'ancrage.
 """
 
 from __future__ import annotations
 
 from pytamaro.graphic import Graphic
 
-Graphisme = Graphic
+Graphique = Graphic
 """
-Un graphisme (image) avec un point à ancrer.
+Un graphique (image) avec un point à ancrer.
 
 Le point d'ancrage est utilisé pour les opérations suivantes:
 
 - rotation (pour déterminer le centre de rotation)
-- composition de graphismes (deux graphismes sont composés en alignant leur point
+- composition de graphiques (deux graphiques sont composés en alignant leur point
   d'ancrage).
 """
