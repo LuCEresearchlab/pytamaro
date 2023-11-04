@@ -1,79 +1,79 @@
-# pylint:disable=duplicate-code
 """
-Funzioni per output di grafiche (visualizzare o salvare).
+Fonctions pour output de graphiques (visualiser ou sauvegarder).
 """
 
 from __future__ import annotations
 
 from pytamaro.io import save_animation, save_graphic, show_animation, show_graphic
-from pytamaro.it.graphic import Grafica
+from pytamaro.fr.graphic import Graphique
 
 
-def visualizza_grafica(grafica: Grafica, debug: bool = False):
+def montre_graphique(graphique: Graphique, debug: bool = False):
     """
-    Visualizza una grafica. Grafiche prive di area non possono essere
-    visualizzate.
+    Montre un graphique. Les graphiques n'ayant pas de surface ne peuvent pas être montrés.
 
-    Quando `debug` è `True`, adorna la visualizzazione con informazioni utili
-    per debugging: un bordo rosso attorno alla bounding box e una croce
-    giallastra attorno al punto di fissaggio.
+    Quand `debug` est `True`, la visualisation est ornée d'informations utile pour le débogage:
+    une bordure rouge autour des boîtes d'encombrements et une croix jaunâtre autour du pion
+    d'ancrage.
 
-    :param grafica: grafica da visualizzare
-    :param debug: può facoltativamente essere impostato a `True` per
-           sovrapporre informazioni di debug
+    :param graphique: le graphique à montrer
+    :param debug: (optionnel) peut être assigné à `True` pour superposer les informations de
+           débogage
     """
-    show_graphic(grafica, debug)
+    show_graphic(graphique, debug)
 
 
-def salva_grafica(nome_file: str, grafica: Grafica, debug: bool = False):
+def sauvegarde_graphique(nom_fichier: str, graphique: Graphique, debug: bool = False):
     """
-    Salva una grafica in un file.
-    Due formati di file sono supportati: PNG (grafica raster) e SVG (grafica
-    vettoriale).
-    L'estensione del nome del file (o ".png" o ".svg") determina il formato.
+    Sauvegarde un graphique dans un fichier.
+    Deux formats de fichiers sont supporter: PNG (graphiques tramés) et SVG (graphiques
+    vectoriels). L'extension du fichier (".png" ou ".svg") détermine le format.
 
-    Una grafica priva di area non può essere salvata nel formato PNG.
 
-    Quando `debug` è `True`, adorna la visualizzazione con informazioni utili
-    per debugging: un bordo rosso attorno alla bounding box e una croce
-    giallastra attorno al punto di fissaggio.
+    Les graphiques avec aucune surface ne peuvent pas être sauvegardés au format PNG.
 
-    :param nome_file: nome del file da creare (con l'estensione)
-    :param grafica: grafica da visualizzare
-    :param debug: può facoltativamente essere impostato a `True` per
-           sovrapporre informazioni di debug
+    Quand `debug` est `True`, la visualisation est ornée d'informations utile pour le débogage:
+    une bordure rouge autour des boîtes d'encombrements et une croix jaunâtre autour du pion
+    d'ancrage.
+
+    :param nom_fichier: le nom du fichier à créer (avec l'extension)
+    :param graphique: le graphique à sauvegarder
+    :param debug: (optionnel) peut être assigné à `True` pour superposer les informations de
+           débogage
     """
-    save_graphic(nome_file, grafica, debug)
+    save_graphic(nom_fichier, graphique, debug)
 
 
-def salva_animazione(
-    nome_file: str, grafiche: list[Grafica], durata: int = 40, loop: bool = True
+def sauvegarde_animation(
+    nom_fichier: str, graphiques: list[Graphique], duree: int = 40, en_boucle: bool = True
 ):
     """
-    Salva una sequenza di grafiche come un'animazione (GIF).
+    Sauvegarde une séquence de graphiques en tant qu'animation (GIF).
 
-    Le grafiche vengono riprodotte sequenzialmente (normalmente a 25 frame al
-    secondo) a ciclo continuo.
+    Les graphiques sont reproduit de manière séquentielle (normalement à 25 images par secondes) en
+    boucle (à moins que ça ne soit indiqué autrement).
 
-    :param nome_file: nome del file da creare (inclusa l'estensione '.gif')
-    :param grafiche: lista di grafiche da salvare come animazione
-    :param durata: durata in millisecondi di ciascun frame (default a 40
-           millisecondi, ovvero 25 frame al secondo)
-    :param loop: determina se la GIF debba riprodursi in loop indefinitamente (default a True)
+
+    :param nom_fichier: le nom du fichier à créer (contenant l'extension ".gif")
+    :param graphiques: la liste des graphiques à sauvegarder en tant qu'animation.
+    :param duree: durée en millisecondes entre chaque image (par défaut est égale à 40
+    millisecondes, ce qui amène à avoir 25 images par secondes)
+    :param en_boucle: si le GIF doit tourner en boucle indéfiniment (par défaut est `True`)
     """
-    save_animation(nome_file, grafiche, durata, loop)
+    save_animation(nom_fichier, graphiques, duree, en_boucle)
 
 
-def visualizza_animazione(grafiche: list[Grafica], durata: int = 40, loop: bool = True):
+def montre_animation(graphiques: list[Graphique], duree: int = 40, en_boucle: bool = True):
     """
-    Visualizza una sequenza di grafiche come un'animazione (GIF).
+    Montre une séquence de graphiques en tant qu'animation (GIF).
 
-    Le grafiche vengono riprodotte sequenzialmente (normalmente a 25 frame al
-    secondo) a ciclo continuo.
+    Les graphiques sont reproduit de manière séquentielle (normalement à 25 images par secondes) en
+    boucle (à moins que ça ne soit indiqué autrement).
 
-    :param grafiche: lista di grafiche da salvare come animazione
-    :param durata: durata in millisecondi di ciascun frame (default a 40
-           millisecondi, ovvero 25 frame al secondo)
-    :param loop: determina se la GIF debba riprodursi in loop indefinitamente (default a True)
+
+    :param graphiques: la liste des graphiques à sauvegarder en tant qu'animation.
+    :param duree: durée en millisecondes entre chaque image (par défaut est égale à 40
+            millisecondes, ce qui amène à avoir 25 images par secondes)
+    :param en_boucle: si le GIF doit tourner en boucle indéfiniment (par défaut est `True`)
     """
-    show_animation(grafiche, durata, loop)
+    show_animation(graphiques, duree, en_boucle)
