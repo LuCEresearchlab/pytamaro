@@ -5,8 +5,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from pytamaro.localization import translate
 
-@dataclass
+
+@dataclass(frozen=True)
 class Point:
     """
     Represents a point on a plane.
@@ -26,12 +28,20 @@ class Point:
         return Point(self.x + current_vector.terminal_point.x,
                      self.y + current_vector.terminal_point.y)
 
+    def __repr__(self) -> str:
+        from pytamaro.point_names import \
+            _known_points  # pylint: disable=cyclic-import,import-outside-toplevel
+        maybe_known_point = _known_points.get(self)
+        if maybe_known_point:
+            return translate(maybe_known_point)
+        return f"({self.x}, {self.y})"
+
 
 # Center of the 2-dimensional space
 zero = Point(0.0, 0.0)
 
 
-@dataclass
+@dataclass(frozen=True)
 class Vector:
     """
     Represents a vector in 2-dimensional space storing its terminal point,

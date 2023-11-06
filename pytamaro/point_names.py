@@ -2,8 +2,7 @@
 Names of notable points, that can be used as pinning positions for a graphic.
 """
 
-from pytamaro.point import zero, i_hat, j_hat, Point
-
+from pytamaro.point import Point, i_hat, j_hat, zero
 
 center: Point = zero
 """The center point of the bounding box
@@ -63,3 +62,15 @@ bottom_right: Point = center_right.translate(j_hat * -1)
 
 :meta hide-value:
 """
+
+_known_points = {
+    center: "center",
+    top_center: "top_center",
+    bottom_center: "bottom_center",
+    center_left: "center_left",
+    center_right: "center_right",
+    top_left: "top_left",
+    top_right: "top_right",
+    bottom_left: "bottom_left",
+    bottom_right: "bottom_right",
+}

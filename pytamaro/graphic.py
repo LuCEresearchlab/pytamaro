@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from skia import Canvas, Font, Matrix, Paint, Path, Point, Rect, Size, Typeface
 
 from pytamaro.color import Color
+from pytamaro.localization import translate
 from pytamaro.point import Point as PyTamaroPoint
 from pytamaro.point_names import (bottom_center, center, center_left,
                                   center_right, top_center)
@@ -90,7 +91,7 @@ class Primitive(Graphic):
             bounds = path.computeTightBounds()
             pin_position = Point(bounds.width() / 2, bounds.height() / 2)
         super().__init__(pin_position, path)
-        paint = Paint(color.color)
+        paint = Paint(color.skia_color)
         object.__setattr__(self, "paint", paint)
 
     def draw(self, canvas: Canvas):
@@ -112,6 +113,9 @@ class Empty(Graphic):
     def draw(self, canvas: Canvas):
         pass
 
+    def __repr__(self) -> str:
+        return f"{translate('empty_graphic')}()"
+
 
 @dataclass(frozen=True, eq=False)
 class Rectangle(Primitive):
@@ -127,6 +131,9 @@ class Rectangle(Primitive):
         path = Path().addRect(Rect.MakeWH(width, height))
         super().__init__(path, color)
 
+    def __repr__(self) -> str:
+        return f"{translate('rectangle')}({self.width}, {self.height}, {self.color})"
+
 
 @dataclass(frozen=True, eq=False)
 class Ellipse(Primitive):
@@ -141,6 +148,9 @@ class Ellipse(Primitive):
         object.__setattr__(self, "height", height)
         path = Path().addOval(Rect.MakeWH(width, height))
         super().__init__(path, color)
+
+    def __repr__(self) -> str:
+        return f"{translate('ellipse')}({self.width}, {self.height}, {self.color})"
 
 
 @dataclass(frozen=True, eq=False)
@@ -165,6 +175,9 @@ class CircularSector(Primitive):
             path.close()
         super().__init__(path, color, Point(radius, radius))
 
+    def __repr__(self) -> str:
+        return f"{translate('circular_sector')}({self.radius}, {self.angle}, {self.color})"
+
 
 @dataclass(frozen=True, eq=False)
 class Triangle(Primitive):
@@ -188,6 +201,9 @@ class Triangle(Primitive):
         # The centroid is the average of the three vertices
         centroid = Point((side1 + third_point.x()) / 3, third_point.y() / 3)
         super().__init__(path, color, centroid)
+
+    def __repr__(self) -> str:
+        return f"{translate('triangle')}({self.side1}, {self.side2}, {self.angle}, {self.color})"
 
 
 @dataclass(frozen=True, eq=False)
@@ -223,6 +239,9 @@ class Text(Primitive):
         bounds = text_path.computeTightBounds()
         super().__init__(text_path, color, Point(bounds.left(), 0))
 
+    def __repr__(self) -> str:
+        return f"{translate('text')}({self.text!r}, {self.font_name!r}, {self.text_size}, {self.color})"  # pylint: disable=line-too-long
+
 
 @dataclass(frozen=True, eq=False)
 class Compose(Graphic):
@@ -251,6 +270,9 @@ class Compose(Graphic):
                          self.background.pin_position.y() - self.foreground.pin_position.y())
         self.foreground.draw(canvas)
         canvas.restore()
+
+    def __repr__(self) -> str:
+        return f"{translate('compose')}({self.foreground}, {self.background})"
 
 
 @dataclass(frozen=True, eq=False)
@@ -281,12 +303,16 @@ class Pin(Graphic):
     def draw(self, canvas: Canvas):
         self.graphic.draw(canvas)
 
+    def __repr__(self) -> str:
+        return f"{translate('pin')}({self.pinning_point}, {self.graphic})"
+
 
 @dataclass(frozen=True, eq=False)
 class Rotate(Graphic):
     """
-    Represents the rotation of a graphic by a certain angle (in degrees),
-    clockwise.
+    Represents the counterclockwise rotation of a graphic
+    by a certain angle around the pinning position.
+    The angle is expressed in degrees.
     """
     graphic: Graphic
     angle: float
@@ -294,7 +320,8 @@ class Rotate(Graphic):
     def __init__(self, graphic: Graphic, angle: float):
         object.__setattr__(self, "graphic", graphic)
         object.__setattr__(self, "angle", angle)
-        object.__setattr__(self, "rot_matrix", Matrix.RotateDeg(angle, graphic.pin_position))
+        # Negated angle because RotateDeg works clockwise.
+        object.__setattr__(self, "rot_matrix", Matrix.RotateDeg(-angle, graphic.pin_position))
         path = Path()
         # transform() mutates the path provided as the second argument
         graphic.path.transform(self.rot_matrix, path)  # type: ignore  # pylint: disable=no-member
@@ -305,6 +332,9 @@ class Rotate(Graphic):
         canvas.concat(self.rot_matrix)  # type: ignore  # pylint: disable=no-member
         self.graphic.draw(canvas)
         canvas.restore()
+
+    def __repr__(self) -> str:
+        return f"{translate('rotate')}({self.angle}, {self.graphic})"
 
 
 @dataclass(frozen=True, eq=False)
@@ -341,6 +371,9 @@ class Beside(SimpleCompose):
         object.__setattr__(self, "right_graphic", right_graphic)
         super().__init__(left_graphic, right_graphic, center_right, center_left)
 
+    def __repr__(self) -> str:
+        return f"{translate('beside')}({self.left_graphic}, {self.right_graphic})"
+
 
 @dataclass(frozen=True, eq=False)
 class Above(SimpleCompose):
@@ -356,6 +389,9 @@ class Above(SimpleCompose):
         object.__setattr__(self, "bottom_graphic", bottom_graphic)
         super().__init__(top_graphic, bottom_graphic, bottom_center, top_center)
 
+    def __repr__(self) -> str:
+        return f"{translate('above')}({self.top_graphic}, {self.bottom_graphic})"
+
 
 @dataclass(frozen=True, eq=False)
 class Overlay(SimpleCompose):
@@ -370,3 +406,6 @@ class Overlay(SimpleCompose):
         object.__setattr__(self, "front_graphic", front_graphic)
         object.__setattr__(self, "back_graphic", back_graphic)
         super().__init__(front_graphic, back_graphic, center, center)
+
+    def __repr__(self) -> str:
+        return f"{translate('overlay')}({self.front_graphic}, {self.back_graphic})"

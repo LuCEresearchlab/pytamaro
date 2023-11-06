@@ -1,4 +1,5 @@
 from pytamaro.it.point_names import *
+from tests.testing_utils import assert_repr
 
 
 def test_point_names():
@@ -11,3 +12,8 @@ def test_point_names():
     assert bottom_left == basso_sinistra
     assert bottom_center == basso_centro
     assert bottom_right == basso_destra
+
+
+def test_point_localized_repr():
+    assert_repr(alto_sinistra, "it")
+    assert "alto" in repr(alto_sinistra)

@@ -58,3 +58,15 @@ transparent = rgb_color(0, 0, 0, 0)
 
 :meta hide-value:
 """
+
+_known_colors = {
+    black: "black",
+    red: "red",
+    green: "green",
+    blue: "blue",
+    yellow: "yellow",
+    magenta: "magenta",
+    cyan: "cyan",
+    white: "white",
+    transparent: "transparent",
+}

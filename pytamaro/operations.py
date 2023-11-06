@@ -2,10 +2,11 @@
 Functions to do operations on graphics (mainly, to combine them).
 """
 
-from pytamaro.graphic import Compose, Graphic, Pin, Rotate, Beside, Above, Overlay
 from pytamaro.checks import check_angle, check_graphic, check_point
-from pytamaro.utils import export
+from pytamaro.graphic import (Above, Beside, Compose, Graphic, Overlay, Pin,
+                              Rotate)
 from pytamaro.point import Point
+from pytamaro.utils import export
 
 
 @export
@@ -141,5 +142,4 @@ def rotate(angle: float, graphic: Graphic) -> Graphic:
     """
     check_angle(angle)
     check_graphic(graphic)
-    # Negate the angle given that Rotate is clockwise.
-    return Rotate(graphic, -angle)
+    return Rotate(graphic, angle)

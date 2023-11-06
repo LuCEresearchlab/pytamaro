@@ -1,12 +1,12 @@
 from pytamaro.color_names import blue, red
 from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
+from pytamaro.point_names import bottom_left, bottom_right, top_left
 from pytamaro.primitives import ellipse, rectangle, triangle
-
-from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_equals_rendered, assert_pin_tolerance,
+from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_equals_rendered,
+                                 assert_pin_tolerance, assert_repr,
                                  assert_size, assert_size_tolerance,
                                  assert_unique_color)
-from pytamaro.point_names import bottom_left, bottom_right, top_left
 
 
 def test_width():
@@ -68,6 +68,11 @@ def test_rotate_pin_circle():
     assert_pin_tolerance(rotate(90, c), (RADIUS, RADIUS))
 
 
+def test_rotate_repr():
+    r = rotate(90, rectangle(WIDTH, HEIGHT, red))
+    assert_repr(r, "en")
+
+
 # Beside
 
 
@@ -93,6 +98,13 @@ def test_beside_pinning_position():
     joined = beside(r1, r2)
     # Joined should have the pinning position at its center
     assert graphic_width(compose(rectangle(3 * WIDTH, HEIGHT, red), joined)) == 3 * WIDTH
+
+
+def test_beside_repr():
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(2 * WIDTH, HEIGHT, red)
+    joined = beside(r1, r2)
+    assert_repr(joined, "en")
 
 
 # Above
@@ -122,6 +134,13 @@ def test_above_pinning_position():
     assert graphic_height(compose(rectangle(WIDTH, 3 * HEIGHT, red), joined)) == 3 * HEIGHT
 
 
+def test_above_repr():
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(WIDTH, 2 * HEIGHT, red)
+    joined = above(r1, r2)
+    assert_repr(joined, "en")
+
+
 # Overlay
 
 
@@ -148,6 +167,15 @@ def test_overlay_small_large():
     assert_size(s_blue_red, (large, large))
 
 
+def test_overlay_repr():
+    large = 2 * WIDTH
+    small = WIDTH
+    s1 = rectangle(large, large, blue)
+    s2 = rectangle(small, small, red)
+    s_blue_red = overlay(s2, s1)
+    assert_repr(s_blue_red, "en")
+
+
 # Compose
 
 
@@ -163,3 +191,10 @@ def test_compose_visually_equals_overlay():
     s1 = rectangle(WIDTH, WIDTH, blue)
     s2 = rectangle(WIDTH, WIDTH, red)
     assert_equals_rendered(compose(s1, s2), overlay(s1, s2))
+
+
+def test_compose_repr():
+    s1 = rectangle(WIDTH, WIDTH, blue)
+    s2 = rectangle(WIDTH, WIDTH, red)
+    composed = compose(s1, s2)
+    assert_repr(composed, "en")

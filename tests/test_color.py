@@ -1,11 +1,13 @@
-from pytamaro.color import Color
 from PIL.ImageColor import getrgb
-from pytamaro.color_functions import hsv_color, hsl_color
+
+from pytamaro.color import Color
+from pytamaro.color_functions import hsl_color, hsv_color
 from pytamaro.color_names import *
+from tests.testing_utils import assert_repr
 
 
 def _same_color(color: Color, name: str):
-    assert color.as_tuple()[:3] == getrgb(name)
+    assert (color.red, color.green, color.blue) == getrgb(name)
 
 
 def test_rgb_color():
@@ -24,7 +26,7 @@ def test_color_names():
 
 
 def test_transparent_color_name():
-    assert transparent.as_tuple()[-1] == 0.0
+    assert transparent.alpha == 0.0
 
 
 def test_hsl_rgb_conversion():
@@ -49,3 +51,9 @@ def test_hsv_rbg_conversion():
     assert hsv_color(300, 1, 1) == rgb_color(255, 0, 255)  # magenta
     assert hsv_color(0, 0, 1) == rgb_color(255, 255, 255)  # white
     assert hsv_color(0, 0, 0) == rgb_color(0, 0, 0)        # black
+
+
+def test_color_repr():
+    from pytamaro.color_names import _known_colors
+    for color in _known_colors:
+        assert_repr(color, "en")

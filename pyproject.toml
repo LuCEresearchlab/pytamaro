@@ -9,18 +9,16 @@ python = ">=3.8,<4.0"
 Pillow = "^9.0.0"
 skia-python = "^87.4"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^6.2.5"
 pytest-watch = "^4.2.0"
 pytest-cov = "^3.0.0"
-pylint = "^2.12.2"
+pylint = "^3.0.2"
 pycodestyle = "^2.8.0"
 Sphinx = "^5.2.3"
 sphinx-rtd-theme = "^1.0.0"
 pyright = "^0.0.13"
-
-[tool.poetry.group.dev.dependencies]
-sphinx-toolbox = "^3.5.0"
+sphinx-toolbox = "3.5.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
