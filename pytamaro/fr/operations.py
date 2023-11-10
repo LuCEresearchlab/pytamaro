@@ -1,126 +1,122 @@
-# pylint:disable=duplicate-code
 """
-Funzioni per operazioni con grafiche (principlamente per combinarle).
+Fonctions pour faire des opérations sur des graphiques (principalement pour les combiner).
 """
 
 from __future__ import annotations
 
-from pytamaro.it.graphic import Grafica
-from pytamaro.it.point import Punto
-from pytamaro.operations import (above, beside, compose, graphic_height,
+from pytamaro.fr.graphic import Graphique
+from pytamaro.fr.point import Point
+from pytamaro.operations import (above, beside, graphic_height,
                                  graphic_width, overlay, pin, rotate)
+from pytamaro import operations
 
 
-def larghezza_grafica(grafica: Grafica) -> int:
+def largeur_graphique(graphique: Graphique) -> int:
     """
-    Ritorna la larghezza di una grafica.
-
-    :param grafica: grafica di cui calcolare la larghezza
-    :returns: larghezza della grafica
+    Retourne la largeur du graphique
+    
+    :param graphique: graphique duquel calculer la largeur
+    :returns: la largeur du graphique
     """
-    return graphic_width(grafica)
+    return graphic_width(graphique)
 
 
-def altezza_grafica(grafica: Grafica) -> int:
+def hauteur_graphique(graphique: Graphique) -> int:
     """
-    Ritorna l'altezza di una grafica.
-
-    :param grafica: grafica di cui calcolare l'altezza
-    :returns: altezza della grafica
+    Retourne la hauteur du graphique
+    
+    :param graphique: graphique duquel calculer la hauteur
+    :returns: la hauteur du graphique
     """
-    return graphic_height(grafica)
+    return graphic_height(graphique)
 
 
-def componi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
-        -> Grafica:
+def compose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) \
+        -> Graphique:
     """
-    Crea una nuova grafica componendo le due grafiche fornite.
-    La prima grafica viene tenuta in primo piano, la seconda sullo sfondo.
-    Le grafiche vengono allineate superimponendo le loro posizioni di fissaggio.
+    Créé un nouveau graphique en composant les deux graphiques fournis. 
+    Le premier graphique est maintenu au premier plan, le second en arrière plan.
+    Les graphiques sont alignés en superposant les points d'ancrage.
 
-    La posizione di fissaggio usata per comporre diventa la posizione di
-    fissaggio della grafica risultante.
+    Le point d'ancrage utilisé pour la composition sera celui du graphique résultant.
 
-    :param grafica_primopiano: grafica in primo piano
-    :param grafica_secondopiano: grafica sullo sfondo
-    :returns: la grafica risultante composta
+    :param graphique_premier_plan: le graphique au premier plan
+    :param graphique_premier_plan: le graphique en arrière plan
+    :returns: le graphique qui résulte de la composition
     """
-    return compose(grafica_primopiano, grafica_secondopiano)
+    return operations.compose(graphique_premier_plan, graphique_arriere_plan)
 
 
-def fissa(punto: Punto, grafica: Grafica) -> Grafica:
+def ancre(point: Point, graphique: Graphique) -> Graphique:
     """
-    Crea una nuova grafica che corrisponde alla grafica fornita,
-    con una nuova posizione di fissaggio.
+    Créé un nouveau graphique qui correspond au graphique fourni avec un nouveau point d'ancrage.
 
-    Ogni grafica è racchiusa in un rettangolo di delimitazione (bounding box).
-    Ci sono 9 punti notevoli, corrispondenti ai quattro angoli di questo rettangolo,
-    ai punti centrali dei quattro lati e al centro del rettangolo.
-    Ci si può riferire a questi punti usando i nomi `alto_sinistra`, `alto_destra`,
-    `basso_sinistra`, `basso_destra`, `alto_centro`, `centro_destra`, `basso_centro`,
-    `centro_sinistra` e `centro`.
+    Chaque graphique est compris dans un cadre de délimitation.
+    Il y a 9 points d'ancrages particuliers, qui correspondent aux quatre coins du cadre
+    (rectangle), le milieu de chaque côté ainsi que le centre du cadre.
+    Les points peuvent être désignés avec les noms suivants: `haut_gauche`, `haut_droite`,
+    `bas_gauche`, `bas_droite`, `haut_centre`, `centre_droite`, `bas_centre`, `centre_gauche` et 
+    `centre`.
 
-    :param punto: il punto indicante la nuova posizione di fissaggio
-    :param grafica: grafica originale
-    :returns: una nuova grafica con una posizione di fissaggio aggiornata
+    :param point: le point indiquant le nouveau point d'ancrage
+    :param graphique: le graphique originel
+    :returns: un nouveau graphique avec le nouveau point d'ancrage
     """
-    return pin(punto, grafica)
+    return pin(point, graphique)
 
 
-def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
-        -> Grafica:
+def superpose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) \
+        -> Graphique:
     """
-    Crea una nuova grafica sovrapponendo le due grafiche fornite,
-    tenendo la prima in primo piano e la seconda sullo sfondo.
-    Le due grafiche vengono sovrapposte sui loro centri.
+    Créé un nouveau graphique en superposant les deux graphiques fournis, en gardant le premier au
+    premier plan et en mettant le second en arrière plan.
+    Les graphiques sont superposés par rapport à leur centre.
 
-    La posizione di fissaggio della grafica risultante è nel suo centro.
-
-    :param grafica_primopiano: grafica in primo piano
-    :param grafica_secondopiano: grafica sullo sfondo
-    :returns: grafica risultante dalla sovrapposizione delle due fornite
+    Le point d'ancrage du nouveau graphique est en son centre.
+    
+    :param graphique_premier_plan: le graphique au premier plan
+    :param graphique_arriere_plan: le graphique en arrière plan
+    :returns: le graphique résultant de la superposition des deux graphiques fournis
     """
-    return overlay(grafica_primopiano, grafica_secondopiano)
+    return overlay(graphique_premier_plan, graphique_arriere_plan)
 
 
-def accanto(grafica_sinistra: Grafica, grafica_destra: Grafica) -> Grafica:
+def cote_a_cote(graphique_gauche: Graphique, graphique_droite: Graphique) -> Graphique:
     """
-    Crea una nuova grafica affiancando orizzontalmente le due grafiche fornite.
-    Le due grafiche vengono centrate verticalmente.
+    Créé un graphique en plaçant les deux graphiques fournis côte à côte.
+    Les deux graphiques sont centrés verticalement.
 
-    La posizione di fissaggio della grafica risultante è nel suo centro.
+    Le point d'ancrage du nouveau graphique est en son centre.
 
-    :param grafica_sinistra: grafica da posizionare a sinistra
-    :param grafica_destra: grafica da posizionare a destra
-    :returns: grafica risultante dall'affiancamento orizzontale delle due
-              grafiche fornite
+    :param graphique_gauche: le graphique à placer à gauche
+    :param graphique_droite: le graphique à placer à droite
+    :returns: le graphique résultant après avoir placé les deux graphiques l'un à côté de l'autre
     """
-    return beside(grafica_sinistra, grafica_destra)
+    return beside(graphique_gauche, graphique_droite)
 
 
-def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
+def au_dessus(graphique_haut: Graphique, graphique_bas: Graphique) -> Graphique:
     """
-    Crea una nuova grafica posizionando le due grafiche fornite una sopra l'altra.
-    Le due grafiche vengono centrate orizzontalmente.
+    Créé un graphique en plaçant les deux graphiques fournis l'un au-dessus de l'autre.
+    Les deux graphiques sont centrés horizontalement.
 
-    La posizione di fissaggio della grafica risultante è nel suo centro.
+    Le point d'ancrage du nouveau graphique est en son centre.
 
-    :param grafica_sopra: grafica da posizionare sopra
-    :param grafica_sotto: grafica da posizionare sotto
-    :returns: grafica risultante dall'affiancamento verticale delle due
-              grafiche fornite
+    :param graphique_haut: le graphique à placer au dessus
+    :param graphique_bas: le graphique à placer en dessous
+    :returns: le graphique résultant après avoir placé les deux graphiques l'un au-dessus de l'autre
     """
-    return above(grafica_alto, grafica_basso)
+    return above(graphique_haut, graphique_bas)
 
 
-def ruota(angolo: float, grafica: Grafica) -> Grafica:
+def pivoter(angle: float, graphique: Graphique) -> Graphique:
     """
-    Crea una nuova grafica ruotando dell'angolo indicato, in senso antiorario,
-    una grafica attorno alla sua posizione di fissaggio.
-    Un angolo negativo corrisponde a una rotazione in senso orario.
+    Crée un nouveau graphique en pivotant dans le sens inverse des aiguilles d'une montre le
+    graphique fourni autour de son point d'ancrage selon l'angle donné. Un angle négatif
+    correspond à une rotation dans le sens des aiguilles d'une montre.
 
-    :param angolo: angolo di rotazione in senso antiorario, in gradi
-    :param grafica: grafica da ruotare
-    :returns: una nuova grafica, ruotata
+    :param angle: angle dans le sens inverse des aiguilles d'une montre, en degrés
+    :param graphique: le graphique à pivoter
+    :returns: un nouveau graphique pivoté
     """
-    return rotate(angolo, grafica)
+    return rotate(angle, graphique)
