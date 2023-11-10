@@ -2,12 +2,11 @@
 Functions to do operations on graphics (mainly, to combine them).
 """
 
-
-from pytamaro.graphic import Compose, Graphic, Pin, Rotate
 from pytamaro.checks import check_angle, check_graphic, check_point
-from pytamaro.utils import export
+from pytamaro.graphic import (Above, Beside, Compose, Graphic, Overlay, Pin,
+                              Rotate)
 from pytamaro.point import Point
-from pytamaro.point_names import center, top_center, bottom_center, center_right, center_left
+from pytamaro.utils import export
 
 
 @export
@@ -76,22 +75,6 @@ def pin(point: Point, graphic: Graphic) -> Graphic:
     return Pin(graphic, point)
 
 
-def _compose_pin_center(graphic1: Graphic, graphic2: Graphic,
-                        point1: Point, point2: Point) -> Graphic:
-    """
-    Composes the two graphics, pinning the first one at `point1` and the second one
-    at `point2`. The composed graphic is then pinned at its center.
-
-    :param graphic1: first graphic to compose
-    :param graphic2: second graphic to compose
-    :param point1: pinning position for the first graphic
-    :param point2: pinning position for the second graphic
-
-    :returns: the combined graphic, pinned at its center
-    """
-    return pin(center, compose(pin(point1, graphic1), pin(point2, graphic2)))
-
-
 @export
 def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
     """
@@ -107,7 +90,7 @@ def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
     """
     check_graphic(foreground_graphic, "foreground_graphic")
     check_graphic(background_graphic, "background_graphic")
-    return _compose_pin_center(foreground_graphic, background_graphic, center, center)
+    return Overlay(foreground_graphic, background_graphic)
 
 
 @export
@@ -125,7 +108,7 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
     """
     check_graphic(left_graphic, "left_graphic")
     check_graphic(right_graphic, "right_graphic")
-    return _compose_pin_center(left_graphic, right_graphic, center_right, center_left)
+    return Beside(left_graphic, right_graphic)
 
 
 @export
@@ -143,7 +126,7 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
     """
     check_graphic(top_graphic, "top_graphic")
     check_graphic(bottom_graphic, "bottom_graphic")
-    return _compose_pin_center(top_graphic, bottom_graphic, bottom_center, top_center)
+    return Above(top_graphic, bottom_graphic)
 
 
 @export
@@ -159,5 +142,4 @@ def rotate(angle: float, graphic: Graphic) -> Graphic:
     """
     check_angle(angle)
     check_graphic(graphic)
-    # Negate the angle given that Rotate is clockwise.
-    return Rotate(graphic, -angle)
+    return Rotate(graphic, angle)

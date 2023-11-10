@@ -40,6 +40,72 @@ translations = {
         "it": "Impossibile mostrare/salvare una grafica di dimensione {} poiché non ha area",
         "de": "Kann eine Grafik der Größe {} nicht anzeigen/speichern, da sie keine Fläche hat",
     },
+    # Function names
+    "compose": {
+        "en": "compose",
+        "it": "componi",
+        "de": "kombiniere",
+    },
+    "pin": {
+        "en": "pin",
+        "it": "fissa",
+        "de": "fixiere",
+    },
+    "overlay": {
+        "en": "overlay",
+        "it": "sovrapponi",
+        "de": "ueberlagere",
+    },
+    "beside": {
+        "en": "beside",
+        "it": "accanto",
+        "de": "neben",
+    },
+    "above": {
+        "en": "above",
+        "it": "sopra",
+        "de": "ueber",
+    },
+    "rotate": {
+        "en": "rotate",
+        "it": "ruota",
+        "de": "drehe",
+    },
+    "rgb_color": {
+        "en": "rgb_color",
+        "it": "colore_rgb",
+        "de": "rgb_farbe",
+    },
+    "rectangle": {
+        "en": "rectangle",
+        "it": "rettangolo",
+        "de": "rechteck",
+    },
+    "empty_graphic": {
+        "en": "empty_graphic",
+        "it": "grafica_vuota",
+        "de": "leere_grafik",
+    },
+    "ellipse": {
+        "en": "ellipse",
+        "it": "ellisse",
+        "de": "ellipse",
+    },
+    "text": {
+        "en": "text",
+        "it": "testo",
+        "de": "text",
+    },
+    "circular_sector": {
+        "en": "circular_sector",
+        "it": "settore_circolare",
+        "de": "kreissektor",
+    },
+    "triangle": {
+        "en": "triangle",
+        "it": "triangolo",
+        "de": "dreieck",
+    },
     # Parameter names
     "width": {
         "en": "width",
@@ -55,21 +121,6 @@ translations = {
         "en": "radius",
         "it": "raggio",
         "de": "radius",
-    },
-    "red": {
-        "en": "red",
-        "it": "rosso",
-        "de": "rot",
-    },
-    "green": {
-        "en": "green",
-        "it": "verde",
-        "de": "gruen",
-    },
-    "blue": {
-        "en": "blue",
-        "it": "blu",
-        "de": "blau",
     },
     "opacity": {
         "en": "opacity",
@@ -196,6 +247,98 @@ translations = {
         "en": "Point",
         "it": "Punto",
         "de": "Punkt",
+    },
+    # Known Points
+    "center": {
+        "en": "center",
+        "it": "centro",
+        "de": "mitte",
+    },
+    "top_center": {
+        "en": "top_center",
+        "it": "alto_centro",
+        "de": "oben_mitte",
+    },
+    "bottom_center": {
+        "en": "bottom_center",
+        "it": "basso_centro",
+        "de": "unten_mitte",
+    },
+    "center_left": {
+        "en": "center_left",
+        "it": "centro_sinistra",
+        "de": "mitte_links",
+    },
+    "center_right": {
+        "en": "center_right",
+        "it": "centro_destra",
+        "de": "mitte_rechts",
+    },
+    "top_left": {
+        "en": "top_left",
+        "it": "alto_sinistra",
+        "de": "oben_links",
+    },
+    "top_right": {
+        "en": "top_right",
+        "it": "alto_destra",
+        "de": "oben_rechts",
+    },
+    "bottom_left": {
+        "en": "bottom_left",
+        "it": "basso_sinistra",
+        "de": "unten_links",
+    },
+    "bottom_right": {
+        "en": "bottom_right",
+        "it": "basso_destra",
+        "de": "unten_rechts",
+    },
+    # Known Colors
+    "black": {
+        "en": "black",
+        "it": "nero",
+        "de": "schwarz",
+    },
+    "red": {
+        "en": "red",
+        "it": "rosso",
+        "de": "rot",
+    },
+    "green": {
+        "en": "green",
+        "it": "verde",
+        "de": "gruen",
+    },
+    "blue": {
+        "en": "blue",
+        "it": "blu",
+        "de": "blau",
+    },
+    "yellow": {
+        "en": "yellow",
+        "it": "giallo",
+        "de": "gelb",
+    },
+    "magenta": {
+        "en": "magenta",
+        "it": "magenta",
+        "de": "magenta",
+    },
+    "cyan": {
+        "en": "cyan",
+        "it": "ciano",
+        "de": "cyan",
+    },
+    "white": {
+        "en": "white",
+        "it": "bianco",
+        "de": "weiss",
+    },
+    "transparent": {
+        "en": "transparent",
+        "it": "trasparente",
+        "de": "transparent",
     },
 }
 

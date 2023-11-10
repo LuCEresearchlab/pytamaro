@@ -2,6 +2,7 @@ from pytamaro.color import *
 from pytamaro.color_names import *
 from pytamaro.it.color import *
 from pytamaro.it.color_names import *
+from tests.testing_utils import assert_repr
 
 
 def test_rgb_color():
@@ -33,3 +34,8 @@ def test_color_names():
 
 def test_transparent_color_name():
     assert transparent == trasparente
+
+
+def test_color_localized_repr():
+    assert_repr(rosso, "it")
+    assert "rosso" in repr(rosso)

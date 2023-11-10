@@ -8,15 +8,19 @@ from pytamaro.operations import (above, compose, graphic_height, graphic_width,
 from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
                                  rectangle, text, triangle)
 from tests.testing_utils import (HEIGHT, RADIUS, WIDTH,
-                                 assert_graphics_equals_tolerance, assert_size,
-                                 assert_unique_color, assert_value_tolerance,
-                                 pixels_colors)
+                                 assert_graphics_equals_tolerance, assert_repr,
+                                 assert_size, assert_unique_color,
+                                 assert_value_tolerance, pixels_colors)
 
 
 def test_rectangle():
     rect = rectangle(WIDTH, HEIGHT, red)
     assert_size(rect, (WIDTH, HEIGHT))
     assert_unique_color(rect, red)
+
+
+def test_rectangle_repr():
+    assert_repr(rectangle(WIDTH, HEIGHT, red), "en")
 
 
 def test_negative_size():
@@ -29,16 +33,28 @@ def test_empty_graphic():
     assert_size(empty, (0, 0))
 
 
+def test_empty_graphic_repr():
+    assert_repr(empty_graphic(), "en")
+
+
 def test_ellipse():
     e = ellipse(WIDTH, HEIGHT, red)
     assert_size(e, (WIDTH, HEIGHT))
     assert_unique_color(e, red)
 
 
+def test_ellipse_repr():
+    assert_repr(ellipse(WIDTH, HEIGHT, red), "en")
+
+
 def test_text():
     graphic = text("hello", "", 12, red)
     assert graphic_width(graphic) > 0 and graphic_height(graphic) > 0
     assert_unique_color(graphic, red)
+
+
+def test_text_repr():
+    assert_repr(text("hello", "", 12, red), "en")
 
 
 def test_circular_sector_0_deg():
@@ -83,6 +99,10 @@ def test_circular_sector_negative_angle():
         circular_sector(RADIUS, -1, red)
 
 
+def test_circular_sector_repr():
+    assert_repr(circular_sector(RADIUS, 180, red), "en")
+
+
 def test_equilateral_triangle():
     side = 100  # large enough
     t = triangle(side, side, 60, red)
@@ -108,3 +128,7 @@ def test_right_triangle_pinning_position():
     common = colors.most_common(3)
     assert_value_tolerance(common[1][1], large_area - small_area)
     assert_value_tolerance(common[2][1], small_area)
+
+
+def test_triangle_repr():
+    assert_repr(triangle(WIDTH, HEIGHT, 90, red), "en")

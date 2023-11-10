@@ -3,12 +3,14 @@
 """
 
 from dataclasses import dataclass
-from typing import Tuple
+from functools import cached_property
 
 from skia import Color4f
 
+from pytamaro.localization import translate
 
-@dataclass
+
+@dataclass(frozen=True)
 class Color:
     """
     Represents a color.
@@ -16,18 +18,26 @@ class Color:
     from completely transparent (like the color `transparent`)
     to completely opaque (like the color `red`).
     """
+    red: int      # [0-255]
+    green: int    # [0-255]
+    blue: int     # [0-255]
+    alpha: float  # [0-1]
 
-    color: Color4f
-
-    def __init__(self, red: int, green: int, blue: int, alpha: float):
-        self.color = Color4f(red / 255, green / 255, blue / 255, alpha)
-
-    def as_tuple(self) -> Tuple[int, int, int, float]:
+    @cached_property
+    def skia_color(self) -> Color4f:
         """
-        Returns the current color as an RGBA tuple.
+        Returns the current color as a Skia color.
 
         :meta private:
-        :returns: a tuple with four components. The first three [0-255] identify the
-                  color, the last one [0-1] identifies the transparency
+        :returns: a Skia color
         """
-        return self.color[0] * 255, self.color[1] * 255, self.color[2] * 255, self.color[3]
+        return Color4f(self.red / 255, self.green / 255, self.blue / 255, self.alpha)
+
+    def __repr__(self) -> str:
+        from pytamaro.color_names import \
+            _known_colors  # pylint: disable=cyclic-import,import-outside-toplevel
+        maybe_known_color = _known_colors.get(self)
+        if maybe_known_color:
+            return translate(maybe_known_color)
+        alpha_repr = "" if self.alpha == 1 else f", {self.alpha}"
+        return f"{translate('rgb_color')}({self.red}, {self.green}, {self.blue}{alpha_repr})"

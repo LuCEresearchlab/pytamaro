@@ -2,11 +2,11 @@ from pytamaro.color_names import blue, red
 from pytamaro.it.operations import (accanto, altezza_grafica, componi, fissa,
                                     larghezza_grafica, ruota, sopra,
                                     sovrapponi)
+from pytamaro.it.point_names import *
 from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
 from pytamaro.primitives import rectangle
-from tests.testing_utils import HEIGHT, WIDTH
-from pytamaro.it.point_names import *
+from tests.testing_utils import HEIGHT, WIDTH, assert_repr
 
 g = rectangle(WIDTH, HEIGHT, red)
 
@@ -43,3 +43,9 @@ def test_fissa():
     assert pin(top_left, g) == fissa(alto_sinistra, g)
     assert pin(center, g) == fissa(centro, g)
     assert pin(bottom_right, g) == fissa(basso_destra, g)
+
+
+def test_operation_localized_repr():
+    composed = compose(g, g)
+    assert_repr(composed, "it")
+    assert "componi" in repr(composed)

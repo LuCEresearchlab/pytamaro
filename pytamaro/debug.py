@@ -7,16 +7,10 @@ from skia import Point
 from pytamaro.color import Color
 from pytamaro.color_functions import rgb_color
 from pytamaro.graphic import Graphic
-from pytamaro.operations import (
-    compose,
-    graphic_height,
-    graphic_width,
-    overlay,
-    pin,
-    rotate,
-)
+from pytamaro.operations import (compose, graphic_height, graphic_width,
+                                 overlay, pin, rotate)
+from pytamaro.point_names import bottom_left, top_left
 from pytamaro.primitives import rectangle
-from pytamaro.point_names import top_left, bottom_left
 
 
 def top_left_point(graphic: Graphic) -> Point:
@@ -44,7 +38,7 @@ def add_debug_info(graphic: Graphic) -> Graphic:
     g_with_border = add_border(graphic, border_thickness, border_color)
     new_rel_pin_pos = relative_pin_pos + (border_thickness, border_thickness)
     new_abs_pin_pos = top_left_point(g_with_border) + new_rel_pin_pos
-    g_with_border.set_pin_position(new_abs_pin_pos.x(), new_abs_pin_pos.y())
+    object.__setattr__(g_with_border, "pin_position", new_abs_pin_pos)
     return show_pin_position(g_with_border)
 
 
