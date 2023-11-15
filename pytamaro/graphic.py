@@ -4,6 +4,7 @@ Type `Graphic`, that includes a graphic with a pinning position.
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Any
 
 from skia import Canvas, Font, Matrix, Paint, Path, Point, Rect, Size, Typeface
 
@@ -76,9 +77,16 @@ class Graphic(ABC):
         return ((self.pin_position.fX, self.pin_position.fY),
                 self.path.serialize().bytes())
 
+    @abstractmethod
+    def accept(self, visitor: Any) -> Any:
+        """
+        Invoke the appropriate method in the visitor
+        depending on the concrete class of self.
+        """
+
 
 @dataclass(frozen=True, eq=False)
-class Primitive(Graphic):
+class Primitive(Graphic, ABC):
     """
     Represents a primitive graphic, which has a uniform color.
     Geometric shapes and text are primitive graphics.
@@ -116,6 +124,9 @@ class Empty(Graphic):
     def __repr__(self) -> str:
         return f"{translate('empty_graphic')}()"
 
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_empty(self)
+
 
 @dataclass(frozen=True, eq=False)
 class Rectangle(Primitive):
@@ -134,6 +145,9 @@ class Rectangle(Primitive):
     def __repr__(self) -> str:
         return f"{translate('rectangle')}({self.width}, {self.height}, {self.color})"
 
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_rectangle(self)
+
 
 @dataclass(frozen=True, eq=False)
 class Ellipse(Primitive):
@@ -151,6 +165,9 @@ class Ellipse(Primitive):
 
     def __repr__(self) -> str:
         return f"{translate('ellipse')}({self.width}, {self.height}, {self.color})"
+
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_ellipse(self)
 
 
 @dataclass(frozen=True, eq=False)
@@ -178,6 +195,9 @@ class CircularSector(Primitive):
     def __repr__(self) -> str:
         return f"{translate('circular_sector')}({self.radius}, {self.angle}, {self.color})"
 
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_circular_sector(self)
+
 
 @dataclass(frozen=True, eq=False)
 class Triangle(Primitive):
@@ -204,6 +224,9 @@ class Triangle(Primitive):
 
     def __repr__(self) -> str:
         return f"{translate('triangle')}({self.side1}, {self.side2}, {self.angle}, {self.color})"
+
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_triangle(self)
 
 
 @dataclass(frozen=True, eq=False)
@@ -242,6 +265,9 @@ class Text(Primitive):
     def __repr__(self) -> str:
         return f"{translate('text')}({self.text!r}, {self.font_name!r}, {self.text_size}, {self.color})"  # pylint: disable=line-too-long
 
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_text(self)
+
 
 @dataclass(frozen=True, eq=False)
 class Compose(Graphic):
@@ -273,6 +299,9 @@ class Compose(Graphic):
 
     def __repr__(self) -> str:
         return f"{translate('compose')}({self.foreground}, {self.background})"
+
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_compose(self)
 
 
 @dataclass(frozen=True, eq=False)
@@ -306,6 +335,9 @@ class Pin(Graphic):
     def __repr__(self) -> str:
         return f"{translate('pin')}({self.pinning_point}, {self.graphic})"
 
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_pin(self)
+
 
 @dataclass(frozen=True, eq=False)
 class Rotate(Graphic):
@@ -336,9 +368,12 @@ class Rotate(Graphic):
     def __repr__(self) -> str:
         return f"{translate('rotate')}({self.angle}, {self.graphic})"
 
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_rotate(self)
+
 
 @dataclass(frozen=True, eq=False)
-class SimpleCompose(Graphic):
+class SimpleCompose(Graphic, ABC):
     """
     Represents a simple composition operation between two graphics
     (i.e., beside, above, or overlay).
@@ -374,6 +409,9 @@ class Beside(SimpleCompose):
     def __repr__(self) -> str:
         return f"{translate('beside')}({self.left_graphic}, {self.right_graphic})"
 
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_beside(self)
+
 
 @dataclass(frozen=True, eq=False)
 class Above(SimpleCompose):
@@ -392,6 +430,9 @@ class Above(SimpleCompose):
     def __repr__(self) -> str:
         return f"{translate('above')}({self.top_graphic}, {self.bottom_graphic})"
 
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_above(self)
+
 
 @dataclass(frozen=True, eq=False)
 class Overlay(SimpleCompose):
@@ -409,3 +450,6 @@ class Overlay(SimpleCompose):
 
     def __repr__(self) -> str:
         return f"{translate('overlay')}({self.front_graphic}, {self.back_graphic})"
+
+    def accept(self, visitor: Any) -> Any:
+        return visitor.visit_overlay(self)
