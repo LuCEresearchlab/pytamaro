@@ -11,12 +11,12 @@ from this top-level module.
 
 import sys
 
-from pytamaro.it.color import *
-from pytamaro.it.color_names import *
-from pytamaro.it.graphic import *
-from pytamaro.it.io import *
-from pytamaro.it.operations import *
-from pytamaro.it.primitives import *
-from pytamaro.it.point_names import *
+from pytamaro.fr.color import *
+from pytamaro.fr.color_names import *
+from pytamaro.fr.graphic import *
+from pytamaro.fr.io import *
+from pytamaro.fr.operations import *
+from pytamaro.fr.primitives import *
+from pytamaro.fr.point_names import *
 
-setattr(sys.modules["pytamaro"], "LANGUAGE", "it")
+setattr(sys.modules["pytamaro"], "LANGUAGE", "fr")
