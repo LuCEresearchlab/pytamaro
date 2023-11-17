@@ -1,119 +1,125 @@
 # pylint:disable=duplicate-code
 """
-Funzioni per creare grafiche primitive (forme e testo).
-Tranne quando specificato diversamente, la posizione di fissaggio iniziale è al
-centro del rettangolo di delimitazione (bounding box) della grafica.
+Fonctions pour créer des graphiques primitifs (formes et texte).
+À moins d'être spécifié autrement, le point d'ancrage initial est le centre du
+cadre de délimitation (bounding box) du graphique.
 """
 
 from __future__ import annotations
 
-from pytamaro.it.color import Colore
-from pytamaro.it.graphic import Grafica
-from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
-                                 rectangle, text, triangle)
+from pytamaro.fr.color import Couleur
+from pytamaro.fr.graphic import Graphique
+from pytamaro.primitives import (circular_sector, empty_graphic, text)
+from pytamaro.primitives import rectangle as en_rectangle
+from pytamaro.primitives import ellipse as en_ellipse
+from pytamaro.primitives import triangle as en_triangle
 
 
-def rettangolo(larghezza: float, altezza: float, colore: Colore) -> Grafica:
+def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     """
-    Crea un rettangolo delle dimensioni indicate, riempito con un colore.
+    Créé un rectangle de dimensions indiquées et rempli avec la couleur donnée.  
 
-    :param larghezza: larghezza del rettangolo
-    :param altezza: altezza del rettangolo
-    :param colore: colore da usare per riempire il rettangolo
-    :returns: una grafica con il rettangolo specificato
+    :param largeur: largeur du rectangle
+    :param hauteur: hauteur du rectangle
+    :param couleur: couleur qui remplira le rectangle
+    :returns: un graphique avec le rectangle spécifié
     """
-    return rectangle(larghezza, altezza, colore)
+    return en_rectangle(largeur, hauteur, couleur)
 
 
-def grafica_vuota() -> Grafica:
+def graphique_vide() -> Graphique:
     """
-    Crea una grafica vuota.
-    Quando una grafica vuota viene composta con ogni altra grafica, si comporta
-    da elemento neutro: il risultato è sempre uguale all'altra grafica.
+    Créé un graphique vide.
+    Quand un graphique vide est composé avec n'importe quel autre graphique, il
+    se comporte comme l'élément neutre: le résultat est toujours égal à l'autre
+    graphique.
 
-    :returns: una grafica vuota (larghezza e altezza 0)
+    :returns: un graphique vide (largeur et hauteur 0)
     """
     return empty_graphic()
 
 
-def ellisse(larghezza: float, altezza: float, colore: Colore) -> Grafica:
+def ellipse(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     """
-    Crea un ellisse delle dimensioni indicate, riempito con un colore.
+    Créé une ellipse avec les dimensions indiquées et rempli avec la couleur
+    donnée.
 
-    Quando larghezza e altezza coincidono, l'ellisse diventa un cerchio di
-    diametro pari alla dimensione indicata.
+    Lorsque la largeur et la hauteur coïncident, l'ellipse devient un cercle
+    dont le diamètre est égal à la taille indiquée.
 
-    :param larghezza: larghezza dell'ellisse
-    :param altezza: altezza dell'ellisse
-    :param colore: colore da usare per riempire l'ellisse
-    :returns: una grafica con l'ellisse specificato
+    :param largeur: largeur de l'ellipse
+    :param hauteur: hauteur de l'ellipse
+    :param couleur: couleur à utiliser pour remplir l'ellipse
+    :returns: un graphique avec l'ellipse spécifié
     """
-    return ellipse(larghezza, altezza, colore)
+    return en_ellipse(largeur, hauteur, couleur)
 
 
-def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
+def secteur_circulaire(rayon: float, angle: float, couleur: Couleur) -> Graphique:
     """
-    Crea un settore circolare appartenente a un cerchio del raggio indicato,
-    riempito con un colore.
+    Crée un secteur circulaire appartenant à un cercle du rayon indiqué, rempli
+    d'une couleur.
 
-    Un settore circolare è una porzione di cerchio racchiusa tra due raggi e un
-    arco.
-    Considerando il cerchio come un orologio, il primo raggio "punta" in
-    direzione delle ore 3. L'`angolo` determina la posizione del secondo
-    raggio, calcolata a partire dalla posizione del primo in senso antiorario.
-    Un angolo di 360 gradi corrisponde a un cerchio completo.
+    Un secteur circulaire est une portion de cercle comprise entre deux rayons
+    et un arc.
+    Si l'on considère le cercle comme une horloge, le premier rayon "pointe"
+    dans la direction de 3 heures. L'`angle` détermine la position du deuxième
+    rayon, calculée à partir de la position du premier rayon dans le sens
+    inverse des aiguilles d'une montre. Un angle de 360 degrés correspond à un
+    cercle complet.
 
-    La posizione di fissaggio è al centro del cerchio da cui è preso il settore
-    circolare.
+    Le point d'ancrage se trouve au centre du cercle à partir duquel le
+    secteur circulaire est pris.
 
-    :param raggio: raggio del cerchio da cui è preso il settore circolare
-    :param angolo: angolo al centro, in gradi
-    :param colore: colore da usare per riempire il settore circolare
-    :returns: una grafica con il settore circolare specificato
+    :param rayon: rayon du cercle duquel est pris le secteur circulaire
+    :param angle: angle au centre, en degrés
+    :param couleur: couleur à utiliser pour remplir le secteur circulaire
+    :returns: un graphique avec le secteur circulaire spécifié
     """
-    return circular_sector(raggio, angolo, colore)
+    return circular_sector(rayon, angle, couleur)
 
 
-def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Grafica:
+def triangle(cote1: float, cote2: float, angle: float, couleur: Couleur) -> Graphique:
     """
-    Crea un triangolo specificando due lati e l'angolo tra essi compreso,
-    riempito con un colore.
-    Il primo lato si estende orizzontalmente verso destra. L'angolo specifica
-    di quanto il secondo lato è ruotato, in senso antiorario, rispetto al primo.
+    Crée un triangle en spécifiant deux côtés et l'angle qui les sépare, remplis
+    d'une couleur.
+    Le premier côté s'étend horizontalement vers la droite. L'angle spécifie la
+    rotation du deuxième côté, dans le sens inverse des aiguilles d'une montre,
+    par rapport au premier.
 
-    Per tutti i triangoli, eccetto quelli ottusi, il punto in basso a sinistra
-    della grafica risultante coincide con il vertice del triangolo di cui si è
-    specificato l'angolo.
+    Pour tous les triangles, à l'exception des triangles obtus, le point
+    inférieur gauche du graphique résultant coïncide avec le sommet du triangle
+    dont l'angle a été spécifié.
 
-    La posizione di fissaggio è il centroide del triangolo.
+    Le point d'ancrage est le centroïde du triangle.
 
-    :param lato1: lunghezza del primo lato (orizzontale) del triangolo
-    :param lato1: lunghezza del secondo lato del triangolo
-    :param angolo: angolo compreso tra i due lati, in gradi
-    :param colore: colore da usare per riempire il triangolo
-    :returns: una grafica con il triangolo specificato
+    :param cote1: longueur du premier côté (horizontal) du triangle
+    :param cote2: longueur du second côté du triangle
+    :param angle: angle compris entre les deux côté, en degrés
+    :param couleur: couleur à utiliser pour remplir le secteur circulaire
+    :returns: un graphique avec le triangle spécifié
     """
-    return triangle(lato1, lato2, angolo, colore)
+    return en_triangle(cote1, cote2, angle, couleur)
 
 
-def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:
+def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphique:
     """
-    Crea una grafica con il testo renderizzato usando font, dimensione e colore
-    indicati.
+    Crée un graphique avec le texte rendu à l'aide de la police, de la taille et
+    de la couleur spécifiées.
 
-    Quando il font True-Type indicato non è disponibile nel sistema, al suo
-    posto viene usato un font estremamente basilare e sempre disponibile. La
-    grafica risultante ha la dimensione minima in modo da racchiudere l'intero
-    testo.
+    Lorsque la police True-Type indiquée n'est pas disponible dans le système,
+    une police très basilaire toujours disponible est utilisée à la place. Le
+    graphique qui en résulte a la taille minimale nécessaire pour contenir
+    l'ensemble du texte.
 
-    La posizione di fissaggio è allineata orizzontalmente a sinistra e
-    verticalmente sulla linea di base (baseline) del testo.
-
-    :param contenuto: il testo di cui fare rendering
-    :param font: il nome del font (ad esempio "arial" su Windows, "Arial" su
-           macOS)
-    :param punti: dimensione in punti tipografici (ad esempio 16)
-    :param colore: colore da usare per fare il rendering del testo
-    :returns: una grafica con il testo specificato
+    La point d'ancrage est alignée horizontalement sur la gauche et
+    verticalement sur la ligne de base du texte.
+       
+    :param contenu: le texte à présenter 
+    :param font: le nom de la police (par exemple, "arial" sous Windows, "Arial"
+           sous macOS)
+    :param points: la taille en points typographiques (par exemple, 16)
+    :param couleur: la couleur à utiliser pour le rendu du texte
+    :returns: le texte spécifié sous forme de graphique
     """
-    return text(contenuto, font, punti, colore)
+    return text(contenu, police, points, couleur)
