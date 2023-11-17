@@ -13,7 +13,7 @@ def montre_graphique(graphique: Graphique, debug: bool = False):
     Montre un graphique. Les graphiques n'ayant pas de surface ne peuvent pas être montrés.
 
     Quand `debug` est `True`, la visualisation est ornée d'informations utile pour le débogage:
-    une bordure rouge autour du carde de délimitation et une croix jaunâtre autour du pion
+    une bordure rouge autour du cadre de délimitation et une croix jaunâtre autour du pion
     d'ancrage.
 
     :param graphique: le graphique à montrer
