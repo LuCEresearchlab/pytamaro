@@ -2,6 +2,7 @@ from pytamaro.color import *
 import pytamaro.color_names as en
 from pytamaro.fr.color import *
 import pytamaro.fr.color_names as fr
+from tests.testing_utils import assert_repr
 
 
 def test_rgb_color():
@@ -33,3 +34,8 @@ def test_color_names():
 
 def test_transparent_color_name():
     assert en.transparent == fr.transparent
+
+
+def test_color_localized_repr():
+    assert_repr(fr.rouge, "fr")
+    assert "rouge" in repr(fr.rouge)
