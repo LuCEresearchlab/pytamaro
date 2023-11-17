@@ -109,7 +109,7 @@ def au_dessus(graphique_haut: Graphique, graphique_bas: Graphique) -> Graphique:
     return above(graphique_haut, graphique_bas)
 
 
-def pivoter(angle: float, graphique: Graphique) -> Graphique:
+def pivote(angle: float, graphique: Graphique) -> Graphique:
     """
     Crée un nouveau graphique en pivotant dans le sens inverse des aiguilles d'une montre le
     graphique fourni autour de son point d'ancrage selon l'angle donné. Un angle négatif
