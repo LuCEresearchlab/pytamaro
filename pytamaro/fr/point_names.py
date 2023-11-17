@@ -37,7 +37,7 @@ centre_gauche: Point = center_left
 """
 
 
-centro_droite: Point = center_right
+centre_droite: Point = center_right
 """Le point centrale du côté droit du cadre de délimitation du graphique
 
 :meta hide-value:

@@ -7,7 +7,7 @@ def test_point_names():
     assert top_right == haut_droite
     assert center_left == centre_gauche
     assert center == centre
-    assert center_right == centro_droite
+    assert center_right == centre_droite
     assert bottom_left == bas_gauche
     assert bottom_center == bas_centre
     assert bottom_right == bas_droite
