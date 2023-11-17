@@ -1,6 +1,6 @@
 from typing import List
 
-from pytamaro.it import *
+from pytamaro.fr import *
 
 
 def _assert_names(names: List[str]):
@@ -9,18 +9,19 @@ def _assert_names(names: List[str]):
 
 
 def test_operations_primitives_io():
-    _assert_names(["componi", "grafica_vuota", "visualizza_grafica"])
+    _assert_names(["compose", "graphique_vide", "montre_graphique"])
 
 
 def test_import_types():
-    _assert_names(["Grafica", "Colore"])
+    _assert_names(["Graphique", "Couleur"])
 
 
 def test_colors():
-    _assert_names(["colore_rgb", "colore_hsv", "colore_hsl"])
-    _assert_names(["rosso", "trasparente"])
+    _assert_names(["couleur_rgb", "couleur_hsv", "couleur_hsl"])
+    _assert_names(["rouge", "transparent"])
 
 
 def test_points():
-    _assert_names(["alto_sinistra", "alto_centro", "alto_destra", "centro_sinistra",
-                   "centro", "centro_destra", "basso_sinistra", "basso_centro", "basso_destra"])
+    _assert_names(["haut_gauche", "haut_centre", "haut_droite", "centre_gauche",
+                   "centre", "centre_droite", "bas_gauche", "bas_centre",
+                   "bas_droite"])
