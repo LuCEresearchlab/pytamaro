@@ -1,5 +1,5 @@
 """
-(Re-)Export Italian names for:
+(Re-)Export French names for:
 - basic types (Graphic and Color)
 - color names
 - operations
