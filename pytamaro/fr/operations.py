@@ -14,7 +14,7 @@ from pytamaro import operations
 def largeur_graphique(graphique: Graphique) -> int:
     """
     Retourne la largeur du graphique
-    
+
     :param graphique: graphique duquel calculer la largeur
     :returns: la largeur du graphique
     """
@@ -24,7 +24,7 @@ def largeur_graphique(graphique: Graphique) -> int:
 def hauteur_graphique(graphique: Graphique) -> int:
     """
     Retourne la hauteur du graphique
-    
+
     :param graphique: graphique duquel calculer la hauteur
     :returns: la hauteur du graphique
     """
@@ -34,7 +34,7 @@ def hauteur_graphique(graphique: Graphique) -> int:
 def compose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) \
         -> Graphique:
     """
-    Créé un nouveau graphique en composant les deux graphiques fournis. 
+    Créé un nouveau graphique en composant les deux graphiques fournis.
     Le premier graphique est maintenu au premier plan, le second en arrière plan.
     Les graphiques sont alignés en superposant les points d'ancrage.
 
@@ -55,7 +55,7 @@ def ancre(point: Point, graphique: Graphique) -> Graphique:
     Il y a 9 points d'ancrages particuliers, qui correspondent aux quatre coins du cadre
     (rectangle), le milieu de chaque côté ainsi que le centre du cadre.
     Les points peuvent être désignés avec les noms suivants: `haut_gauche`, `haut_droite`,
-    `bas_gauche`, `bas_droite`, `haut_centre`, `centre_droite`, `bas_centre`, `centre_gauche` et 
+    `bas_gauche`, `bas_droite`, `haut_centre`, `centre_droite`, `bas_centre`, `centre_gauche` et
     `centre`.
 
     :param point: le point indiquant le nouveau point d'ancrage
@@ -73,7 +73,7 @@ def superpose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphiq
     Les graphiques sont superposés par rapport à leur centre.
 
     Le point d'ancrage du nouveau graphique est en son centre.
-    
+
     :param graphique_premier_plan: le graphique au premier plan
     :param graphique_arriere_plan: le graphique en arrière plan
     :returns: le graphique résultant de la superposition des deux graphiques fournis

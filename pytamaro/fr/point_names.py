@@ -12,7 +12,7 @@ from pytamaro.fr.point import Point
 
 
 centre: Point = center
-"""Le point centrale du cadre de délimitation du graphique 
+"""Le point centrale du cadre de délimitation du graphique
 
 :meta hide-value:
 """

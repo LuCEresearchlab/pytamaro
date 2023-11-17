@@ -1,10 +1,9 @@
 from pytamaro.color_names import blue, red
 from pytamaro.fr.point_names import *
-# from pytamaro import operations as en
 from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
 from pytamaro.fr.operations import (largeur_graphique, hauteur_graphique, ancre,
-superpose, cote_a_cote, au_dessus, pivote)
+                                    superpose, cote_a_cote, au_dessus, pivote)
 from pytamaro.fr.operations import compose as fr_compose
 
 
@@ -46,6 +45,7 @@ def test_pin():
     assert pin(top_left, g) == ancre(haut_gauche, g)
     assert pin(center, g) == ancre(centre, g)
     assert pin(bottom_right, g) == ancre(bas_droite, g)
+
 
 def test_operation_localized_repr():
     composed = compose(g, g)

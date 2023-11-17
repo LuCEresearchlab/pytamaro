@@ -17,7 +17,7 @@ from pytamaro.primitives import triangle as en_triangle
 
 def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     """
-    Créé un rectangle de dimensions indiquées et rempli avec la couleur donnée.  
+    Créé un rectangle de dimensions indiquées et rempli avec la couleur donnée.
 
     :param largeur: largeur du rectangle
     :param hauteur: hauteur du rectangle
@@ -114,8 +114,8 @@ def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphiq
 
     La point d'ancrage est alignée horizontalement sur la gauche et
     verticalement sur la ligne de base du texte.
-       
-    :param contenu: le texte à présenter 
+
+    :param contenu: le texte à présenter
     :param font: le nom de la police (par exemple, "arial" sous Windows, "Arial"
            sous macOS)
     :param points: la taille en points typographiques (par exemple, 16)
