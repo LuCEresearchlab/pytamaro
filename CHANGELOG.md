@@ -6,12 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## Unreleased
+## [0.6.0] - 2023-11-20
 
 ### Added
 
-- French translation
-
+- French version of the library (importable from `pytamaro.fr`): full translation of the API and the documentation (#25 by @karma-riuk)
+- Graphics (as well as points and colors) now have a `__repr__` method which returns a more useful, localized string representation
 
 ## [0.5.2] - 2023-08-01
 
