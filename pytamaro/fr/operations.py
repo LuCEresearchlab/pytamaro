@@ -4,16 +4,16 @@ Fonctions pour faire des opérations sur des graphiques (principalement pour les
 
 from __future__ import annotations
 
+from pytamaro import operations
 from pytamaro.fr.graphic import Graphique
 from pytamaro.fr.point import Point
-from pytamaro.operations import (above, beside, graphic_height,
-                                 graphic_width, overlay, pin, rotate)
-from pytamaro import operations
+from pytamaro.operations import (above, beside, graphic_height, graphic_width,
+                                 overlay, pin, rotate)
 
 
 def largeur_graphique(graphique: Graphique) -> int:
     """
-    Retourne la largeur du graphique
+    Retourne la largeur du graphique.
 
     :param graphique: graphique duquel calculer la largeur
     :returns: la largeur du graphique
@@ -23,7 +23,7 @@ def largeur_graphique(graphique: Graphique) -> int:
 
 def hauteur_graphique(graphique: Graphique) -> int:
     """
-    Retourne la hauteur du graphique
+    Retourne la hauteur du graphique.
 
     :param graphique: graphique duquel calculer la hauteur
     :returns: la hauteur du graphique
