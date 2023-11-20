@@ -87,7 +87,7 @@ def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Graf
     La posizione di fissaggio è il centroide del triangolo.
 
     :param lato1: lunghezza del primo lato (orizzontale) del triangolo
-    :param lato1: lunghezza del secondo lato del triangolo
+    :param lato2: lunghezza del secondo lato del triangolo
     :param angolo: angolo compreso tra i due lati, in gradi
     :param colore: colore da usare per riempire il triangolo
     :returns: una grafica con il triangolo specificato

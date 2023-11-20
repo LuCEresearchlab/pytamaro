@@ -1,7 +1,7 @@
 API Documentation
 =======================================
 
-The API documentation is available in three languages:
+The API documentation is available in four languages:
 
 .. toctree::
    :caption: API:
@@ -9,3 +9,4 @@ The API documentation is available in three languages:
    English/index
    Italian/index
    German/index
+   French/index
