@@ -3,7 +3,7 @@
 ![Test](https://github.com/LuCEresearchlab/pytamaro/workflows/Test/badge.svg)
 ![Lint](https://github.com/LuCEresearchlab/pytamaro/workflows/Lint/badge.svg)
 ![TypeCheck](https://github.com/LuCEresearchlab/pytamaro/workflows/TypeCheck/badge.svg)
-<a href="https://pypi.org/project/uncertainty-wizard/">
+<a href="https://pypi.org/project/pytamaro/">
     <img alt="PyPI" src="https://img.shields.io/pypi/v/pytamaro">
 </a>
 
