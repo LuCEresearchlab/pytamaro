@@ -8,7 +8,6 @@ from typing import Any
 
 from pytamaro.color import Color
 from pytamaro.graphic import Graphic
-
 from pytamaro.localization import translate
 from pytamaro.point import Point
 
@@ -41,13 +40,17 @@ def check_type(value: Any, expected_type: type, parameter_name: str):
     Raises an exception when the provided value is not valid for a
     given type.
 
+    Subclasses of Graphic are opaquely reported as Graphic.
+
     :param value: the value to be checked
     :param expected_type: the expected type for the value
     :param parameter_name: original parameter name, to be used in the error message
     """
     if not isinstance(value, expected_type):
         expected_type_name: str = expected_type.__name__
-        actual_type_name: str = type(value).__name__
+        actual_type = type(value)
+        actual_public_type = Graphic if issubclass(actual_type, Graphic) else actual_type
+        actual_type_name: str = actual_public_type.__name__
         raise TypeError(translate("INVALID_TYPE",
                                   translate(parameter_name),
                                   translate(expected_type_name),

@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Produce a warning message when a font that is not available is used to produce a graphic with `text`
 
+### Fixed
+
+- Do not show subclasses of `Graphic` in error messages
+
 ## [0.6.0] - 2023-11-20
 
 ### Added
