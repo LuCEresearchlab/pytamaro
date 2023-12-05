@@ -2,10 +2,12 @@
 Type `Graphic`, that includes a graphic with a pinning position.
 """
 
+import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from skia import Canvas, Font, Matrix, Paint, Path, Point, Rect, Size, Typeface
+from skia import (Canvas, Font, FontMgr, Matrix, Paint, Path, Point, Rect,
+                  Size, Typeface)
 
 from pytamaro.color import Color
 from pytamaro.localization import translate
@@ -221,6 +223,8 @@ class Text(Primitive):
         object.__setattr__(self, "text", text)
         object.__setattr__(self, "font_name", font_name)
         object.__setattr__(self, "text_size", text_size)
+        if FontMgr().matchFamily(font_name).count() == 0:
+            print(translate("FONT_NOT_FOUND", font_name), file=sys.stderr)
         font = Font(Typeface(font_name), text_size)
         glyphs = font.textToGlyphs(text)
         offsets = font.getXPos(glyphs)

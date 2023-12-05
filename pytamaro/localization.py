@@ -47,6 +47,12 @@ translations = {
         "de": "Kann eine Grafik der Größe {} nicht anzeigen/speichern, da sie keine Fläche hat",
         "fr": "Impossible de montrer/sauvegarder un graphiqye de dimensions {} vu qu'il ne possède pas de surface",
     },
+    "FONT_NOT_FOUND": {
+        "en": "Cannot find font '{}', another font used as fallback",
+        "it": "Impossibile trovare il font '{}', un altro font è stato usato come alternativa",
+        "de": "Schriftart '{}' nicht gefunden, eine andere Schriftart wird als Fallback verwendet",
+        "fr": "Impossible de trouver la police '{}', une autre police est utilisée comme alternative",
+    },
     # Function names
     "compose": {
         "en": "compose",
