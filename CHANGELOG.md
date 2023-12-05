@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Support Python 3.12 (skia-python upgrade)
+
 ### Changed
 
 - Produce a warning message when a font that is not available is used to produce a graphic with `text`
@@ -15,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Do not show subclasses of `Graphic` in error messages
 
-## [0.6.0] - 2023-11-20
+## [0.6.0] - 
 
 ### Added
 
