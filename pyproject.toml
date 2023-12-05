@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytamaro"
-version = "0.6.0"
+version = "0.6.1"
 description = "Educational library for Python to teach programming using graphics"
 authors = ["Luca Chiodini <luca@chiodini.org>"]
 readme = "README.md"
@@ -36,3 +36,4 @@ extension-pkg-allow-list = "skia"
 ignore-long-lines = "^.*https?://\\S+$"
 
 [tool.poetry_bumpversion.file."pytamaro/__init__.py"]
+[tool.poetry_bumpversion.file."docs/conf.py"]
