@@ -132,7 +132,7 @@ def _print_data_uri(mime_type: str, b64_content: str):
 
 
 @export
-def show_graphic(graphic: Graphic, debug: bool = False):
+def display(graphic: Graphic, debug: bool = False):
     """
     Show a graphic. Graphics with no area cannot be shown.
 
