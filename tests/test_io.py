@@ -1,12 +1,13 @@
 from tempfile import NamedTemporaryFile
 
 from PIL import Image as ImageMod
-from pytamaro.color_names import blue, red
-from pytamaro.io import save_animation, save_graphic, show_animation, show_graphic
-from pytamaro.primitives import empty_graphic, rectangle
 from pytest import raises
-from pytamaro.operations import beside
 
+from pytamaro.color_names import blue, red
+from pytamaro.io import (save_animation, save_graphic, show_animation,
+                         show_graphic)
+from pytamaro.operations import beside
+from pytamaro.primitives import empty_graphic, rectangle
 from tests.testing_utils import HEIGHT, WIDTH, assert_SVG_file_width_height
 
 
@@ -98,7 +99,7 @@ def test_save_empty_graphic_as_PNG(capfd):
 
 
 DATA_URI_11RED_RECT = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg=="
-DATA_URI_11RED_RECT_GIF = "data:image/gif;base64,R0lGODlhAQABAIEAAP8AAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBBAABACwAAAAAAQABAAAIBAABBAQAOw=="
+DATA_URI_11RED_RECT_GIF = "data:image/gif;base64,R0lGODlhAQABAIEAAP8AAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQABAAAACwAAAAAAQABAAAIBAABBAQAOw=="
 PREFIX = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
 SUFFIX = "@@@PYTAMARO_DATA_URI_END@@@"
 

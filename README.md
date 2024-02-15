@@ -28,7 +28,7 @@ As simple as
 pip install pytamaro
 ```
 
-You can install PyTamaro using at least Python 3.7 on all major operating systems and architectures.
+You can install PyTamaro using Python 3.9 - 3.12 on all major operating systems and architectures.
 
 ### 📚 Documentation
 

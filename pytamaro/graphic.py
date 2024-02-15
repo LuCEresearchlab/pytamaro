@@ -100,7 +100,7 @@ class Primitive(Graphic):
         canvas.drawPath(self.path, self.paint)  # type: ignore  # pylint: disable=no-member
 
     def _key(self):
-        return super()._key(), self.paint.getHash()  # type: ignore  # pylint: disable=no-member
+        return super()._key(), self.color
 
 
 @dataclass(frozen=True, eq=False)
