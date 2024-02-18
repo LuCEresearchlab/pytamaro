@@ -53,6 +53,12 @@ translations = {
         "de": "Schriftart '{}' nicht gefunden, eine andere Schriftart wird als Fallback verwendet",
         "fr": "Impossible de trouver la police '{}', une autre police est utilisée comme alternative",
     },
+    "DIFFERENT_SIZES": {
+        "en": "All graphics in the list must have the same size",
+        "it": "Tutte le grafiche nella lista devono avere le stesse dimensioni",
+        "de": "Alle Grafiken in der Liste müssen die gleiche Größe haben",
+        "fr": "Tous les graphiques dans la liste doivent avoir la même taille",
+    },
     # Function names
     "compose": {
         "en": "compose",

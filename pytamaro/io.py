@@ -87,7 +87,7 @@ def graphic_to_image(graphic: Graphic) -> Image:
     :param graphic: graphic to be rendered
     :returns: rendered graphic as a Skia image
     """
-    int_size = graphic.size().toCeil()
+    int_size = graphic.size().toRound()
     surface = Surface(int_size.width(), int_size.height())
     _draw_to_canvas(surface.getCanvas(), graphic)
     return surface.makeImageSnapshot()
@@ -216,6 +216,8 @@ def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, l
     if len(graphics) == 0:
         raise ValueError(translate("EMPTY_GRAPHICS_LIST"))
     pil_images = list(map(graphic_to_pillow_image, graphics))
+    if len(set(image.size for image in pil_images)) != 1:
+        raise ValueError(translate("DIFFERENT_SIZES"))
     pil_images[0].save(
         filename,
         save_all=True,
