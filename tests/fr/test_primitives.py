@@ -1,12 +1,15 @@
 from pytamaro.color_names import red
-from pytamaro.fr.primitives import (graphique_vide, secteur_circulaire, texte)
 from pytamaro.fr.primitives import ellipse as fr_ellipse
-from pytamaro.fr.primitives import triangle as fr_triangle
+from pytamaro.fr.primitives import graphique_vide
 from pytamaro.fr.primitives import rectangle as fr_rectangle
-from pytamaro.primitives import (circular_sector, empty_graphic, text)
+from pytamaro.fr.primitives import secteur_circulaire, texte
+from pytamaro.fr.primitives import triangle as fr_triangle
+from pytamaro.primitives import circular_sector
 from pytamaro.primitives import ellipse as en_ellipse
-from pytamaro.primitives import triangle as en_triangle
+from pytamaro.primitives import empty_graphic
 from pytamaro.primitives import rectangle as en_rectangle
+from pytamaro.primitives import text
+from pytamaro.primitives import triangle as en_triangle
 from tests.testing_utils import HEIGHT, RADIUS, WIDTH
 
 
@@ -32,4 +35,4 @@ def test_circular_sector():
 
 
 def test_equilateral_triangle():
-    assert en_triangle(WIDTH, WIDTH, 60, red) == en_triangle(WIDTH, WIDTH, 60, red)
+    assert en_triangle(WIDTH, WIDTH, 60, red) == fr_triangle(WIDTH, WIDTH, 60, red)

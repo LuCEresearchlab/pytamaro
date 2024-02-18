@@ -1,8 +1,11 @@
 from pytamaro.color_names import red
 from pytamaro.de.primitives import (dreieck, ellipse, kreis_sektor,
                                     leere_grafik, rechteck, text)
-from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
-                                 rectangle, text, triangle)
+from pytamaro.primitives import circular_sector
+from pytamaro.primitives import ellipse as ellipse_en
+from pytamaro.primitives import empty_graphic, rectangle
+from pytamaro.primitives import text as text_en
+from pytamaro.primitives import triangle
 from tests.testing_utils import HEIGHT, RADIUS, WIDTH, assert_repr
 
 
@@ -15,11 +18,11 @@ def test_empty_graphic():
 
 
 def test_ellipse():
-    assert ellipse(WIDTH, HEIGHT, red) == ellipse(WIDTH, HEIGHT, red)
+    assert ellipse_en(WIDTH, HEIGHT, red) == ellipse(WIDTH, HEIGHT, red)
 
 
 def test_text():
-    assert text("hello", "", 12, red) == text("hello", "", 12, red)
+    assert text_en("hello", "", 12, red) == text("hello", "", 12, red)
 
 
 def test_circular_sector():

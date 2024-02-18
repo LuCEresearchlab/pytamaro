@@ -22,3 +22,4 @@ def test_point_repr():
     from pytamaro.point_names import _known_points
     for point in _known_points:
         assert_repr(point, "en")
+    assert_repr(Point(42, -42), "en")

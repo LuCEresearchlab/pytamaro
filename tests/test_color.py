@@ -57,3 +57,5 @@ def test_color_repr():
     from pytamaro.color_names import _known_colors
     for color in _known_colors:
         assert_repr(color, "en")
+    assert_repr(rgb_color(1, 1, 1), "en")
+    assert_repr(rgb_color(1, 1, 1, 0.5), "en")

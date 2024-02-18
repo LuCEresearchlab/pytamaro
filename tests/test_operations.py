@@ -193,8 +193,8 @@ def test_compose_visually_equals_overlay():
     assert_equals_rendered(compose(s1, s2), overlay(s1, s2))
 
 
-def test_compose_repr():
+def test_compose_pin_repr():
     s1 = rectangle(WIDTH, WIDTH, blue)
     s2 = rectangle(WIDTH, WIDTH, red)
-    composed = compose(s1, s2)
+    composed = compose(pin(top_left, s1), s2)
     assert_repr(composed, "en")
