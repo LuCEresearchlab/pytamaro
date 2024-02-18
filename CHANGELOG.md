@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.3] - 2024-02-18
+
+### Changed
+
+- Round the size of graphics used as GIF frames (mainly to accommodate rounding errors) 
+- Raise an error when graphics of different sizes are used as GIF frames
+- Proper `Point`'s `repr` for unknown points 
+
 ## [0.6.2] - 2024-02-15
 
 ### Fixed
