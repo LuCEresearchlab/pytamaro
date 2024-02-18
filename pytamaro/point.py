@@ -34,7 +34,7 @@ class Point:
         maybe_known_point = _known_points.get(self)
         if maybe_known_point:
             return translate(maybe_known_point)
-        return f"({self.x}, {self.y})"
+        return f"Point({self.x}, {self.y})"
 
 
 # Center of the 2-dimensional space
