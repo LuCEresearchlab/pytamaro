@@ -7,16 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.7", "3.11"]  # 3.7 is Thonny's latest, 3.11 is the latest Python
+        python-version: ["3.9", "3.12"]  # 3.9 is the minimum supported version, 3.12 is the latest Python
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Cache for poetry, venv and deps
       id: cached-dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.local
@@ -24,7 +24,7 @@ jobs:
           .venv
         key: cache-deps-${{ runner.os }}-${{ matrix.python-version }}-${{ hashfiles('**/poetry.lock') }}-${{ hashFiles('.github/workflows/lint.yml') }}
     - name: Python Poetry Action
-      uses: abatilo/actions-poetry@v2.3.0
+      uses: abatilo/actions-poetry@v3.0.0
     - name: Install dependencies
       run: poetry install
       if: steps.cached-dependencies.outputs.cache-hit != 'true'
