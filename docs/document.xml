@@ -1,0 +1,461 @@
+<document source="/Users/simonepiatti/Documents/Univeristy/repositories/Thesis/pytamaro/docs/English/colors.rst">
+    <substitution_definition ltrim="1" names="nbsp" rtrim="1"> </substitution_definition>
+    <section ids="module-pytamaro.color colors" names="colors">
+        <title>Colors</title>
+        <index entries="[('pair', 'module; pytamaro.color', 'module-pytamaro.color', '', None)]"/>
+        <paragraph>
+            <title_reference>Color</title_reference>
+            type, functions to produce colors, and constants for important colors.
+        </paragraph>
+        <index entries="[('single', 'Color (class in pytamaro.color)', 'pytamaro.color.Color', '', None)]"/>
+        <desc classes="py class" desctype="class" domain="py" nocontentsentry="False" noindex="False"
+              noindexentry="False" objtype="class">
+            <desc_signature _toc_name="Color" _toc_parts="('pytamaro.color', 'Color')" class=""
+                            classes="sig sig-object py" fullname="Color" ids="pytamaro.color.Color"
+                            module="pytamaro.color">
+                <desc_annotation xml:space="preserve">class
+                    <inline classes="w"> </inline>
+                </desc_annotation>
+                <desc_name classes="sig-name descname" xml:space="preserve">Color</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Represents a color.
+                    A color also has a degree of opacity,
+                    from completely transparent (like the color <title_reference>transparent</title_reference>)
+                    to completely opaque (like the color <title_reference>red</title_reference>).
+                </paragraph>
+            </desc_content>
+        </desc>
+        <target ids="['module-pytamaro.color_functions']" ismod="True"/>
+        <index entries="[('pair', 'module; pytamaro.color_functions', 'module-pytamaro.color_functions', '', None)]"/>
+        <index entries="[('single', 'hsl_color() (in module pytamaro.color_functions)', 'pytamaro.color_functions.hsl_color', '', None)]"/>
+        <desc classes="py function" desctype="function" domain="py" nocontentsentry="False" noindex="False"
+              noindexentry="False" objtype="function">
+            <desc_signature _toc_name="hsl_color()" _toc_parts="('pytamaro.color_functions', 'hsl_color')" class=""
+                            classes="sig sig-object py" fullname="hsl_color" ids="pytamaro.color_functions.hsl_color"
+                            module="pytamaro.color_functions">
+                <desc_name classes="sig-name descname" xml:space="preserve">hsl_color</desc_name>
+                <desc_parameterlist xml:space="preserve">
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">hue</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">float</inline>
+                    </desc_parameter>
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">saturation</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">float</inline>
+                    </desc_parameter>
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">lightness</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">float</inline>
+                    </desc_parameter>
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">opacity</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">float</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="o">=</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="default_value" support_smartquotes="False">1.0</inline>
+                    </desc_parameter>
+                </desc_parameterlist>
+                <desc_returns xml:space="preserve">
+                    <reference internal="True" refid="pytamaro.color.Color" reftitle="pytamaro.color.Color">Color
+                    </reference>
+                </desc_returns>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Returns a color with the provided hue (H), saturation (S), lightness (L) and a
+                    certain degree of opacity (alpha, A).
+                </paragraph>
+                <figure align="center" ids="id1">
+                    <image candidates="{'?': 'https://upload.wikimedia.org/wikipedia/commons/3/35/HSL_color_solid_cylinder.png'}"
+                           height="120px"
+                           uri="https://upload.wikimedia.org/wikipedia/commons/3/35/HSL_color_solid_cylinder.png"/>
+                    <caption>
+                        <reference name="HSL cylinder: SharkD via Wikimedia Commons"
+                                   refuri="https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder.png">HSL
+                            cylinder: SharkD via Wikimedia Commons
+                        </reference>
+                        <target ids="['hsl-cylinder-sharkd-via-wikimedia-commons']"
+                                names="['hsl cylinder: sharkd via wikimedia commons']"
+                                refuri="https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder.png"/>
+                    </caption>
+                </figure>
+                <field_list>
+                    <field>
+                        <field_name>Parameters</field_name>
+                        <field_body>
+                            <bullet_list>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>hue</literal_strong>
+                                        – hue of the color [0-360]
+                                    </paragraph>
+                                </list_item>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>saturation</literal_strong>
+                                        – saturation of the color [0-1]
+                                    </paragraph>
+                                </list_item>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>lightness</literal_strong>
+                                        – the amount of white or black applied [0-1].
+                                        Fully saturated colors have a lightness value of 1/2.
+                                    </paragraph>
+                                </list_item>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>opacity</literal_strong>
+                                        – opacity (alpha) of the color, where 0 means fully
+                                        transparent and 1 fully opaque. By default, all colors are fully opaque.
+                                    </paragraph>
+                                </list_item>
+                            </bullet_list>
+                        </field_body>
+                    </field>
+                    <field>
+                        <field_name>Returns</field_name>
+                        <field_body>
+                            <paragraph>a color with the provided HSLA components</paragraph>
+                        </field_body>
+                    </field>
+                </field_list>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'hsv_color() (in module pytamaro.color_functions)', 'pytamaro.color_functions.hsv_color', '', None)]"/>
+        <desc classes="py function" desctype="function" domain="py" nocontentsentry="False" noindex="False"
+              noindexentry="False" objtype="function">
+            <desc_signature _toc_name="hsv_color()" _toc_parts="('pytamaro.color_functions', 'hsv_color')" class=""
+                            classes="sig sig-object py" fullname="hsv_color" ids="pytamaro.color_functions.hsv_color"
+                            module="pytamaro.color_functions">
+                <desc_name classes="sig-name descname" xml:space="preserve">hsv_color</desc_name>
+                <desc_parameterlist xml:space="preserve">
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">hue</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">float</inline>
+                    </desc_parameter>
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">saturation</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">float</inline>
+                    </desc_parameter>
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">value</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">float</inline>
+                    </desc_parameter>
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">opacity</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">float</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="o">=</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="default_value" support_smartquotes="False">1.0</inline>
+                    </desc_parameter>
+                </desc_parameterlist>
+                <desc_returns xml:space="preserve">
+                    <reference internal="True" refid="pytamaro.color.Color" reftitle="pytamaro.color.Color">Color
+                    </reference>
+                </desc_returns>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Returns a color with the provided hue (H), saturation (S), value (V) and a
+                    certain degree of opacity (alpha, A).
+                </paragraph>
+                <figure align="center" ids="id2">
+                    <image candidates="{'?': 'https://upload.wikimedia.org/wikipedia/commons/4/4e/HSV_color_solid_cylinder.png'}"
+                           height="120px"
+                           uri="https://upload.wikimedia.org/wikipedia/commons/4/4e/HSV_color_solid_cylinder.png"/>
+                    <caption>
+                        <reference name="HSV cylinder (SharkD via Wikimedia Commons)"
+                                   refuri="https://commons.wikimedia.org/wiki/File:HSV_color_solid_cylinder.png">HSV
+                            cylinder (SharkD via Wikimedia Commons)
+                        </reference>
+                        <target ids="['hsv-cylinder-sharkd-via-wikimedia-commons']"
+                                names="['hsv cylinder (sharkd via wikimedia commons)']"
+                                refuri="https://commons.wikimedia.org/wiki/File:HSV_color_solid_cylinder.png"/>
+                    </caption>
+                </figure>
+                <field_list>
+                    <field>
+                        <field_name>Parameters</field_name>
+                        <field_body>
+                            <bullet_list>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>hue</literal_strong>
+                                        – hue of the color [0-360]
+                                    </paragraph>
+                                </list_item>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>saturation</literal_strong>
+                                        – saturation of the color [0-1]
+                                    </paragraph>
+                                </list_item>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>value</literal_strong>
+                                        – the amount of light that is applied [0-1]
+                                    </paragraph>
+                                </list_item>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>opacity</literal_strong>
+                                        – opacity (alpha) of the color, where 0 means fully
+                                        transparent and 1 fully opaque. By default, all colors are fully opaque.
+                                    </paragraph>
+                                </list_item>
+                            </bullet_list>
+                        </field_body>
+                    </field>
+                    <field>
+                        <field_name>Returns</field_name>
+                        <field_body>
+                            <paragraph>a color with the provided HSVA components.</paragraph>
+                        </field_body>
+                    </field>
+                </field_list>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'rgb_color() (in module pytamaro.color_functions)', 'pytamaro.color_functions.rgb_color', '', None)]"/>
+        <desc classes="py function" desctype="function" domain="py" nocontentsentry="False" noindex="False"
+              noindexentry="False" objtype="function">
+            <desc_signature _toc_name="rgb_color()" _toc_parts="('pytamaro.color_functions', 'rgb_color')" class=""
+                            classes="sig sig-object py" fullname="rgb_color" ids="pytamaro.color_functions.rgb_color"
+                            module="pytamaro.color_functions">
+                <desc_name classes="sig-name descname" xml:space="preserve">rgb_color</desc_name>
+                <desc_parameterlist xml:space="preserve">
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">red</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">int</inline>
+                    </desc_parameter>
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">green</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">int</inline>
+                    </desc_parameter>
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">blue</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">int</inline>
+                    </desc_parameter>
+                    <desc_parameter xml:space="preserve">
+                        <inline classes="n">opacity</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">float</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="o">=</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="default_value" support_smartquotes="False">1.0</inline>
+                    </desc_parameter>
+                </desc_parameterlist>
+                <desc_returns xml:space="preserve">
+                    <reference internal="True" refid="pytamaro.color.Color" reftitle="pytamaro.color.Color">Color
+                    </reference>
+                </desc_returns>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Returns a color with the provided components for red (R), green (G) and blue (B) and a
+                    certain degree of opacity (alpha, A).
+                </paragraph>
+                <figure align="center" ids="id3">
+                    <image candidates="{'?': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/524px-RGBCube_a.svg.png'}"
+                           height="120px"
+                           uri="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/524px-RGBCube_a.svg.png"/>
+                    <caption>
+                        <reference name="RGB cube (SharkD via Wikimedia Commons)"
+                                   refuri="https://commons.wikimedia.org/wiki/File:RGBCube_a.svg">RGB cube (SharkD via
+                            Wikimedia Commons)
+                        </reference>
+                        <target ids="['rgb-cube-sharkd-via-wikimedia-commons']"
+                                names="['rgb cube (sharkd via wikimedia commons)']"
+                                refuri="https://commons.wikimedia.org/wiki/File:RGBCube_a.svg"/>
+                    </caption>
+                </figure>
+                <field_list>
+                    <field>
+                        <field_name>Parameters</field_name>
+                        <field_body>
+                            <bullet_list>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>red</literal_strong>
+                                        – red component [0-255]
+                                    </paragraph>
+                                </list_item>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>green</literal_strong>
+                                        – green component [0-255]
+                                    </paragraph>
+                                </list_item>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>blue</literal_strong>
+                                        – blue component [0-255]
+                                    </paragraph>
+                                </list_item>
+                                <list_item>
+                                    <paragraph>
+                                        <literal_strong>opacity</literal_strong>
+                                        – opacity (alpha) of the color, where 0 means fully
+                                        transparent and 1 fully opaque. By default, all colors are fully opaque.
+                                    </paragraph>
+                                </list_item>
+                            </bullet_list>
+                        </field_body>
+                    </field>
+                    <field>
+                        <field_name>Returns</field_name>
+                        <field_body>
+                            <paragraph>a color with the provided RGBA components</paragraph>
+                        </field_body>
+                    </field>
+                </field_list>
+            </desc_content>
+        </desc>
+        <target ids="['module-pytamaro.color_names']" ismod="True"/>
+        <index entries="[('pair', 'module; pytamaro.color_names', 'module-pytamaro.color_names', '', None)]"/>
+        <paragraph>Names of notable colors because they are at the vertices of the RGB cube,
+            plus the fully-transparent one.
+        </paragraph>
+        <index entries="[('single', 'black (in module pytamaro.color_names)', 'pytamaro.color_names.black', '', None)]"/>
+        <desc classes="py data" desctype="data" domain="py" nocontentsentry="False" noindex="False" noindexentry="False"
+              objtype="data">
+            <desc_signature _toc_name="black" _toc_parts="('pytamaro.color_names', 'black')" class=""
+                            classes="sig sig-object py" fullname="black" ids="pytamaro.color_names.black"
+                            module="pytamaro.color_names">
+                <desc_name classes="sig-name descname" xml:space="preserve">black</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Black color</paragraph>
+                <field_list/>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'blue (in module pytamaro.color_names)', 'pytamaro.color_names.blue', '', None)]"/>
+        <desc classes="py data" desctype="data" domain="py" nocontentsentry="False" noindex="False" noindexentry="False"
+              objtype="data">
+            <desc_signature _toc_name="blue" _toc_parts="('pytamaro.color_names', 'blue')" class=""
+                            classes="sig sig-object py" fullname="blue" ids="pytamaro.color_names.blue"
+                            module="pytamaro.color_names">
+                <desc_name classes="sig-name descname" xml:space="preserve">blue</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Blue color</paragraph>
+                <field_list/>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'cyan (in module pytamaro.color_names)', 'pytamaro.color_names.cyan', '', None)]"/>
+        <desc classes="py data" desctype="data" domain="py" nocontentsentry="False" noindex="False" noindexentry="False"
+              objtype="data">
+            <desc_signature _toc_name="cyan" _toc_parts="('pytamaro.color_names', 'cyan')" class=""
+                            classes="sig sig-object py" fullname="cyan" ids="pytamaro.color_names.cyan"
+                            module="pytamaro.color_names">
+                <desc_name classes="sig-name descname" xml:space="preserve">cyan</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Cyan color</paragraph>
+                <field_list/>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'green (in module pytamaro.color_names)', 'pytamaro.color_names.green', '', None)]"/>
+        <desc classes="py data" desctype="data" domain="py" nocontentsentry="False" noindex="False" noindexentry="False"
+              objtype="data">
+            <desc_signature _toc_name="green" _toc_parts="('pytamaro.color_names', 'green')" class=""
+                            classes="sig sig-object py" fullname="green" ids="pytamaro.color_names.green"
+                            module="pytamaro.color_names">
+                <desc_name classes="sig-name descname" xml:space="preserve">green</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Green color</paragraph>
+                <field_list/>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'magenta (in module pytamaro.color_names)', 'pytamaro.color_names.magenta', '', None)]"/>
+        <desc classes="py data" desctype="data" domain="py" nocontentsentry="False" noindex="False" noindexentry="False"
+              objtype="data">
+            <desc_signature _toc_name="magenta" _toc_parts="('pytamaro.color_names', 'magenta')" class=""
+                            classes="sig sig-object py" fullname="magenta" ids="pytamaro.color_names.magenta"
+                            module="pytamaro.color_names">
+                <desc_name classes="sig-name descname" xml:space="preserve">magenta</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Magenta color</paragraph>
+                <field_list/>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'red (in module pytamaro.color_names)', 'pytamaro.color_names.red', '', None)]"/>
+        <desc classes="py data" desctype="data" domain="py" nocontentsentry="False" noindex="False" noindexentry="False"
+              objtype="data">
+            <desc_signature _toc_name="red" _toc_parts="('pytamaro.color_names', 'red')" class=""
+                            classes="sig sig-object py" fullname="red" ids="pytamaro.color_names.red"
+                            module="pytamaro.color_names">
+                <desc_name classes="sig-name descname" xml:space="preserve">red</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Red color</paragraph>
+                <field_list/>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'transparent (in module pytamaro.color_names)', 'pytamaro.color_names.transparent', '', None)]"/>
+        <desc classes="py data" desctype="data" domain="py" nocontentsentry="False" noindex="False" noindexentry="False"
+              objtype="data">
+            <desc_signature _toc_name="transparent" _toc_parts="('pytamaro.color_names', 'transparent')" class=""
+                            classes="sig sig-object py" fullname="transparent" ids="pytamaro.color_names.transparent"
+                            module="pytamaro.color_names">
+                <desc_name classes="sig-name descname" xml:space="preserve">transparent</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Fully-transparent color</paragraph>
+                <field_list/>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'white (in module pytamaro.color_names)', 'pytamaro.color_names.white', '', None)]"/>
+        <desc classes="py data" desctype="data" domain="py" nocontentsentry="False" noindex="False" noindexentry="False"
+              objtype="data">
+            <desc_signature _toc_name="white" _toc_parts="('pytamaro.color_names', 'white')" class=""
+                            classes="sig sig-object py" fullname="white" ids="pytamaro.color_names.white"
+                            module="pytamaro.color_names">
+                <desc_name classes="sig-name descname" xml:space="preserve">white</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>White color</paragraph>
+                <field_list/>
+            </desc_content>
+        </desc>
+        <index entries="[('single', 'yellow (in module pytamaro.color_names)', 'pytamaro.color_names.yellow', '', None)]"/>
+        <desc classes="py data" desctype="data" domain="py" nocontentsentry="False" noindex="False" noindexentry="False"
+              objtype="data">
+            <desc_signature _toc_name="yellow" _toc_parts="('pytamaro.color_names', 'yellow')" class=""
+                            classes="sig sig-object py" fullname="yellow" ids="pytamaro.color_names.yellow"
+                            module="pytamaro.color_names">
+                <desc_name classes="sig-name descname" xml:space="preserve">yellow</desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>Yellow color</paragraph>
+                <field_list/>
+            </desc_content>
+        </desc>
+    </section>
+</document>

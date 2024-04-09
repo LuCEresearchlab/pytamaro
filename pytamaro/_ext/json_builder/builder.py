@@ -2,15 +2,16 @@ import os
 from contextlib import contextmanager
 from typing import Set
 
-from docutils.writers import pseudoxml
 from docutils import nodes
 from docutils.io import StringOutput
 from sphinx.application import Sphinx
 from sphinx.builders import Builder
 from sphinx.environment import BuildEnvironment
 from sphinx.locale import __
-
 from sphinx.util import logging, os_path, ensuredir
+
+from .translator import JSONTranslator
+from .writer import JSONWriter
 
 logger = logging.getLogger(__name__)
 
@@ -38,10 +39,10 @@ class JSONBuilder(Builder):
 
     out_suffix = ".json"
 
-    # default_translator_class = JSONTranslator TODO: implement the translator (Phase 1/3)
+    default_translator_class = JSONTranslator  # TODO: implement the translator (Phase 1/3)
 
     def __init__(self, app: Sphinx, env: BuildEnvironment = None):
-        logger.info('Initializing JSONBuilder', color='green')
+        # logger.info('Initializing JSONBuilder', color='green')
         super().__init__(app, env)
         self.writer = None
         self.sec_numbers = None
@@ -54,14 +55,13 @@ class JSONBuilder(Builder):
         """
         Returns the target file name.
         """
-        logger.info(f"get_target_uri ({docname})", color='green')
+        # logger.info(f"get_target_uri ({docname})", color='green')
         return f"{docname}{self.config.markdown_uri_doc_suffix}"
 
     def get_outdated_docs(self):
         """
         Return a list of the doc names that have been updated after the last run of this builder.
         """
-        logger.info("get_outdated_docs.", color='green')
         for doc_name in self.env.found_docs:
             if doc_name not in self.env.all_docs:
                 yield doc_name
@@ -78,13 +78,21 @@ class JSONBuilder(Builder):
         """
         Select and initiate the Writer for this builder
         """
-        # TODO: change the pseudoxml.Writer to the custom one for json (Phase 4)
-        logger.info("prepare_writing.", color='green')
-        self.writer = pseudoxml.Writer()
+        # logger.info("prepare_writing.", color='green')
+
+        # Remove the index and API pages from the list of docnames since they are not needed in the JSON output
+        to_be_removed = []
+        for doc_name in docnames:
+            if "index" in doc_name or "API" in doc_name:
+                to_be_removed.append(doc_name)
+
+        for doc_name in to_be_removed:
+            docnames.remove(doc_name)
+
+        self.writer = JSONWriter(self)
 
     def write_doc(self, docname: str, doctree: nodes.document):
 
-        logger.info("write_doc", color="green")
         self.current_doc_name = docname
         self.sec_numbers = self.env.toc_secnumbers.get(docname, {})
         destination = StringOutput(encoding="utf-8")

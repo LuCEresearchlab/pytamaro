@@ -1,0 +1,88 @@
+<document>
+    <section>
+        <title> </title>
+        <paragraph>
+
+        </paragraph>
+        <index />
+        <desc>
+            <desc_signature>
+                <desc_annotation>
+
+                </desc_annotation>
+                <desc_name> </desc_name>
+            </desc_signature>
+            <desc_content>
+                <paragraph>
+
+                </paragraph>
+            </desc_content>
+        </desc>
+        <target />
+        <index />
+        <index />
+        <desc>
+            <desc_signature>
+                <desc_name> </desc_name>
+                <desc_parameterlist>
+                    <desc_parameter>
+                        <inline classes="n">NAME</inline>
+                        <inline classes="p">:</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="n">TYPE</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="o">=</inline>
+                        <inline classes="w"> </inline>
+                        <inline classes="default_value">VALUE</inline>
+                    </desc_parameter>
+                    <desc_parameter>
+                        ...
+                    </desc_parameter>
+                    ...
+                </desc_parameterlist>
+                <desc_return>
+                    <reference> TYPE
+                    </reference>
+                </desc_return>
+            </desc_signature>
+            <desc_content>
+                <paragraph>
+
+                </paragraph>
+                <figure>
+                    <image uri="URI" />
+                    <caption>
+                        <reference> ... </reference>
+                        <target />
+                    </caption>
+                </figure>
+                <field_list>
+                    <field>
+                    <field_name>Parameters</field_name>
+                    <field_body>
+                        <bullet_list>
+                            <list_itme>
+                                <paragraph>
+                                    <literal_strong>NAME</literal_strong>
+                                    - DESCRIPTION
+                                </paragraph>
+                            </list_itme>
+                            <list_itme>
+                                ...
+                            </list_itme>
+                            ...
+                        </bullet_list>
+                    </field_body>
+                    </field>
+                    <field>
+                        <field_name>Returns</field_name>
+                        <field_body>
+                            <paragraph>DESCRIPTION</paragraph>
+                        </field_body>
+                    </field>
+                </field_list>
+            </desc_content>
+        </desc>
+        ...
+    </section>
+</document>
