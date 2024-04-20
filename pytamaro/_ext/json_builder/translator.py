@@ -1,97 +1,213 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
+import docutils.nodes
+import sphinx.addnodes
 from docutils import nodes
-from sphinx.util import logging
 from sphinx.util.docutils import SphinxTranslator
+
+import json
+from enum import Enum
 
 from .ast.enachedString import EnhancedStr
 from .ast.module import Module
-from .ast.class_def import Class
+from .ast.type import Type
 from .ast.function import Function
+from .ast.variable import Variable
+
+from sphinx.util import logging
 
 logger = logging.getLogger(__name__)
-
-import json
 
 if TYPE_CHECKING:  # pragma: no cover
     from .builder import JSONBuilder
 
 
+class Context(Enum):
+    NONE = -1
+    MODULE = 0
+    TYPE = 1
+    FUNCTION = 2
+    FUNCTION_RETURN = 3
+    FUNCTION_PARAMETERS = 4
+
+
 # A new translator class is created foreach file that is being processed.
-# The translator traverses each node of the document in order so it's possible to differentiate between the different
+# The translator traverses each node of the document in order, so it's possible to differentiate between the different
 # nodes by the "deep" of that node.
 
 # Node are inside other nodes (example: title contains text)
 
-# { "filename": "",
-#   "description": "",
-#   "classes": [{"name": "",
-#                "description": "",
-#                 "fields": [],
-#                 "functions": []}],
-# } TODO: clenaup
 class JSONTranslator(SphinxTranslator):
-    module: Module = None
+    module: Module
 
-    current_class: Class = None
-    current_function: Function = None
+    current_type: Optional[Type] = None
+    current_function: Optional[Function] = None
+    current_variables: Optional[list[Variable]] = None
 
-    current_part: str = ""
+    current_context: Context = Context.NONE
 
     def __init__(self, document: nodes.document, builder: "JSONBuilder"):
-        logger.info("Translator init.", color='blue')
         super().__init__(document, builder)
+        self.module = Module()
+
+    # --------------------------------------------------
+    #                   TITLE
+    # --------------------------------------------------
 
     def visit_title(self, node):
-        # logger.info(f"Visiting title. {node.astext()}", color='blue')
-        self.module = Module(node.astext())
-        self.current_part = "module"
+        self.module.add_name(node.astext())
+        self.current_context = Context.MODULE
+
+    # --------------------------------------------------
+    #                   PARAGRAPH
+    # --------------------------------------------------
 
     def visit_paragraph(self, node):
-        if self.current_part == "module":
-            self.module.add_description(EnhancedStr(node.astext()))
-        elif self.current_part == "class":
-            self.current_class.add_description(EnhancedStr(node.astext()))
-        elif self.current_part == "function":
-            self.current_function.add_description(EnhancedStr(node.astext()))
-        else:
-            logger.error(f"Invalid part {self.current_part} for pragragh")
+        content = EnhancedStr(node.astext())
+        if self.current_context == Context.MODULE:
+            self.module.add_description(content)
+
+    # --------------------------------------------------
+    #                   DESC
+    # --------------------------------------------------
 
     def visit_desc(self, node):
         desc_type = node.attributes["desctype"]
-        if desc_type == "class":
-            self.current_part = "class"
+        if desc_type == "class" or desc_type == "attribute":
+            self.current_context = Context.TYPE
         elif desc_type == "function":
-            self.current_part = "function"
-        elif desc_type == "attribute":
-            logger.info(f"Attribute desc{node}", color='green')
-        else:
-            logger.error(f"Invalid desc type: {desc_type}")
+            self.current_context = Context.FUNCTION
 
     def depart_desc(self, node):
         desc_type = node.attributes["desctype"]
-        if desc_type == "class" and self.current_part == "class":
-            self.module.add_class(self.current_class)
-        elif desc_type == "function" and self.current_part == "function":
+        if (
+                desc_type == "class" or desc_type == "attribute") and self.current_context == Context.TYPE and self.current_type:
+            self.module.add_class(self.current_type)
+            self.current_type = None
+        elif desc_type == "function" and self.current_context == Context.FUNCTION and self.current_function:
+            if self.current_variables:
+                self.current_function.add_positional_args(self.current_variables)
+                self.current_variables = None
             self.module.add_global_function(self.current_function)
-        else:
-            logger.error(f"Invalid desc type: {desc_type} or current part: {self.current_part} for departing desc")
+            self.current_function = None
 
+        self.current_context = Context.NONE
+
+    # --------------------------------------------------
+    #                   DESC_SIGNATURE
+    # --------------------------------------------------
     def visit_desc_signature(self, node):
-        if self.current_part == "class":
-            self.current_class = Class(node.attributes["_toc_name"])
-        elif self.current_part == "function":
-            self.current_function = Function(node.attributes["_toc_name"])
-        else:
-            logger.error(f"Invalid part {self.current_part} for desc signature")
+        name = node.attributes["fullname"]
+        if self.current_context == Context.TYPE:
+            self.current_type = Type(name)
+        elif self.current_context == Context.FUNCTION:
+            self.current_function = Function(name)
 
-    def astext(self):
-        return json.dumps(self.module.__dict__())
+    # --------------------------------------------------
+    #                   DESC_PARAMETERLIST
+    # --------------------------------------------------
+
+    def visit_desc_parameterlist(self, node):
+        self.current_variables = []
+
+    # --------------------------------------------------
+    #                   DESC_PARAMETER
+    # --------------------------------------------------
+    def visit_desc_parameter(self, node):
+        assert self.current_variables is not None
+        self.current_variables.append(Variable())
+
+    # --------------------------------------------------
+    #                   INLINE
+    # --------------------------------------------------
+    def visit_inline(self, node):
+
+        if self.current_context == Context.FUNCTION:
+            classes = node.attributes["classes"][0]
+            content = node.astext()
+            assert self.current_variables is not None
+            if classes == "n" and self.current_variables[-1].name == "":
+                self.current_variables[-1].set_name(content)
+            elif classes == "n":
+                self.current_variables[-1].add_type(content)
+            elif classes == "default_value":
+                self.current_variables[-1].add_default_value(content)
+
+    # --------------------------------------------------
+    #                   DESC_RETURNS
+    # --------------------------------------------------
+
+    def visit_desc_returns(self, node):
+        types = node.astext().split(" -> ")[1]
+        assert self.current_function is not None
+        self.current_function.add_return_type(types)
+
+    # --------------------------------------------------
+    #                   DESC_CONTENT
+    # --------------------------------------------------
+
+    def visit_desc_content(self, node: sphinx.addnodes.desc_content):
+        if self.current_context == Context.TYPE and self.current_type:
+            self.current_type.add_description(EnhancedStr(node.astext()))
+        elif self.current_context == Context.FUNCTION and self.current_function:
+            functionDescription = EnhancedStr("")
+            for child in node.children:
+                if isinstance(child, docutils.nodes.paragraph):
+                    functionDescription.append_content(child.astext())
+                elif isinstance(child, docutils.nodes.figure):
+                    uri = child.children[0]['uri']
+                    caption = child.astext().split("\n\n")[1]
+                    functionDescription.add_image(uri, caption)
+
+            self.current_function.add_description(functionDescription)
+
+    # --------------------------------------------------
+    #                   FIELD
+    # --------------------------------------------------
+    def depart_field(self, node):
+        if self.current_context == Context.FUNCTION_RETURN or self.current_context == Context.FUNCTION_PARAMETERS:
+            self.current_context = Context.FUNCTION
+
+    # --------------------------------------------------
+    #                   FIELD_NAME
+    # --------------------------------------------------
+    def visit_field_name(self, node):
+        if node.astext() == "Parameters":
+            self.current_context = Context.FUNCTION_PARAMETERS
+        elif node.astext() == "Returns":
+            self.current_context = Context.FUNCTION_RETURN
+
+    # --------------------------------------------------
+    #                   FIELD_BODY
+    # --------------------------------------------------
+    def visit_field_body(self, node):
+        if self.current_context == Context.FUNCTION_RETURN and self.current_function:
+            self.current_function.add_return_description(node.astext())
+
+    # --------------------------------------------------
+    #                   LIST_ITEM
+    # --------------------------------------------------
+    def visit_list_item(self, node):
+        if self.current_context == Context.FUNCTION_PARAMETERS and self.current_variables:
+            name = node.astext().split(" ")[0]
+            description = ' '.join(node.astext().split(" ")[2:])
+            for param in self.current_variables:
+                if param.name == name:
+                    param.add_description(EnhancedStr(description))
+                    break
+
+    # --------------------------------------------------
+    #                   UNKNOWN
+    # --------------------------------------------------
 
     def unknown_departure(self, node):
-        # logger.info(f"Unknown departure {node}", color='blue')
         pass
 
     def unknown_visit(self, node):
-        # logger.info(f"Unknown departure {node}", color='blue')
         pass
+
+    # --------------------------------------------------
+    #                   OTHER METHODS
+    # --------------------------------------------------
+    def astext(self):
+        return json.dumps(self.module.__dict__())

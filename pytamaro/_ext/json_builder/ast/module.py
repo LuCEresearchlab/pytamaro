@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .class_def import Class
+from .type import Type
 from .enachedString import EnhancedStr
 from .function import Function
 from .variable import Variable
@@ -9,20 +9,20 @@ from .variable import Variable
 class Module:
     name: str = ""
     description: Optional[EnhancedStr] = None
-    classes: Optional[list[Class]] = None
+    types: Optional[list[Type]] = None
     global_functions: Optional[list[Function]] = None
     global_variables: Optional[list[Variable]] = None
 
-    def __init__(self, name: str = ""):
+    def add_name(self, name):
         self.name = name
 
     def add_description(self, description: EnhancedStr):
         self.description = description
 
-    def add_class(self, class_: Class):
-        if self.classes is None:
-            self.classes = []
-        self.classes.append(class_)
+    def add_class(self, class_: Type):
+        if self.types is None:
+            self.types = []
+        self.types.append(class_)
 
     def add_global_function(self, function: Function):
         if self.global_functions is None:
@@ -35,9 +35,9 @@ class Module:
         self.global_variables.append(variable)
 
     def get_class(self, class_name: str):
-        if self.classes is None:
+        if self.types is None:
             return None
-        for class_ in self.classes:
+        for class_ in self.types:
             if class_.name == class_name:
                 return class_
         return None
@@ -59,12 +59,13 @@ class Module:
         return None
 
     def __dict__(self):
-        return {
-            "name": self.name,
-            "description": self.description.__dict__() if self.description is not None else None,
-            "classes": [class_.__dict__() for class_ in self.classes] if self.classes is not None else None,
-            "global_functions": [function.__dict__() for function in
-                                 self.global_functions] if self.global_functions is not None else None,
-            "global_variables": [variable.__dict__() for variable in
-                                 self.global_variables] if self.global_variables is not None else None
-        }
+        result: dict[str, str | dict | list[dict]] = {"name": self.name}
+        if self.description is not None:
+            result["description"] = self.description.__dict__()
+        if self.types is not None:
+            result["types"] = [type_.__dict__() for type_ in self.types]
+        if self.global_functions is not None:
+            result["functions"] = [function.__dict__() for function in self.global_functions]
+        if self.global_variables is not None:
+            result["variables"] = [variable.__dict__() for variable in self.global_variables]
+        return result

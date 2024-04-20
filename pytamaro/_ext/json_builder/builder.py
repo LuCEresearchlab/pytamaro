@@ -8,7 +8,8 @@ from sphinx.application import Sphinx
 from sphinx.builders import Builder
 from sphinx.environment import BuildEnvironment
 from sphinx.locale import __
-from sphinx.util import logging, os_path, ensuredir
+from sphinx.util import logging
+from sphinx.util.osutil import os_path, ensuredir
 
 from .translator import JSONTranslator
 from .writer import JSONWriter
@@ -56,7 +57,7 @@ class JSONBuilder(Builder):
         Returns the target file name.
         """
         # logger.info(f"get_target_uri ({docname})", color='green')
-        return f"{docname}{self.config.markdown_uri_doc_suffix}"
+        return f"{docname}{self.out_suffix}"
 
     def get_outdated_docs(self):
         """
@@ -96,6 +97,7 @@ class JSONBuilder(Builder):
         self.current_doc_name = docname
         self.sec_numbers = self.env.toc_secnumbers.get(docname, {})
         destination = StringOutput(encoding="utf-8")
+        assert self.writer is not None
         self.writer.write(doctree, destination)
         out_filename = os.path.join(self.outdir, f"{os_path(docname)}{self.out_suffix}")
         ensuredir(os.path.dirname(out_filename))
