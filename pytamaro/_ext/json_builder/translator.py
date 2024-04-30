@@ -29,6 +29,7 @@ class Context(Enum):
     FUNCTION = 2
     FUNCTION_RETURN = 3
     FUNCTION_PARAMETERS = 4
+    VARIABLE = 5
 
 
 # A new translator class is created foreach file that is being processed.
@@ -42,7 +43,8 @@ class JSONTranslator(SphinxTranslator):
 
     current_type: Optional[Type] = None
     current_function: Optional[Function] = None
-    current_variables: Optional[list[Variable]] = None
+    function_variables: Optional[list[Variable]] = None
+    current_variable: Optional[Variable] = None
 
     current_context: Context = Context.NONE
 
@@ -77,6 +79,8 @@ class JSONTranslator(SphinxTranslator):
             self.current_context = Context.TYPE
         elif desc_type == "function":
             self.current_context = Context.FUNCTION
+        elif desc_type == "data":
+            self.current_context = Context.VARIABLE
 
     def depart_desc(self, node):
         desc_type = node.attributes["desctype"]
@@ -85,11 +89,14 @@ class JSONTranslator(SphinxTranslator):
             self.module.add_class(self.current_type)
             self.current_type = None
         elif desc_type == "function" and self.current_context == Context.FUNCTION and self.current_function:
-            if self.current_variables:
-                self.current_function.add_positional_args(self.current_variables)
-                self.current_variables = None
+            if self.function_variables:
+                self.current_function.add_positional_args(self.function_variables)
+                self.function_variables = None
             self.module.add_global_function(self.current_function)
             self.current_function = None
+        elif desc_type == "data" and self.current_context == Context.VARIABLE and self.current_variable:
+            self.module.add_global_variable(self.current_variable)
+            self.current_variable = None
 
         self.current_context = Context.NONE
 
@@ -102,20 +109,22 @@ class JSONTranslator(SphinxTranslator):
             self.current_type = Type(name)
         elif self.current_context == Context.FUNCTION:
             self.current_function = Function(name)
+        elif self.current_context == Context.VARIABLE:
+            self.current_variable = Variable(name)
 
     # --------------------------------------------------
     #                   DESC_PARAMETERLIST
     # --------------------------------------------------
 
     def visit_desc_parameterlist(self, node):
-        self.current_variables = []
+        self.function_variables = []
 
     # --------------------------------------------------
     #                   DESC_PARAMETER
     # --------------------------------------------------
     def visit_desc_parameter(self, node):
-        assert self.current_variables is not None
-        self.current_variables.append(Variable())
+        assert self.function_variables is not None
+        self.function_variables.append(Variable())
 
     # --------------------------------------------------
     #                   INLINE
@@ -125,13 +134,13 @@ class JSONTranslator(SphinxTranslator):
         if self.current_context == Context.FUNCTION:
             classes = node.attributes["classes"][0]
             content = node.astext()
-            assert self.current_variables is not None
-            if classes == "n" and self.current_variables[-1].name == "":
-                self.current_variables[-1].set_name(content)
+            assert self.function_variables is not None
+            if classes == "n" and self.function_variables[-1].name == "":
+                self.function_variables[-1].set_name(content)
             elif classes == "n":
-                self.current_variables[-1].add_type(content)
+                self.function_variables[-1].add_type(content)
             elif classes == "default_value":
-                self.current_variables[-1].add_default_value(content)
+                self.function_variables[-1].add_default_value(content)
 
     # --------------------------------------------------
     #                   DESC_RETURNS
@@ -160,6 +169,8 @@ class JSONTranslator(SphinxTranslator):
                     functionDescription.add_image(uri, caption)
 
             self.current_function.add_description(functionDescription)
+        elif self.current_context == Context.VARIABLE and self.current_variable:
+            self.current_variable.add_description(EnhancedStr(node.astext().split("\n\n")[0]))
 
     # --------------------------------------------------
     #                   FIELD
@@ -188,10 +199,10 @@ class JSONTranslator(SphinxTranslator):
     #                   LIST_ITEM
     # --------------------------------------------------
     def visit_list_item(self, node):
-        if self.current_context == Context.FUNCTION_PARAMETERS and self.current_variables:
+        if self.current_context == Context.FUNCTION_PARAMETERS and self.function_variables:
             name = node.astext().split(" ")[0]
             description = ' '.join(node.astext().split(" ")[2:])
-            for param in self.current_variables:
+            for param in self.function_variables:
                 if param.name == name:
                     param.add_description(EnhancedStr(description))
                     break
