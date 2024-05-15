@@ -1,17 +1,19 @@
 from typing import Optional
 
+from .image import Image
 
-class EnhancedStr:
+
+class EnhancedString:
     content: str = ""
 
-    images: list[tuple[str, str]]  # tuple( uri: str, caption: str)
+    images: list[Image]
 
     def __init__(self, content: str):
         self.content = content
         self.images = []
 
-    def add_image(self, uri: str, caption: str = ""):
-        self.images.append((uri, caption))
+    def add_image(self, uri: str, caption: Optional[str] = None):
+        self.images.append(Image(uri, caption))
 
     def append_content(self, content: str):
         if self.content != "":
@@ -23,5 +25,5 @@ class EnhancedStr:
         if self.images:
             result["images"] = []
             for img in self.images:
-                result["images"].append({'uri': img[0], 'caption': img[1]})
+                result["images"].append(img.__dict__())
         return result

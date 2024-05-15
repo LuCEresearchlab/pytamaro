@@ -1,12 +1,12 @@
 from typing import Optional
 
-from .enachedString import EnhancedStr
+from .enachedString import EnhancedString
 from .variable import Variable
 
 
 class Function:
     name: str = ""
-    description: Optional[EnhancedStr] = None
+    description: Optional[EnhancedString] = None
     parameters: Optional[list[Variable]] = None
     return_type: Optional[str] = None
     return_description: Optional[str] = None
@@ -28,7 +28,7 @@ class Function:
     def add_positional_args(self, args: list[Variable]):
         self.parameters = args
 
-    def add_description(self, description: EnhancedStr):
+    def add_description(self, description: EnhancedString):
         self.description = description
 
     def __dict__(self):

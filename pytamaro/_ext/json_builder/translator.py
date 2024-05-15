@@ -8,7 +8,7 @@ from sphinx.util.docutils import SphinxTranslator
 import json
 from enum import Enum
 
-from .ast.enachedString import EnhancedStr
+from .ast.enachedString import EnhancedString
 from .ast.module import Module
 from .ast.type import Type
 from .ast.function import Function
@@ -65,7 +65,7 @@ class JSONTranslator(SphinxTranslator):
     # --------------------------------------------------
 
     def visit_paragraph(self, node):
-        content = EnhancedStr(node.astext())
+        content = EnhancedString(node.astext())
         if self.current_context == Context.MODULE:
             self.module.add_description(content)
 
@@ -157,9 +157,9 @@ class JSONTranslator(SphinxTranslator):
 
     def visit_desc_content(self, node: sphinx.addnodes.desc_content):
         if self.current_context == Context.TYPE and self.current_type:
-            self.current_type.add_description(EnhancedStr(node.astext()))
+            self.current_type.add_description(EnhancedString(node.astext()))
         elif self.current_context == Context.FUNCTION and self.current_function:
-            functionDescription = EnhancedStr("")
+            functionDescription = EnhancedString("")
             for child in node.children:
                 if isinstance(child, docutils.nodes.paragraph):
                     functionDescription.append_content(child.astext())
@@ -170,7 +170,7 @@ class JSONTranslator(SphinxTranslator):
 
             self.current_function.add_description(functionDescription)
         elif self.current_context == Context.VARIABLE and self.current_variable:
-            self.current_variable.add_description(EnhancedStr(node.astext().split("\n\n")[0]))
+            self.current_variable.add_description(EnhancedString(node.astext().split("\n\n")[0]))
 
     # --------------------------------------------------
     #                   FIELD
@@ -204,7 +204,7 @@ class JSONTranslator(SphinxTranslator):
             description = ' '.join(node.astext().split(" ")[2:])
             for param in self.function_variables:
                 if param.name == name:
-                    param.add_description(EnhancedStr(description))
+                    param.add_description(EnhancedString(description))
                     break
 
     # --------------------------------------------------

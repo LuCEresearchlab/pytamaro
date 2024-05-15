@@ -81,10 +81,10 @@ class JSONBuilder(Builder):
         """
         # logger.info("prepare_writing.", color='green')
 
-        # Remove the index and API pages from the list of docnames since they are not needed in the JSON output
+        # Remove API page from the list of docnames since they are not needed in the JSON output
         to_be_removed = []
         for doc_name in docnames:
-            if "index" in doc_name or "API" in doc_name:
+            if "API" in doc_name:  # or doc_name == "index":
                 to_be_removed.append(doc_name)
 
         for doc_name in to_be_removed:
@@ -94,12 +94,18 @@ class JSONBuilder(Builder):
 
     def write_doc(self, docname: str, doctree: nodes.document):
 
+        if docname == "index":
+            # Remove the index page from the output files since it is not needed in the JSON output because it will
+            # create duplication of the Type "Point" already present in the "points" (for the English version) pages
+            return
         self.current_doc_name = docname
         self.sec_numbers = self.env.toc_secnumbers.get(docname, {})
-        destination = StringOutput(encoding="utf-8")
-        assert self.writer is not None
-        self.writer.write(doctree, destination)
         out_filename = os.path.join(self.outdir, f"{os_path(docname)}{self.out_suffix}")
+
+        assert self.writer is not None
+        destination = StringOutput(encoding="utf-8")
+        self.writer.write(doctree, destination)
+
         ensuredir(os.path.dirname(out_filename))
 
         with io_handler(out_filename):

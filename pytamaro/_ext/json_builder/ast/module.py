@@ -1,14 +1,14 @@
 from typing import Optional
 
 from .type import Type
-from .enachedString import EnhancedStr
+from .enachedString import EnhancedString
 from .function import Function
 from .variable import Variable
 
 
 class Module:
     name: str = ""
-    description: Optional[EnhancedStr] = None
+    description: Optional[EnhancedString] = None
     types: Optional[list[Type]] = None
     global_functions: Optional[list[Function]] = None
     global_variables: Optional[list[Variable]] = None
@@ -16,7 +16,7 @@ class Module:
     def add_name(self, name):
         self.name = name
 
-    def add_description(self, description: EnhancedStr):
+    def add_description(self, description: EnhancedString):
         self.description = description
 
     def add_class(self, class_: Type):

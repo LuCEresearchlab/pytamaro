@@ -1,11 +1,11 @@
 from typing import Optional
 
-from .enachedString import EnhancedStr
+from .enachedString import EnhancedString
 
 
 class Variable:
     name: str = ""
-    description: Optional[EnhancedStr] = None
+    description: Optional[EnhancedString] = None
     of_type: Optional[str] = None
     default_value: Optional[str] = None
 
@@ -15,7 +15,7 @@ class Variable:
     def set_name(self, name: str):
         self.name = name
 
-    def add_description(self, description: EnhancedStr):
+    def add_description(self, description: EnhancedString):
         self.description = description
 
     def add_type(self, of_type: str):

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from .enachedString import EnhancedStr
+from .enachedString import EnhancedString
 from .function import Function
 from .variable import Variable
 
@@ -13,12 +13,12 @@ from .variable import Variable
 
 class Type:
     name: str = ""
-    description: Optional[EnhancedStr] = None
+    description: Optional[EnhancedString] = None
 
     def __init__(self, name: str = ""):
         self.name = name
 
-    def add_description(self, description: EnhancedStr):
+    def add_description(self, description: EnhancedString):
         self.description = description
 
     def __dict__(self):
