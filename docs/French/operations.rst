@@ -1,4 +1,4 @@
-Operations
+Opérations
 =======================================
 
 .. automodule:: pytamaro.fr.operations
