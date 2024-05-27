@@ -1,4 +1,4 @@
-Output
+Sortie
 =======================================
 
 .. automodule:: pytamaro.fr.io
