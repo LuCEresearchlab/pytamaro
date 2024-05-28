@@ -13,7 +13,7 @@ Couleur = Color
 Représente une couleur.
 Une couleur a aussi un taux d'opacité,
 de complètement transparent (comme la couleur `transparent`)
-a complètement opaque (comme la couleur `rouge`).
+à complètement opaque (comme la couleur `rouge`).
 """
 
 
