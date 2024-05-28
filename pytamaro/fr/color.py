@@ -10,10 +10,10 @@ from pytamaro.color_functions import rgb_color, hsl_color, hsv_color
 
 Couleur = Color
 """
-Represente une couleur.
+Représente une couleur.
 Une couleur a aussi un taux d'opacité,
-de complètement transparent (come la couleur `transparent`)
-a complètement opaque (come la couleur `rouge`).
+de complètement transparent (comme la couleur `transparent`)
+a complètement opaque (comme la couleur `rouge`).
 """
 
 
@@ -30,7 +30,7 @@ def couleur_rgb(rouge: int, vert: int, bleu: int, opacite: float = 1.0) -> Coule
 
     :param rouge: composante rouge [0-255]
     :param vert: composante verte [0-255]
-    :param bleu: composante bleu [0-255]
+    :param bleu: composante bleue [0-255]
     :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent
             et 1 complètement opaque.
             Par défaut, toutes les couleurs sont complètement opaques.
@@ -53,7 +53,7 @@ def couleur_hsv(teinte: float, saturation: float, valeur: float, opacite: float 
     :param teinte: teinte de la couleur [0-360]
     :param saturation: saturation de la couleur [0-1]
     :param valeur: quantité de lumière appliquée [0-1]
-           Les couleurs complètement saturé ont une quantité de lumière de 1.
+           Les couleurs complètement saturées ont une quantité de lumière de 1.
     :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent
             et 1 complètement opaque.
             Par défaut, toutes les couleurs sont complètement opaques.
@@ -77,7 +77,7 @@ def couleur_hsl(teinte: float, saturation: float, luminosite: float, opacite: fl
     :param teinte: teinte de la couleur [0-360]
     :param saturation: saturation de la couleur [0-1]
     :param luminosite: quantité de blanc ou noire appliquée [0-1].
-           Les couleurs complètement saturé ont un valeur de luminosité de 1/2.
+           Les couleurs complètement saturées ont un valeur de luminosité de 1/2.
     :param opacite: opacité (alpha) de la couleur, où 0 est complètement transparent
             et 1 complètement opaque.
             Par défaut, toutes les couleurs sont complètement opaques.

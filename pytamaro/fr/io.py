@@ -1,5 +1,5 @@
 """
-Fonctions pour output de graphiques (visualiser ou sauvegarder).
+Fonctions pour visualiser ou sauvegarder des graphiques.
 """
 
 from __future__ import annotations
@@ -13,10 +13,10 @@ def montre_graphique(graphique: Graphique, debug: bool = False):
     Montre un graphique. Les graphiques n'ayant pas de surface ne peuvent pas
     être montrés.
 
-    Quand `debug` est `True`, la visualisation est ornée d'informations utile
+    Quand `debug` est `True`, la visualisation est ornée d'informations utiles
     pour le débogage:
     une bordure rouge autour du cadre de délimitation et une croix jaunâtre
-    autour du pion d'ancrage.
+    autour du point d'ancrage.
 
     :param graphique: le graphique à montrer
     :param debug: (optionnel) peut être assigné à `True` pour superposer les
@@ -28,18 +28,18 @@ def montre_graphique(graphique: Graphique, debug: bool = False):
 def sauvegarde_graphique(nom_fichier: str, graphique: Graphique, debug: bool = False):
     """
     Sauvegarde un graphique dans un fichier.
-    Deux formats de fichiers sont supporter: PNG (graphiques tramés) et SVG
+    Deux formats de fichiers sont supportés: PNG (graphiques tramés) et SVG
     (graphiques vectoriels). L'extension du fichier (".png" ou ".svg") détermine
     le format.
 
 
-    Les graphiques avec aucune surface ne peuvent pas être sauvegardés au format
+    Les graphiques sans surface ne peuvent pas être sauvegardés au format
     PNG.
 
-    Quand `debug` est `True`, la visualisation est ornée d'informations utile
+    Quand `debug` est `True`, la visualisation est ornée d'informations utiles
     pour le débogage:
     une bordure rouge autour du cadre de délimitation et une croix jaunâtre
-    autour du pion d'ancrage.
+    autour du point d'ancrage.
 
     :param nom_fichier: le nom du fichier à créer (avec l'extension)
     :param graphique: le graphique à sauvegarder
@@ -55,7 +55,7 @@ def sauvegarde_animation(
     """
     Sauvegarde une séquence de graphiques en tant qu'animation (GIF).
 
-    Les graphiques sont reproduit de manière séquentielle (normalement à 25
+    Les graphiques sont reproduits de manière séquentielle (normalement à 25
     images par secondes) en boucle (à moins que ça ne soit indiqué autrement).
 
 
@@ -74,7 +74,7 @@ def montre_animation(graphiques: list[Graphique], duree: int = 40, en_boucle: bo
     """
     Montre une séquence de graphiques en tant qu'animation (GIF).
 
-    Les graphiques sont reproduit de manière séquentielle (normalement à 25
+    Les graphiques sont reproduits de manière séquentielle (normalement à 25
     images par secondes) en boucle (à moins que ça ne soit indiqué autrement).
 
 
