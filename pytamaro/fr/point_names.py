@@ -1,5 +1,5 @@
 """
-Noms de points particuliers, qui peuvent être utilisé comme des points d'ancrage pour des
+Noms de points particuliers, qui peuvent être utilisés comme des points d'ancrage pour des
 graphiques.
 """
 
@@ -12,33 +12,33 @@ from pytamaro.fr.point import Point
 
 
 centre: Point = center
-"""Le point centrale du cadre de délimitation du graphique
+"""Le point central du cadre de délimitation du graphique
 
 :meta hide-value:
 """
 
 
 haut_centre: Point = top_center
-"""Le point centrale du côté supérieur du cadre de délimitation du graphique
+"""Le point central du côté supérieur du cadre de délimitation du graphique
 
 :meta hide-value:
 """
 
 bas_centre: Point = bottom_center
-"""Le point centrale du côté inférieur du cadre de délimitation du graphique
+"""Le point central du côté inférieur du cadre de délimitation du graphique
 
 :meta hide-value:
 """
 
 centre_gauche: Point = center_left
-"""Le point centrale du côté gauche du cadre de délimitation du graphique
+"""Le point central du côté gauche du cadre de délimitation du graphique
 
 :meta hide-value:
 """
 
 
 centre_droite: Point = center_right
-"""Le point centrale du côté droit du cadre de délimitation du graphique
+"""Le point central du côté droit du cadre de délimitation du graphique
 
 :meta hide-value:
 """

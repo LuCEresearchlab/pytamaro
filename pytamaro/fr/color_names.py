@@ -27,7 +27,7 @@ vert: Couleur = green
 """
 
 bleu: Couleur = blue
-"""Couleur bleu
+"""Couleur bleue
 
 :meta hide-value:
 """
@@ -51,7 +51,7 @@ cyan: Couleur = cyan
 """
 
 blanc: Couleur = white
-"""Couleur blanc
+"""Couleur blanche
 
 :meta hide-value:
 """

@@ -1,5 +1,5 @@
 """
-Type `Graphique`, qui inclue un graphique avec un point d'ancrage.
+Type `Graphique`, qui inclut un graphique avec un point d'ancrage.
 """
 
 from __future__ import annotations
@@ -8,7 +8,7 @@ from pytamaro.graphic import Graphic
 
 Graphique = Graphic
 """
-Un graphique (image) avec un point à ancrer.
+Un graphique (image) avec un point d'ancrage.
 
 Le point d'ancrage est utilisé pour les opérations suivantes:
 

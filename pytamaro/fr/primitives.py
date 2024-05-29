@@ -50,7 +50,7 @@ def ellipse(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     :param largeur: largeur de l'ellipse
     :param hauteur: hauteur de l'ellipse
     :param couleur: couleur à utiliser pour remplir l'ellipse
-    :returns: un graphique avec l'ellipse spécifié
+    :returns: un graphique avec l'ellipse spécifiée
     """
     return en_ellipse(largeur, hauteur, couleur)
 
@@ -108,7 +108,7 @@ def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphiq
     de la couleur spécifiées.
 
     Lorsque la police True-Type indiquée n'est pas disponible dans le système,
-    une police très basilaire toujours disponible est utilisée à la place. Le
+    une police très basique toujours disponible est utilisée à la place. Le
     graphique qui en résulte a la taille minimale nécessaire pour contenir
     l'ensemble du texte.
 

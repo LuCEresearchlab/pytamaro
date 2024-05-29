@@ -34,11 +34,11 @@ def hauteur_graphique(graphique: Graphique) -> int:
 def compose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) \
         -> Graphique:
     """
-    Créé un nouveau graphique en composant les deux graphiques fournis.
+    Crée un nouveau graphique en composant les deux graphiques fournis.
     Le premier graphique est maintenu au premier plan, le second en arrière plan.
     Les graphiques sont alignés en superposant les points d'ancrage.
 
-    Le point d'ancrage utilisé pour la composition sera celui du graphique résultant.
+    Le point d'ancrage du graphique résultant est celui utilisé pour la composition.
 
     :param graphique_premier_plan: le graphique au premier plan
     :param graphique_premier_plan: le graphique en arrière plan
