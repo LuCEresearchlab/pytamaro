@@ -22,5 +22,5 @@ preferred-citation:
   year: 2023
   collection-title: "Proceedings of the 2023 ACM SIGPLAN International Symposium on SPLASH-E"
   conference:
-    - name: SPLASH-E 2023
+    name: SPLASH-E 2023
   doi: 10.1145/3622780.3623644
