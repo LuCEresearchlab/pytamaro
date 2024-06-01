@@ -157,3 +157,22 @@ def test_show_deeply_nested_graphic():
     graphic = reduce(beside, [element] * 1000, empty_graphic())
     # Implicitly assert that it does not throw
     show_graphic(graphic)
+
+
+def test_animation_frames_not_overlaid():
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(HEIGHT, WIDTH, blue)
+    with NamedTemporaryFile() as f:
+        filename = f"{f.name}.gif"
+        save_animation(filename, [beside(r1, r2), beside(r2, r1)])
+        gif = ImageMod.open(filename)
+        assert gif.n_frames == 2
+
+        def non_transparent_pixels(frame):
+            return sum(1 for pixel in frame.convert("RGBA").getdata() if pixel[3] > 0)
+
+        gif.seek(0)
+        colored_frame0 = non_transparent_pixels(gif)
+        gif.seek(1)
+        colored_frame1 = non_transparent_pixels(gif)
+        assert colored_frame0 == colored_frame1
