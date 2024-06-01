@@ -11,7 +11,7 @@ Pillow = "^10.2.0"
 skia-python = {version = "^121.0b6", allow-prereleases = true}
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.0.0"
+pytest = "^8.2.1"
 pytest-watch = "^4.2.0"
 pytest-cov = "^3.0.0"
 pylint = "^3.0.2"
