@@ -14,7 +14,8 @@ from typing import List
 
 from PIL import Image as PILImageMod
 from PIL.Image import Image as PILImage
-from skia import Canvas, FILEWStream, Image, Rect, Surface, SVGCanvas, kPNG
+from skia import (Canvas, FILEWStream, Image, Rect, Surface, SVGCanvas, kPNG,
+                  kUnpremul_AlphaType)
 
 from pytamaro.checks import check_graphic, check_type
 from pytamaro.debug import add_debug_info
@@ -100,10 +101,7 @@ def graphic_to_pillow_image(graphic: Graphic) -> PILImage:
     :param graphic: graphic to be rendered and converted
     :returns: rendered graphic as a Pillow image
     """
-    with io.BytesIO(graphic_to_image(graphic).encodeToData()) as stream:
-        pil_image = PILImageMod.open(stream)
-        pil_image.load()  # Ensure to make a copy of buffer
-        return pil_image
+    return PILImageMod.fromarray(graphic_to_image(graphic).convert(alphaType=kUnpremul_AlphaType))
 
 
 # pylint: disable-next=invalid-name
