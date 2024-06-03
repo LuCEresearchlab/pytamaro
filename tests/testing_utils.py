@@ -31,11 +31,15 @@ def assert_unique_color(g: Graphic,
     assert int(color.skia_color) in colors
 
 
+def assert_color(g: Graphic, color: Color):
+    assert int(color.skia_color) in pixels_colors(g)
+
+
 def assert_size(g: Graphic, expected_size: Tuple[int, int]):
     assert_size_tolerance(g, expected_size, tolerance=0)
 
 
-def assert_value_tolerance(actual_value: float, expected_value: float, tolerance: float = 0.02):
+def assert_value_tolerance(actual_value: float, expected_value: float, tolerance: float):
     assert expected_value * (1 - tolerance) <= actual_value <= expected_value * (1 + tolerance)
 
 

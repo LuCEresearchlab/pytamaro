@@ -93,7 +93,7 @@ class Primitive(Graphic):
             bounds = path.computeTightBounds()
             pin_position = Point(bounds.width() / 2, bounds.height() / 2)
         super().__init__(pin_position, path)
-        paint = Paint(color.skia_color)
+        paint = Paint(Color=color.skia_color, AntiAlias=True)
         object.__setattr__(self, "paint", paint)
 
     def draw(self, canvas: Canvas):

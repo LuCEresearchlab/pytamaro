@@ -3,10 +3,10 @@ from pytamaro.operations import (above, beside, compose, graphic_height,
                                  graphic_width, overlay, pin, rotate)
 from pytamaro.point_names import bottom_left, bottom_right, top_left
 from pytamaro.primitives import ellipse, rectangle, triangle
-from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_equals_rendered,
-                                 assert_pin_tolerance, assert_repr,
-                                 assert_size, assert_size_tolerance,
-                                 assert_unique_color)
+from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_color,
+                                 assert_equals_rendered, assert_pin_tolerance,
+                                 assert_repr, assert_size,
+                                 assert_size_tolerance, assert_unique_color)
 
 
 def test_width():
@@ -34,7 +34,7 @@ def test_rotate_45():
     c = ellipse(2 * RADIUS, 2 * RADIUS, red)
     rot = rotate(45, c)
     assert_size_tolerance(rot, (RADIUS * 2, RADIUS * 2))
-    assert_unique_color(rot, red)
+    assert_color(rot, red)  # color might not be unique due to antialiasing
 
 
 def test_rotate_pin_left_top():

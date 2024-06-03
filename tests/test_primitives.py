@@ -7,7 +7,7 @@ from pytamaro.operations import (above, compose, graphic_height, graphic_width,
                                  rotate)
 from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
                                  rectangle, text, triangle)
-from tests.testing_utils import (HEIGHT, RADIUS, WIDTH,
+from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_color,
                                  assert_graphics_equals_tolerance, assert_repr,
                                  assert_size, assert_unique_color,
                                  assert_value_tolerance, pixels_colors)
@@ -40,7 +40,7 @@ def test_empty_graphic_repr():
 def test_ellipse():
     e = ellipse(WIDTH, HEIGHT, red)
     assert_size(e, (WIDTH, HEIGHT))
-    assert_unique_color(e, red)
+    assert_color(e, red)  # color might not be unique due to antialiasing
 
 
 def test_ellipse_repr():
@@ -50,7 +50,7 @@ def test_ellipse_repr():
 def test_text():
     graphic = text("hello", "", 12, red)
     assert graphic_width(graphic) > 0 and graphic_height(graphic) > 0
-    assert_unique_color(graphic, red)
+    assert_color(graphic, red)  # color might not be unique due to antialiasing
 
 
 def test_text_repr():
@@ -106,7 +106,7 @@ def test_circular_sector_repr():
 def test_equilateral_triangle():
     side = 100  # large enough
     t = triangle(side, side, 60, red)
-    assert_unique_color(t, red)
+    assert_color(t, red)  # color might not be unique due to antialiasing
     # Assert that the number of red pixels is almost equal (2%)
     # to the number of transparent pixels.
     colors = Counter(pixels_colors(t))
@@ -126,8 +126,8 @@ def test_right_triangle_pinning_position():
     # Most common expected to be transparent, then blue, then red.
     colors = Counter(pixels_colors(t))
     common = colors.most_common(3)
-    assert_value_tolerance(common[1][1], large_area - small_area)
-    assert_value_tolerance(common[2][1], small_area)
+    assert_value_tolerance(common[1][1], large_area - small_area, 0.05)
+    assert_value_tolerance(common[2][1], small_area, 0.05)
 
 
 def test_triangle_repr():
