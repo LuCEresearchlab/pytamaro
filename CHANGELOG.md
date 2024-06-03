@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2024-06-03
+
+### Added
+
+- [Enable antialiasing](https://github.com/LuCEresearchlab/pytamaro/issues/29) for better rendering
+
+### Changed
+
+- [Faster rendering of images](https://github.com/LuCEresearchlab/pytamaro/pull/33), especially noticeable for GIFs with several frames
+
+### Fixed
+
+- [Fix GIFs overlaying frames within a loop](https://github.com/LuCEresearchlab/pytamaro/commit/57850c696f9323a1ac71a041ebdad174692b5f7f), which was visibile in certain cases with transparency
+
 ## [0.6.3] - 2024-02-18
 
 ### Changed
