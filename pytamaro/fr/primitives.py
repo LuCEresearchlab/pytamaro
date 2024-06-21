@@ -9,9 +9,11 @@ from __future__ import annotations
 
 from pytamaro.fr.color import Couleur
 from pytamaro.fr.graphic import Graphique
-from pytamaro.primitives import (circular_sector, empty_graphic, text)
-from pytamaro.primitives import rectangle as en_rectangle
+from pytamaro.primitives import circular_sector
 from pytamaro.primitives import ellipse as en_ellipse
+from pytamaro.primitives import empty_graphic
+from pytamaro.primitives import rectangle as en_rectangle
+from pytamaro.primitives import text
 from pytamaro.primitives import triangle as en_triangle
 
 
@@ -116,7 +118,7 @@ def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphiq
     verticalement sur la ligne de base du texte.
 
     :param contenu: le texte à présenter
-    :param font: le nom de la police (par exemple, "arial" sous Windows, "Arial"
+    :param police: le nom de la police (par exemple, "arial" sous Windows, "Arial"
            sous macOS)
     :param points: la taille en points typographiques (par exemple, 16)
     :param couleur: la couleur à utiliser pour le rendu du texte

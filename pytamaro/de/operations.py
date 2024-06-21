@@ -61,7 +61,7 @@ def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
     Die Namen dieser Punkte sind: `oben_links`, `oben_mitte`, `oben_rechts`,
     `mitte_links`, `mitte`, `mitte_rechts`, `unten_links`, `unten_mitte` und `unten_rechts`.
 
-    :param point: ein Punkt welcher die neue Fixierposition bestimmt
+    :param punkt: ein Punkt welcher die neue Fixierposition bestimmt
     :param graphic: die ursprüngliche Grafik
     :returns: eine neue Grafik mit der gegebenen Fixierposition
     """

@@ -104,8 +104,8 @@ def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
 
     La posizione di fissaggio della grafica risultante è nel suo centro.
 
-    :param grafica_sopra: grafica da posizionare sopra
-    :param grafica_sotto: grafica da posizionare sotto
+    :param grafica_alto: grafica da posizionare in alto
+    :param grafica_basso: grafica da posizionare in basso
     :returns: grafica risultante dall'affiancamento verticale delle due
               grafiche fornite
     """
