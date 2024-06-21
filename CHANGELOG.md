@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.1] - 2024-06-21
+
+### Changed
+
+- [Check the type of optional parameters for output functions](https://github.com/LuCEresearchlab/pytamaro/issues/35)
+
+### Fixed
+
+- Fixed some inconsistent names for localized parameters in the documentation
+
 ## [0.7.0] - 2024-06-03
 
 ### Added
