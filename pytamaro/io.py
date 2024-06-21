@@ -145,6 +145,7 @@ def show_graphic(graphic: Graphic, debug: bool = False):
            information
     """
     check_graphic(graphic)
+    check_type(debug, bool, "debug")
     if graphic.empty_area():
         _warning_no_area(graphic)
     else:
@@ -182,6 +183,7 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     """
     check_type(filename, str, "filename")
     check_graphic(graphic)
+    check_type(debug, bool, "debug")
     to_show = add_debug_info(graphic) if debug else graphic
     extension = Path(filename).suffix
     if extension == ".png":
@@ -218,6 +220,8 @@ def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, l
     pil_images = list(map(graphic_to_pillow_image, graphics))
     if len(set(image.size for image in pil_images)) != 1:
         raise ValueError(translate("DIFFERENT_SIZES"))
+    check_type(duration, int, "duration")
+    check_type(loop, bool, "loop")
     pil_images[0].save(
         filename,
         save_all=True,

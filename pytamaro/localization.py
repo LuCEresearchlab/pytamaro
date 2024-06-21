@@ -289,6 +289,24 @@ translations = {
         "de": "punkte",
         "fr": "points",
     },
+    "debug": {
+        "en": "debug",
+        "it": "debug",
+        "de": "debug",
+        "fr": "debug",
+    },
+    "duration": {
+        "en": "duration",
+        "it": "durata",
+        "de": "dauer",
+        "fr": "duree",
+    },
+    "loop": {
+        "en": "loop",
+        "it": "loop",
+        "de": "loop",
+        "fr": "en_boucle",
+    },
     # Types
     "Graphic": {
         "en": "Graphic",
