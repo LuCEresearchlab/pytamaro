@@ -212,7 +212,7 @@ def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, l
     :param loop: whether the GIF should loop indefinitely (defaults to true)
     """
     check_type(filename, str, "filename")
-    if Path(filename).suffix != ".gif":
+    if Path(filename).suffix != ".png":
         raise ValueError(translate("INVALID_FILENAME_GIF"))
     check_type(graphics, list, "graphics")
     if len(graphics) == 0:
@@ -245,7 +245,7 @@ def show_animation(graphics: List[Graphic], duration: int = 40, loop: bool = Tru
            (defaults to 40 milliseconds, which leads to 25 frames per second)
     :param loop: whether the animation should loop indefinitely (defaults to true)
     """
-    with NamedTemporaryFile(suffix=".gif", delete=False) as file:
+    with NamedTemporaryFile(suffix=".png", delete=False) as file:
         save_animation(file.name, graphics, duration, loop)
         if is_notebook():
             # pylint: disable-next=import-outside-toplevel, import-error
@@ -256,7 +256,7 @@ def show_animation(graphics: List[Graphic], duration: int = 40, loop: bool = Tru
         elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
             with open(file.name, "rb") as stream:
                 b64_str = base64.b64encode(stream.read()).decode("utf-8")
-                _print_data_uri("image/gif", b64_str)
+                _print_data_uri("image/apng", b64_str)
         elif sys.platform == "win32":
             os.startfile(file.name)
         elif sys.platform == "darwin":
