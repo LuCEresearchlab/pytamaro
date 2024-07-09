@@ -89,12 +89,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix rendering of reasonably big graphics (by increasing the recursion limit)
 
-## [0.4.1] - 2023-04-06
-
-### Fixed
-
-- Improve Jupyter notebook detection to include Google Colab
-
 ## [0.5.0] - 2023-05-29
 
 ### Added
