@@ -57,14 +57,13 @@ class Graphic(ABC):
         :param canvas: canvas onto which to draw
         """
 
-    def empty_area(self) -> bool:
+    def zero_pixels(self) -> bool:
         """
-        Returns whether this graphic has an empty area (width or height 0) or
-        not.
+        Returns whether this graphic has no pixels to render, because its (rounded) area is 0.
 
-        :returns: True if the graphic has an empty area, False otherwise
+        :returns: True if the graphic has no pixels, False otherwise
         """
-        return self.size().isEmpty()
+        return self.size().toRound().isEmpty()
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Graphic):

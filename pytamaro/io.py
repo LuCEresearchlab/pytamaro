@@ -31,9 +31,8 @@ def _warning_no_area(graphic: Graphic):
 
     :param graphic: graphic that cannot be shown or saved
     """
-    size = graphic.bounds().round()
-    # pylint: disable-next=line-too-long
-    print(translate("EMPTY_AREA_OUTPUT", f"{size.width()}x{size.height()}"))
+    rounded_size = graphic.size().toRound()
+    print(translate("EMPTY_AREA_OUTPUT", f"{rounded_size.width()}x{rounded_size.height()}"))
 
 
 def _draw_to_canvas(canvas: Canvas, graphic: Graphic):
@@ -146,7 +145,7 @@ def show_graphic(graphic: Graphic, debug: bool = False):
     """
     check_graphic(graphic)
     check_type(debug, bool, "debug")
-    if graphic.empty_area():
+    if graphic.zero_pixels():
         _warning_no_area(graphic)
     else:
         to_show = add_debug_info(graphic) if debug else graphic
@@ -187,7 +186,7 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     to_show = add_debug_info(graphic) if debug else graphic
     extension = Path(filename).suffix
     if extension == ".png":
-        if graphic.empty_area():
+        if graphic.zero_pixels():
             _warning_no_area(graphic)
         else:
             _save_as_PNG(filename, to_show)

@@ -57,4 +57,4 @@ def test_hash_empty_graphic():
 
 def test_empty_area_not_empty_graphic():
     g = rectangle(0, HEIGHT, red)
-    assert g.empty_area()
+    assert g.zero_pixels()

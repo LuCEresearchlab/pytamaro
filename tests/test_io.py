@@ -25,7 +25,16 @@ def test_show_empty_graphic(capfd):
     # Implicitly assert that it does not throw
     show_graphic(empty_graphic())
     out, _ = capfd.readouterr()
+    # Assert that a nice warning message with the (rounded) size is reported
     assert "0x0" in out
+
+
+def test_show_round_to_zero_graphic(capfd):
+    # Implicitly assert that it does not throw
+    show_graphic(rectangle(0.1, 100, red))
+    out, _ = capfd.readouterr()
+    # Assert that a nice warning message with the (rounded) size is reported
+    assert "0x100" in out
 
 
 def test_show_debug_graphic():
