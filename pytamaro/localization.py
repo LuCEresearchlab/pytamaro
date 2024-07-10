@@ -13,13 +13,13 @@ translations = {
     },
     "INVALID_TYPE": {
         "en": "Invalid type for parameter `{}`: expected `{}`, got `{}`",
-        "it": "Tipo non valido per il parametro `{}`: previsto `{}`, ottenuto `{}`",
+        "it": "Tipo non valido per il parametro `{}`: previsto `{}`, ricevuto `{}`",
         "de": "Ungültiger Typ für den Parameter `{}`: erwartet `{}`, erhalten `{}`",
         "fr": "Type invalid pour le paramètre `{}`: attendu `{}`, eu `{}`"
     },
     "INVALID_ELEMENT_TYPE": {
         "en": "Invalid type for parameter `{0}`: at position {3} expected `{1}`, got `{2}`",
-        "it": "Tipo non valido per il parametro `{0}`: alla posizione {3} previsto `{1}`, ottenuto `{2}`",
+        "it": "Tipo non valido per il parametro `{0}`: alla posizione {3} previsto `{1}`, ricevuto `{2}`",
         "de": "Ungültiger Typ für den Parameter `{0}`: an Position {3} erwartet `{1}`, erhalten `{2}`",
         "fr": "Type invalide pour le paramètre `{0}`: à la position {3} attendu `{1}`, eu `{2}`",
     },
