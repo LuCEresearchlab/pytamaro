@@ -57,6 +57,16 @@ def test_show_wrong_type():
         show_graphic(None)  # type: ignore
 
 
+def test_show_animation_wrong_type():
+    with raises(TypeError, match="str"):
+        show_animation("bar")  # type: ignore
+
+
+def test_show_animation_wrong_element_type():
+    with raises(TypeError, match="1"):
+        show_animation([rectangle(WIDTH, HEIGHT, red), "bar"])  # type: ignore
+
+
 def test_save_animation():
     r1 = rectangle(WIDTH, HEIGHT, red)
     r2 = rectangle(WIDTH, HEIGHT, blue)
@@ -105,6 +115,22 @@ def test_save_empty_graphic_as_PNG(capfd):
         save_graphic(f"{f.name}.png", empty_graphic())
         out, _ = capfd.readouterr()
         assert "0x0" in out
+
+
+def test_save_animation_empty_graphic(capfd):
+    # Implicitly assert that it does not throw
+    with NamedTemporaryFile() as f:
+        save_animation(f"{f.name}.gif", [rectangle(100, 0, red)])
+        out, _ = capfd.readouterr()
+        assert "100x0" in out
+
+
+def test_save_animation_multiple_empty_graphics(capfd):
+    # Implicitly assert that it does not throw
+    with NamedTemporaryFile() as f:
+        save_animation(f"{f.name}.gif", [rectangle(200, 0, red), rectangle(0, 200, blue)])
+        out, _ = capfd.readouterr()
+        assert "200x0" in out
 
 
 DATA_URI_11RED_RECT = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg=="

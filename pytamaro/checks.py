@@ -4,7 +4,7 @@ Checks to be performed on the parameters of user-facing functions.
 
 from math import inf
 from numbers import Number
-from typing import Any
+from typing import Any, Optional
 
 from pytamaro.color import Color
 from pytamaro.graphic import Graphic
@@ -35,7 +35,8 @@ def check_length(length: Any, parameter_name: str):
         raise ValueError(translate("INVALID_LENGTH", localized_parameter_name))
 
 
-def check_type(value: Any, expected_type: type, parameter_name: str):
+def check_type(value: Any, expected_type: type, parameter_name: str,
+               element_idx: Optional[int] = None):
     """
     Raises an exception when the provided value is not valid for a
     given type.
@@ -45,16 +46,19 @@ def check_type(value: Any, expected_type: type, parameter_name: str):
     :param value: the value to be checked
     :param expected_type: the expected type for the value
     :param parameter_name: original parameter name, to be used in the error message
+    :param element_idx: index of the element in a sequence,
+                        if we are checking the type of an element
     """
     if not isinstance(value, expected_type):
         expected_type_name: str = expected_type.__name__
         actual_type = type(value)
         actual_public_type = Graphic if issubclass(actual_type, Graphic) else actual_type
         actual_type_name: str = actual_public_type.__name__
-        raise TypeError(translate("INVALID_TYPE",
+        raise TypeError(translate("INVALID_TYPE" if element_idx is None else "INVALID_ELEMENT_TYPE",
                                   translate(parameter_name),
                                   translate(expected_type_name),
-                                  translate(actual_type_name)))
+                                  translate(actual_type_name),
+                                  element_idx))
 
 
 def check_color(color: Any):

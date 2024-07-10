@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Raise an error when trying to show an animation whose frames are not all of type `Graphic`
+
 ### Fixed
 
 - Avoid crashing when showing graphics with a zero area after rounding
+- Avoid crashing when showing animations with zero area frames
 
 ## [0.7.1] - 2024-06-21
 

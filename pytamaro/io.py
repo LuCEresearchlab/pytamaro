@@ -196,6 +196,43 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
         raise ValueError(translate("INVALID_FILENAME_EXTENSION"))
 
 
+def _save_animation(filename: str, graphics: List[Graphic], duration: int, loop: bool) -> bool:
+    """
+    Try to save a sequence of graphics as an animation (GIF).
+
+    :param filename: name of the file to create, including the extension '.gif'
+    :param graphics: list of graphics to be saved as an animation
+    :param duration: duration in milliseconds for each frame
+    :param loop: whether the GIF should loop indefinitely
+    :returns: whether the animation was successfully saved
+    """
+    check_type(filename, str, "filename")
+    if Path(filename).suffix != ".gif":
+        raise ValueError(translate("INVALID_FILENAME_GIF"))
+    check_type(graphics, list, "graphics")
+    if len(graphics) == 0:
+        raise ValueError(translate("EMPTY_GRAPHICS_LIST"))
+    for idx, graphic in enumerate(graphics):
+        check_type(graphic, Graphic, "graphics", idx)
+        if graphic.zero_pixels():
+            _warning_no_area(graphic)
+            return False
+    pil_images = list(map(graphic_to_pillow_image, graphics))
+    if len(set(image.size for image in pil_images)) != 1:
+        raise ValueError(translate("DIFFERENT_SIZES"))
+    check_type(duration, int, "duration")
+    check_type(loop, bool, "loop")
+    pil_images[0].save(
+        filename,
+        save_all=True,
+        append_images=pil_images[1:],
+        duration=duration,
+        loop=0 if loop else 1,  # loop 0 means "indefinitely", 1 means "once"
+        disposal=2,  # 2 means "after showing the frame, clear to background"
+    )
+    return True
+
+
 @export
 def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, loop: bool = True):
     """
@@ -210,25 +247,7 @@ def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, l
            (defaults to 40 milliseconds, which leads to 25 frames per second)
     :param loop: whether the GIF should loop indefinitely (defaults to true)
     """
-    check_type(filename, str, "filename")
-    if Path(filename).suffix != ".gif":
-        raise ValueError(translate("INVALID_FILENAME_GIF"))
-    check_type(graphics, list, "graphics")
-    if len(graphics) == 0:
-        raise ValueError(translate("EMPTY_GRAPHICS_LIST"))
-    pil_images = list(map(graphic_to_pillow_image, graphics))
-    if len(set(image.size for image in pil_images)) != 1:
-        raise ValueError(translate("DIFFERENT_SIZES"))
-    check_type(duration, int, "duration")
-    check_type(loop, bool, "loop")
-    pil_images[0].save(
-        filename,
-        save_all=True,
-        append_images=pil_images[1:],
-        duration=duration,
-        loop=0 if loop else 1,  # loop 0 means "indefinitely", 1 means "once"
-        disposal=2,  # 2 means "after showing the frame, clear to background"
-    )
+    _save_animation(filename, graphics, duration, loop)
 
 
 @export
@@ -245,20 +264,20 @@ def show_animation(graphics: List[Graphic], duration: int = 40, loop: bool = Tru
     :param loop: whether the animation should loop indefinitely (defaults to true)
     """
     with NamedTemporaryFile(suffix=".gif", delete=False) as file:
-        save_animation(file.name, graphics, duration, loop)
-        if is_notebook():
-            # pylint: disable-next=import-outside-toplevel, import-error
-            from IPython.display import Image as IPythonImage  # type: ignore[import]
-            with open(file.name, "rb") as stream:
-                # pylint: disable-next=undefined-variable
-                display(IPythonImage(stream.read()))  # type: ignore[name-defined]
-        elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
-            with open(file.name, "rb") as stream:
-                b64_str = base64.b64encode(stream.read()).decode("utf-8")
-                _print_data_uri("image/gif", b64_str)
-        elif sys.platform == "win32":
-            os.startfile(file.name)
-        elif sys.platform == "darwin":
-            subprocess.call(["open", "-a", "Safari", file.name])
-        else:
-            subprocess.call(["xdg-open", file.name])
+        if _save_animation(file.name, graphics, duration, loop):
+            if is_notebook():
+                # pylint: disable-next=import-outside-toplevel, import-error
+                from IPython.display import Image as IPythonImage  # type: ignore[import]
+                with open(file.name, "rb") as stream:
+                    # pylint: disable-next=undefined-variable
+                    display(IPythonImage(stream.read()))  # type: ignore[name-defined]
+            elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
+                with open(file.name, "rb") as stream:
+                    b64_str = base64.b64encode(stream.read()).decode("utf-8")
+                    _print_data_uri("image/gif", b64_str)
+            elif sys.platform == "win32":
+                os.startfile(file.name)
+            elif sys.platform == "darwin":
+                subprocess.call(["open", "-a", "Safari", file.name])
+            else:
+                subprocess.call(["xdg-open", file.name])
