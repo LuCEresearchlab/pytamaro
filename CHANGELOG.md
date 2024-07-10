@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Names of parameters and types in error messages are now reported inside backticks to make them more distinguishable from the rest of the message 
 - Raise an error when trying to show an animation whose frames are not all of type `Graphic`
 
 ### Fixed

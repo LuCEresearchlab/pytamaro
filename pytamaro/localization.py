@@ -6,28 +6,28 @@ import sys
 translations = {
     # Error messages
     "INVALID_LENGTH": {
-        "en": "Invalid length for parameter {}",
-        "it": "Lunghezza non valida per il parametro {}",
-        "de": "Ungültige Länge für den Parameter {}",
-        "fr": "Longeur invalide pour paramètre {}",
+        "en": "Invalid length for parameter `{}`",
+        "it": "Lunghezza non valida per il parametro `{}`",
+        "de": "Ungültige Länge für den Parameter `{}`",
+        "fr": "Longeur invalide pour paramètre `{}`",
     },
     "INVALID_TYPE": {
-        "en": "Invalid type for parameter {}: expected {}, got {}",
-        "it": "Tipo non valido per il parametro {}: previsto {}, ottenuto {}",
-        "de": "Ungültiger Typ für den Parameter {}: erwartet {}, erhalten {}",
-        "fr": "Type invalid pour le paramètre {}: attendu {}, eu {}"
+        "en": "Invalid type for parameter `{}`: expected `{}`, got `{}`",
+        "it": "Tipo non valido per il parametro `{}`: previsto `{}`, ottenuto `{}`",
+        "de": "Ungültiger Typ für den Parameter `{}`: erwartet `{}`, erhalten `{}`",
+        "fr": "Type invalid pour le paramètre `{}`: attendu `{}`, eu `{}`"
     },
     "INVALID_ELEMENT_TYPE": {
-        "en": "Invalid type for parameter {0}: at position {3} expected {1}, got {2}",
-        "it": "Tipo non valido per il parametro {0}: alla posizione {3} previsto {1}, ottenuto {2}",
-        "de": "Ungültiger Typ für den Parameter {0}: an Position {3} erwartet {1}, erhalten {2}",
-        "fr": "Type invalide pour le paramètre {0}: à la position {3} attendu {1}, eu {2}",
+        "en": "Invalid type for parameter `{0}`: at position {3} expected `{1}`, got `{2}`",
+        "it": "Tipo non valido per il parametro `{0}`: alla posizione {3} previsto `{1}`, ottenuto `{2}`",
+        "de": "Ungültiger Typ für den Parameter `{0}`: an Position {3} erwartet `{1}`, erhalten `{2}`",
+        "fr": "Type invalide pour le paramètre `{0}`: à la position {3} attendu `{1}`, eu `{2}`",
     },
     "INVALID_RANGE": {
-        "en": "Value for parameter {} out of the allowed range [{}, {}]",
-        "it": "Valore per il parametro {} fuori dall'intervallo consentito [{}, {}]",
-        "de": "Wert für den Parameter {} außerhalb des zulässigen Bereichs [{}, {}]",
-        "fr": "Valeur pour le paramètre {} est hors de l'interval autorisé [{}, {}]",
+        "en": "Value for parameter `{}` out of the allowed range [{}, {}]",
+        "it": "Valore per il parametro `{}` fuori dall'intervallo consentito [{}, {}]",
+        "de": "Wert für den Parameter `{}` außerhalb des zulässigen Bereichs [{}, {}]",
+        "fr": "Valeur pour le paramètre `{}` est hors de l'interval autorisé [{}, {}]",
     },
     "INVALID_FILENAME_EXTENSION": {
         "en": "Invalid or missing extension for filename: only .png and .svg are supported",
