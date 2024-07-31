@@ -7,8 +7,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
-Pillow = "^10.2.0"
-skia-python = {version = "^121.0b6", allow-prereleases = true}
+Pillow = "^10.4.0"
+skia-python = {version = "^128.0b9", allow-prereleases = true}
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.1"
