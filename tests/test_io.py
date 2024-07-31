@@ -6,9 +6,10 @@ from pytest import raises
 from pytamaro.color_names import blue, red
 from pytamaro.io import (save_animation, save_graphic, show_animation,
                          show_graphic)
-from pytamaro.operations import beside
+from pytamaro.operations import above, beside, rotate
 from pytamaro.primitives import empty_graphic, rectangle
-from tests.testing_utils import HEIGHT, WIDTH, assert_SVG_file_width_height
+from tests.testing_utils import (HEIGHT, WIDTH, assert_frames_count,
+                                 assert_SVG_file_width_height)
 
 
 def test_show_graphic():
@@ -74,7 +75,7 @@ def test_save_animation():
         filename = f"{f.name}.gif"
         save_animation(filename, [r1, r2])
         gif = ImageMod.open(filename)
-        assert gif.n_frames == 2
+        assert_frames_count(gif, 2)
 
 
 def test_save_graphic_PNG():
@@ -131,6 +132,24 @@ def test_save_animation_multiple_empty_graphics(capfd):
         save_animation(f"{f.name}.gif", [rectangle(200, 0, red), rectangle(0, 200, blue)])
         out, _ = capfd.readouterr()
         assert "200x0" in out
+
+
+def test_antialiasing():
+    # Two red squares rotated 45 degrees, one above the other, should have no visible seam in between
+    # (i.e., all pixels should be pure red).
+    side = 100
+    r = rectangle(side, side, red)
+    g = rotate(45, above(r, r))
+    with NamedTemporaryFile() as f:
+        filename = f"{f.name}.png"
+        save_graphic(filename, g)
+        image = ImageMod.open(filename)
+        image_rotated = image.rotate(-45)
+        h_center = image_rotated.width // 2
+        v_center = image_rotated.height // 2
+        pixels_seams = [image_rotated.getpixel((x, y)) for x in range(h_center - 20, h_center + 21) for y in range(v_center - 1, v_center + 2)]
+        print(pixels_seams)
+        assert all(pixel == (255, 0, 0, 255) for pixel in pixels_seams)
 
 
 DATA_URI_11RED_RECT = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg=="
@@ -201,7 +220,7 @@ def test_animation_frames_not_overlaid():
         filename = f"{f.name}.gif"
         save_animation(filename, [beside(r1, r2), beside(r2, r1)])
         gif = ImageMod.open(filename)
-        assert gif.n_frames == 2
+        assert_frames_count(gif, 2)
 
         def non_transparent_pixels(frame):
             return sum(1 for pixel in frame.convert("RGBA").getdata() if pixel[3] > 0)

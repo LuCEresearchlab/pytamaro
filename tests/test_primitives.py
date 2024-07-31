@@ -107,12 +107,12 @@ def test_equilateral_triangle():
     side = 100  # large enough
     t = triangle(side, side, 60, red)
     assert_color(t, red)  # color might not be unique due to antialiasing
-    # Assert that the number of red pixels is almost equal (2%)
+    # Assert that the number of red pixels is almost equal (<=5%)
     # to the number of transparent pixels.
     colors = Counter(pixels_colors(t))
     pixels = graphic_width(t) * graphic_height(t)
     common = colors.most_common(2)
-    assert abs(common[0][1] - common[1][1]) <= pixels * 0.02
+    assert abs(common[0][1] - common[1][1]) <= pixels * 0.05
 
 
 def test_right_triangle_pinning_position():

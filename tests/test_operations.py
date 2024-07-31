@@ -89,7 +89,7 @@ def test_beside_different_height():
     r2 = rectangle(2 * WIDTH, 2 * HEIGHT, red)
     joined = beside(r1, r2)
     assert_size(joined, (3 * WIDTH, 2 * HEIGHT))
-    assert_unique_color(joined, red)
+    assert_color(joined, red)  # color might not be unique due to antialiasing
 
 
 def test_beside_pinning_position():
@@ -123,7 +123,7 @@ def test_above_different_width():
     r2 = rectangle(2 * WIDTH, 2 * HEIGHT, red)
     joined = above(r1, r2)
     assert_size(joined, (2 * WIDTH, 3 * HEIGHT))
-    assert_unique_color(joined, red)
+    assert_color(joined, red)  # color might not be unique due to antialiasing
 
 
 def test_above_pinning_position():

@@ -1,10 +1,12 @@
 from tempfile import NamedTemporaryFile
 
 from PIL import Image as ImageMod
+
 from pytamaro.color_names import blue, red
-from pytamaro.de.io import speichere_animation, speichere_grafik, zeige_animation, zeige_grafik
+from pytamaro.de.io import (speichere_animation, speichere_grafik,
+                            zeige_animation, zeige_grafik)
 from pytamaro.primitives import rectangle
-from tests.testing_utils import HEIGHT, WIDTH
+from tests.testing_utils import HEIGHT, WIDTH, assert_frames_count
 
 
 def test_show_graphic():
@@ -24,7 +26,7 @@ def test_save_gif():
         filename = f"{f.name}.gif"
         speichere_animation(filename, [r1, r2])
         gif = ImageMod.open(filename)
-        assert gif.n_frames == 2
+        assert_frames_count(gif, 2)
 
 
 def test_save_graphic():

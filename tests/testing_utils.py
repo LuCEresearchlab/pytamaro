@@ -4,6 +4,7 @@ from dataclasses import astuple
 from typing import List, Tuple
 
 from PIL import ImageChops, ImageFilter
+from PIL.Image import Image
 
 from pytamaro.color import Color
 from pytamaro.color_names import transparent
@@ -87,3 +88,7 @@ def assert_repr(obj: Graphic | Point | Color, language: str):
     sys.modules["pytamaro"].LANGUAGE = language  # type: ignore
     # Assert that evaluating the repr yields the same graphic.
     assert eval(repr(obj)) == obj
+
+
+def assert_frames_count(im: Image, n_frames: int):
+    assert getattr(im, "n_frames", 1) == n_frames

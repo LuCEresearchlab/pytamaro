@@ -5,6 +5,7 @@ Type `Graphic`, that includes a graphic with a pinning position.
 import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from functools import cached_property
 
 from skia import (Canvas, Font, FontMgr, Matrix, Paint, Path, Point, Rect,
                   Size, Typeface)
@@ -92,11 +93,24 @@ class Primitive(Graphic):
             bounds = path.computeTightBounds()
             pin_position = Point(bounds.width() / 2, bounds.height() / 2)
         super().__init__(pin_position, path)
-        paint = Paint(Color=color.skia_color, AntiAlias=True)
-        object.__setattr__(self, "paint", paint)
+
+    @cached_property
+    def fill_paint(self) -> Paint:
+        """
+        Paint used to fill the graphic.
+        """
+        return Paint(Color=self.color.skia_color, AntiAlias=False, Style=Paint.kFill_Style)
+
+    @cached_property
+    def stroke_paint(self) -> Paint:
+        """
+        Paint used to draw the outline of the graphic.
+        """
+        return Paint(Color=self.color.skia_color, AntiAlias=True, Style=Paint.kStroke_Style)
 
     def draw(self, canvas: Canvas):
-        canvas.drawPath(self.path, self.paint)  # type: ignore  # pylint: disable=no-member
+        canvas.drawPath(self.path, self.fill_paint)
+        canvas.drawPath(self.path, self.stroke_paint)
 
     def _key(self):
         return super()._key(), self.color

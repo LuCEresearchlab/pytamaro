@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Avoid crashing when showing graphics with a zero area after rounding
 - Avoid crashing when showing animations with zero area frames
+- [Reduce visible seams when rendering adjacent shapes with antialiasing](https://github.com/LuCEresearchlab/pytamaro/issues/34)
 
 ## [0.7.1] - 2024-06-21
 
