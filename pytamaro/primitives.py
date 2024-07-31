@@ -4,10 +4,11 @@ Unless specified otherwise, the initial pinning position is at the center of the
 graphic's bounding box.
 """
 
+from pytamaro.checks import (check_angle, check_color, check_length,
+                             check_number, check_type)
 from pytamaro.color import Color
 from pytamaro.graphic import (CircularSector, Ellipse, Empty, Graphic,
                               Rectangle, Text, Triangle)
-from pytamaro.checks import check_angle, check_color, check_length, check_number, check_type
 from pytamaro.utils import export
 
 
@@ -128,8 +129,7 @@ def text(content: str, font: str, points: float, color: Color) \
     the baseline of the text.
 
     :param content: the text to render
-    :param font: the name of the font (e.g., "arial" on Windows, "Arial" on
-           macOS)
+    :param font: the name of the font (e.g., "Arial" or "Fira Sans")
     :param points: size in typographic points (e.g., 16)
     :param color: the color to be used to render the text
     :returns: the specified text as a graphic

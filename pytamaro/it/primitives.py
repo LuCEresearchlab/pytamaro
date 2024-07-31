@@ -109,8 +109,7 @@ def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:
     verticalmente sulla linea di base (baseline) del testo.
 
     :param contenuto: il testo di cui fare rendering
-    :param font: il nome del font (ad esempio "arial" su Windows, "Arial" su
-           macOS)
+    :param font: il nome del font (ad esempio "Arial" o "Fira Sans")
     :param punti: dimensione in punti tipografici (ad esempio 16)
     :param colore: colore da usare per fare il rendering del testo
     :returns: una grafica con il testo specificato

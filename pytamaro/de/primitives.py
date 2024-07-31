@@ -8,9 +8,11 @@ from __future__ import annotations
 
 from pytamaro.de.color import Farbe
 from pytamaro.de.graphic import Grafik
-from pytamaro.primitives import (circular_sector, empty_graphic,
-                                 rectangle, triangle)
-from pytamaro.primitives import (ellipse as ellipse_e, text as text_e)
+from pytamaro.primitives import circular_sector
+from pytamaro.primitives import ellipse as ellipse_e
+from pytamaro.primitives import empty_graphic, rectangle
+from pytamaro.primitives import text as text_e
+from pytamaro.primitives import triangle
 
 
 def rechteck(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
@@ -117,7 +119,7 @@ def text(inhalt: str, schriftart: str, punkte: float, farbe: Farbe) -> Grafik:
 
     :param inhalt: der Text, der dargestellt werden soll
     :param schriftart: der Name der Schriftart
-                       (zum Beispiel "arial" auf Windows, "Arial" auf macOS)
+                       (zum Beispiel "Arial" oder "Fira Sans")
     :param punkte: Schriftgrösse in typografischen Punkten (zum Beispiel 16)
     :param farbe: Farbe, in der der Text dargestellt werden soll
     :returns: eine Grafik bestehend aus dem gegebenen Text

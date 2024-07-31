@@ -118,8 +118,7 @@ def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphiq
     verticalement sur la ligne de base du texte.
 
     :param contenu: le texte à présenter
-    :param police: le nom de la police (par exemple, "arial" sous Windows, "Arial"
-           sous macOS)
+    :param police: le nom de la police (par exemple, "Arial" ou "Fira Sans")
     :param points: la taille en points typographiques (par exemple, 16)
     :param couleur: la couleur à utiliser pour le rendu du texte
     :returns: le texte spécifié sous forme de graphique
