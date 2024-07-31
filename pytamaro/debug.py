@@ -20,7 +20,7 @@ def top_left_point(graphic: Graphic) -> Point:
     :param graphic: graphic to compute the top left corner of
     :returns: the top left corner of the bounding box
     """
-    return graphic.bounds().toQuad()[0]
+    return graphic.bounds.toQuad()[0]
 
 
 def add_debug_info(graphic: Graphic) -> Graphic:

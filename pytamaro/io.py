@@ -42,7 +42,7 @@ def _draw_to_canvas(canvas: Canvas, graphic: Graphic):
     :param canvas: canvas onto which to draw
     :param graphic: graphic to be drawn
     """
-    bounds = graphic.bounds()
+    bounds = graphic.bounds
     canvas.translate(-bounds.left(), -bounds.top())
     # Temporarily set the recursion limit to a high value so that we can
     # traverse the (potentially deeply nested) tree that represents the graphic.

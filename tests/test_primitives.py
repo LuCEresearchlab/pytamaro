@@ -53,6 +53,17 @@ def test_text():
     assert_color(graphic, red)  # color might not be unique due to antialiasing
 
 
+def test_text_leading_trailing_spaces():
+    regular = "hello"
+    leading = " " + regular
+    trailing = regular + " "
+    graphic_regular = text(regular, "", 12, red)
+    graphic_leading = text(leading, "", 12, red)
+    graphic_trailing = text(trailing, "", 12, red)
+    assert graphic_width(graphic_leading) > graphic_width(graphic_regular)
+    assert graphic_width(graphic_trailing) > graphic_width(graphic_regular)
+
+
 def test_text_repr():
     assert_repr(text("hello", "", 12, red), "en")
 

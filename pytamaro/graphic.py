@@ -38,9 +38,9 @@ class Graphic(ABC):
 
         :returns: graphic's size
         """
-        bounds = self.bounds()
-        return Size(bounds.width(), bounds.height())
+        return Size(self.bounds.width(), self.bounds.height())
 
+    @cached_property
     def bounds(self) -> Rect:
         """
         Computes the (tight) bounds for the path (outline) of this graphic.
@@ -238,23 +238,33 @@ class Text(Primitive):
         object.__setattr__(self, "text_size", text_size)
         if FontMgr().matchFamily(font_name).count() == 0:
             print(translate("FONT_NOT_FOUND", font_name), file=sys.stderr)
-        font = Font(Typeface(font_name), text_size)
-        glyphs = font.textToGlyphs(text)
-        offsets = font.getXPos(glyphs)
+        glyphs = self.font.textToGlyphs(text)
+        offsets = self.font.getXPos(glyphs)
         text_path = Path()
         for glyph, x_offset in zip(glyphs, offsets):
-            path = font.getPath(glyph)
-            # Some glyphs (e.g., the space) have no outline
-            if path is not None:
+            path = self.font.getPath(glyph)
+            if path is not None:  # some glyphs (e.g., a space) have no outline
                 path.offset(x_offset, 0)
                 text_path.addPath(path)
+        # The pinning position is on the left (0) on the baseline (0).
+        super().__init__(text_path, color, Point(0, 0))
 
-        # The pinning position is at baseline level (0) on the very left (which
-        # might be slightly after 0, given that the bounding box is computed
-        # very tightly around the glyphs, cutting some space before the first
-        # one).
-        bounds = text_path.computeTightBounds()
-        super().__init__(text_path, color, Point(bounds.left(), 0))
+    @cached_property
+    def font(self) -> Font:
+        """
+        The Skia Font used to render the text.
+        """
+        return Font(Typeface(self.font_name), self.text_size)
+
+    @cached_property
+    def bounds(self) -> Rect:
+        """
+        Computes the bounding box of the text, whose width is determined by
+        Font.measureText() to account for leading and trailing glyphs with no outline.
+        """
+        path_bounds = super().bounds
+        text_length = self.font.measureText(self.text)
+        return Rect.MakeLTRB(0, path_bounds.top(), text_length, path_bounds.bottom())
 
     def __repr__(self) -> str:
         return f"{translate('text')}({self.text!r}, {self.font_name!r}, {self.text_size}, {self.color})"  # pylint: disable=line-too-long
@@ -303,7 +313,7 @@ class Pin(Graphic):
     def __init__(self, graphic: Graphic, pinning_point: PyTamaroPoint):
         object.__setattr__(self, "graphic", graphic)
         object.__setattr__(self, "pinning_point", pinning_point)
-        bounds = graphic.bounds()
+        bounds = graphic.bounds
         h_mapping = {
             -1.0: bounds.left(),
             0.0: bounds.centerX(),
