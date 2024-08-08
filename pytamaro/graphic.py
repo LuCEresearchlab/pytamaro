@@ -95,22 +95,14 @@ class Primitive(Graphic):
         super().__init__(pin_position, path)
 
     @cached_property
-    def fill_paint(self) -> Paint:
+    def antialias(self) -> bool:
         """
-        Paint used to fill the graphic.
+        Whether the graphic should be drawn with antialiasing.
         """
-        return Paint(Color=self.color.skia_color, AntiAlias=False, Style=Paint.kFill_Style)
-
-    @cached_property
-    def stroke_paint(self) -> Paint:
-        """
-        Paint used to draw the outline of the graphic.
-        """
-        return Paint(Color=self.color.skia_color, AntiAlias=True, Style=Paint.kStroke_Style)
+        return False
 
     def draw(self, canvas: Canvas):
-        canvas.drawPath(self.path, self.fill_paint)
-        canvas.drawPath(self.path, self.stroke_paint)
+        canvas.drawPath(self.path, Paint(Color=self.color.skia_color, AntiAlias=self.antialias))
 
     def _key(self):
         return super()._key(), self.color
@@ -248,6 +240,10 @@ class Text(Primitive):
                 text_path.addPath(path)
         # The pinning position is on the left (0) on the baseline (0).
         super().__init__(text_path, color, Point(0, 0))
+
+    @cached_property
+    def antialias(self) -> bool:
+        return True
 
     @cached_property
     def font(self) -> Font:

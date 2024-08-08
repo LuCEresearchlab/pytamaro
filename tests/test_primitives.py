@@ -48,7 +48,7 @@ def test_ellipse_repr():
 
 
 def test_text():
-    graphic = text("hello", "", 12, red)
+    graphic = text("hello", "", 32, red)
     assert graphic_width(graphic) > 0 and graphic_height(graphic) > 0
     assert_color(graphic, red)  # color might not be unique due to antialiasing
 

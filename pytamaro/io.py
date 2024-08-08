@@ -14,7 +14,8 @@ from typing import List
 
 from PIL import Image as PILImageMod
 from PIL.Image import Image as PILImage
-from skia import (Canvas, FILEWStream, Image, Rect, Surface, SVGCanvas, kPNG,
+from skia import (Canvas, FILEWStream, FilterMode, Image, MipmapMode, Rect,
+                  SamplingOptions, Surface, SVGCanvas, kPNG,
                   kRGBA_8888_ColorType, kUnpremul_AlphaType)
 
 from pytamaro.checks import check_graphic, check_type
@@ -87,10 +88,13 @@ def graphic_to_image(graphic: Graphic) -> Image:
     :param graphic: graphic to be rendered
     :returns: rendered graphic as a Skia image
     """
-    int_size = graphic.size().toRound()
-    surface = Surface(int_size.width(), int_size.height())
+    width, height = graphic.size().toRound()
+    scaling_factor = 2
+    surface = Surface(scaling_factor * width, scaling_factor * height)
+    surface.getCanvas().scale(scaling_factor, scaling_factor)
     _draw_to_canvas(surface.getCanvas(), graphic)
-    return surface.makeImageSnapshot()
+    return surface.makeImageSnapshot().resize(
+        width, height, SamplingOptions(FilterMode.kLinear, MipmapMode.kNearest))
 
 
 def graphic_to_pillow_image(graphic: Graphic) -> PILImage:
