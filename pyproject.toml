@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytamaro"
-version = "0.7.2"
+version = "0.7.3"
 description = "Educational library for Python to teach programming using graphics"
 authors = ["Luca Chiodini <luca@chiodini.org>"]
 readme = "README.md"
