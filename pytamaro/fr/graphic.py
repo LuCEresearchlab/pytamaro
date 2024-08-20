@@ -4,9 +4,9 @@ Type `Graphique`, qui inclut un graphique avec un point d'ancrage.
 
 from __future__ import annotations
 
-from pytamaro.graphic import Graphic
+import pytamaro.graphic as _graphic_en
 
-Graphique = Graphic
+Graphique = _graphic_en.Graphic
 """
 Un graphique (image) avec un point d'ancrage.
 

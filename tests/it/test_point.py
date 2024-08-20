@@ -1,17 +1,23 @@
-from pytamaro.it.point_names import *
 from tests.testing_utils import assert_repr
+
+from pytamaro.it.point_names import (
+    alto_sinistra, alto_centro, alto_destra,
+    centro_sinistra, centro, centro_destra,
+    basso_sinistra, basso_centro, basso_destra,
+)
+import pytamaro.point_names as _point_names_en
 
 
 def test_point_names():
-    assert top_left == alto_sinistra
-    assert top_center == alto_centro
-    assert top_right == alto_destra
-    assert center_left == centro_sinistra
-    assert center == centro
-    assert center_right == centro_destra
-    assert bottom_left == basso_sinistra
-    assert bottom_center == basso_centro
-    assert bottom_right == basso_destra
+    assert _point_names_en.top_left == alto_sinistra
+    assert _point_names_en.top_center == alto_centro
+    assert _point_names_en.top_right == alto_destra
+    assert _point_names_en.center_left == centro_sinistra
+    assert _point_names_en.center == centro
+    assert _point_names_en.center_right == centro_destra
+    assert _point_names_en.bottom_left == basso_sinistra
+    assert _point_names_en.bottom_center == basso_centro
+    assert _point_names_en.bottom_right == basso_destra
 
 
 def test_point_localized_repr():

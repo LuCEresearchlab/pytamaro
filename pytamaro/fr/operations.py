@@ -4,11 +4,9 @@ Fonctions pour faire des opérations sur des graphiques (principalement pour les
 
 from __future__ import annotations
 
-from pytamaro import operations
 from pytamaro.fr.graphic import Graphique
 from pytamaro.fr.point import Point
-from pytamaro.operations import (above, beside, graphic_height, graphic_width,
-                                 overlay, pin, rotate)
+import pytamaro.operations as _operations_en
 
 
 def largeur_graphique(graphique: Graphique) -> int:
@@ -18,7 +16,7 @@ def largeur_graphique(graphique: Graphique) -> int:
     :param graphique: graphique duquel calculer la largeur
     :returns: la largeur du graphique
     """
-    return graphic_width(graphique)
+    return _operations_en.graphic_width(graphique)
 
 
 def hauteur_graphique(graphique: Graphique) -> int:
@@ -28,7 +26,7 @@ def hauteur_graphique(graphique: Graphique) -> int:
     :param graphique: graphique duquel calculer la hauteur
     :returns: la hauteur du graphique
     """
-    return graphic_height(graphique)
+    return _operations_en.graphic_height(graphique)
 
 
 def compose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) \
@@ -44,7 +42,7 @@ def compose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique
     :param graphique_premier_plan: le graphique en arrière plan
     :returns: le graphique qui résulte de la composition
     """
-    return operations.compose(graphique_premier_plan, graphique_arriere_plan)
+    return _operations_en.compose(graphique_premier_plan, graphique_arriere_plan)
 
 
 def ancre(point: Point, graphique: Graphique) -> Graphique:
@@ -62,7 +60,7 @@ def ancre(point: Point, graphique: Graphique) -> Graphique:
     :param graphique: le graphique originel
     :returns: un nouveau graphique avec le nouveau point d'ancrage
     """
-    return pin(point, graphique)
+    return _operations_en.pin(point, graphique)
 
 
 def superpose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) \
@@ -78,7 +76,7 @@ def superpose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphiq
     :param graphique_arriere_plan: le graphique en arrière plan
     :returns: le graphique résultant de la superposition des deux graphiques fournis
     """
-    return overlay(graphique_premier_plan, graphique_arriere_plan)
+    return _operations_en.overlay(graphique_premier_plan, graphique_arriere_plan)
 
 
 def cote_a_cote(graphique_gauche: Graphique, graphique_droite: Graphique) -> Graphique:
@@ -92,7 +90,7 @@ def cote_a_cote(graphique_gauche: Graphique, graphique_droite: Graphique) -> Gra
     :param graphique_droite: le graphique à placer à droite
     :returns: le graphique résultant après avoir placé les deux graphiques l'un à côté de l'autre
     """
-    return beside(graphique_gauche, graphique_droite)
+    return _operations_en.beside(graphique_gauche, graphique_droite)
 
 
 def au_dessus(graphique_haut: Graphique, graphique_bas: Graphique) -> Graphique:
@@ -106,7 +104,7 @@ def au_dessus(graphique_haut: Graphique, graphique_bas: Graphique) -> Graphique:
     :param graphique_bas: le graphique à placer en dessous
     :returns: le graphique résultant après avoir placé les deux graphiques l'un au-dessus de l'autre
     """
-    return above(graphique_haut, graphique_bas)
+    return _operations_en.above(graphique_haut, graphique_bas)
 
 
 def pivote(angle: float, graphique: Graphique) -> Graphique:
@@ -119,4 +117,4 @@ def pivote(angle: float, graphique: Graphique) -> Graphique:
     :param graphique: le graphique à pivoter
     :returns: un nouveau graphique pivoté
     """
-    return rotate(angle, graphique)
+    return _operations_en.rotate(angle, graphique)

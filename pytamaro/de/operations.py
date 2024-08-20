@@ -6,8 +6,7 @@ from __future__ import annotations
 
 from pytamaro.de.graphic import Grafik
 from pytamaro.de.point import Punkt
-from pytamaro.operations import (above, beside, compose, graphic_height,
-                                 graphic_width, overlay, pin, rotate)
+import pytamaro.operations as _operations_en
 
 
 def grafik_breite(grafik: Grafik) -> int:
@@ -17,7 +16,7 @@ def grafik_breite(grafik: Grafik) -> int:
     :param grafik: Grafik deren Breite gesucht ist
     :returns: Breite der Grafik
     """
-    return graphic_width(grafik)
+    return _operations_en.graphic_width(grafik)
 
 
 def grafik_hoehe(grafik: Grafik) -> int:
@@ -27,7 +26,7 @@ def grafik_hoehe(grafik: Grafik) -> int:
     :param grafik: Grafik deren Höhe gesucht ist
     :returns: Höhe der Grafik
     """
-    return graphic_height(grafik)
+    return _operations_en.graphic_height(grafik)
 
 
 def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
@@ -47,7 +46,7 @@ def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     :param hintere_grafik: Grafik im Hintergrund
     :returns: die zusammengesetzte Grafik
     """
-    return compose(vordere_grafik, hintere_grafik)
+    return _operations_en.compose(vordere_grafik, hintere_grafik)
 
 
 def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
@@ -65,7 +64,7 @@ def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
     :param graphic: die ursprüngliche Grafik
     :returns: eine neue Grafik mit der gegebenen Fixierposition
     """
-    return pin(punkt, grafik)
+    return _operations_en.pin(punkt, grafik)
 
 
 def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
@@ -82,7 +81,7 @@ def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
     :param hintere_grafik: Grafik im Hintergrund
     :returns: die zusammengesetzte Grafik
     """
-    return overlay(vordere_grafik, hintere_grafik)
+    return _operations_en.overlay(vordere_grafik, hintere_grafik)
 
 
 def neben(linke_grafik: Grafik, rechte_grafik: Grafik) -> Grafik:
@@ -97,7 +96,7 @@ def neben(linke_grafik: Grafik, rechte_grafik: Grafik) -> Grafik:
     :param rechte_grafik: rechte Grafik (im Osten)
     :returns: die zusammengesetzte Grafik
     """
-    return beside(linke_grafik, rechte_grafik)
+    return _operations_en.beside(linke_grafik, rechte_grafik)
 
 
 def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
@@ -112,7 +111,7 @@ def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
     :param untere_grafik: untere Grafik (im Süden)
     :returns: die zusammengesetzte Grafik
     """
-    return above(obere_grafik, untere_grafik)
+    return _operations_en.above(obere_grafik, untere_grafik)
 
 
 def drehe(winkel: float, grafik: Grafik) -> Grafik:
@@ -126,4 +125,4 @@ def drehe(winkel: float, grafik: Grafik) -> Grafik:
     :param grafik: zu rotierende Grafik
     :returns: die neue, rotierte Grafik
     """
-    return rotate(winkel, grafik)
+    return _operations_en.rotate(winkel, grafik)

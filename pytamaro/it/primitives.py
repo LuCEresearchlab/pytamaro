@@ -8,8 +8,7 @@ from __future__ import annotations
 
 from pytamaro.it.color import Colore
 from pytamaro.it.graphic import Grafica
-from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
-                                 rectangle, text, triangle)
+import pytamaro.primitives as _primitives_en
 
 
 def rettangolo(larghezza: float, altezza: float, colore: Colore) -> Grafica:
@@ -21,7 +20,7 @@ def rettangolo(larghezza: float, altezza: float, colore: Colore) -> Grafica:
     :param colore: colore da usare per riempire il rettangolo
     :returns: una grafica con il rettangolo specificato
     """
-    return rectangle(larghezza, altezza, colore)
+    return _primitives_en.rectangle(larghezza, altezza, colore)
 
 
 def grafica_vuota() -> Grafica:
@@ -32,7 +31,7 @@ def grafica_vuota() -> Grafica:
 
     :returns: una grafica vuota (larghezza e altezza 0)
     """
-    return empty_graphic()
+    return _primitives_en.empty_graphic()
 
 
 def ellisse(larghezza: float, altezza: float, colore: Colore) -> Grafica:
@@ -47,7 +46,7 @@ def ellisse(larghezza: float, altezza: float, colore: Colore) -> Grafica:
     :param colore: colore da usare per riempire l'ellisse
     :returns: una grafica con l'ellisse specificato
     """
-    return ellipse(larghezza, altezza, colore)
+    return _primitives_en.ellipse(larghezza, altezza, colore)
 
 
 def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
@@ -70,7 +69,7 @@ def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
     :param colore: colore da usare per riempire il settore circolare
     :returns: una grafica con il settore circolare specificato
     """
-    return circular_sector(raggio, angolo, colore)
+    return _primitives_en.circular_sector(raggio, angolo, colore)
 
 
 def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Grafica:
@@ -92,7 +91,7 @@ def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Graf
     :param colore: colore da usare per riempire il triangolo
     :returns: una grafica con il triangolo specificato
     """
-    return triangle(lato1, lato2, angolo, colore)
+    return _primitives_en.triangle(lato1, lato2, angolo, colore)
 
 
 def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:
@@ -114,4 +113,4 @@ def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:
     :param colore: colore da usare per fare il rendering del testo
     :returns: una grafica con il testo specificato
     """
-    return text(contenuto, font, punti, colore)
+    return _primitives_en.text(contenuto, font, punti, colore)

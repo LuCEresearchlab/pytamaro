@@ -5,58 +5,58 @@ In aggiunta, il colore completamente trasparente.
 
 from __future__ import annotations
 
-from pytamaro.color_names import black, blue, cyan, green, magenta, red, transparent, white, yellow
 from pytamaro.it.color import Colore
+import pytamaro.color_names as _color_names_en
 
-nero: Colore = black
+nero: Colore = _color_names_en.black
 """Colore nero
 
 :meta hide-value:
 """
 
-rosso: Colore = red
+rosso: Colore = _color_names_en.red
 """Colore rosso
 
 :meta hide-value:
 """
 
-verde: Colore = green
+verde: Colore = _color_names_en.green
 """Colore verde
 
 :meta hide-value:
 """
 
-blu: Colore = blue
+blu: Colore = _color_names_en.blue
 """Colore blu
 
 :meta hide-value:
 """
 
-giallo: Colore = yellow
+giallo: Colore = _color_names_en.yellow
 """Colore giallo
 
 :meta hide-value:
 """
 
-magenta: Colore = magenta  # pylint: disable=self-assigning-variable
+magenta: Colore = _color_names_en.magenta  # pylint: disable=self-assigning-variable
 """Colore magenta
 
 :meta hide-value:
 """
 
-ciano: Colore = cyan
+ciano: Colore = _color_names_en.cyan
 """Colore ciano
 
 :meta hide-value:
 """
 
-bianco: Colore = white
+bianco: Colore = _color_names_en.white
 """Colore bianco
 
 :meta hide-value:
 """
 
-trasparente: Colore = transparent
+trasparente: Colore = _color_names_en.transparent
 """Colore completamente trasparente
 
 :meta hide-value:
