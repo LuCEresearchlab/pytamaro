@@ -5,7 +5,7 @@ Fonctions pour visualiser ou sauvegarder des graphiques.
 from __future__ import annotations
 
 from pytamaro.fr.graphic import Graphique
-import pytamaro.io as _io_en
+import pytamaro as _en
 
 
 def montre_graphique(graphique: Graphique, debug: bool = False):
@@ -22,7 +22,7 @@ def montre_graphique(graphique: Graphique, debug: bool = False):
     :param debug: (optionnel) peut être assigné à `True` pour superposer les
            informations de débogage
     """
-    _io_en.show_graphic(graphique, debug)
+    _en.show_graphic(graphique, debug)
 
 
 def sauvegarde_graphique(nom_fichier: str, graphique: Graphique, debug: bool = False):
@@ -46,7 +46,7 @@ def sauvegarde_graphique(nom_fichier: str, graphique: Graphique, debug: bool = F
     :param debug: (optionnel) peut être assigné à `True` pour superposer les
            informations de débogage
     """
-    _io_en.save_graphic(nom_fichier, graphique, debug)
+    _en.save_graphic(nom_fichier, graphique, debug)
 
 
 def sauvegarde_animation(
@@ -67,7 +67,7 @@ def sauvegarde_animation(
     :param en_boucle: si le GIF doit tourner en boucle indéfiniment (par défaut
            est `True`)
     """
-    _io_en.save_animation(nom_fichier, graphiques, duree, en_boucle)
+    _en.save_animation(nom_fichier, graphiques, duree, en_boucle)
 
 
 def montre_animation(graphiques: list[Graphique], duree: int = 40, en_boucle: bool = True):
@@ -85,4 +85,4 @@ def montre_animation(graphiques: list[Graphique], duree: int = 40, en_boucle: bo
     :param en_boucle: si le GIF doit tourner en boucle indéfiniment (par défaut
            est `True`)
     """
-    _io_en.show_animation(graphiques, duree, en_boucle)
+    _en.show_animation(graphiques, duree, en_boucle)

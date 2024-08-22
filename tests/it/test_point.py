@@ -5,19 +5,19 @@ from pytamaro.it.point_names import (
     centro_sinistra, centro, centro_destra,
     basso_sinistra, basso_centro, basso_destra,
 )
-import pytamaro.point_names as _point_names_en
+import pytamaro as _en
 
 
 def test_point_names():
-    assert _point_names_en.top_left == alto_sinistra
-    assert _point_names_en.top_center == alto_centro
-    assert _point_names_en.top_right == alto_destra
-    assert _point_names_en.center_left == centro_sinistra
-    assert _point_names_en.center == centro
-    assert _point_names_en.center_right == centro_destra
-    assert _point_names_en.bottom_left == basso_sinistra
-    assert _point_names_en.bottom_center == basso_centro
-    assert _point_names_en.bottom_right == basso_destra
+    assert _en.top_left == alto_sinistra
+    assert _en.top_center == alto_centro
+    assert _en.top_right == alto_destra
+    assert _en.center_left == centro_sinistra
+    assert _en.center == centro
+    assert _en.center_right == centro_destra
+    assert _en.bottom_left == basso_sinistra
+    assert _en.bottom_center == basso_centro
+    assert _en.bottom_right == basso_destra
 
 
 def test_point_localized_repr():

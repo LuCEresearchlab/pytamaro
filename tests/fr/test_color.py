@@ -8,39 +8,38 @@ from pytamaro.fr.color_names import (
     magenta, noir, rouge,
     transparent, vert, blanc,
 )
-import pytamaro.color_names as _color_names_en
-import pytamaro.color_functions as _color_functions_en
+import pytamaro as _en
 
 
 def test_rgb_color():
-    assert _color_functions_en.rgb_color(255, 0, 0) == couleur_rgb(255, 0, 0)
+    assert _en.rgb_color(255, 0, 0) == couleur_rgb(255, 0, 0)
 
 
 def test_hsv_color():
-    assert _color_functions_en.hsv_color(255, 0, 0) == couleur_hsv(255, 0, 0)
+    assert _en.hsv_color(255, 0, 0) == couleur_hsv(255, 0, 0)
 
 
 def test_hsl_color():
-    assert _color_functions_en.hsl_color(255, 0, 0) == couleur_hsl(255, 0, 0)
+    assert _en.hsl_color(255, 0, 0) == couleur_hsl(255, 0, 0)
 
 
 def test_rgba_color():
-    assert _color_functions_en.rgb_color(0, 0, 0, 0.0) == couleur_rgb(0, 0, 0, 0.0)
+    assert _en.rgb_color(0, 0, 0, 0.0) == couleur_rgb(0, 0, 0, 0.0)
 
 
 def test_color_names():
-    assert _color_names_en.red == rouge
-    assert _color_names_en.green == vert
-    assert _color_names_en.blue == bleu
-    assert _color_names_en.magenta == magenta
-    assert _color_names_en.cyan == cyan
-    assert _color_names_en.yellow == jaune
-    assert _color_names_en.black == noir
-    assert _color_names_en.white == blanc
+    assert _en.red == rouge
+    assert _en.green == vert
+    assert _en.blue == bleu
+    assert _en.magenta == magenta
+    assert _en.cyan == cyan
+    assert _en.yellow == jaune
+    assert _en.black == noir
+    assert _en.white == blanc
 
 
 def test_transparent_color_name():
-    assert _color_names_en.transparent == transparent
+    assert _en.transparent == transparent
 
 
 def test_color_localized_repr():

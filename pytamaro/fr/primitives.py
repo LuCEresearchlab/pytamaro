@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from pytamaro.fr.color import Couleur
 from pytamaro.fr.graphic import Graphique
-import pytamaro.primitives as _primitives_en
+import pytamaro as _en
 
 
 def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
@@ -21,7 +21,7 @@ def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     :param couleur: couleur qui remplira le rectangle
     :returns: un graphique avec le rectangle spécifié
     """
-    return _primitives_en.rectangle(largeur, hauteur, couleur)
+    return _en.rectangle(largeur, hauteur, couleur)
 
 
 def graphique_vide() -> Graphique:
@@ -33,7 +33,7 @@ def graphique_vide() -> Graphique:
 
     :returns: un graphique vide (largeur et hauteur 0)
     """
-    return _primitives_en.empty_graphic()
+    return _en.empty_graphic()
 
 
 def ellipse(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
@@ -49,7 +49,7 @@ def ellipse(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     :param couleur: couleur à utiliser pour remplir l'ellipse
     :returns: un graphique avec l'ellipse spécifiée
     """
-    return _primitives_en.ellipse(largeur, hauteur, couleur)
+    return _en.ellipse(largeur, hauteur, couleur)
 
 
 def secteur_circulaire(rayon: float, angle: float, couleur: Couleur) -> Graphique:
@@ -73,7 +73,7 @@ def secteur_circulaire(rayon: float, angle: float, couleur: Couleur) -> Graphiqu
     :param couleur: couleur à utiliser pour remplir le secteur circulaire
     :returns: un graphique avec le secteur circulaire spécifié
     """
-    return _primitives_en.circular_sector(rayon, angle, couleur)
+    return _en.circular_sector(rayon, angle, couleur)
 
 
 def triangle(cote1: float, cote2: float, angle: float, couleur: Couleur) -> Graphique:
@@ -96,7 +96,7 @@ def triangle(cote1: float, cote2: float, angle: float, couleur: Couleur) -> Grap
     :param couleur: couleur à utiliser pour remplir le secteur circulaire
     :returns: un graphique avec le triangle spécifié
     """
-    return _primitives_en.triangle(cote1, cote2, angle, couleur)
+    return _en.triangle(cote1, cote2, angle, couleur)
 
 
 def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphique:
@@ -118,4 +118,4 @@ def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphiq
     :param couleur: la couleur à utiliser pour le rendu du texte
     :returns: le texte spécifié sous forme de graphique
     """
-    return _primitives_en.text(contenu, police, points, couleur)
+    return _en.text(contenu, police, points, couleur)

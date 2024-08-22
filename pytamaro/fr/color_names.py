@@ -6,57 +6,57 @@ Ainsi que la couleur complètement transparent.
 from __future__ import annotations
 
 from pytamaro.fr.color import Couleur
-import pytamaro.color_names as _color_names_en
+import pytamaro as _en
 
-noir: Couleur = _color_names_en.black
+noir: Couleur = _en.black
 """Couleur noire
 
 :meta hide-value:
 """
 
-rouge: Couleur = _color_names_en.red
+rouge: Couleur = _en.red
 """Couleur rouge
 
 :meta hide-value:
 """
 
-vert: Couleur = _color_names_en.green
+vert: Couleur = _en.green
 """Couleur verte
 
 :meta hide-value:
 """
 
-bleu: Couleur = _color_names_en.blue
+bleu: Couleur = _en.blue
 """Couleur bleue
 
 :meta hide-value:
 """
 
-jaune: Couleur = _color_names_en.yellow
+jaune: Couleur = _en.yellow
 """Couleur jaune
 
 :meta hide-value:
 """
 
-magenta: Couleur = _color_names_en.magenta  # pylint: disable=self-assigning-variable
+magenta: Couleur = _en.magenta  # pylint: disable=self-assigning-variable
 """Couleur magenta
 
 :meta hide-value:
 """
 
-cyan: Couleur = _color_names_en.cyan
+cyan: Couleur = _en.cyan
 """Couleur cyan
 
 :meta hide-value:
 """
 
-blanc: Couleur = _color_names_en.white
+blanc: Couleur = _en.white
 """Couleur blanche
 
 :meta hide-value:
 """
 
-transparent: Couleur = _color_names_en.transparent  # pylint: disable=self-assigning-variable
+transparent: Couleur = _en.transparent  # pylint: disable=self-assigning-variable
 """Couleur complètement transparente
 
 :meta hide-value:
