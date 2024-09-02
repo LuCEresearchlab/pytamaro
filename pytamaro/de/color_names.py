@@ -5,66 +5,66 @@ Farben an den Ecken des RGB Würfels, komplett durchsichtige Farbe.
 
 from __future__ import annotations
 
+import pytamaro as _pytamaro
 from pytamaro.de.color import Farbe
-import pytamaro as _en
 
-schwarz: Farbe = _en.black
+schwarz: Farbe = _pytamaro.black
 """
 Die Farbe Schwarz.
 
 :meta hide-value:
 """
 
-rot: Farbe = _en.red
+rot: Farbe = _pytamaro.red
 """
 Die Farbe Rot.
 
 :meta hide-value:
 """
 
-gruen: Farbe = _en.green
+gruen: Farbe = _pytamaro.green
 """
 Die Farbe Grün.
 
 :meta hide-value:
 """
 
-blau: Farbe = _en.blue
+blau: Farbe = _pytamaro.blue
 """
 Die Farbe Blau.
 
 :meta hide-value:
 """
 
-gelb: Farbe = _en.yellow
+gelb: Farbe = _pytamaro.yellow
 """
 Die Farbe Gelb.
 
 :meta hide-value:
 """
 
-magenta: Farbe = _en.magenta  # pylint: disable=self-assigning-variable
+magenta: Farbe = _pytamaro.magenta
 """
 Die Farbe Magenta.
 
 :meta hide-value:
 """
 
-cyan: Farbe = _en.cyan  # pylint: disable=self-assigning-variable
+cyan: Farbe = _pytamaro.cyan
 """
 Die Farbe Cyan.
 
 :meta hide-value:
 """
 
-weiss: Farbe = _en.white
+weiss: Farbe = _pytamaro.white
 """
 Die Farbe Weiss.
 
 :meta hide-value:
 """
 
-transparent: Farbe = _en.transparent  # pylint: disable=self-assigning-variable
+transparent: Farbe = _pytamaro.transparent
 """
 Die komplett durchsichtige Farbe.
 

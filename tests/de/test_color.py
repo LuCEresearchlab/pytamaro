@@ -1,41 +1,35 @@
+import pytamaro as _pytamaro
+from pytamaro.de.color import hsl_farbe, hsv_farbe, rgb_farbe
+from pytamaro.de.color_names import (blau, cyan, gelb, gruen, magenta, rot,
+                                     schwarz, transparent, weiss)
 from tests.testing_utils import assert_repr
-
-from pytamaro.de.color_names import (
-    rot, gruen, blau,
-    magenta, cyan, gelb,
-    schwarz, weiss, transparent,
-)
-from pytamaro.de.color import (
-    rgb_farbe, hsv_farbe, hsl_farbe,
-)
-import pytamaro as _en
 
 
 def test_rgb_color():
-    assert _en.rgb_color(255, 0, 0) == rgb_farbe(255, 0, 0)
+    assert _pytamaro.rgb_color(255, 0, 0) == rgb_farbe(255, 0, 0)
 
 
 def test_hsv_color():
-    assert _en.hsv_color(255, 0, 0) == hsv_farbe(255, 0, 0)
+    assert _pytamaro.hsv_color(255, 0, 0) == hsv_farbe(255, 0, 0)
 
 
 def test_hsl_color():
-    assert _en.hsl_color(255, 0, 0) == hsl_farbe(255, 0, 0)
+    assert _pytamaro.hsl_color(255, 0, 0) == hsl_farbe(255, 0, 0)
 
 
 def test_rgba_color():
-    assert _en.rgb_color(0, 0, 0, 0.0) == rgb_farbe(0, 0, 0, 0.0)
+    assert _pytamaro.rgb_color(0, 0, 0, 0.0) == rgb_farbe(0, 0, 0, 0.0)
 
 
 def test_color_names():
-    assert _en.red == rot
-    assert _en.green == gruen
-    assert _en.blue == blau
-    assert _en.magenta == magenta
-    assert _en.cyan == cyan
-    assert _en.yellow == gelb
-    assert _en.black == schwarz
-    assert _en.white == weiss
+    assert _pytamaro.red == rot
+    assert _pytamaro.green == gruen
+    assert _pytamaro.blue == blau
+    assert _pytamaro.magenta == magenta
+    assert _pytamaro.cyan == cyan
+    assert _pytamaro.yellow == gelb
+    assert _pytamaro.black == schwarz
+    assert _pytamaro.white == weiss
 
 
 def test_transparent_color_name():

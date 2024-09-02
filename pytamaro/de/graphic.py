@@ -4,9 +4,9 @@ Der Typ `Grafik`, kombiniert eine Grafik mit einer Fixierposition.
 
 from __future__ import annotations
 
-import pytamaro as _en
+import pytamaro as _pytamaro
 
-Grafik = _en.Graphic
+Grafik = _pytamaro.Graphic
 """
 Eine Grafik mit einer Fixierposition.
 

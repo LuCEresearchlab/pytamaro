@@ -5,9 +5,9 @@ und Konstanten für wichtige Farben.
 
 from __future__ import annotations
 
-import pytamaro as _en
+import pytamaro as _pytamaro
 
-Farbe = _en.Color
+Farbe = _pytamaro.Color
 """
 Repräsentiert eine Farbe.
 Eine Farbe hat auch eine gewisse Opazität,
@@ -35,7 +35,7 @@ def rgb_farbe(rot: int, gruen: int, blau: int, opazitaet: float = 1.0) -> Farbe:
            entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig.
     :returns: eine Farbe mit den gegebenen RGBA-Komponenten
     """
-    return _en.rgb_color(rot, gruen, blau, opazitaet)
+    return _pytamaro.rgb_color(rot, gruen, blau, opazitaet)
 
 
 def hsv_farbe(farbton: float, saettigung: float, hellwert: float, opazitaet: float = 1.0) -> Farbe:
@@ -60,7 +60,7 @@ def hsv_farbe(farbton: float, saettigung: float, hellwert: float, opazitaet: flo
            entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig.
     :returns: eine Farbe mit den gegebenen HSVA-Komponenten
     """
-    return _en.hsv_color(farbton, saettigung, hellwert, opazitaet)
+    return _pytamaro.hsv_color(farbton, saettigung, hellwert, opazitaet)
 
 
 def hsl_farbe(farbton: float, saettigung: float, helligkeit: float,
@@ -86,4 +86,4 @@ def hsl_farbe(farbton: float, saettigung: float, helligkeit: float,
            entspricht. Standardmäßig sind alle Farben vollständig undurchsichtig.
     :returns: eine Farbe mit den gegebenen HSLA-Komponenten
     """
-    return _en.hsl_color(farbton, saettigung, helligkeit, opazitaet)
+    return _pytamaro.hsl_color(farbton, saettigung, helligkeit, opazitaet)

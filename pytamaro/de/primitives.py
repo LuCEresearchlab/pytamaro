@@ -6,9 +6,9 @@ in der Mitte des Begrenzungsrahmens der erzeugten Grafik.
 
 from __future__ import annotations
 
+import pytamaro as _pytamaro
 from pytamaro.de.color import Farbe
 from pytamaro.de.graphic import Grafik
-import pytamaro as _en
 
 
 def rechteck(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
@@ -21,7 +21,7 @@ def rechteck(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
     :param farbe: Füllfarbe des Rechtecks
     :returns: eine Grafik mit dem gegebenen Rechteck
     """
-    return _en.rectangle(breite, hoehe, farbe)
+    return _pytamaro.rectangle(breite, hoehe, farbe)
 
 
 def leere_grafik() -> Grafik:
@@ -33,7 +33,7 @@ def leere_grafik() -> Grafik:
 
     :returns: eine leere Grafik (Breite und Höhe sind 0)
     """
-    return _en.empty_graphic()
+    return _pytamaro.empty_graphic()
 
 
 def ellipse(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
@@ -49,7 +49,7 @@ def ellipse(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
     :param farbe: Füllfarbe der Ellipse
     :returns: eine Grafik mit der gegebenen Ellipse
     """
-    return _en.ellipse(breite, hoehe, farbe)
+    return _pytamaro.ellipse(breite, hoehe, farbe)
 
 
 def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
@@ -74,7 +74,7 @@ def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
     :param farbe: Füllfarbe des Kreissektors
     :returns: eine Grafik mit dem gegebenen Kreissektor
     """
-    return _en.circular_sector(radius, winkel, farbe)
+    return _pytamaro.circular_sector(radius, winkel, farbe)
 
 
 def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik:
@@ -97,7 +97,7 @@ def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik
     :param farbe: Farbe des Dreiecks
     :returns: eine Grafik mit dem gegebenen Dreieck
     """
-    return _en.triangle(seite1, seite2, winkel, farbe)
+    return _pytamaro.triangle(seite1, seite2, winkel, farbe)
 
 
 def text(inhalt: str, schriftart: str, punkte: float, farbe: Farbe) -> Grafik:
@@ -120,4 +120,4 @@ def text(inhalt: str, schriftart: str, punkte: float, farbe: Farbe) -> Grafik:
     :param farbe: Farbe, in der der Text dargestellt werden soll
     :returns: eine Grafik bestehend aus dem gegebenen Text
     """
-    return _en.text(inhalt, schriftart, punkte, farbe)
+    return _pytamaro.text(inhalt, schriftart, punkte, farbe)

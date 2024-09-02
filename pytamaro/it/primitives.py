@@ -6,9 +6,9 @@ centro del rettangolo di delimitazione (bounding box) della grafica.
 
 from __future__ import annotations
 
+import pytamaro as _pytamaro
 from pytamaro.it.color import Colore
 from pytamaro.it.graphic import Grafica
-import pytamaro as _en
 
 
 def rettangolo(larghezza: float, altezza: float, colore: Colore) -> Grafica:
@@ -20,7 +20,7 @@ def rettangolo(larghezza: float, altezza: float, colore: Colore) -> Grafica:
     :param colore: colore da usare per riempire il rettangolo
     :returns: una grafica con il rettangolo specificato
     """
-    return _en.rectangle(larghezza, altezza, colore)
+    return _pytamaro.rectangle(larghezza, altezza, colore)
 
 
 def grafica_vuota() -> Grafica:
@@ -31,7 +31,7 @@ def grafica_vuota() -> Grafica:
 
     :returns: una grafica vuota (larghezza e altezza 0)
     """
-    return _en.empty_graphic()
+    return _pytamaro.empty_graphic()
 
 
 def ellisse(larghezza: float, altezza: float, colore: Colore) -> Grafica:
@@ -46,7 +46,7 @@ def ellisse(larghezza: float, altezza: float, colore: Colore) -> Grafica:
     :param colore: colore da usare per riempire l'ellisse
     :returns: una grafica con l'ellisse specificato
     """
-    return _en.ellipse(larghezza, altezza, colore)
+    return _pytamaro.ellipse(larghezza, altezza, colore)
 
 
 def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
@@ -69,7 +69,7 @@ def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
     :param colore: colore da usare per riempire il settore circolare
     :returns: una grafica con il settore circolare specificato
     """
-    return _en.circular_sector(raggio, angolo, colore)
+    return _pytamaro.circular_sector(raggio, angolo, colore)
 
 
 def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Grafica:
@@ -91,7 +91,7 @@ def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Graf
     :param colore: colore da usare per riempire il triangolo
     :returns: una grafica con il triangolo specificato
     """
-    return _en.triangle(lato1, lato2, angolo, colore)
+    return _pytamaro.triangle(lato1, lato2, angolo, colore)
 
 
 def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:
@@ -113,4 +113,4 @@ def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:
     :param colore: colore da usare per fare il rendering del testo
     :returns: una grafica con il testo specificato
     """
-    return _en.text(contenuto, font, punti, colore)
+    return _pytamaro.text(contenuto, font, punti, colore)

@@ -5,9 +5,9 @@ couleurs particulières.
 
 from __future__ import annotations
 
-import pytamaro as _en
+import pytamaro as _pytamaro
 
-Couleur = _en.Color
+Couleur = _pytamaro.Color
 """
 Représente une couleur.
 Une couleur a aussi un taux d'opacité,
@@ -35,7 +35,7 @@ def couleur_rgb(rouge: int, vert: int, bleu: int, opacite: float = 1.0) -> Coule
             Par défaut, toutes les couleurs sont complètement opaques.
     :returns: une couleur avec les composantes RGBA données
     """
-    return _en.rgb_color(rouge, vert, bleu, opacite)
+    return _pytamaro.rgb_color(rouge, vert, bleu, opacite)
 
 
 def couleur_hsv(teinte: float, saturation: float, valeur: float, opacite: float = 1.0) -> Couleur:
@@ -58,7 +58,7 @@ def couleur_hsv(teinte: float, saturation: float, valeur: float, opacite: float 
             Par défaut, toutes les couleurs sont complètement opaques.
     :returns: une couleur avec le composantes HSVA données
     """
-    return _en.hsv_color(teinte, saturation, valeur, opacite)
+    return _pytamaro.hsv_color(teinte, saturation, valeur, opacite)
 
 
 def couleur_hsl(teinte: float, saturation: float, luminosite: float, opacite: float = 1.0
@@ -82,4 +82,4 @@ def couleur_hsl(teinte: float, saturation: float, luminosite: float, opacite: fl
             Par défaut, toutes les couleurs sont complètement opaques.
     :returns: une couleur avec les composantes HSLA données.
     """
-    return _en.hsl_color(teinte, saturation, luminosite, opacite)
+    return _pytamaro.hsl_color(teinte, saturation, luminosite, opacite)
