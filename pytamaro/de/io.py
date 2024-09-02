@@ -4,7 +4,7 @@ Funktionen zur Ausgabe (Anzeigen oder Speichern) von Grafiken.
 
 from __future__ import annotations
 
-from pytamaro.io import save_animation, save_graphic, show_animation, show_graphic
+import pytamaro as _pytamaro
 from pytamaro.de.graphic import Grafik
 
 
@@ -23,7 +23,7 @@ def zeige_grafik(grafik: Grafik, debug: bool = False):
     :param debug: kann optional auf `True` gesetzt werden, um über der Grafik
                   Debug-Informationen darzustellen
     """
-    show_graphic(grafik, debug)
+    _pytamaro.show_graphic(grafik, debug)
 
 
 def speichere_grafik(datei_name: str, grafik: Grafik, debug: bool = False):
@@ -45,7 +45,7 @@ def speichere_grafik(datei_name: str, grafik: Grafik, debug: bool = False):
     :param debug: kann optional auf `True` gesetzt werden, um über der Grafik
                   Debug-Informationen darzustellen
     """
-    save_graphic(datei_name, grafik, debug)
+    _pytamaro.save_graphic(datei_name, grafik, debug)
 
 
 def speichere_animation(
@@ -64,7 +64,7 @@ def speichere_animation(
     :param loop: bestimmt ob das GIF in einer unendlichen Schleife abgespielt
            werden soll (Default: true)
     """
-    save_animation(datei_name, grafiken, dauer, loop)
+    _pytamaro.save_animation(datei_name, grafiken, dauer, loop)
 
 
 def zeige_animation(grafiken: list[Grafik], dauer: int = 40, loop: bool = True):
@@ -80,4 +80,4 @@ def zeige_animation(grafiken: list[Grafik], dauer: int = 40, loop: bool = True):
     :param loop: bestimmt ob das GIF in einer unendlichen Schleife abgespielt
            werden soll (Default: true)
     """
-    show_animation(grafiken, dauer, loop)
+    _pytamaro.show_animation(grafiken, dauer, loop)

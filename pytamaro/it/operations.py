@@ -4,10 +4,9 @@ Funzioni per operazioni con grafiche (principlamente per combinarle).
 
 from __future__ import annotations
 
+import pytamaro as _pytamaro
 from pytamaro.it.graphic import Grafica
 from pytamaro.it.point import Punto
-from pytamaro.operations import (above, beside, compose, graphic_height,
-                                 graphic_width, overlay, pin, rotate)
 
 
 def larghezza_grafica(grafica: Grafica) -> int:
@@ -17,7 +16,7 @@ def larghezza_grafica(grafica: Grafica) -> int:
     :param grafica: grafica di cui calcolare la larghezza
     :returns: larghezza della grafica
     """
-    return graphic_width(grafica)
+    return _pytamaro.graphic_width(grafica)
 
 
 def altezza_grafica(grafica: Grafica) -> int:
@@ -27,7 +26,7 @@ def altezza_grafica(grafica: Grafica) -> int:
     :param grafica: grafica di cui calcolare l'altezza
     :returns: altezza della grafica
     """
-    return graphic_height(grafica)
+    return _pytamaro.graphic_height(grafica)
 
 
 def componi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
@@ -44,7 +43,7 @@ def componi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
     :param grafica_secondopiano: grafica sullo sfondo
     :returns: la grafica risultante composta
     """
-    return compose(grafica_primopiano, grafica_secondopiano)
+    return _pytamaro.compose(grafica_primopiano, grafica_secondopiano)
 
 
 def fissa(punto: Punto, grafica: Grafica) -> Grafica:
@@ -63,7 +62,7 @@ def fissa(punto: Punto, grafica: Grafica) -> Grafica:
     :param grafica: grafica originale
     :returns: una nuova grafica con una posizione di fissaggio aggiornata
     """
-    return pin(punto, grafica)
+    return _pytamaro.pin(punto, grafica)
 
 
 def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
@@ -79,7 +78,7 @@ def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
     :param grafica_secondopiano: grafica sullo sfondo
     :returns: grafica risultante dalla sovrapposizione delle due fornite
     """
-    return overlay(grafica_primopiano, grafica_secondopiano)
+    return _pytamaro.overlay(grafica_primopiano, grafica_secondopiano)
 
 
 def accanto(grafica_sinistra: Grafica, grafica_destra: Grafica) -> Grafica:
@@ -94,7 +93,7 @@ def accanto(grafica_sinistra: Grafica, grafica_destra: Grafica) -> Grafica:
     :returns: grafica risultante dall'affiancamento orizzontale delle due
               grafiche fornite
     """
-    return beside(grafica_sinistra, grafica_destra)
+    return _pytamaro.beside(grafica_sinistra, grafica_destra)
 
 
 def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
@@ -109,7 +108,7 @@ def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
     :returns: grafica risultante dall'affiancamento verticale delle due
               grafiche fornite
     """
-    return above(grafica_alto, grafica_basso)
+    return _pytamaro.above(grafica_alto, grafica_basso)
 
 
 def ruota(angolo: float, grafica: Grafica) -> Grafica:
@@ -122,4 +121,4 @@ def ruota(angolo: float, grafica: Grafica) -> Grafica:
     :param grafica: grafica da ruotare
     :returns: una nuova grafica, ruotata
     """
-    return rotate(angolo, grafica)
+    return _pytamaro.rotate(angolo, grafica)

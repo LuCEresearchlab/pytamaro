@@ -1,39 +1,39 @@
-from pytamaro.color import *
-from pytamaro.color_names import *
-from pytamaro.it.color import *
-from pytamaro.it.color_names import *
+import pytamaro as _pytamaro
+from pytamaro.it.color import colore_hsl, colore_hsv, colore_rgb
+from pytamaro.it.color_names import (bianco, blu, ciano, giallo, magenta, nero,
+                                     rosso, trasparente, verde)
 from tests.testing_utils import assert_repr
 
 
 def test_rgb_color():
-    assert rgb_color(255, 0, 0) == colore_rgb(255, 0, 0)
+    assert _pytamaro.rgb_color(255, 0, 0) == colore_rgb(255, 0, 0)
 
 
 def test_hsv_color():
-    assert hsv_color(255, 0, 0) == colore_hsv(255, 0, 0)
+    assert _pytamaro.hsv_color(255, 0, 0) == colore_hsv(255, 0, 0)
 
 
 def test_hsl_color():
-    assert hsl_color(255, 0, 0) == colore_hsl(255, 0, 0)
+    assert _pytamaro.hsl_color(255, 0, 0) == colore_hsl(255, 0, 0)
 
 
 def test_rgba_color():
-    assert rgb_color(0, 0, 0, 0.0) == colore_rgb(0, 0, 0, 0.0)
+    assert _pytamaro.rgb_color(0, 0, 0, 0.0) == colore_rgb(0, 0, 0, 0.0)
 
 
 def test_color_names():
-    assert red == rosso
-    assert green == verde
-    assert blue == blu
-    assert magenta == magenta
-    assert cyan == ciano
-    assert yellow == giallo
-    assert black == nero
-    assert white == bianco
+    assert _pytamaro.red == rosso
+    assert _pytamaro.green == verde
+    assert _pytamaro.blue == blu
+    assert _pytamaro.magenta == magenta
+    assert _pytamaro.cyan == ciano
+    assert _pytamaro.yellow == giallo
+    assert _pytamaro.black == nero
+    assert _pytamaro.white == bianco
 
 
 def test_transparent_color_name():
-    assert transparent == trasparente
+    assert _pytamaro.transparent == trasparente
 
 
 def test_color_localized_repr():

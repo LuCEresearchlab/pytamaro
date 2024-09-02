@@ -7,14 +7,9 @@ cadre de délimitation (bounding box) du graphique.
 
 from __future__ import annotations
 
+import pytamaro as _pytamaro
 from pytamaro.fr.color import Couleur
 from pytamaro.fr.graphic import Graphique
-from pytamaro.primitives import circular_sector
-from pytamaro.primitives import ellipse as en_ellipse
-from pytamaro.primitives import empty_graphic
-from pytamaro.primitives import rectangle as en_rectangle
-from pytamaro.primitives import text
-from pytamaro.primitives import triangle as en_triangle
 
 
 def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
@@ -26,7 +21,7 @@ def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     :param couleur: couleur qui remplira le rectangle
     :returns: un graphique avec le rectangle spécifié
     """
-    return en_rectangle(largeur, hauteur, couleur)
+    return _pytamaro.rectangle(largeur, hauteur, couleur)
 
 
 def graphique_vide() -> Graphique:
@@ -38,7 +33,7 @@ def graphique_vide() -> Graphique:
 
     :returns: un graphique vide (largeur et hauteur 0)
     """
-    return empty_graphic()
+    return _pytamaro.empty_graphic()
 
 
 def ellipse(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
@@ -54,7 +49,7 @@ def ellipse(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     :param couleur: couleur à utiliser pour remplir l'ellipse
     :returns: un graphique avec l'ellipse spécifiée
     """
-    return en_ellipse(largeur, hauteur, couleur)
+    return _pytamaro.ellipse(largeur, hauteur, couleur)
 
 
 def secteur_circulaire(rayon: float, angle: float, couleur: Couleur) -> Graphique:
@@ -78,7 +73,7 @@ def secteur_circulaire(rayon: float, angle: float, couleur: Couleur) -> Graphiqu
     :param couleur: couleur à utiliser pour remplir le secteur circulaire
     :returns: un graphique avec le secteur circulaire spécifié
     """
-    return circular_sector(rayon, angle, couleur)
+    return _pytamaro.circular_sector(rayon, angle, couleur)
 
 
 def triangle(cote1: float, cote2: float, angle: float, couleur: Couleur) -> Graphique:
@@ -101,7 +96,7 @@ def triangle(cote1: float, cote2: float, angle: float, couleur: Couleur) -> Grap
     :param couleur: couleur à utiliser pour remplir le secteur circulaire
     :returns: un graphique avec le triangle spécifié
     """
-    return en_triangle(cote1, cote2, angle, couleur)
+    return _pytamaro.triangle(cote1, cote2, angle, couleur)
 
 
 def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphique:
@@ -123,4 +118,4 @@ def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphiq
     :param couleur: la couleur à utiliser pour le rendu du texte
     :returns: le texte spécifié sous forme de graphique
     """
-    return text(contenu, police, points, couleur)
+    return _pytamaro.text(contenu, police, points, couleur)
