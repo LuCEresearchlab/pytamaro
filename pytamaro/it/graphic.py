@@ -4,9 +4,9 @@ Tipo `Grafica`, che include una grafica con una posizione di fissaggio.
 
 from __future__ import annotations
 
-from pytamaro.graphic import Graphic
+import pytamaro as _pytamaro
 
-Grafica = Graphic
+Grafica = _pytamaro.Graphic
 """
 Una grafica (immagine) con una posizione per fissare.
 

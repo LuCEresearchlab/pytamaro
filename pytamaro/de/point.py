@@ -2,9 +2,9 @@
 Typ `Punkt`.
 """
 
-from pytamaro.point import Point
+import pytamaro as _pytamaro
 
-Punkt = Point
+Punkt = _pytamaro.Point
 """
 Repräsentiert einen Punkt in der Ebene.
 """

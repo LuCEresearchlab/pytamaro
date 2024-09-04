@@ -1,37 +1,36 @@
-from pytamaro.color_names import red
+import pytamaro as _pytamaro
 from pytamaro.it.primitives import (ellisse, grafica_vuota, rettangolo,
                                     settore_circolare, testo, triangolo)
-from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
-                                 rectangle, text, triangle)
+from pytamaro.it.color_names import rosso
 from tests.testing_utils import HEIGHT, RADIUS, WIDTH, assert_repr
 
 
 def test_rectangle():
-    assert rectangle(WIDTH, HEIGHT, red) == rettangolo(WIDTH, HEIGHT, red)
+    assert _pytamaro.rectangle(WIDTH, HEIGHT, _pytamaro.red) == rettangolo(WIDTH, HEIGHT, rosso)
 
 
 def test_empty_graphic():
-    assert empty_graphic() == grafica_vuota()
+    assert _pytamaro.empty_graphic() == grafica_vuota()
 
 
 def test_ellipse():
-    assert ellipse(WIDTH, HEIGHT, red) == ellisse(WIDTH, HEIGHT, red)
+    assert _pytamaro.ellipse(WIDTH, HEIGHT, _pytamaro.red) == ellisse(WIDTH, HEIGHT, rosso)
 
 
 def test_text():
-    assert text("hello", "", 12, red) == testo("hello", "", 12, red)
+    assert _pytamaro.text("hello", "", 12, _pytamaro.red) == testo("hello", "", 12, rosso)
 
 
 def test_circular_sector():
-    assert circular_sector(
-        RADIUS, 360, red) == settore_circolare(RADIUS, 360, red)
+    assert _pytamaro.circular_sector(
+        RADIUS, 360, _pytamaro.red) == settore_circolare(RADIUS, 360, rosso)
 
 
 def test_equilateral_triangle():
-    assert triangle(WIDTH, WIDTH, 60, red) == triangolo(WIDTH, WIDTH, 60, red)
+    assert _pytamaro.triangle(WIDTH, WIDTH, 60, _pytamaro.red) == triangolo(WIDTH, WIDTH, 60, rosso)
 
 
 def test_primitive_localized_repr():
-    r = rectangle(WIDTH, HEIGHT, red)
+    r = _pytamaro.rectangle(WIDTH, HEIGHT, _pytamaro.red)
     assert_repr(r, "it")
     assert "rettangolo" in repr(r)

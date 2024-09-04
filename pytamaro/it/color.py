@@ -4,10 +4,9 @@ Tipo `Colore`, funzioni per produrre colori e costanti per colori notevoli.
 
 from __future__ import annotations
 
-from pytamaro.color import Color
-from pytamaro.color_functions import rgb_color, hsl_color, hsv_color
+import pytamaro as _pytamaro
 
-Colore = Color
+Colore = _pytamaro.Color
 """
 Rappresenta un colore.
 Un colore ha anche un grado di opacità,
@@ -35,7 +34,7 @@ def colore_rgb(rosso: int, verde: int, blu: int, opacita: float = 1.0) -> Colore
            Di default, tutti i colori sono completamente opachi.
     :returns: un colore con le componenti RGBA indicate
     """
-    return rgb_color(rosso, verde, blu, opacita)
+    return _pytamaro.rgb_color(rosso, verde, blu, opacita)
 
 
 def colore_hsv(tonalita: float, saturazione: float, valore: float, opacita: float = 1.0) -> Colore:
@@ -57,7 +56,7 @@ def colore_hsv(tonalita: float, saturazione: float, valore: float, opacita: floa
            Di default, tutti i colori sono completamente opachi.
     :returns: un colore con le componenti HSVA indicate
     """
-    return hsv_color(tonalita, saturazione, valore, opacita)
+    return _pytamaro.hsv_color(tonalita, saturazione, valore, opacita)
 
 
 def colore_hsl(tonalita: float, saturazione: float, luce: float, opacita: float = 1.0) -> Colore:
@@ -80,4 +79,4 @@ def colore_hsl(tonalita: float, saturazione: float, luce: float, opacita: float 
            Di default, tutti i colori sono completamente opachi.
     :returns: un colore con le componenti HSLA indicate
     """
-    return hsl_color(tonalita, saturazione, luce, opacita)
+    return _pytamaro.hsl_color(tonalita, saturazione, luce, opacita)

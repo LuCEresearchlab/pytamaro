@@ -4,7 +4,7 @@ Funzioni per output di grafiche (visualizzare o salvare).
 
 from __future__ import annotations
 
-from pytamaro.io import save_animation, save_graphic, show_animation, show_graphic
+import pytamaro as _pytamaro
 from pytamaro.it.graphic import Grafica
 
 
@@ -21,7 +21,7 @@ def visualizza_grafica(grafica: Grafica, debug: bool = False):
     :param debug: può facoltativamente essere impostato a `True` per
            sovrapporre informazioni di debug
     """
-    show_graphic(grafica, debug)
+    _pytamaro.show_graphic(grafica, debug)
 
 
 def salva_grafica(nome_file: str, grafica: Grafica, debug: bool = False):
@@ -42,7 +42,7 @@ def salva_grafica(nome_file: str, grafica: Grafica, debug: bool = False):
     :param debug: può facoltativamente essere impostato a `True` per
            sovrapporre informazioni di debug
     """
-    save_graphic(nome_file, grafica, debug)
+    _pytamaro.save_graphic(nome_file, grafica, debug)
 
 
 def salva_animazione(
@@ -60,7 +60,7 @@ def salva_animazione(
            millisecondi, ovvero 25 frame al secondo)
     :param loop: determina se la GIF debba riprodursi in loop indefinitamente (default a True)
     """
-    save_animation(nome_file, grafiche, durata, loop)
+    _pytamaro.save_animation(nome_file, grafiche, durata, loop)
 
 
 def visualizza_animazione(grafiche: list[Grafica], durata: int = 40, loop: bool = True):
@@ -75,4 +75,4 @@ def visualizza_animazione(grafiche: list[Grafica], durata: int = 40, loop: bool 
            millisecondi, ovvero 25 frame al secondo)
     :param loop: determina se la GIF debba riprodursi in loop indefinitamente (default a True)
     """
-    show_animation(grafiche, durata, loop)
+    _pytamaro.show_animation(grafiche, durata, loop)

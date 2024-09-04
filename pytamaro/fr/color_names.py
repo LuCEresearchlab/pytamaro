@@ -5,58 +5,58 @@ Ainsi que la couleur complètement transparent.
 
 from __future__ import annotations
 
-from pytamaro.color_names import black, blue, cyan, green, magenta, red, transparent, white, yellow
+import pytamaro as _pytamaro
 from pytamaro.fr.color import Couleur
 
-noir: Couleur = black
+noir: Couleur = _pytamaro.black
 """Couleur noire
 
 :meta hide-value:
 """
 
-rouge: Couleur = red
+rouge: Couleur = _pytamaro.red
 """Couleur rouge
 
 :meta hide-value:
 """
 
-vert: Couleur = green
+vert: Couleur = _pytamaro.green
 """Couleur verte
 
 :meta hide-value:
 """
 
-bleu: Couleur = blue
+bleu: Couleur = _pytamaro.blue
 """Couleur bleue
 
 :meta hide-value:
 """
 
-jaune: Couleur = yellow
+jaune: Couleur = _pytamaro.yellow
 """Couleur jaune
 
 :meta hide-value:
 """
 
-magenta: Couleur = magenta  # pylint: disable=self-assigning-variable
+magenta: Couleur = _pytamaro.magenta
 """Couleur magenta
 
 :meta hide-value:
 """
 
-cyan: Couleur = cyan
+cyan: Couleur = _pytamaro.cyan
 """Couleur cyan
 
 :meta hide-value:
 """
 
-blanc: Couleur = white
+blanc: Couleur = _pytamaro.white
 """Couleur blanche
 
 :meta hide-value:
 """
 
-transparent: Couleur = transparent  # pylint: disable=self-assigning-variable
+transparent: Couleur = _pytamaro.transparent
 """Couleur complètement transparente
 
 :meta hide-value:
