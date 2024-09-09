@@ -50,7 +50,7 @@
             <xsl:value-of select="desc_signature/desc_returns"/>
           </type>
           <description>
-            <xsl:value-of select="normalize-space(//field_list/field[field_name='Returns']/field_body/paragraph)"/>
+            <xsl:value-of select="normalize-space(desc_content/field_list/field[field_name='Returns']/field_body/paragraph)"/>
           </description>
         </returnValue>
       </xsl:if>
@@ -76,7 +76,7 @@
         </default>
       </xsl:if>
       <description>
-        <xsl:value-of select="normalize-space(substring-after(//field_list/field[field_name='Parameters']/field_body//paragraph[literal_strong = current()/desc_sig_name[1]], concat(current()/desc_sig_name[1],' – ')))"/>
+        <xsl:value-of select="normalize-space(substring-after(../../../desc_content/field_list/field[field_name='Parameters']/field_body//paragraph[literal_strong = current()/desc_sig_name[1]], concat(current()/desc_sig_name[1],' – ')))"/>
       </description>
     </parameter>
   </xsl:template>
