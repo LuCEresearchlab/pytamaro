@@ -19,8 +19,8 @@ def plural(element_type):
 
 
 def postprocessor(path, key, value):
-    if key == "parameter":
-        return plural(key), value
+    if key == "parameters":
+        return key, value["parameter"] if value is not None else []
     if key == "sideEffects":
         return key, True if value == "true" else False
     return key, value
@@ -43,7 +43,7 @@ for languagedir in [el for el in Path("_build/xml").iterdir() if el.is_dir()]:
     for filename in languagedir.glob("*.xml"):
         xml = ET.parse(filename)
         new_xml = xslt_transform(xml)
-        new_xml_as_dict = xmltodict.parse(ET.tostring(new_xml, encoding='unicode'), force_list=['element', 'p'], postprocessor=postprocessor)
+        new_xml_as_dict = xmltodict.parse(ET.tostring(new_xml, encoding='unicode'), force_list=['element', 'p', 'parameter'], postprocessor=postprocessor)
         docs["elements"].extend(new_xml_as_dict['elements']["element"])
     output_path = OUTPUT_DIR / (module_name + ".json")
     with open(output_path, "w") as f:

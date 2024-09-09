@@ -41,7 +41,9 @@
         <xsl:apply-templates select="desc_content/paragraph[position() > 0]"/>
         <xsl:apply-templates select="desc_content/figure"/>
       </description>
-      <xsl:apply-templates select="desc_signature/desc_parameterlist/desc_parameter"/>
+      <parameters>
+        <xsl:apply-templates select="desc_signature/desc_parameterlist/desc_parameter"/>
+      </parameters>
       <xsl:if test="desc_signature/desc_returns">
         <returnValue>
           <type>
