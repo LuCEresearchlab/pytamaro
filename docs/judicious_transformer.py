@@ -39,12 +39,14 @@ def pytamaro_module(folder_name):
 
 for languagedir in [el for el in Path("_build/xml").iterdir() if el.is_dir()]:
     module_name = pytamaro_module(languagedir.name)
-    docs = {"module": module_name, "elements": []}
+    docs = {"module": module_name, "summary": f"PyTamaro graphics ({languagedir.name} API)", "elements": []}
     for filename in languagedir.glob("*.xml"):
         xml = ET.parse(filename)
         new_xml = xslt_transform(xml)
         new_xml_as_dict = xmltodict.parse(ET.tostring(new_xml, encoding='unicode'), force_list=['element', 'p', 'parameter'], postprocessor=postprocessor)
-        docs["elements"].extend(new_xml_as_dict['elements']["element"])
+        maybe_elements = new_xml_as_dict["elements"]
+        new_elements = maybe_elements["element"] if maybe_elements is not None else []
+        docs["elements"].extend(new_elements)
     output_path = OUTPUT_DIR / (module_name + ".json")
     with open(output_path, "w") as f:
         f.write(json.dumps(docs, indent=4))

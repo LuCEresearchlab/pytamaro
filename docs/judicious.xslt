@@ -13,6 +13,7 @@
 
   <xsl:template match="desc[@objtype='attribute' or @objtype='class' or @objtype='data']">
     <element>
+      <section><xsl:value-of select="../title"/></section>
       <kind>
         <xsl:choose>
           <xsl:when test="@objtype='attribute' or @objtype='class'">type</xsl:when>
@@ -33,6 +34,7 @@
 
   <xsl:template match="desc[@objtype='function']">
     <element>
+      <section><xsl:value-of select="../title"/></section>
       <kind>function</kind>
       <name>
         <xsl:value-of select="desc_signature/desc_name"/>

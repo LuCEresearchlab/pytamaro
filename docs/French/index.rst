@@ -5,6 +5,9 @@ Version Française
   :width: 700
   :alt: PyTamaro logo
 
+Bienvenue dans la documentation de Pytamaro !
+Explorez les fonctions disponibles à l'aide du menu de gauche.
+
 .. toctree::
    :caption: Index:
 
@@ -13,8 +16,3 @@ Version Française
    io
    colors
    points
-
-Bienvenue dans la documentation de Pytamaro !
-Explorez les fonctions disponibles à l'aide du menu de gauche.
-
-.. autoclass:: pytamaro.fr.graphic.Graphique

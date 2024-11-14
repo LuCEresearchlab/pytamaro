@@ -54,7 +54,7 @@ def assert_size_tolerance(g: Graphic, expected_size: Tuple[int, int],
 def assert_graphics_equals_tolerance(g1: Graphic, g2: Graphic):
     diff = ImageChops.difference(graphic_to_pillow_image(g1), graphic_to_pillow_image(g2))
     filtered_diff = diff.filter(ImageFilter.MinFilter())
-    colors = filtered_diff.getcolors()
+    colors = filtered_diff.getcolors() or []
     assert len(colors) == 1
     assert colors[0][1] == astuple(transparent)
 

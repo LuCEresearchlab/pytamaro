@@ -1,4 +1,4 @@
-Punti
+Punkte
 =======================================
 
 .. automodule:: pytamaro.de.point
