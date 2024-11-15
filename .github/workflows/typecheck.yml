@@ -3,7 +3,7 @@ name: Typecheck
 on: [push]
 
 jobs:
-  lint:
+  typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
