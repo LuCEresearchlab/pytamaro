@@ -3,32 +3,21 @@ name: Lint
 on: [push]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.12"]  # 3.12 is the latest Python
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Cache for poetry, venv and deps
-      id: cached-dependencies
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.local
-          ~/.cache/pypoetry
-          .venv
-        key: cache-deps-${{ runner.os }}-${{ matrix.python-version }}-${{ hashfiles('**/poetry.lock') }}-${{ hashFiles('.github/workflows/lint.yml') }}
-    - name: Python Poetry Action
-      uses: abatilo/actions-poetry@v3.0.0
-    - name: Install dependencies
-      run: poetry install
-      if: steps.cached-dependencies.outputs.cache-hit != 'true'
-    - name: Pylint and Pycodestyle
-      run: |
-        poetry run pylint pytamaro
-        poetry run pycodestyle .
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      - name: Install the project
+        run: uv sync --all-extras --dev
+      - name: Pylint and Pycodestyle
+        run: |
+          uv run pylint pytamaro
+          uv run pycodestyle pytamaro tests

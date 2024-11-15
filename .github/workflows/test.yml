@@ -3,30 +3,22 @@ name: Test
 on: [push]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.12"]  # 3.10 is used by Thonny, 3.12 is the latest Python
+        python-version: ["3.10", "3.13"]  # extremes of supported range
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Cache for poetry, venv and deps
-      id: cached-dependencies
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.local
-          ~/.cache/pypoetry
-          .venv
-        key: cache-deps-${{ runner.os }}-${{ matrix.python-version }}-${{ hashfiles('**/poetry.lock') }}-${{ hashFiles('.github/workflows/lint.yml') }}
-    - name: Python Poetry Action
-      uses: abatilo/actions-poetry@v3.0.0
-    - name: Install dependencies
-      run: poetry install
-      if: steps.cached-dependencies.outputs.cache-hit != 'true'
-    - name: Test
-      run: poetry run pytest tests
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install the project
+        run: uv sync --all-extras --dev
+      - name: Test
+        run: uv run pytest tests

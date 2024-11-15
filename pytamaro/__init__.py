@@ -1,11 +1,5 @@
 """
-(Re-)Export names for:
-- basic types (Graphic and Color)
-- color names
-- operations
-- primitves
-- I/O
-from this top-level module.
+(Re-)Export names from this top-level module for the public API.
 """
 
 
@@ -21,4 +15,4 @@ from pytamaro.primitives import *
 
 LANGUAGE = "en"
 
-__version__ = "0.7.3"
+__version__ = "1.0.1"
