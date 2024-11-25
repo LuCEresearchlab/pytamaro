@@ -23,7 +23,7 @@ copyright = "2021-2024, LuCE Research Lab"
 author = "LuCE Research Lab"
 
 # The full version, including alpha/beta/rc tags
-release = "1.0.1"
+release = "1.0.2"
 
 
 # -- General configuration ---------------------------------------------------

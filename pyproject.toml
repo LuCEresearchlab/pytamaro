@@ -1,6 +1,6 @@
 [project]
 name = "pytamaro"
-version = "1.0.1"
+version = "1.0.2"
 description = "Educational library for Python to teach programming using graphics"
 authors = [
   {name = "Luca Chiodini", email = "luca@chiodini.org"},
@@ -33,6 +33,3 @@ python_functions = "test_*"
 [tool.pylint.main]
 extension-pkg-allow-list = "skia"
 ignore-long-lines = "^.*https?://\\S+$"
-
-[tool.setuptools]
-package-dir = {"" = "pytamaro"}
