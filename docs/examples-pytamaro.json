@@ -1,0 +1,387 @@
+{
+    "module": "pytamaro.it",
+    "elements": [
+        {
+            "name": "hsl_color",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, hsl_color(0, 1.0, 1.0)))"
+                },
+                {
+                    "code": "show_graphic(rectangle(50, 50, hsl_color(120, 1.0, 0.5)))"
+                },
+                {
+                    "code": "show_graphic(rectangle(50, 50, hsl_color(240, 1.0, 1.0, 0.25)))",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "hsv_color",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, hsv_color(0, 1.0, 1.0)))"
+                },
+                {
+                    "code": "show_graphic(rectangle(50, 50, hsv_color(120, 1.0, 1.0)))"
+                },
+                {
+                    "code": "show_graphic(rectangle(50, 50, hsv_color(240, 1.0, 1.0, 0.25)))",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "rgb_color",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, rgb_color(255, 0, 0)))"
+                },
+                {
+                    "code": "show_graphic(rectangle(50, 50, rgb_color(0, 255, 0)))"
+                },
+                {
+                    "code": "show_graphic(rectangle(50, 50, rgb_color(127, 127, 127)))"
+                },
+                {
+                    "code": "show_graphic(rectangle(50, 50, rgb_color(0, 0, 255, 0.2)))",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "black",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, black))"
+                }
+            ]
+        },
+        {
+            "name": "blue",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, blue))"
+                }
+            ]
+        },
+        {
+            "name": "cyan",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, cyan))"
+                }
+            ]
+        },
+        {
+            "name": "green",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, green))"
+                }
+            ]
+        },
+        {
+            "name": "magenta",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, magenta))"
+                }
+            ]
+        },
+        {
+            "name": "red",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, red))"
+                }
+            ]
+        },
+        {
+            "name": "white",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, white))"
+                }
+            ]
+        },
+        {
+            "name": "yellow",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, yellow))"
+                }
+            ]
+        },
+        {
+            "name": "transparent",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(50, 50, transparent))"
+                }
+            ]
+        },
+        {
+            "name": "save_animation",
+            "examples": [
+                {
+                    "code": "save_animation('flash.gif', [rectangle(50, 50, yellow), rectangle(50, 50, black)])"
+                },
+                {
+                    "code": "save_animation('flash.gif', [rectangle(50, 50, yellow), rectangle(50, 50, black)], 1000, True)",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "save_graphic",
+            "examples": [
+                {
+                    "code": "save_graphic('football_pitch.png', rectangle(100, 60, green))"
+                },
+                {
+                    "code": "save_graphic('football_pitch.png', rectangle(100, 60, green), True)",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "show_graphic",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(100, 60, green))"
+                },
+                {
+                    "code": "show_graphic(rectangle(100, 60, green), True)",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "show_animation",
+            "examples": [
+                {
+                    "code": "show_animation([rectangle(50, 50, yellow), rectangle(50, 50, black)])"
+                },
+                {
+                    "code": "show_animation([rectangle(50, 50, yellow), rectangle(50, 50, black)], 1000, True)",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "circular_sector",
+            "examples": [
+                {
+                    "code": "show_graphic(circular_sector(100, 30, blue))"
+                },
+                {
+                    "code": "show_graphic(circular_sector(100, 120, blue))"
+                },
+                {
+                    "code": "show_graphic(circular_sector(100, 120, blue), True)",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "ellipse",
+            "examples": [
+                {
+                    "code": "show_graphic(ellipse(100, 50, red))"
+                },
+                {
+                    "code": "show_graphic(ellipse(75, 75, black))"
+                }
+            ]
+        },
+        {
+            "name": "empty_graphic",
+            "examples": [
+                {
+                    "code": "show_graphic(empty_graphic())"
+                }
+            ]
+        },
+        {
+            "name": "rectangle",
+            "examples": [
+                {
+                    "code": "show_graphic(rectangle(100, 60, green))"
+                },
+                {
+                    "code": "show_graphic(rectangle(50, 50, red))"
+                }
+            ]
+        },
+        {
+            "name": "text",
+            "examples": [
+                {
+                    "code": "show_graphic(text('PyTamaro', 'Fira Sans', 32, blue))"
+                },
+                {
+                    "code": "show_graphic(text('PyTamaro', 'Ubuntu', 32, blue), True)",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "triangle",
+            "examples": [
+                {
+                    "code": "show_graphic(triangle(100, 100, 60, blue))"
+                },
+                {
+                    "code": "show_graphic(triangle(100, 100, 120, blue))"
+                },
+                {
+                    "code": "show_graphic(triangle(100, 100, 120, blue), True)",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "top_left",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(top_left, ellipse(100, 50, blue)), True)"
+                }
+            ]
+        },
+        {
+            "name": "top_center",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(top_center, ellipse(100, 50, blue)), True)"
+                }
+            ]
+        },
+        {
+            "name": "top_right",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(top_right, ellipse(100, 50, blue)), True)"
+                }
+            ]
+        },
+        {
+            "name": "center_left",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(center_left, ellipse(100, 50, blue)), True)"
+                }
+            ]
+        },
+        {
+            "name": "center",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(center, ellipse(100, 50, blue)), True)"
+                }
+            ]
+        },
+        {
+            "name": "center_right",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(center_right, ellipse(100, 50, blue)), True)"
+                }
+            ]
+        },
+        {
+            "name": "bottom_left",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(bottom_left, ellipse(100, 50, blue)), True)"
+                }
+            ]
+        },
+        {
+            "name": "bottom_center",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(bottom_center, ellipse(100, 50, blue)), True)"
+                }
+            ]
+        },
+        {
+            "name": "bottom_right",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(bottom_right, ellipse(100, 50, blue)), True)"
+                }
+            ]
+        },
+        {
+            "name": "above",
+            "examples": [
+                {
+                    "code": "show_graphic(above(rectangle(100, 50, red), rectangle(50, 50, blue)))"
+                }
+            ]
+        },
+        {
+            "name": "beside",
+            "examples": [
+                {
+                    "code": "show_graphic(beside(rectangle(100, 50, red), rectangle(50, 50, blue)))"
+                }
+            ]
+        },
+        {
+            "name": "overlay",
+            "examples": [
+                {
+                    "code": "show_graphic(overlay(rectangle(50, 50, blue), rectangle(100, 50, red)))"
+                }
+            ]
+        },
+        {
+            "name": "compose",
+            "examples": [
+                {
+                    "code": "show_graphic(compose(pin(top_right, rectangle(50, 50, blue)), pin(bottom_left, rectangle(100, 50, red))))"
+                }
+            ]
+        },
+        {
+            "name": "pin",
+            "examples": [
+                {
+                    "code": "show_graphic(pin(top_right, rectangle(50, 50, blue)), True)",
+                    "usesOptional": true
+                }
+            ]
+        },
+        {
+            "name": "graphic_height",
+            "examples": [
+                {
+                    "code": "graphic_height(rectangle(100, 50, red))",
+                    "result": "50"
+                }
+            ]
+        },
+        {
+            "name": "graphic_width",
+            "examples": [
+                {
+                    "code": "graphic_width(rectangle(100, 50, red))",
+                    "result": "100"
+                }
+            ]
+        },
+        {
+            "name": "rotate",
+            "examples": [
+                {
+                    "code": "show_graphic(rotate(45, rectangle(100, 50, red)))"
+                },
+                {
+                    "code": "show_graphic(rotate(-45, rectangle(100, 50, red)))"
+                }
+            ]
+        }
+    ]
+}
