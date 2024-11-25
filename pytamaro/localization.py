@@ -130,12 +130,12 @@ translations = {
         "en": "text",
         "it": "testo",
         "de": "text",
-        "fr": "text",
+        "fr": "texte",
     },
     "circular_sector": {
         "en": "circular_sector",
         "it": "settore_circolare",
-        "de": "kreissektor",
+        "de": "kreis_sektor",
         "fr": "secteur_circulaire",
     },
     "triangle": {
@@ -143,6 +143,54 @@ translations = {
         "it": "triangolo",
         "de": "dreieck",
         "fr": "triangle",
+    },
+    "show_graphic": {
+        "en": "show_graphic",
+        "fr": "montre_graphique",
+        "de": "zeige_grafik",
+        "it": "visualizza_grafica",
+    },
+    "save_graphic": {
+        "en": "save_graphic",
+        "fr": "sauvegarde_graphique",
+        "de": "speichere_grafik",
+        "it": "salva_grafica",
+    },
+    "save_animation": {
+        "en": "save_animation",
+        "fr": "sauvegarde_animation",
+        "de": "speichere_animation",
+        "it": "salva_animazione",
+    },
+    "show_animation": {
+        "en": "show_animation",
+        "fr": "montre_animation",
+        "de": "zeige_animation",
+        "it": "visualizza_animazione",
+    },
+    "hsv_color": {
+        "en": "hsv_color",
+        "fr": "couleur_hsv",
+        "de": "hsv_farbe",
+        "it": "colore_hsv",
+    },
+    "hsl_color": {
+        "en": "hsl_color",
+        "fr": "couleur_hsl",
+        "de": "hsl_farbe",
+        "it": "colore_hsl",
+    },
+    "graphic_height": {
+        "en": "graphic_height",
+        "fr": "hauteur_graphique",
+        "de": "grafik_hoehe",
+        "it": "altezza_grafica",
+    },
+    "graphic_width": {
+        "en": "graphic_width",
+        "fr": "largeur_graphique",
+        "de": "grafik_breite",
+        "it": "larghezza_grafica",
     },
     # Parameter names
     "width": {
