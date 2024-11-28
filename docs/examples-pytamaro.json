@@ -179,7 +179,7 @@
                     "code": "show_graphic(circular_sector(100, 120, blue))"
                 },
                 {
-                    "code": "show_graphic(circular_sector(100, 120, blue), True)",
+                    "code": "show_graphic(circular_sector(100, 120, red), True)",
                     "usesOptional": true
                 }
             ]
@@ -199,7 +199,10 @@
             "name": "empty_graphic",
             "examples": [
                 {
-                    "code": "show_graphic(empty_graphic())"
+                    "code": "print(graphic_width(empty_graphic()))"
+                },
+                {
+                    "code": "print(graphic_height(empty_graphic()))"
                 }
             ]
         },
@@ -218,10 +221,10 @@
             "name": "text",
             "examples": [
                 {
-                    "code": "show_graphic(text('PyTamaro', 'Fira Sans', 32, blue))"
+                    "code": "show_graphic(text('PyTamaro', 'Fira Sans', 32, red))"
                 },
                 {
-                    "code": "show_graphic(text('PyTamaro', 'Ubuntu', 32, blue), True)",
+                    "code": "show_graphic(text('PyTamaro', 'Ubuntu', 32, red), True)",
                     "usesOptional": true
                 }
             ]
@@ -230,13 +233,13 @@
             "name": "triangle",
             "examples": [
                 {
-                    "code": "show_graphic(triangle(100, 100, 60, blue))"
+                    "code": "show_graphic(triangle(100, 100, 60, red))"
                 },
                 {
-                    "code": "show_graphic(triangle(100, 100, 120, blue))"
+                    "code": "show_graphic(triangle(100, 100, 120, red))"
                 },
                 {
-                    "code": "show_graphic(triangle(100, 100, 120, blue), True)",
+                    "code": "show_graphic(triangle(100, 100, 120, red), True)",
                     "usesOptional": true
                 }
             ]
@@ -245,7 +248,7 @@
             "name": "top_left",
             "examples": [
                 {
-                    "code": "show_graphic(pin(top_left, ellipse(100, 50, blue)), True)"
+                    "code": "show_graphic(pin(top_left, ellipse(100, 50, red)), True)"
                 }
             ]
         },
@@ -253,7 +256,7 @@
             "name": "top_center",
             "examples": [
                 {
-                    "code": "show_graphic(pin(top_center, ellipse(100, 50, blue)), True)"
+                    "code": "show_graphic(pin(top_center, ellipse(100, 50, red)), True)"
                 }
             ]
         },
@@ -261,7 +264,7 @@
             "name": "top_right",
             "examples": [
                 {
-                    "code": "show_graphic(pin(top_right, ellipse(100, 50, blue)), True)"
+                    "code": "show_graphic(pin(top_right, ellipse(100, 50, red)), True)"
                 }
             ]
         },
@@ -269,7 +272,7 @@
             "name": "center_left",
             "examples": [
                 {
-                    "code": "show_graphic(pin(center_left, ellipse(100, 50, blue)), True)"
+                    "code": "show_graphic(pin(center_left, ellipse(100, 50, red)), True)"
                 }
             ]
         },
@@ -277,7 +280,7 @@
             "name": "center",
             "examples": [
                 {
-                    "code": "show_graphic(pin(center, ellipse(100, 50, blue)), True)"
+                    "code": "show_graphic(pin(center, ellipse(100, 50, red)), True)"
                 }
             ]
         },
@@ -285,7 +288,7 @@
             "name": "center_right",
             "examples": [
                 {
-                    "code": "show_graphic(pin(center_right, ellipse(100, 50, blue)), True)"
+                    "code": "show_graphic(pin(center_right, ellipse(100, 50, red)), True)"
                 }
             ]
         },
@@ -293,7 +296,7 @@
             "name": "bottom_left",
             "examples": [
                 {
-                    "code": "show_graphic(pin(bottom_left, ellipse(100, 50, blue)), True)"
+                    "code": "show_graphic(pin(bottom_left, ellipse(100, 50, red)), True)"
                 }
             ]
         },
@@ -301,7 +304,7 @@
             "name": "bottom_center",
             "examples": [
                 {
-                    "code": "show_graphic(pin(bottom_center, ellipse(100, 50, blue)), True)"
+                    "code": "show_graphic(pin(bottom_center, ellipse(100, 50, red)), True)"
                 }
             ]
         },
@@ -309,7 +312,7 @@
             "name": "bottom_right",
             "examples": [
                 {
-                    "code": "show_graphic(pin(bottom_right, ellipse(100, 50, blue)), True)"
+                    "code": "show_graphic(pin(bottom_right, ellipse(100, 50, red)), True)"
                 }
             ]
         },
@@ -349,7 +352,7 @@
             "name": "pin",
             "examples": [
                 {
-                    "code": "show_graphic(pin(top_right, rectangle(50, 50, blue)), True)",
+                    "code": "show_graphic(pin(top_right, rectangle(50, 50, red)), True)",
                     "usesOptional": true
                 }
             ]
