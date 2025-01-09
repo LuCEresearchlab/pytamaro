@@ -379,10 +379,10 @@
             "name": "rotate",
             "examples": [
                 {
-                    "code": "show_graphic(rotate(45, rectangle(100, 50, red)))"
+                    "code": "show_graphic(rotate(15, text('PyTamaro', 'Fira Sans', 24, red)))"
                 },
                 {
-                    "code": "show_graphic(rotate(-45, rectangle(100, 50, red)))"
+                    "code": "show_graphic(rotate(-30, text('PyTamaro', 'Fira Sans', 24, red)))"
                 }
             ]
         }
