@@ -4,11 +4,13 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import lxml.etree as ET
 import xmltodict
 
 OUTPUT_DIR = Path("_build/judicious")
+EXAMPLES_EXECUTION_DIR = TemporaryDirectory()
 subprocess.run(["make", "xml"])
 subprocess.run(["rm", "-rf", str(OUTPUT_DIR)])
 subprocess.run(["mkdir", str(OUTPUT_DIR)])
@@ -74,7 +76,7 @@ for languagedir in [el for el in Path("_build/xml").iterdir() if el.is_dir()]:
         if "examples" in element:
             for example in element["examples"]:
                 example["code"] = localize_code(example["code"], lang_code)
-                output = subprocess.run([sys.executable, "-c", f'from {module_name} import *; {example["code"]}'], 
+                output = subprocess.run([sys.executable, "-c", f'import os; os.chdir("{EXAMPLES_EXECUTION_DIR.name}"); from {module_name} import *; {example["code"]}'], 
                                         capture_output=True, text=True, env={"PYTAMARO_OUTPUT_DATA_URI": "1"}, check=True)
                 example["stdout"] = output.stdout
             for el in docs["elements"]:
