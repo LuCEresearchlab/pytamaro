@@ -14,7 +14,7 @@ from pytamaro.fr.graphic import Graphique
 
 def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     """
-    Créé un rectangle de dimensions indiquées et rempli avec la couleur donnée.
+    Crée un rectangle de dimensions indiquées et rempli avec la couleur donnée.
 
     :param largeur: largeur du rectangle
     :param hauteur: hauteur du rectangle
@@ -26,7 +26,7 @@ def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
 
 def graphique_vide() -> Graphique:
     """
-    Créé un graphique vide.
+    Crée un graphique vide.
     Quand un graphique vide est composé avec n'importe quel autre graphique, il
     se comporte comme l'élément neutre: le résultat est toujours égal à l'autre
     graphique.
@@ -38,7 +38,7 @@ def graphique_vide() -> Graphique:
 
 def ellipse(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
     """
-    Créé une ellipse avec les dimensions indiquées et rempli avec la couleur
+    Crée une ellipse avec les dimensions indiquées et rempli avec la couleur
     donnée.
 
     Lorsque la largeur et la hauteur coïncident, l'ellipse devient un cercle
