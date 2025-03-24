@@ -74,14 +74,13 @@ def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
 
 def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Grafica:
     """
-    Crea un triangolo specificando due lati e l'angolo tra essi compreso,
+    Crea un triangolo dati due lati e l'angolo tra essi compreso,
     riempito con un colore.
-    Il primo lato si estende orizzontalmente verso destra. L'angolo specifica
-    di quanto il secondo lato è ruotato, in senso antiorario, rispetto al primo.
 
-    Per tutti i triangoli, eccetto quelli ottusi, il punto in basso a sinistra
-    della grafica risultante coincide con il vertice del triangolo di cui si è
-    specificato l'angolo.
+    Il primo lato si estende orizzontalmente verso destra. Il secondo lato si
+    estende dall'estremità sinistra del primo lato, ruotato dell'angolo specificato
+    in senso antiorario. Questo punto sarà in basso a sinistra nella grafica,
+    a meno che l'angolo specificato sia più grande di 90 gradi.
 
     La posizione di fissaggio è il centroide del triangolo.
 

@@ -78,15 +78,14 @@ def secteur_circulaire(rayon: float, angle: float, couleur: Couleur) -> Graphiqu
 
 def triangle(cote1: float, cote2: float, angle: float, couleur: Couleur) -> Graphique:
     """
-    Crée un triangle en spécifiant deux côtés et l'angle qui les sépare, remplis
+    Crée un triangle en spécifiant deux côtés et l'angle qui les sépare, rempli
     d'une couleur.
-    Le premier côté s'étend horizontalement vers la droite. L'angle spécifie la
-    rotation du deuxième côté, dans le sens inverse des aiguilles d'une montre,
-    par rapport au premier.
 
-    Pour tous les triangles, à l'exception des triangles obtus, le point
-    inférieur gauche du graphique résultant coïncide avec le sommet du triangle
-    dont l'angle a été spécifié.
+    Le premier côté s'étend horizontalement vers la droite. Le deuxième côté
+    s'étend à partir du point d'extrémité gauche du premier côté, tourné de l'angle
+    spécifié dans le sens inverse des aiguilles d'une montre.
+    Ce point sera situé en bas à gauche du graphique, sauf si l'angle spécifié
+    est supérieur à 90 degrés.
 
     Le point d'ancrage est le centroïde du triangle.
 

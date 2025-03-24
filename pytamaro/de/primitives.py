@@ -81,13 +81,11 @@ def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik
     """
     Erzeugt ein Dreieck mit den gegebenen Seitenlängen und dem gegebenen Winkel,
     gefüllt in der gegebenen Farbe.
-    Die erste Seite verläuft horizontal nach rechts.
-    Der Winkel gibt an, wie viel die zweite Seite
-    im Gegenuhrzeigersinn von der ersten Seite abweicht.
 
-    Für alle Dreiecke, ausser für stumpfe Dreiecke,
-    liegt die untere linke Ecke des Begrenzungsrahmens
-    auf dem Eckpunkt des Dreiecks, für das der Winkel angegeben ist.
+    Die erste Seite verläuft horizontal nach rechts. Die zweite Seite verläuft
+    vom linken Endpunkt der ersten Seite aus, gedreht gegen den Uhrzeigersinn um
+    den gegebenen Winkel. Dieser Punkt befindet sich unten links in der Grafik,
+    es sei denn, der gegebene Winkel beträgt mehr als 90 Grad.
 
     Die Fixierposition liegt auf dem Schwerpunkt des Dreiecks.
 

@@ -91,14 +91,13 @@ def circular_sector(radius: float, angle: float, color: Color) \
 @export
 def triangle(side1: float, side2: float, angle: float, color: Color) -> Graphic:
     """
-    Creates a triangle specifying two sides and the angle between them, filled
-    with a color.
-    The first side extends horizontally to the right. The angle specifies how
-    much the second side is rotated, counterclockwise, from the first one.
+    Creates a triangle given two sides and the angle between them, filled with a
+    color.
 
-    For all triangles, except obtuse ones, the bottom-left corner of the
-    resulting graphic concides with the vertex of the triangle for which the
-    angle is specified.
+    The first side extends horizontally to the right. The second side extends
+    from the left endpoint of the first side, rotated counterclockwise by the
+    given angle. This point will be at the bottom left of the graphic, unless
+    the specified angle is more than 90 degrees.
 
     The pinning position is the centroid of the triangle.
 
