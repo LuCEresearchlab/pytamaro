@@ -1,3 +1,16 @@
+# /// script
+# dependencies = [
+#   "lxml",
+#   "xmltodict",
+#   "pytamaro==1.1.2",
+# ]
+# ///
+
+
+"""
+Run this script with:
+> uv run --prerelease=allow judicious_transformer.py
+"""
 import ast
 import json
 import os
@@ -67,7 +80,7 @@ for languagedir in [el for el in Path("_build/xml").iterdir() if el.is_dir()]:
         new_elements = maybe_elements["element"] if maybe_elements is not None else []
         docs["elements"].extend(new_elements)
 
-    # Execute code examples for PyTamaro (localizing names) and add the output to the docs 
+    # Execute code examples for PyTamaro (localizing names) and add the output to the docs
     with open("examples-pytamaro.json", "r") as f:
         examples_dict = json.load(f)
     for element in examples_dict["elements"]:
@@ -76,7 +89,7 @@ for languagedir in [el for el in Path("_build/xml").iterdir() if el.is_dir()]:
         if "examples" in element:
             for example in element["examples"]:
                 example["code"] = localize_code(example["code"], lang_code)
-                output = subprocess.run([sys.executable, "-c", f'import os; os.chdir("{EXAMPLES_EXECUTION_DIR.name}"); from {module_name} import *; {example["code"]}'], 
+                output = subprocess.run([sys.executable, "-c", f'import os; os.chdir("{EXAMPLES_EXECUTION_DIR.name}"); from {module_name} import *; {example["code"]}'],
                                         capture_output=True, text=True, env={"PYTAMARO_OUTPUT_DATA_URI": "1"}, check=True)
                 example["stdout"] = output.stdout
             for el in docs["elements"]:
