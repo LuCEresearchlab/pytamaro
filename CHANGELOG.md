@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2025-04-16
+
+### Fixed
+
+- Fixed non-looping GIF animations [repeating twice instead of only once](https://github.com/LuCEresearchlab/pytamaro/issues/45#issuecomment-2809733342)
+- Fixed GIF animations [incorrectly cropped when using black as a background in certain cases](https://github.com/python-pillow/Pillow/issues/8746)
+
 ## [1.1.2] - 2025-01-09
 
 ### Changed

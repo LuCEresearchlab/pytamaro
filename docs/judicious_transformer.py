@@ -2,7 +2,7 @@
 # dependencies = [
 #   "lxml",
 #   "xmltodict",
-#   "pytamaro==1.1.2",
+#   "pytamaro==1.1.3",
 # ]
 # ///
 
