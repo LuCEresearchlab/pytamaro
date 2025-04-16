@@ -230,3 +230,13 @@ def test_animation_frames_not_overlaid():
         gif.seek(1)
         colored_frame1 = non_transparent_pixels(gif)
         assert colored_frame0 == colored_frame1
+
+
+def test_gif_no_loop():
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(WIDTH, HEIGHT, blue)
+    with NamedTemporaryFile() as f:
+        filename = f"{f.name}.gif"
+        save_animation(filename, [r1, r2], loop=False)
+        gif = ImageMod.open(filename)
+        assert gif.info.get("loop") is None

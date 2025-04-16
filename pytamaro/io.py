@@ -231,7 +231,7 @@ def _save_animation(filename: str, graphics: List[Graphic], duration: int, loop:
         save_all=True,
         append_images=pil_images[1:],
         duration=duration,
-        loop=0 if loop else 1,  # loop 0 means "indefinitely", 1 means "once"
+        loop=0 if loop else 1,  # loop 0 means "indefinitely", None means "once"
         disposal=2,  # 2 means "after showing the frame, clear to background"
     )
     return True
