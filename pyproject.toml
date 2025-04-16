@@ -8,7 +8,7 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "pillow>=11.1.0",
+    "pillow==11.2.1",
     "skia-python>=132.0b11",
 ]
 
