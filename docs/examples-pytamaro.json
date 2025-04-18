@@ -125,10 +125,10 @@
             "name": "save_animation",
             "examples": [
                 {
-                    "code": "save_animation('flash.gif', [rectangle(50, 50, yellow), rectangle(50, 50, black)])"
+                    "code": "save_animation('colors.gif', [rectangle(50, 50, hsv_color(hue, 1, 1)) for hue in range(360)])"
                 },
                 {
-                    "code": "save_animation('flash.gif', [rectangle(50, 50, yellow), rectangle(50, 50, black)], 1000, True)",
+                    "code": "save_animation('flash.gif', [rectangle(50, 50, yellow), rectangle(50, 50, black)], 1000, False)",
                     "usesOptional": true
                 }
             ]
@@ -161,10 +161,10 @@
             "name": "show_animation",
             "examples": [
                 {
-                    "code": "show_animation([rectangle(50, 50, yellow), rectangle(50, 50, black)])"
+                    "code": "show_animation([rectangle(50, 50, hsv_color(hue, 1, 1)) for hue in range(360)])"
                 },
                 {
-                    "code": "show_animation([rectangle(50, 50, yellow), rectangle(50, 50, black)], 1000, True)",
+                    "code": "show_animation([rectangle(50, 50, yellow), rectangle(50, 50, black)], 1000, False)",
                     "usesOptional": true
                 }
             ]
