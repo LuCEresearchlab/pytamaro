@@ -48,10 +48,16 @@ translations = {
         "fr": "La list de graphiques ne peut pas être vide",
     },
     "EMPTY_AREA_OUTPUT": {
-        "en": "Cannot show/save a graphic of size {} as it has no area",
-        "it": "Impossibile mostrare/salvare una grafica di dimensione {} poiché non ha area",
+        "en": "Cannot show/save a graphic of size {} because it has no area",
+        "it": "Impossibile visualizzare/salvare una grafica di dimensione {} perché non ha area",
         "de": "Kann eine Grafik der Größe {} nicht anzeigen/speichern, da sie keine Fläche hat",
         "fr": "Impossible de montrer/sauvegarder un graphiqye de dimensions {} vu qu'il ne possède pas de surface",
+    },
+    "TOO_LARGE_AREA_OUTPUT": {
+        "en": "Cannot show/save a graphic of size {} because it is too large",
+        "it": "Impossibile visualizzare/salvare una grafica di dimensione {} perché è troppo grande",
+        "de": "Kann eine Grafik der Größe {} nicht anzeigen/speichern, da sie zu groß ist",
+        "fr": "Impossible de montrer/sauvegarder un graphiqye de dimensions {} vu qu'il est trop grand",
     },
     "FONT_NOT_FOUND": {
         "en": "Cannot find font '{}', another font used as fallback",

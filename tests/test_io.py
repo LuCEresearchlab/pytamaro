@@ -23,19 +23,15 @@ def test_show_animation():
 
 
 def test_show_empty_graphic(capfd):
-    # Implicitly assert that it does not throw
-    show_graphic(empty_graphic())
-    out, _ = capfd.readouterr()
-    # Assert that a nice warning message with the (rounded) size is reported
-    assert "0x0" in out
+    # Assert that it throws ValueError with a message containing the size
+    with raises(ValueError, match="0x0"):
+        show_graphic(empty_graphic())
 
 
 def test_show_round_to_zero_graphic(capfd):
-    # Implicitly assert that it does not throw
-    show_graphic(rectangle(0.1, 100, red))
-    out, _ = capfd.readouterr()
-    # Assert that a nice warning message with the (rounded) size is reported
-    assert "0x100" in out
+    # Assert that it throws ValueError with a message containing the size
+    with raises(ValueError, match="0x100"):
+        show_graphic(rectangle(0.1, 100, red))
 
 
 def test_show_debug_graphic():
@@ -111,27 +107,18 @@ def test_save_graphic_wrong_no_ext():
 
 
 def test_save_empty_graphic_as_PNG(capfd):
-    # Implicitly assert that it does not throw
-    with NamedTemporaryFile() as f:
+    with NamedTemporaryFile() as f, raises(ValueError, match="0x0"):
         save_graphic(f"{f.name}.png", empty_graphic())
-        out, _ = capfd.readouterr()
-        assert "0x0" in out
 
 
 def test_save_animation_empty_graphic(capfd):
-    # Implicitly assert that it does not throw
-    with NamedTemporaryFile() as f:
+    with NamedTemporaryFile() as f, raises(ValueError, match="100x0"):
         save_animation(f"{f.name}.gif", [rectangle(100, 0, red)])
-        out, _ = capfd.readouterr()
-        assert "100x0" in out
 
 
 def test_save_animation_multiple_empty_graphics(capfd):
-    # Implicitly assert that it does not throw
-    with NamedTemporaryFile() as f:
+    with NamedTemporaryFile() as f, raises(ValueError, match="200x0"):
         save_animation(f"{f.name}.gif", [rectangle(200, 0, red), rectangle(0, 200, blue)])
-        out, _ = capfd.readouterr()
-        assert "200x0" in out
 
 
 def test_antialiasing():
@@ -147,7 +134,11 @@ def test_antialiasing():
         image_rotated = image.rotate(-45)
         h_center = image_rotated.width // 2
         v_center = image_rotated.height // 2
-        pixels_seams = [image_rotated.getpixel((x, y)) for x in range(h_center - 20, h_center + 21) for y in range(v_center - 1, v_center + 2)]
+        pixels_seams = [
+            image_rotated.getpixel((x, y))
+            for x in range(h_center - 20, h_center + 21)
+            for y in range(v_center - 1, v_center + 2)
+        ]
         print(pixels_seams)
         assert all(pixel == (255, 0, 0, 255) for pixel in pixels_seams)
 
@@ -166,9 +157,7 @@ def test_data_uri_output(capfd):
     r = rectangle(1, 1, red)
     show_graphic(r)
     out, _ = capfd.readouterr()
-    assert (
-        out == f"{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}"
-    )
+    assert out == f"{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}"
     del os.environ[VAR]
 
 
@@ -184,9 +173,7 @@ def test_multiple_data_uri_mixed_output(capfd):
     show_graphic(r)
     print(42)
     out, _ = capfd.readouterr()
-    assert (
-        out == f"42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n"
-    )
+    assert out == f"42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n"
     del os.environ[VAR]
 
 
@@ -198,16 +185,14 @@ def test_data_uri_gif_output(capfd):
     r = rectangle(1, 1, red)
     show_animation([r])
     out, _ = capfd.readouterr()
-    assert (
-        out
-        == f"{PREFIX}{DATA_URI_11RED_RECT_GIF}{SUFFIX}"
-    )
+    assert out == f"{PREFIX}{DATA_URI_11RED_RECT_GIF}{SUFFIX}"
     del os.environ[VAR]
 
 
 def test_show_deeply_nested_graphic():
     element = rectangle(WIDTH, HEIGHT, red)
     from functools import reduce
+
     graphic = reduce(beside, [element] * 1000, empty_graphic())
     # Implicitly assert that it does not throw
     show_graphic(graphic)
@@ -240,3 +225,19 @@ def test_gif_no_loop():
         save_animation(filename, [r1, r2], loop=False)
         gif = ImageMod.open(filename)
         assert gif.info.get("loop") is None
+
+
+def test_image_large_size():
+    # Implicitly assert that it does not throw
+    with NamedTemporaryFile() as f:
+        filename = f"{f.name}.png"
+        save_graphic(filename, rectangle(4000, 3000, red))
+
+
+def test_image_too_large_size():
+    with NamedTemporaryFile() as f:
+        filename = f"{f.name}.png"
+        width = 30_000
+        height = 30_000
+        with raises(ValueError, match=f"{width}x{height}"):
+            save_graphic(filename, rectangle(width, height, red))

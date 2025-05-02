@@ -25,15 +25,17 @@ from pytamaro.localization import translate
 from pytamaro.utils import export, is_notebook
 
 
-def _warning_no_area(graphic: Graphic):
+def _area_message(error_message_key: str, graphic: Graphic) -> str:
     """
     Emits a warning indicating that the graphic cannot be shown or saved
-    because it has no area.
+    because of a problem with its area.
 
+    :param error_message_key: key for the error message
     :param graphic: graphic that cannot be shown or saved
+    :returns: translated error message
     """
     rounded_size = graphic.size().toRound()
-    print(translate("EMPTY_AREA_OUTPUT", f"{rounded_size.width()}x{rounded_size.height()}"))
+    return translate(error_message_key, f"{rounded_size.width()}x{rounded_size.height()}")
 
 
 def _draw_to_canvas(canvas: Canvas, graphic: Graphic):
@@ -89,8 +91,21 @@ def graphic_to_image(graphic: Graphic) -> Image:
     :returns: rendered graphic as a Skia image
     """
     width, height = graphic.size().toRound()
-    scaling_factor = 2
-    surface = Surface(scaling_factor * width, scaling_factor * height)
+    pixels = width * height
+    if pixels <= 300 * 300:
+        scaling_factor = 3
+    elif pixels <= 3_000 * 3_000:
+        scaling_factor = 2
+    else:
+        scaling_factor = 1
+    surface_width = width * scaling_factor
+    surface_height = height * scaling_factor
+    sk_maxs32 = 2**31 - 1
+    bytes_per_pixel = 4
+    surface_size = surface_width * surface_height * bytes_per_pixel
+    if surface_size > sk_maxs32:
+        raise ValueError(_area_message("TOO_LARGE_AREA_OUTPUT", graphic))
+    surface = Surface(surface_width, surface_height)
     surface.getCanvas().scale(scaling_factor, scaling_factor)
     _draw_to_canvas(surface.getCanvas(), graphic)
     return surface.makeImageSnapshot().resize(
@@ -150,20 +165,19 @@ def show_graphic(graphic: Graphic, debug: bool = False):
     check_graphic(graphic)
     check_type(debug, bool, "debug")
     if graphic.zero_pixels():
-        _warning_no_area(graphic)
+        raise ValueError(_area_message("EMPTY_AREA_OUTPUT", graphic))
+    to_show = add_debug_info(graphic) if debug else graphic
+    pil_image = graphic_to_pillow_image(to_show)
+    if is_notebook():
+        # pylint: disable-next=undefined-variable
+        display(pil_image)  # type: ignore[name-defined]
+    elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
+        buffer = io.BytesIO()
+        pil_image.save(buffer, format="PNG")
+        b64_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
+        _print_data_uri("image/png", b64_str)
     else:
-        to_show = add_debug_info(graphic) if debug else graphic
-        pil_image = graphic_to_pillow_image(to_show)
-        if is_notebook():
-            # pylint: disable-next=undefined-variable
-            display(pil_image)  # type: ignore[name-defined]
-        elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
-            buffer = io.BytesIO()
-            pil_image.save(buffer, format="PNG")
-            b64_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
-            _print_data_uri("image/png", b64_str)
-        else:
-            pil_image.show()
+        pil_image.show()
 
 
 @export
@@ -191,16 +205,15 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     extension = Path(filename).suffix
     if extension == ".png":
         if graphic.zero_pixels():
-            _warning_no_area(graphic)
-        else:
-            _save_as_PNG(filename, to_show)
+            raise ValueError(_area_message("EMPTY_AREA_OUTPUT", graphic))
+        _save_as_PNG(filename, to_show)
     elif extension == ".svg":
         _save_as_SVG(filename, to_show)
     else:
         raise ValueError(translate("INVALID_FILENAME_EXTENSION"))
 
 
-def _save_animation(filename: str, graphics: List[Graphic], duration: int, loop: bool) -> bool:
+def _save_animation(filename: str, graphics: List[Graphic], duration: int, loop: bool):
     """
     Try to save a sequence of graphics as an animation (GIF).
 
@@ -219,8 +232,7 @@ def _save_animation(filename: str, graphics: List[Graphic], duration: int, loop:
     for idx, graphic in enumerate(graphics):
         check_type(graphic, Graphic, "graphics", idx)
         if graphic.zero_pixels():
-            _warning_no_area(graphic)
-            return False
+            raise ValueError(_area_message("EMPTY_AREA_OUTPUT", graphic))
     pil_images = list(map(graphic_to_pillow_image, graphics))
     if len(set(image.size for image in pil_images)) != 1:
         raise ValueError(translate("DIFFERENT_SIZES"))
@@ -234,7 +246,6 @@ def _save_animation(filename: str, graphics: List[Graphic], duration: int, loop:
         loop=0 if loop else None,  # loop 0 means "indefinitely", None means "once"
         disposal=2,  # 2 means "after showing the frame, clear to background"
     )
-    return True
 
 
 @export
@@ -268,20 +279,20 @@ def show_animation(graphics: List[Graphic], duration: int = 40, loop: bool = Tru
     :param loop: whether the animation should loop indefinitely (defaults to true)
     """
     with NamedTemporaryFile(suffix=".gif", delete=False) as file:
-        if _save_animation(file.name, graphics, duration, loop):
-            if is_notebook():
-                # pylint: disable-next=import-outside-toplevel, import-error
-                from IPython.display import Image as IPythonImage  # type: ignore[import]
-                with open(file.name, "rb") as stream:
-                    # pylint: disable-next=undefined-variable
-                    display(IPythonImage(stream.read()))  # type: ignore[name-defined]
-            elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
-                with open(file.name, "rb") as stream:
-                    b64_str = base64.b64encode(stream.read()).decode("utf-8")
-                    _print_data_uri("image/gif", b64_str)
-            elif sys.platform == "win32":
-                os.startfile(file.name)
-            elif sys.platform == "darwin":
-                subprocess.call(["open", "-a", "Safari", file.name])
-            else:
-                subprocess.call(["xdg-open", file.name])
+        _save_animation(file.name, graphics, duration, loop)
+        if is_notebook():
+            # pylint: disable-next=import-outside-toplevel, import-error
+            from IPython.display import Image as IPythonImage  # type: ignore[import]
+            with open(file.name, "rb") as stream:
+                # pylint: disable-next=undefined-variable
+                display(IPythonImage(stream.read()))  # type: ignore[name-defined]
+        elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
+            with open(file.name, "rb") as stream:
+                b64_str = base64.b64encode(stream.read()).decode("utf-8")
+                _print_data_uri("image/gif", b64_str)
+        elif sys.platform == "win32":
+            os.startfile(file.name)
+        elif sys.platform == "darwin":
+            subprocess.call(["open", "-a", "Safari", file.name])
+        else:
+            subprocess.call(["xdg-open", file.name])
