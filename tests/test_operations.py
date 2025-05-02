@@ -8,13 +8,23 @@ from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_color,
                                  assert_repr, assert_size,
                                  assert_size_tolerance, assert_unique_color)
 
+# Width and height
+
 
 def test_width():
     assert graphic_width(rectangle(WIDTH, HEIGHT, red)) == WIDTH
 
 
+def test_width_rounding():
+    assert graphic_width(rectangle(0.01, HEIGHT, red)) == 0
+
+
 def test_height():
     assert graphic_height(rectangle(WIDTH, HEIGHT, red)) == HEIGHT
+
+
+def test_height_rounding():
+    assert graphic_height(rectangle(WIDTH, 0.01, red)) == 0
 
 
 # Rotation

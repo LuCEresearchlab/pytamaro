@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Progressively anti-alias graphics (9x up to 300² pixels, 4x up to 3000² pixels, no super-sampling above)
 - Raise an error with an informative message when showing/saving a graphic that is too big. Both this error and the one about empty areas are `ValueError` exceptions, instead of a simply a warning printed to stdout.
+- The functions `graphic_width` and `graphic_height` now round the size of the graphic to the nearest integer, instead of always rounding up. This matches the behavior of showing/saving graphics and the sizes reported in error messages.
 
 ## [1.1.3] - 2025-04-16
 

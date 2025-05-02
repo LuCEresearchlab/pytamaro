@@ -18,7 +18,7 @@ def graphic_width(graphic: Graphic) -> int:
     :returns: width of the graphic
     """
     check_graphic(graphic)
-    return graphic.size().toCeil().width()
+    return graphic.size().toRound().width()
 
 
 @export
@@ -30,7 +30,7 @@ def graphic_height(graphic: Graphic) -> int:
     :returns: height of the graphic
     """
     check_graphic(graphic)
-    return graphic.size().toCeil().height()
+    return graphic.size().toRound().height()
 
 
 @export
