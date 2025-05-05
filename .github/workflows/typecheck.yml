@@ -17,5 +17,5 @@ jobs:
           python-version-file: ".python-version"
       - name: Install the project
         run: uv sync --all-extras --dev
-      - name: Pylint and Pycodestyle
+      - name: Typecheck
         run: uv run pyright
