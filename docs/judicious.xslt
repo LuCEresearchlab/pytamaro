@@ -27,7 +27,7 @@
         <xsl:value-of select="substring(normalize-space(desc_signature/desc_annotation), 3)"/>
       </type>
       <description>
-        <xsl:apply-templates select="desc_content/paragraph"/>
+        <xsl:apply-templates select="desc_content/*"/>
       </description>
     </element>
   </xsl:template>
@@ -83,9 +83,24 @@
     </parameter>
   </xsl:template>
 
-  <xsl:template match="//paragraph">
+  <xsl:template match="paragraph">
     <p>
       <xsl:value-of select="normalize-space(.)"/>
+    </p>
+  </xsl:template>
+
+  <xsl:template match="bullet_list">
+    <xsl:param name="bullet" select="@bullet"/>
+    <xsl:apply-templates select="list_item">
+      <xsl:with-param name="bullet" select="$bullet"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template match="list_item">
+    <xsl:param name="bullet"/>
+    <p>
+      <xsl:value-of select="concat($bullet, ' ')"/>
+      <xsl:value-of select="normalize-space(paragraph)"/>
     </p>
   </xsl:template>
   
