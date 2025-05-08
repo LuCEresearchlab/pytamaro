@@ -76,6 +76,9 @@ autodoc_type_aliases = {
     # de
     "Farbe": "Farbe",
     "Grafik": "Grafik",
+    # fr
+    "Couleur": "Couleur",
+    "Graphique": "Graphique",
 }
 
 autodoc_default_options = {
@@ -83,5 +86,5 @@ autodoc_default_options = {
     "exclude-members": "__init__, __new__",
 }
 
-github_username = 'LuCEresearchlab'
-github_repository = 'pytamaro'
+github_username = "LuCEresearchlab"
+github_repository = "pytamaro"
