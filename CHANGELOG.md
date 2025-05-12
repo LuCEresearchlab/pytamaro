@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Raise an error with an informative message when showing/saving a graphic that is too big. Both this error and the one about empty areas are `ValueError` exceptions, instead of a simply a warning printed to stdout.
 - The functions `graphic_width` and `graphic_height` now round the size of the graphic to the nearest integer, instead of always rounding up. This matches the behavior of showing/saving graphics and the sizes reported in error messages.
 
+### Fixed
+- Add missing check on the type of the value passed as `color` to `triangle`
+
 ## [1.1.3] - 2025-04-16
 
 ### Fixed

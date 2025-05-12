@@ -110,6 +110,7 @@ def triangle(side1: float, side2: float, angle: float, color: Color) -> Graphic:
     check_length(side1, "side1")
     check_length(side2, "side2")
     check_angle(angle, 0, 180)
+    check_color(color)
     return Triangle(side1, side2, angle, color)
 
 
