@@ -1,0 +1,185 @@
+{
+  "definitions": {
+    "color": {
+      "properties": {
+        "red": {
+          "type": "uint8"
+        },
+        "blue": {
+          "type": "uint8"
+        },
+        "green": {
+          "type": "uint8"
+        },
+        "alpha": {
+          "type": "float32"
+        }
+      }
+    },
+    "point": {
+      "properties": {
+        "x": {
+          "type": "float32"
+        },
+        "y": {
+          "type": "float32"
+        }
+      }
+    },
+    "graphics": {
+      "discriminator": "id",
+      "mapping": {
+        "empty": {
+          "properties": {}
+        },
+        "rectangle": {
+          "properties": {
+            "color": {
+              "ref": "color"
+            },
+            "width": {
+              "type": "float32"
+            },
+            "height": {
+              "type": "float32"
+            }
+          }
+        },
+        "ellipse": {
+          "properties": {
+            "color": {
+              "ref": "color"
+            },
+            "width": {
+              "type": "float32"
+            },
+            "height": {
+              "type": "float32"
+            }
+          }
+        },
+        "circularSector": {
+          "properties": {
+            "color": {
+              "ref": "color"
+            },
+            "radius": {
+              "type": "float32"
+            },
+            "angle": {
+              "type": "float32"
+            }
+          }
+        },
+        "triangle": {
+          "properties": {
+            "color": {
+              "ref": "color"
+            },
+            "side1": {
+              "type": "float32"
+            },
+            "side2": {
+              "type": "float32"
+            },
+            "angle": {
+              "type": "float32"
+            }
+          }
+        },
+        "text": {
+          "properties": {
+            "color": {
+              "ref": "color"
+            },
+            "text": {
+              "type": "string"
+            },
+            "font_name": {
+              "type": "string"
+            },
+            "text_size": {
+              "type": "float32"
+            }
+          }
+        },
+        "compose": {
+          "properties": {
+            "foreground": {
+              "ref": "graphics"
+            },
+            "background": {
+              "ref": "graphics"
+            }
+          }
+        },
+        "pin": {
+          "properties": {
+            "graphic": {
+              "ref": "graphics"
+            },
+            "pinning_point": {
+              "ref": "point"
+            }
+          }
+        },
+        "rotate": {
+          "properties": {
+            "graphic": {
+              "ref": "graphics"
+            },
+            "angle": {
+              "type": "float32"
+            }
+          }
+        },
+        "simple_compose": {
+          "properties": {
+            "graphic1": {
+              "ref": "graphics"
+            },
+            "graphic2": {
+              "ref": "graphics"
+            },
+            "point1": {
+              "ref": "point"
+            },
+            "point2": {
+              "ref": "point"
+            }
+          }
+        },
+        "beside": {
+          "properties": {
+            "left_graphic": {
+              "ref": "graphics"
+            },
+            "right_graphic": {
+              "ref": "graphics"
+            }
+          }
+        },
+        "above": {
+          "properties": {
+            "top_graphic": {
+              "ref": "graphics"
+            },
+            "bottom_graphic": {
+              "ref": "graphics"
+            }
+          }
+        },
+        "overlay": {
+          "properties": {
+            "front_graphic": {
+              "ref": "graphics"
+            },
+            "back_graphic": {
+              "ref": "graphics"
+            }
+          }
+        }
+      }
+    }
+  }
+}
