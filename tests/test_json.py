@@ -117,3 +117,12 @@ def test_rotate():
     rotated_graphic = rotate(42, rect)
 
     assert_serializer_deserializer(rotated_graphic)
+
+
+def test_pin():
+    from pytamaro import pin, rectangle, top_center
+
+    rect = rectangle(WIDTH, HEIGHT, red)
+    pinned_graphic = pin(top_center, rect)
+
+    assert_serializer_deserializer(pinned_graphic)

@@ -119,7 +119,7 @@ class JSONSerializer(visitor.GraphicVisitor[JSONGraphic]):
         return JSONGraphicPin(
             "pin",
             graphic=self.visit(v.graphic),
-            pinning_point=JSONSerializer.point(v.pin_position),
+            pinning_point=JSONSerializer.point(v.pinning_point),
         )
 
     def visitRotate(self, v: Rotate) -> JSONGraphicRotate:
