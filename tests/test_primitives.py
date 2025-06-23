@@ -28,6 +28,11 @@ def test_negative_size():
         rectangle(WIDTH, -1, red)
 
 
+def test_complex_size():
+    with raises(ValueError):
+        rectangle(complex(WIDTH, 0), HEIGHT, red)  # type: ignore
+
+
 def test_empty_graphic():
     empty = empty_graphic()
     assert_size(empty, (0, 0))

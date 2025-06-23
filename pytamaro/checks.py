@@ -3,7 +3,7 @@ Checks to be performed on the parameters of user-facing functions.
 """
 
 from math import inf
-from numbers import Number
+from numbers import Number, Real
 from typing import Any, Optional
 
 from pytamaro.color import Color
@@ -25,13 +25,13 @@ def check_angle(angle: Any, lower_bound: float = -inf, upper_bound: float = inf)
 def check_length(length: Any, parameter_name: str):
     """
     Raises an exception when the provided value is not valid for a
-    length, being negative or not a numeric type.
+    length, being negative or not a numeric type that is Real.
 
     :param length: the value for a length to be checked
     """
     check_number(length, parameter_name)
     localized_parameter_name = translate(parameter_name)
-    if length < 0:
+    if not isinstance(length, Real) or length < 0:
         raise ValueError(translate("INVALID_LENGTH", localized_parameter_name))
 
 
@@ -104,15 +104,16 @@ def check_number(value: Any, parameter_name: str):
 
 def check_range(value: Any, lower_bound: float, upper_bound: float, parameter_name: str):
     """
-    Raises an exception when the provided value is not valid for a
-    range, being outside the specified range or not a numeric type.
+    Raises an exception when the provided value is not valid for a range, being
+    outside the specified range or not a numeric type that is Real.
 
     :param value: the value to be checked
     :param lower_bound: the lower bound of the range
     :param upper_bound: the upper bound of the range
     """
     check_number(value, parameter_name)
-    if value < lower_bound or value > upper_bound:
+    if not isinstance(value, Real) or \
+            value < lower_bound or not value <= upper_bound:
         raise ValueError(translate("INVALID_RANGE",
                                    translate(parameter_name),
                                    lower_bound,
