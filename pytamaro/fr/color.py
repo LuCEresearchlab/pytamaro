@@ -4,10 +4,11 @@ couleurs particulières.
 """
 
 from __future__ import annotations
+from typing import TypeAlias
 
 import pytamaro as _pytamaro
 
-Couleur = _pytamaro.Color
+Couleur: TypeAlias = _pytamaro.Color
 """
 Représente une couleur.
 Une couleur a aussi un taux d'opacité,

@@ -4,10 +4,11 @@ und Konstanten für wichtige Farben.
 """
 
 from __future__ import annotations
+from typing import TypeAlias
 
 import pytamaro as _pytamaro
 
-Farbe = _pytamaro.Color
+Farbe: TypeAlias = _pytamaro.Color
 """
 Repräsentiert eine Farbe.
 Eine Farbe hat auch eine gewisse Opazität,

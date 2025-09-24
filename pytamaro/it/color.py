@@ -3,10 +3,11 @@ Tipo `Colore`, funzioni per produrre colori e costanti per colori notevoli.
 """
 
 from __future__ import annotations
+from typing import TypeAlias
 
 import pytamaro as _pytamaro
 
-Colore = _pytamaro.Color
+Colore: TypeAlias = _pytamaro.Color
 """
 Rappresenta un colore.
 Un colore ha anche un grado di opacità,

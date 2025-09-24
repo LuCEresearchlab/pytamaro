@@ -3,10 +3,11 @@ Type `Graphique`, qui inclut un graphique avec un point d'ancrage.
 """
 
 from __future__ import annotations
+from typing import TypeAlias
 
 import pytamaro as _pytamaro
 
-Graphique = _pytamaro.Graphic
+Graphique: TypeAlias = _pytamaro.Graphic
 """
 Un graphique (image) avec un point d'ancrage.
 

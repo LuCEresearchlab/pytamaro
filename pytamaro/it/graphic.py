@@ -3,10 +3,11 @@ Tipo `Grafica`, che include una grafica con una posizione di fissaggio.
 """
 
 from __future__ import annotations
+from typing import TypeAlias
 
 import pytamaro as _pytamaro
 
-Grafica = _pytamaro.Graphic
+Grafica: TypeAlias = _pytamaro.Graphic
 """
 Una grafica (immagine) con una posizione per fissare.
 

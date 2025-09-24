@@ -2,9 +2,10 @@
 Type `Point`.
 """
 
+from typing import TypeAlias
 import pytamaro as _pytamaro
 
-Point = _pytamaro.Point
+Point: TypeAlias = _pytamaro.Point
 """
 Représente un point sur un plan.
 """
