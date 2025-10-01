@@ -1,4 +1,3 @@
-import importlib
 import xml.etree.ElementTree as ET
 from dataclasses import astuple
 from typing import List, Tuple
@@ -9,7 +8,7 @@ from PIL.Image import Image
 from pytamaro.color import Color
 from pytamaro.color_names import transparent
 from pytamaro.graphic import Graphic
-from pytamaro.io import graphic_to_image, graphic_to_pillow_image
+from pytamaro.impl.skia import graphic_to_image, graphic_to_pillow_image
 from pytamaro.operations import graphic_height, graphic_width
 from pytamaro.point import Point
 

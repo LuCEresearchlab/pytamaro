@@ -2,17 +2,13 @@
 Type `Graphic`, that includes a graphic with a pinning position.
 """
 
-import sys
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from functools import cached_property
-
-from skia import (Canvas, Font, FontMgr, Matrix, Paint, Path, Point, Rect,
-                  Size, Typeface)
+from dataclasses import dataclass, asdict
+from typing import override, Any
 
 from pytamaro.color import Color
 from pytamaro.localization import translate
-from pytamaro.point import Point as PyTamaroPoint
+from pytamaro.point import Point
 from pytamaro.point_names import (bottom_center, center, center_left,
                                   center_right, top_center)
 
@@ -28,84 +24,14 @@ class Graphic(ABC):
     - graphic composition (two graphics get composed aligning their pinning
       position).
     """
-    pin_position: Point
-    path: Path
-
-    def size(self) -> Size:
-        """
-        Computes the size of this graphic (x and y axes spanning),
-        using the bounds computed by bounds().
-
-        :returns: graphic's size
-        """
-        return Size(self.bounds.width(), self.bounds.height())
-
-    @cached_property
-    def bounds(self) -> Rect:
-        """
-        Computes the (tight) bounds for the path (outline) of this graphic.
-
-        :returns: a rectangle that indicates the bounds of the graphic in the 2D
-                  space
-        """
-        return self.path.computeTightBounds()
 
     @abstractmethod
-    def draw(self, canvas: Canvas):
+    def as_dict(self) -> dict[str, int | float | dict[str, Any] | str]:
         """
-        Draws the current graphic onto the provided canvas.
+        Produce a dictionary-based representation of this graphic.
 
-        :param canvas: canvas onto which to draw
+        :meta private:
         """
-
-    def zero_pixels(self) -> bool:
-        """
-        Returns whether this graphic has no pixels to render, because its (rounded) area is 0.
-
-        :returns: True if the graphic has no pixels, False otherwise
-        """
-        return self.size().toRound().isEmpty()
-
-    def __eq__(self, other: object) -> bool:
-        if isinstance(other, Graphic):
-            return self.__hash__() == other.__hash__()
-        return False
-
-    def __hash__(self) -> int:
-        return hash(self._key())
-
-    def _key(self):
-        return ((self.pin_position.fX, self.pin_position.fY),
-                self.path.serialize().bytes())
-
-
-@dataclass(frozen=True, eq=False)
-class Primitive(Graphic):
-    """
-    Represents a primitive graphic, which has a uniform color.
-    Geometric shapes and text are primitive graphics.
-    """
-    color: Color
-
-    def __init__(self, path: Path, color: Color, pin_position: Point = None):
-        object.__setattr__(self, "color", color)
-        if pin_position is None:
-            bounds = path.computeTightBounds()
-            pin_position = Point(bounds.width() / 2, bounds.height() / 2)
-        super().__init__(pin_position, path)
-
-    @cached_property
-    def antialias(self) -> bool:
-        """
-        Whether the graphic should be drawn with antialiasing.
-        """
-        return False
-
-    def draw(self, canvas: Canvas):
-        canvas.drawPath(self.path, Paint(Color=self.color.skia_color, AntiAlias=self.antialias))
-
-    def _key(self):
-        return super()._key(), self.color
 
 
 @dataclass(frozen=True, eq=False)
@@ -114,80 +40,85 @@ class Empty(Graphic):
     An empty graphic.
     """
 
-    def __init__(self):
-        super().__init__(Point(0, 0), Path())
-
-    def draw(self, canvas: Canvas):
-        pass
+    @override
+    def as_dict(self) -> dict[str, str]:
+        return {
+            "type": "empty",
+        }
 
     def __repr__(self) -> str:
         return f"{translate('empty_graphic')}()"
 
 
 @dataclass(frozen=True, eq=False)
-class Rectangle(Primitive):
+class Rectangle(Graphic):
     """
     A rectangle.
     """
     width: float
     height: float
+    color: Color
 
-    def __init__(self, width: float, height: float, color: Color):
-        object.__setattr__(self, "width", width)
-        object.__setattr__(self, "height", height)
-        path = Path().addRect(Rect.MakeWH(width, height))
-        super().__init__(path, color)
+    @override
+    def as_dict(self) -> dict[str, float | str | dict[str, int | float]]:
+        return {
+            "type": "rectangle",
+            "width": self.width,
+            "height": self.height,
+            "color": asdict(self.color),
+        }
 
     def __repr__(self) -> str:
         return f"{translate('rectangle')}({self.width}, {self.height}, {self.color})"
 
 
 @dataclass(frozen=True, eq=False)
-class Ellipse(Primitive):
+class Ellipse(Graphic):
     """
     An ellipse.
     """
     width: float
     height: float
+    color: Color
 
-    def __init__(self, width: float, height: float, color: Color):
-        object.__setattr__(self, "width", width)
-        object.__setattr__(self, "height", height)
-        path = Path().addOval(Rect.MakeWH(width, height))
-        super().__init__(path, color)
+    @override
+    def as_dict(self) -> dict[str, float | str | dict[str, int | float]]:
+        return {
+            "type": "ellipse",
+            "width": self.width,
+            "height": self.height,
+            "color": asdict(self.color),
+        }
 
     def __repr__(self) -> str:
         return f"{translate('ellipse')}({self.width}, {self.height}, {self.color})"
 
 
 @dataclass(frozen=True, eq=False)
-class CircularSector(Primitive):
+class CircularSector(Graphic):
     """
     A circular sector (with an angle between 0 and 360).
     Its pinning position is the center of the circle from which it is taken.
     """
     radius: float
     angle: float
+    color: Color
 
-    def __init__(self, radius: float, angle: float, color: Color):
-        object.__setattr__(self, "radius", radius)
-        object.__setattr__(self, "angle", angle)
-        if angle == 360:
-            path = Path.Circle(radius, radius, radius)
-        else:
-            diameter = 2 * radius
-            path = Path()
-            path.moveTo(radius, radius)
-            path.arcTo(Rect.MakeWH(diameter, diameter), 0, -angle, False)
-            path.close()
-        super().__init__(path, color, Point(radius, radius))
+    @override
+    def as_dict(self) -> dict[str, float | str | dict[str, int | float]]:
+        return {
+            "type": "circular_sector",
+            "radius": self.radius,
+            "angle": self.angle,
+            "color": asdict(self.color),
+        }
 
     def __repr__(self) -> str:
         return f"{translate('circular_sector')}({self.radius}, {self.angle}, {self.color})"
 
 
 @dataclass(frozen=True, eq=False)
-class Triangle(Primitive):
+class Triangle(Graphic):
     """
     A triangle specified using two sides and the angle between them.
     The first side extends horizontally to the right.
@@ -198,23 +129,23 @@ class Triangle(Primitive):
     side1: float
     side2: float
     angle: float
+    color: Color
 
-    def __init__(self, side1: float, side2: float, angle: float, color: Color):
-        object.__setattr__(self, "side1", side1)
-        object.__setattr__(self, "side2", side2)
-        object.__setattr__(self, "angle", angle)
-        third_point = Matrix.RotateDeg(-angle).mapXY(side2, 0)
-        path = Path.Polygon([Point(0, 0), Point(side1, 0), third_point], isClosed=True)
-        # The centroid is the average of the three vertices
-        centroid = Point((side1 + third_point.x()) / 3, third_point.y() / 3)
-        super().__init__(path, color, centroid)
+    def as_dict(self) -> dict[str, str | float | dict[str, int | float]]:
+        return {
+            "type": "triangle",
+            "side1": self.side1,
+            "side2": self.side2,
+            "angle": self.angle,
+            "color": asdict(self.color),
+        }
 
     def __repr__(self) -> str:
         return f"{translate('triangle')}({self.side1}, {self.side2}, {self.angle}, {self.color})"
 
 
 @dataclass(frozen=True, eq=False)
-class Text(Primitive):
+class Text(Graphic):
     """
     Graphic containing text, using a given font with a given typographic size.
     Its pinning position is horizontally aligned on the left and vertically on
@@ -223,44 +154,16 @@ class Text(Primitive):
     text: str
     font_name: str
     text_size: float
+    color: Color
 
-    def __init__(self, text: str, font_name: str, text_size: float, color: Color):
-        object.__setattr__(self, "text", text)
-        object.__setattr__(self, "font_name", font_name)
-        object.__setattr__(self, "text_size", text_size)
-        if FontMgr().matchFamily(font_name).count() == 0:
-            print(translate("FONT_NOT_FOUND", font_name), file=sys.stderr)
-        glyphs = self.font.textToGlyphs(text)
-        offsets = self.font.getXPos(glyphs)
-        text_path = Path()
-        for glyph, x_offset in zip(glyphs, offsets):
-            path = self.font.getPath(glyph)
-            if path is not None:  # some glyphs (e.g., a space) have no outline
-                path.offset(x_offset, 0)
-                text_path.addPath(path)
-        # The pinning position is on the left (0) on the baseline (0).
-        super().__init__(text_path, color, Point(0, 0))
-
-    @cached_property
-    def antialias(self) -> bool:
-        return True
-
-    @cached_property
-    def font(self) -> Font:
-        """
-        The Skia Font used to render the text.
-        """
-        return Font(Typeface(self.font_name), self.text_size)
-
-    @cached_property
-    def bounds(self) -> Rect:
-        """
-        Computes the bounding box of the text, whose width is determined by
-        Font.measureText() to account for leading and trailing glyphs with no outline.
-        """
-        path_bounds = super().bounds
-        text_length = self.font.measureText(self.text)
-        return Rect.MakeLTRB(0, path_bounds.top(), text_length, path_bounds.bottom())
+    def as_dict(self) -> dict[str, str | float | dict[str, int | float]]:
+        return {
+            "type": "text",
+            "text": self.text,
+            "font_name": self.font_name,
+            "text_size": self.text_size,
+            "color": asdict(self.color),
+        }
 
     def __repr__(self) -> str:
         return f"{translate('text')}({self.text!r}, {self.font_name!r}, {self.text_size}, {self.color})"  # pylint: disable=line-too-long
@@ -275,24 +178,12 @@ class Compose(Graphic):
     foreground: Graphic
     background: Graphic
 
-    def __init__(self, foreground: Graphic, background: Graphic):
-        object.__setattr__(self, "foreground", foreground)
-        object.__setattr__(self, "background", background)
-        fg_pin = self.foreground.pin_position
-        bg_pin = self.background.pin_position
-        pin = Point(bg_pin.x(), bg_pin.y())
-        path = Path(self.background.path)
-        path.addPath(self.foreground.path,
-                     bg_pin.x() - fg_pin.x(), bg_pin.y() - fg_pin.y())
-        super().__init__(pin, path)
-
-    def draw(self, canvas: Canvas):
-        canvas.save()
-        self.background.draw(canvas)
-        canvas.translate(self.background.pin_position.x() - self.foreground.pin_position.x(),
-                         self.background.pin_position.y() - self.foreground.pin_position.y())
-        self.foreground.draw(canvas)
-        canvas.restore()
+    def as_dict(self) -> dict[str, str | dict[str, Any]]:
+        return {
+            "type": "compose",
+            "foreground": self.foreground.as_dict(),
+            "background": self.background.as_dict(),
+        }
 
     def __repr__(self) -> str:
         return f"{translate('compose')}({self.foreground}, {self.background})"
@@ -304,27 +195,14 @@ class Pin(Graphic):
     Represents the pinning of a graphic in a certain position on its bounds.
     """
     graphic: Graphic
-    pinning_point: PyTamaroPoint
+    pinning_point: Point
 
-    def __init__(self, graphic: Graphic, pinning_point: PyTamaroPoint):
-        object.__setattr__(self, "graphic", graphic)
-        object.__setattr__(self, "pinning_point", pinning_point)
-        bounds = graphic.bounds
-        h_mapping = {
-            -1.0: bounds.left(),
-            0.0: bounds.centerX(),
-            1.0: bounds.right()
+    def as_dict(self) -> dict[str, str | dict[str, Any]]:
+        return {
+            "type": "pin",
+            "graphic": self.graphic.as_dict(),
+            "pinning_point": asdict(self.pinning_point),
         }
-        v_mapping = {
-            1.0: bounds.top(),
-            0.0: bounds.centerY(),
-            -1.0: bounds.bottom()
-        }
-        pin = Point(h_mapping[pinning_point.x], v_mapping[pinning_point.y])
-        super().__init__(pin, graphic.path)
-
-    def draw(self, canvas: Canvas):
-        self.graphic.draw(canvas)
 
     def __repr__(self) -> str:
         return f"{translate('pin')}({self.pinning_point}, {self.graphic})"
@@ -340,48 +218,19 @@ class Rotate(Graphic):
     graphic: Graphic
     angle: float
 
-    def __init__(self, graphic: Graphic, angle: float):
-        object.__setattr__(self, "graphic", graphic)
-        object.__setattr__(self, "angle", angle)
-        # Negated angle because RotateDeg works clockwise.
-        object.__setattr__(self, "rot_matrix", Matrix.RotateDeg(-angle, graphic.pin_position))
-        path = Path()
-        # transform() mutates the path provided as the second argument
-        graphic.path.transform(self.rot_matrix, path)  # type: ignore  # pylint: disable=no-member
-        super().__init__(graphic.pin_position, path)
-
-    def draw(self, canvas: Canvas):
-        canvas.save()
-        canvas.concat(self.rot_matrix)  # type: ignore  # pylint: disable=no-member
-        self.graphic.draw(canvas)
-        canvas.restore()
+    def as_dict(self) -> dict[str, str | dict[str, Any] | float]:
+        return {
+            "type": "rotate",
+            "graphic": self.graphic.as_dict(),
+            "angle": self.angle,
+        }
 
     def __repr__(self) -> str:
         return f"{translate('rotate')}({self.angle}, {self.graphic})"
 
 
 @dataclass(frozen=True, eq=False)
-class SimpleCompose(Graphic):
-    """
-    Represents a simple composition operation between two graphics
-    (i.e., beside, above, or overlay).
-    These simple compositions pin the two graphics appropriately,
-    compose them normally, and then pin the result on its center.
-    """
-
-    def __init__(self, graphic1: Graphic, graphic2: Graphic,
-                 point1: PyTamaroPoint, point2: PyTamaroPoint):
-        composed_graphic = Pin(Compose(Pin(graphic1, point1),
-                                       Pin(graphic2, point2)), center)
-        object.__setattr__(self, "composed_graphic", composed_graphic)
-        super().__init__(composed_graphic.pin_position, composed_graphic.path)
-
-    def draw(self, canvas: Canvas):
-        self.composed_graphic.draw(canvas)  # type: ignore  # pylint: disable=no-member
-
-
-@dataclass(frozen=True, eq=False)
-class Beside(SimpleCompose):
+class Beside(Graphic):
     """
     Represents the composition of two graphics one beside the other,
     vertically centered.
@@ -389,17 +238,19 @@ class Beside(SimpleCompose):
     left_graphic: Graphic
     right_graphic: Graphic
 
-    def __init__(self, left_graphic: Graphic, right_graphic: Graphic):
-        object.__setattr__(self, "left_graphic", left_graphic)
-        object.__setattr__(self, "right_graphic", right_graphic)
-        super().__init__(left_graphic, right_graphic, center_right, center_left)
+    def as_dict(self) -> dict[str, str | dict[str, Any]]:
+        return Pin(
+            Compose(Pin(self.left_graphic, center_right),
+                    Pin(self.right_graphic, center_left)),
+            center
+        ).as_dict()
 
     def __repr__(self) -> str:
         return f"{translate('beside')}({self.left_graphic}, {self.right_graphic})"
 
 
 @dataclass(frozen=True, eq=False)
-class Above(SimpleCompose):
+class Above(Graphic):
     """
     Represents the composition of two graphics one above the other,
     horizontally centered.
@@ -407,17 +258,19 @@ class Above(SimpleCompose):
     top_graphic: Graphic
     bottom_graphic: Graphic
 
-    def __init__(self, top_graphic: Graphic, bottom_graphic: Graphic):
-        object.__setattr__(self, "top_graphic", top_graphic)
-        object.__setattr__(self, "bottom_graphic", bottom_graphic)
-        super().__init__(top_graphic, bottom_graphic, bottom_center, top_center)
+    def as_dict(self) -> dict[str, str | dict[str, Any]]:
+        return Pin(
+            Compose(Pin(self.top_graphic, bottom_center),
+                    Pin(self.bottom_graphic, top_center)),
+            center
+        ).as_dict()
 
     def __repr__(self) -> str:
         return f"{translate('above')}({self.top_graphic}, {self.bottom_graphic})"
 
 
 @dataclass(frozen=True, eq=False)
-class Overlay(SimpleCompose):
+class Overlay(Graphic):
     """
     Represents the composition of two graphics that one overlay other,
     the center of the two graphics are at the same position
@@ -425,10 +278,12 @@ class Overlay(SimpleCompose):
     front_graphic: Graphic
     back_graphic: Graphic
 
-    def __init__(self, front_graphic: Graphic, back_graphic: Graphic):
-        object.__setattr__(self, "front_graphic", front_graphic)
-        object.__setattr__(self, "back_graphic", back_graphic)
-        super().__init__(front_graphic, back_graphic, center, center)
+    def as_dict(self) -> dict[str, str | dict[str, Any]]:
+        return Pin(
+            Compose(Pin(self.front_graphic, center),
+                    Pin(self.back_graphic, center)),
+            center
+        ).as_dict()
 
     def __repr__(self) -> str:
         return f"{translate('overlay')}({self.front_graphic}, {self.back_graphic})"
