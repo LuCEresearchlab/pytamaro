@@ -13,8 +13,8 @@ class Point:
     """
     Represents a point on a plane.
     """
-    x: float    # pylint: disable=invalid-name
-    y: float    # pylint: disable=invalid-name
+    x: float  # pylint: disable=invalid-name
+    y: float  # pylint: disable=invalid-name
 
     def translate(self, current_vector: Vector) -> Point:
         """

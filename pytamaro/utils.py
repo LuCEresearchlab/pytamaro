@@ -1,7 +1,7 @@
 """
 General utils.
 """
-
+import importlib.util
 import sys
 
 
@@ -38,3 +38,21 @@ def is_notebook() -> bool:
     except AttributeError:
         return False
     return True
+
+
+__has_skia: bool | None = None
+
+
+def has_skia() -> bool:
+    """
+    Check whether the skia module is available
+
+    :meta private:
+    :returns: True if the "skia" python package is available
+    """
+    # Use global to cache the __has_skia value
+    # pylint: disable=global-statement
+    global __has_skia
+    if __has_skia is None:
+        __has_skia = importlib.util.find_spec("skia") is not None
+    return __has_skia

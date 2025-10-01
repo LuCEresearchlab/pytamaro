@@ -7,11 +7,11 @@ from skia import Point
 from pytamaro.color import Color
 from pytamaro.color_functions import rgb_color
 from pytamaro.graphic import Graphic
-from pytamaro.operations import (compose, graphic_height, graphic_width,
-                                 overlay, pin, rotate)
+from pytamaro.impl.skia.operations import (compose, graphic_height, graphic_width,
+                                           overlay, pin, rotate)
+from pytamaro.impl.skia.primitives import ellipse, rectangle
 from pytamaro.point_names import (bottom_left, center_left, center_right,
                                   top_left)
-from pytamaro.primitives import ellipse, rectangle
 
 
 def top_left_point(graphic: Graphic) -> Point:
@@ -93,9 +93,11 @@ def show_pin_position(graphic: Graphic, light: Color, dark: Color) -> Graphic:
 
     :returns: the graphic with the indicator at the pinning position
     """
+
     def indicator(color, padding=0):
         arm = rectangle(15 + padding, 1 + padding, color)
         cross = overlay(rotate(90, arm), arm)
         central_circle = circle(8 + padding, color)
         return overlay(cross, central_circle)
+
     return compose(overlay(indicator(dark), indicator(light, 3)), graphic)

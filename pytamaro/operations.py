@@ -1,12 +1,15 @@
 """
 Functions to do operations on graphics (mainly, to combine them).
 """
-
 from pytamaro.checks import check_angle, check_graphic, check_point
-from pytamaro.graphic import (Above, Beside, Compose, Graphic, Overlay, Pin,
-                              Rotate)
+from pytamaro.graphic import Graphic
 from pytamaro.point import Point
-from pytamaro.utils import export
+from pytamaro.utils import export, has_skia
+
+if has_skia():
+    import pytamaro.impl.skia.operations as __impl
+else:
+    import pytamaro.impl.ffi.operations as __impl
 
 
 @export
@@ -18,7 +21,7 @@ def graphic_width(graphic: Graphic) -> int:
     :returns: width of the graphic
     """
     check_graphic(graphic)
-    return graphic.size().toRound().width()
+    return __impl.graphic_width(graphic)
 
 
 @export
@@ -30,7 +33,7 @@ def graphic_height(graphic: Graphic) -> int:
     :returns: height of the graphic
     """
     check_graphic(graphic)
-    return graphic.size().toRound().height()
+    return __impl.graphic_height(graphic)
 
 
 @export
@@ -50,7 +53,7 @@ def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
     """
     check_graphic(foreground_graphic, "foreground_graphic")
     check_graphic(background_graphic, "background_graphic")
-    return Compose(foreground_graphic, background_graphic)
+    return __impl.compose(foreground_graphic, background_graphic)
 
 
 @export
@@ -72,7 +75,7 @@ def pin(point: Point, graphic: Graphic) -> Graphic:
     """
     check_point(point)
     check_graphic(graphic)
-    return Pin(graphic, point)
+    return __impl.pin(point, graphic)
 
 
 @export
@@ -90,7 +93,7 @@ def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
     """
     check_graphic(foreground_graphic, "foreground_graphic")
     check_graphic(background_graphic, "background_graphic")
-    return Overlay(foreground_graphic, background_graphic)
+    return __impl.overlay(foreground_graphic, background_graphic)
 
 
 @export
@@ -108,7 +111,7 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
     """
     check_graphic(left_graphic, "left_graphic")
     check_graphic(right_graphic, "right_graphic")
-    return Beside(left_graphic, right_graphic)
+    return __impl.beside(left_graphic, right_graphic)
 
 
 @export
@@ -126,7 +129,7 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
     """
     check_graphic(top_graphic, "top_graphic")
     check_graphic(bottom_graphic, "bottom_graphic")
-    return Above(top_graphic, bottom_graphic)
+    return __impl.above(top_graphic, bottom_graphic)
 
 
 @export
@@ -142,4 +145,4 @@ def rotate(angle: float, graphic: Graphic) -> Graphic:
     """
     check_angle(angle)
     check_graphic(graphic)
-    return Rotate(graphic, angle)
+    return __impl.rotate(angle, graphic)

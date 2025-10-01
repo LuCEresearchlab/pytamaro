@@ -5,10 +5,7 @@ This project is managed using [uv](https://docs.astral.sh/uv/).
 ### Install dependencies
 
 ```sh
-# Base dependencies
-uv sync
-# Dev dependencies
-uv sync --group dev pyproject.toml
+uv sync --all-extras --dev
 ```
 
 ## Test, TypeCheck, Style Guidelines
