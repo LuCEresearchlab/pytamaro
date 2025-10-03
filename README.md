@@ -1,8 +1,8 @@
 ![PyTamaro Logo](https://github.com/LuCEresearchlab/pytamaro/raw/main/docs/images/PyTamaro-horizontal-white-bg.png)
 
-![Test](https://github.com/LuCEresearchlab/pytamaro/workflows/Test/badge.svg?branch=main)
-![Lint](https://github.com/LuCEresearchlab/pytamaro/workflows/Lint/badge.svg?branch=main)
-![TypeCheck](https://github.com/LuCEresearchlab/pytamaro/workflows/TypeCheck/badge.svg?branch=main)
+![Test](https://github.com/LuCEresearchlab/pytamaro/actions/workflows/test.yml/badge.svg?branch=main)
+![Lint](https://github.com/LuCEresearchlab/pytamaro/actions/workflows/lint.yml/badge.svg?branch=main)
+![TypeCheck](https://github.com/LuCEresearchlab/pytamaro/actions/workflows/typecheck.yml/badge.svg?branch=main)
 <a href="https://pypi.org/project/pytamaro/">
     <img alt="PyPI" src="https://img.shields.io/pypi/v/pytamaro">
 </a>
