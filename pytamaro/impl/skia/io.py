@@ -22,7 +22,7 @@ from skia import (Canvas, FILEWStream, FilterMode, Image, MipmapMode, Rect,
 
 from pytamaro.checks import check_type
 from pytamaro.graphic import Graphic
-from pytamaro.impl.skia.checks import check_skia_graphic
+from pytamaro.impl.skia.checks import ensure_skia_graphic
 from pytamaro.impl.skia.debug import add_debug_info
 from pytamaro.impl.skia.graphic import SkiaGraphic
 from pytamaro.localization import translate
@@ -116,13 +116,14 @@ def graphic_to_image(graphic: SkiaGraphic) -> Image:
         width, height, SamplingOptions(FilterMode.kLinear, MipmapMode.kNearest))
 
 
-def graphic_to_pillow_image(graphic: SkiaGraphic) -> PILImage:
+def graphic_to_pillow_image(graphic: Graphic) -> PILImage:
     """
     Renders a graphic and converts it into a Pillow image.
 
     :param graphic: graphic to be rendered and converted
     :returns: rendered graphic as a Pillow image
     """
+    graphic = ensure_skia_graphic(graphic)
     return PILImageMod.fromarray(graphic_to_image(graphic).convert(
         alphaType=kUnpremul_AlphaType, colorType=kRGBA_8888_ColorType)
     )
@@ -153,8 +154,8 @@ def _print_data_uri(mime_type: str, b64_content: str):
     print(f"{prefix}{uri}{suffix}", end="")
 
 
-def show_graphic(graphic: SkiaGraphic, debug: bool):
-    check_skia_graphic(graphic)
+def show_graphic(graphic: Graphic, debug: bool):
+    graphic = ensure_skia_graphic(graphic)
     if graphic.zero_pixels():
         raise ValueError(_area_message("EMPTY_AREA_OUTPUT", graphic))
     to_show = add_debug_info(graphic) if debug else graphic
@@ -171,8 +172,8 @@ def show_graphic(graphic: SkiaGraphic, debug: bool):
         pil_image.show()
 
 
-def save_graphic(filename: str, graphic: SkiaGraphic, debug: bool):
-    check_skia_graphic(graphic)
+def save_graphic(filename: str, graphic: Graphic, debug: bool):
+    graphic = ensure_skia_graphic(graphic)
     to_show = add_debug_info(graphic) if debug else graphic
     extension = Path(filename).suffix
     if extension == ".png":
@@ -185,7 +186,7 @@ def save_graphic(filename: str, graphic: SkiaGraphic, debug: bool):
         raise ValueError(translate("INVALID_FILENAME_EXTENSION"))
 
 
-def _save_animation(filename: str, graphics: List[SkiaGraphic],
+def _save_animation(filename: str, graphics: List[Graphic],
                     duration: int, loop: bool):
     """
     Try to save a sequence of graphics as an animation (GIF).
@@ -198,6 +199,7 @@ def _save_animation(filename: str, graphics: List[SkiaGraphic],
     """
     for idx, graphic in enumerate(graphics):
         check_type(graphic, Graphic, "graphics", idx)
+        graphic = ensure_skia_graphic(graphic)
         if graphic.zero_pixels():
             raise ValueError(_area_message("EMPTY_AREA_OUTPUT", graphic))
     pil_images = list(map(graphic_to_pillow_image, graphics))
@@ -215,12 +217,12 @@ def _save_animation(filename: str, graphics: List[SkiaGraphic],
     )
 
 
-def save_animation(filename: str, graphics: List[SkiaGraphic],
+def save_animation(filename: str, graphics: List[Graphic],
                    duration: int, loop: bool):
     _save_animation(filename, graphics, duration, loop)
 
 
-def show_animation(graphics: List[SkiaGraphic], duration: int, loop: bool):
+def show_animation(graphics: List[Graphic], duration: int, loop: bool):
     with NamedTemporaryFile(suffix=".gif", delete=False) as file:
         _save_animation(file.name, graphics, duration, loop)
         if is_notebook():

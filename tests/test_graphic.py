@@ -8,7 +8,7 @@ def test_pin_position():
     semiwidth = 10
     semiheight = 5
     img = rectangle(semiwidth * 2, semiheight * 2, red)
-    assert tuple(img.pin_position) == (semiwidth, semiheight)
+    assert tuple(img.pin_position) == (semiwidth, semiheight)  # pyright: ignore[reportAttributeAccessIssue]
 
 
 def test_equality():
@@ -57,4 +57,4 @@ def test_hash_empty_graphic():
 
 def test_empty_area_not_empty_graphic():
     g = rectangle(0, HEIGHT, red)
-    assert g.zero_pixels()
+    assert g.zero_pixels()  # pyright: ignore[reportAttributeAccessIssue]
