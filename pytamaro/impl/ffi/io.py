@@ -3,12 +3,13 @@ FFI-based implementation of I/O functions.
 
 :meta private:
 """
-# pylint: disable=import-error, missing-function-docstring
 import sys
 from io import UnsupportedOperation
 from typing import List
 
-import pytamaro_ffi as __impl  # type: ignore
+# pylint: disable=missing-function-docstring
+
+import pytamaro_ffi as __impl  # pylint: disable=import-error # type: ignore
 
 from pytamaro.checks import check_graphic, check_type
 from pytamaro.graphic import Graphic
@@ -19,8 +20,9 @@ def show_graphic(graphic: Graphic, debug: bool):
     check_graphic(graphic)
     check_type(debug, bool, "debug")
 
+    graphic_dict = graphic.asdict()
     # Check for empty graphics
-    size = __impl.graphic_size(graphic.as_dict())
+    size = __impl.graphic_size(graphic_dict)
     rounded_size = {
         "width": round(size.width),
         "height": round(size.height),
@@ -32,7 +34,7 @@ def show_graphic(graphic: Graphic, debug: bool):
         ))
 
     # Render and print data uri
-    b64_str = __impl.show_graphic(graphic.as_dict(), debug)
+    b64_str = __impl.show_graphic(graphic_dict, debug)
     prefix = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
     suffix = "@@@PYTAMARO_DATA_URI_END@@@"
     print(f"{prefix}{b64_str}{suffix}", end="")

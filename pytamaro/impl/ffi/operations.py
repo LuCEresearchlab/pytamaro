@@ -3,18 +3,19 @@ FFI-based implementation of graphic operations.
 
 :meta private:
 """
-# pylint: disable=import-error. missing-function-docstring
-from pytamaro_ffi import graphic_size  # type: ignore
+from pytamaro_ffi import graphic_size  # pylint: disable=import-error # type: ignore
 
 from pytamaro.graphic import Graphic, Compose, Point, Pin, Overlay, Beside, Above, Rotate
 
+# pylint: disable=missing-function-docstring
+
 
 def graphic_width(graphic: Graphic) -> int:
-    return graphic_size(graphic.as_dict()).width
+    return graphic_size(graphic.asdict()).width
 
 
 def graphic_height(graphic: Graphic) -> int:
-    return graphic_size(graphic.as_dict()).height
+    return graphic_size(graphic.asdict()).height
 
 
 def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
