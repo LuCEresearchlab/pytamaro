@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from functools import cached_property
 from typing import override
 
-from skia import (Canvas, Paint, Path, Point, Rect, Size, Matrix, FontMgr, Font, Typeface)
+from skia import (Canvas, Paint, Path, Point, Rect, Size, Matrix, FontMgr, Font, Typeface, Color4f)
 
 from pytamaro.color import Color
 from pytamaro.graphic import (Graphic, Empty, Rectangle, Ellipse, CircularSector,
@@ -96,10 +96,19 @@ class SkiaPrimitive(SkiaGraphic):
         """
         return False
 
+    @cached_property
+    def skia_color(self) -> Color4f:
+        """
+        Returns the Skia color representation of this graphic.
+        """
+        return Color4f(self.color.red / 255,
+                       self.color.green / 255,
+                       self.color.blue / 255,
+                       self.color.alpha)
+
     @override
     def draw(self, canvas: Canvas):
-        # pylint: disable=no-member
-        canvas.drawPath(self.path, Paint(Color=self.color.skia_color, AntiAlias=self.antialias))
+        canvas.drawPath(self.path, Paint(Color=self.skia_color, AntiAlias=self.antialias))
 
     @override
     def _key(self):

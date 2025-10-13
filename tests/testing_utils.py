@@ -12,10 +12,17 @@ from pytamaro.impl.skia.graphic import Graphic
 from pytamaro.impl.skia.io import graphic_to_image, graphic_to_pillow_image
 from pytamaro.operations import graphic_height, graphic_width
 from pytamaro.point import Point
+from pytamaro.primitives import rectangle
+
+from skia import Color4f
 
 WIDTH = 10
 HEIGHT = 20
 RADIUS = 20
+
+
+def skia_color(color: Color) -> Color4f:
+    return rectangle(WIDTH, HEIGHT, color).skia_color  # pyright: ignore[reportAttributeAccessIssue]
 
 
 def pixels_colors(g: Graphic) -> List[int]:
@@ -27,13 +34,13 @@ def pixels_colors(g: Graphic) -> List[int]:
 def assert_unique_color(g: Graphic,
                         color: Color):
     all_colors = pixels_colors(g)
-    colors = set(filter(lambda c: c != int(transparent.skia_color), all_colors))  # pyright: ignore[reportAttributeAccessIssue]
+    colors = set(filter(lambda c: c != int(skia_color(transparent)), all_colors))
     assert len(colors) == 1
-    assert int(color.skia_color) in colors  # pyright: ignore[reportAttributeAccessIssue]
+    assert int(skia_color(color)) in colors
 
 
 def assert_color(g: Graphic, color: Color):
-    assert int(color.skia_color) in pixels_colors(g)  # pyright: ignore[reportAttributeAccessIssue]
+    assert int(skia_color(color)) in pixels_colors(g)
 
 
 def assert_size(g: Graphic, expected_size: Tuple[int, int]):
