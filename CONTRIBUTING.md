@@ -5,7 +5,7 @@ This project is managed using [uv](https://docs.astral.sh/uv/).
 ### Install dependencies
 
 ```sh
-uv sync --all-extras --dev
+uv sync
 ```
 
 ## Test, TypeCheck, Style Guidelines
