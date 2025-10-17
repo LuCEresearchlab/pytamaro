@@ -38,7 +38,13 @@ def show_graphic(graphic: Graphic, debug: bool):
     prefix = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
     suffix = "@@@PYTAMARO_DATA_URI_END@@@"
     print(f"{prefix}{b64_str}{suffix}", end="")
-    sys.stdout.flush()
+    try:
+        sys.stdout.flush()
+    except AttributeError:
+        # https://docs.python.org/3/library/sys.html#sys.stdout
+        # > Under some conditions stdin, stdout and stderr as well as the
+        # > original values __stdin__, __stdout__ and __stderr__ can be None
+        pass
 
 
 def save_graphic(filename: str, graphic: Graphic, debug: bool):
