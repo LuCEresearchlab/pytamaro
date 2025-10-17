@@ -3,8 +3,7 @@ Type `Graphic`, that includes a graphic with a pinning position.
 """
 
 from abc import ABC
-from dataclasses import dataclass, asdict
-from typing import Any
+from dataclasses import dataclass, field
 
 from pytamaro.color import Color
 from pytamaro.localization import translate
@@ -23,13 +22,10 @@ class Graphic(ABC):
       position).
     """
 
-    def asdict(self) -> dict[str, Any]:
-        """
-        Produce a dictionary-based representation of this graphic.
+    type: str = field(init=False)
 
-        :meta private:
-        """
-        return {"type": self.__class__.__name__, **asdict(self)}
+    def __post_init__(self):
+        object.__setattr__(self, "type", self.__class__.__name__)
 
 
 @dataclass(frozen=True, eq=False)

@@ -3,6 +3,7 @@ FFI-based implementation of I/O functions.
 
 :meta private:
 """
+from dataclasses import asdict
 import sys
 from io import UnsupportedOperation
 from typing import List
@@ -20,7 +21,7 @@ def show_graphic(graphic: Graphic, debug: bool):
     check_graphic(graphic)
     check_type(debug, bool, "debug")
 
-    graphic_dict = graphic.asdict()
+    graphic_dict = asdict(graphic)
     # Check for empty graphics
     size = __impl.graphic_size(graphic_dict)
     rounded_size = {
