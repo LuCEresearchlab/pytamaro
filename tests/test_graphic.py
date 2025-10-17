@@ -62,7 +62,7 @@ def test_empty_area_not_empty_graphic():
     assert g.zero_pixels()  # pyright: ignore[reportAttributeAccessIssue]
 
 
-def _mock_pytamaro_ffi():
+def _enable_ffi_impl():
     import sys
     from unittest.mock import MagicMock
     sys.modules['pytamaro_ffi'] = MagicMock()
@@ -73,8 +73,16 @@ def _mock_pytamaro_ffi():
     pytamaro.operations.__impl = pytamaro.impl.ffi.operations  # type: ignore
 
 
+def _enable_skia_impl():
+    import pytamaro
+    import pytamaro.impl.skia.primitives
+    import pytamaro.impl.skia.operations
+    pytamaro.primitives.__impl = pytamaro.impl.skia.primitives  # type: ignore
+    pytamaro.operations.__impl = pytamaro.impl.skia.operations  # type: ignore
+
+
 def test_asdict():
-    _mock_pytamaro_ffi()
+    _enable_ffi_impl()
     r = rectangle(WIDTH, HEIGHT, red)
     d = asdict(r)
     assert d["type"] == "Rectangle"
@@ -85,10 +93,11 @@ def test_asdict():
     assert color["red"] == 255
     assert color["green"] == 0
     assert color["blue"] == 0
+    _enable_skia_impl()
 
 
 def test_asdict_recursive():
-    _mock_pytamaro_ffi()
+    _enable_ffi_impl()
     r = rectangle(WIDTH, HEIGHT, red)
     c = circular_sector(WIDTH, HEIGHT, red)
     g = beside(r, c)
@@ -96,3 +105,4 @@ def test_asdict_recursive():
     assert d["type"] == "Beside"
     assert d["left_graphic"]["type"] == "Rectangle"
     assert d["right_graphic"]["type"] == "CircularSector"
+    _enable_skia_impl()
