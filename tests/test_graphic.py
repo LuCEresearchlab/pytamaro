@@ -65,7 +65,7 @@ def test_empty_area_not_empty_graphic():
 def _enable_ffi_impl():
     import sys
     from unittest.mock import MagicMock
-    sys.modules['pytamaro_ffi'] = MagicMock()
+    sys.modules['pytamaro_js_ffi'] = MagicMock()
     import pytamaro
     import pytamaro.impl.ffi.primitives
     import pytamaro.impl.ffi.operations
