@@ -34,7 +34,7 @@ def show_graphic(graphic: Graphic, debug: bool):
     check_type(debug, bool, "debug")
     graphic_dict = asdict(graphic)
     size = js_graphic_size(graphic_dict)
-    if size.empty_area():
+    if size.to_round().empty_area():
         raise ValueError(area_message("EMPTY_AREA_OUTPUT", size.width, size.height))
     b64_str = render_graphic(graphic_dict, debug)
     print_data_uri("image/png", extract_base64_image_data(b64_str))

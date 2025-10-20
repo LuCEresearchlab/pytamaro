@@ -73,7 +73,7 @@ def _save_animation(filename: str, graphics: List[Graphic],
     for idx, graphic in enumerate(graphics):
         check_type(graphic, Graphic, "graphics", idx)
         size = __impl.graphic_size(graphic)
-        if size.empty_area():
+        if size.to_round().empty_area():
             raise ValueError(area_message("EMPTY_AREA_OUTPUT", size.width, size.height))
     pil_images = list(map(__impl.graphic_to_pillow_image, graphics))
     if len(set(image.size for image in pil_images)) != 1:

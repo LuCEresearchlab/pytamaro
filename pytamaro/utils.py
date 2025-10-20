@@ -60,9 +60,9 @@ def has_skia() -> bool:
 
 
 @dataclass
-class Size:
-    """Size representation for the dimensions of a graphic. """
-    width:  int
+class ISize:
+    """Version of Size but with integer values."""
+    width: int
     height: int
 
     def empty_area(self) -> bool:
@@ -70,3 +70,18 @@ class Size:
         Check if the size represents an empty area (zero width or height).
         """
         return self.width * self.height == 0
+
+
+@dataclass
+class Size:
+    """Size representation for the dimensions of a graphic. """
+    width:  float
+    height: float
+
+    def to_round(self) -> ISize:
+        """
+        Round the size dimensions to the nearest integer values.
+
+        :returns: ISize with the rounded dimensions
+        """
+        return ISize(round(self.width), round(self.height))
