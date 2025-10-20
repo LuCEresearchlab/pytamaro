@@ -3,61 +3,54 @@ FFI-based implementation of I/O functions.
 
 :meta private:
 """
+import base64
 from dataclasses import asdict
-import sys
-from io import UnsupportedOperation
-from typing import List
+from io import BytesIO, UnsupportedOperation
+from PIL import Image
+from PIL.Image import Image as PILImage
 
-# pylint: disable=missing-function-docstring
+from pytamaro_js_ffi import graphic_size as js_graphic_size, render_graphic  # pylint: disable=import-error # type: ignore
 
-from pytamaro_js_ffi import graphic_size, render_graphic  # pylint: disable=import-error # type: ignore
+from pytamaro.impl.shared_io import area_message, print_data_uri
+from pytamaro.utils import Size
 
 from pytamaro.checks import check_graphic, check_type
 from pytamaro.graphic import Graphic
-from pytamaro.localization import translate
+
+# pylint: disable=missing-function-docstring
+
+
+def extract_base64_image_data(data_uri: str) -> str:
+    return data_uri.split(",")[1]
+
+
+def graphic_size(graphic: Graphic):
+    js_size = js_graphic_size(asdict(graphic))
+    return Size(js_size.width, js_size.height)
 
 
 def show_graphic(graphic: Graphic, debug: bool):
     check_graphic(graphic)
     check_type(debug, bool, "debug")
-
     graphic_dict = asdict(graphic)
-    # Check for empty graphics
-    size = graphic_size(graphic_dict)
-    rounded_size = {
-        "width": round(size.width),
-        "height": round(size.height),
-    }
-    if rounded_size["width"] == 0 or rounded_size["height"] == 0:
-        raise ValueError(translate(
-            "EMPTY_AREA_OUTPUT",
-            f"{rounded_size["width"]}x{rounded_size["height"]}"
-        ))
-
-    # Render and print data uri
+    size = js_graphic_size(graphic_dict)
+    if size.empty_area():
+        raise ValueError(area_message("EMPTY_AREA_OUTPUT", size.width, size.height))
     b64_str = render_graphic(graphic_dict, debug)
-    prefix = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
-    suffix = "@@@PYTAMARO_DATA_URI_END@@@"
-    print(f"{prefix}{b64_str}{suffix}", end="")
-    try:
-        sys.stdout.flush()
-    except AttributeError:
-        # https://docs.python.org/3/library/sys.html#sys.stdout
-        # > Under some conditions stdin, stdout and stderr as well as the
-        # > original values __stdin__, __stdout__ and __stderr__ can be None
-        pass
+    print_data_uri("image/png", extract_base64_image_data(b64_str))
+
+
+def graphic_to_pillow_image(graphic: Graphic) -> PILImage:
+    data_uri = render_graphic(asdict(graphic), False)
+    data = BytesIO(base64.b64decode(extract_base64_image_data(data_uri)))
+    return Image.open(data)
 
 
 def save_graphic(filename: str, graphic: Graphic, debug: bool):
     raise UnsupportedOperation(f"save_graphic({filename}, {graphic}, {debug})")
 
 
-def save_animation(filename: str, graphics: List[Graphic],
-                   duration: int, loop: bool):
-    raise UnsupportedOperation(
-        f"save_animation({filename}, [{', '.join(list(map(str, graphics)))}, {duration}, {loop})")
-
-
-def show_animation(graphics: List[Graphic], duration: int, loop: bool):
-    raise UnsupportedOperation(
-        f"show_animation([{', '.join(list(map(str, graphics)))}], {duration}, {loop})")
+def show_animation(filename: str):
+    with open(filename, "rb") as stream:
+        b64_str = base64.b64encode(stream.read()).decode("utf-8")
+        print_data_uri("image/gif", b64_str)

@@ -11,8 +11,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from tempfile import NamedTemporaryFile
-from typing import List
+from typing import cast
 
 from PIL import Image as PILImageMod
 from PIL.Image import Image as PILImage
@@ -20,26 +19,18 @@ from skia import (Canvas, FILEWStream, FilterMode, Image, MipmapMode, Rect,
                   SamplingOptions, Surface, SVGCanvas, kPNG,
                   kRGBA_8888_ColorType, kUnpremul_AlphaType)
 
-from pytamaro.checks import check_type
 from pytamaro.graphic import Graphic
-from pytamaro.impl.skia.checks import ensure_skia_graphic
+from pytamaro.impl.shared_io import area_message, print_data_uri
 from pytamaro.impl.skia.debug import add_debug_info
 from pytamaro.impl.skia.graphic import SkiaGraphic
 from pytamaro.localization import translate
-from pytamaro.utils import is_notebook
+from pytamaro.utils import Size, is_notebook
 
 
-def _area_message(error_message_key: str, graphic: SkiaGraphic) -> str:
-    """
-    Emits a warning indicating that the graphic cannot be shown or saved
-    because of a problem with its area.
-
-    :param error_message_key: key for the error message
-    :param graphic: graphic that cannot be shown or saved
-    :returns: translated error message
-    """
-    rounded_size = graphic.size().toRound()
-    return translate(error_message_key, f"{rounded_size.width()}x{rounded_size.height()}")
+def graphic_size(graphic: Graphic) -> Size:
+    graphic = cast(SkiaGraphic, graphic)
+    skia_size = graphic.size()
+    return Size(skia_size.width(), skia_size.height())
 
 
 def _draw_to_canvas(canvas: Canvas, graphic: SkiaGraphic):
@@ -108,7 +99,7 @@ def graphic_to_image(graphic: SkiaGraphic) -> Image:
     bytes_per_pixel = 4
     surface_size = surface_width * surface_height * bytes_per_pixel
     if surface_size > sk_maxs32:
-        raise ValueError(_area_message("TOO_LARGE_AREA_OUTPUT", graphic))
+        raise ValueError(area_message("TOO_LARGE_AREA_OUTPUT", width, height))
     surface = Surface(surface_width, surface_height)
     surface.getCanvas().scale(scaling_factor, scaling_factor)
     _draw_to_canvas(surface.getCanvas(), graphic)
@@ -123,7 +114,7 @@ def graphic_to_pillow_image(graphic: Graphic) -> PILImage:
     :param graphic: graphic to be rendered and converted
     :returns: rendered graphic as a Pillow image
     """
-    graphic = ensure_skia_graphic(graphic)
+    graphic = cast(SkiaGraphic, graphic)
     return PILImageMod.fromarray(graphic_to_image(graphic).convert(
         alphaType=kUnpremul_AlphaType, colorType=kRGBA_8888_ColorType)
     )
@@ -140,24 +131,11 @@ def _save_as_PNG(filename: str, graphic: SkiaGraphic):
     graphic_to_image(graphic).save(filename, kPNG)
 
 
-def _print_data_uri(mime_type: str, b64_content: str):
-    """
-    Prints a data URI to standard output with a special prefix and suffix so
-    that it can be recognized in the context of a larger output.
-
-    :param mime_type: MIME type of the data (e.g., "image/png")
-    :param b64_content: base64-encoded content
-    """
-    prefix = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
-    suffix = "@@@PYTAMARO_DATA_URI_END@@@"
-    uri = f"data:{mime_type};base64,{b64_content}"
-    print(f"{prefix}{uri}{suffix}", end="")
-
-
 def show_graphic(graphic: Graphic, debug: bool):
-    graphic = ensure_skia_graphic(graphic)
+    graphic = cast(SkiaGraphic, graphic)
     if graphic.zero_pixels():
-        raise ValueError(_area_message("EMPTY_AREA_OUTPUT", graphic))
+        size = graphic.size()
+        raise ValueError(area_message("EMPTY_AREA_OUTPUT", size.width(), size.height()))
     to_show = add_debug_info(graphic) if debug else graphic
     pil_image = graphic_to_pillow_image(to_show)
     if is_notebook():
@@ -167,18 +145,19 @@ def show_graphic(graphic: Graphic, debug: bool):
         buffer = io.BytesIO()
         pil_image.save(buffer, format="PNG")
         b64_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
-        _print_data_uri("image/png", b64_str)
+        print_data_uri("image/png", b64_str)
     else:
         pil_image.show()
 
 
 def save_graphic(filename: str, graphic: Graphic, debug: bool):
-    graphic = ensure_skia_graphic(graphic)
+    graphic = cast(SkiaGraphic, graphic)
     to_show = add_debug_info(graphic) if debug else graphic
     extension = Path(filename).suffix
     if extension == ".png":
         if graphic.zero_pixels():
-            raise ValueError(_area_message("EMPTY_AREA_OUTPUT", graphic))
+            size = graphic.size()
+            raise ValueError(area_message("EMPTY_AREA_OUTPUT", size.width(), size.height()))
         _save_as_PNG(filename, to_show)
     elif extension == ".svg":
         _save_as_SVG(filename, to_show)
@@ -186,58 +165,20 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool):
         raise ValueError(translate("INVALID_FILENAME_EXTENSION"))
 
 
-def _save_animation(filename: str, graphics: List[Graphic],
-                    duration: int, loop: bool):
-    """
-    Try to save a sequence of graphics as an animation (GIF).
-
-    :param filename: name of the file to create, including the extension '.gif'
-    :param graphics: list of graphics to be saved as an animation
-    :param duration: duration in milliseconds for each frame
-    :param loop: whether the GIF should loop indefinitely
-    :returns: whether the animation was successfully saved
-    """
-    for idx, graphic in enumerate(graphics):
-        check_type(graphic, Graphic, "graphics", idx)
-        graphic = ensure_skia_graphic(graphic)
-        if graphic.zero_pixels():
-            raise ValueError(_area_message("EMPTY_AREA_OUTPUT", graphic))
-    pil_images = list(map(graphic_to_pillow_image, graphics))
-    if len(set(image.size for image in pil_images)) != 1:
-        raise ValueError(translate("DIFFERENT_SIZES"))
-    check_type(duration, int, "duration")
-    check_type(loop, bool, "loop")
-    pil_images[0].save(
-        filename,
-        save_all=True,
-        append_images=pil_images[1:],
-        duration=duration,
-        loop=0 if loop else None,  # loop 0 means "indefinitely", None means "once"
-        disposal=2,  # 2 means "after showing the frame, clear to background"
-    )
-
-
-def save_animation(filename: str, graphics: List[Graphic],
-                   duration: int, loop: bool):
-    _save_animation(filename, graphics, duration, loop)
-
-
-def show_animation(graphics: List[Graphic], duration: int, loop: bool):
-    with NamedTemporaryFile(suffix=".gif", delete=False) as file:
-        _save_animation(file.name, graphics, duration, loop)
-        if is_notebook():
-            # pylint: disable-next=import-outside-toplevel, import-error
-            from IPython.display import Image as IPythonImage  # type: ignore[import]
-            with open(file.name, "rb") as stream:
-                # pylint: disable-next=undefined-variable
-                display(IPythonImage(stream.read()))  # type: ignore[name-defined]
-        elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
-            with open(file.name, "rb") as stream:
-                b64_str = base64.b64encode(stream.read()).decode("utf-8")
-                _print_data_uri("image/gif", b64_str)
-        elif sys.platform == "win32":
-            os.startfile(file.name)
-        elif sys.platform == "darwin":
-            subprocess.call(["open", "-a", "Safari", file.name])
-        else:
-            subprocess.call(["xdg-open", file.name])
+def show_animation(filename: str):
+    if is_notebook():
+        # pylint: disable-next=import-outside-toplevel, import-error
+        from IPython.display import Image as IPythonImage  # type: ignore[import]
+        with open(filename, "rb") as stream:
+            # pylint: disable-next=undefined-variable
+            display(IPythonImage(stream.read()))  # type: ignore[name-defined]
+    elif "PYTAMARO_OUTPUT_DATA_URI" in os.environ:
+        with open(filename, "rb") as stream:
+            b64_str = base64.b64encode(stream.read()).decode("utf-8")
+            print_data_uri("image/gif", b64_str)
+    elif sys.platform == "win32":
+        os.startfile(filename)
+    elif sys.platform == "darwin":
+        subprocess.call(["open", "-a", "Safari", filename])
+    else:
+        subprocess.call(["xdg-open", filename])

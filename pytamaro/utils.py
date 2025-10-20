@@ -1,6 +1,7 @@
 """
 General utils.
 """
+from dataclasses import dataclass
 import importlib.util
 import sys
 
@@ -56,3 +57,16 @@ def has_skia() -> bool:
     if __has_skia is None:
         __has_skia = importlib.util.find_spec("skia") is not None
     return __has_skia
+
+
+@dataclass
+class Size:
+    """Size representation for the dimensions of a graphic. """
+    width:  int
+    height: int
+
+    def empty_area(self) -> bool:
+        """
+        Check if the size represents an empty area (zero width or height).
+        """
+        return self.width * self.height == 0

@@ -1,9 +1,8 @@
 from typing import Any
 
+from pytamaro.utils import Size
 
-class Size:
-    width: float
-    height: float
+
 
 def graphic_size(graphic_dict: dict[str, Any]) -> Size: ...
 
