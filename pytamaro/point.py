@@ -36,6 +36,16 @@ class Point:
             return translate(maybe_known_point)
         return f"Point({self.x}, {self.y})"
 
+    @property
+    def as_dict(self) -> dict[str, float]:
+        """
+        Dictionary representation of this point.
+        """
+        return {
+            'x': self.x,
+            'y': self.y,
+        }
+
 
 # Center of the 2-dimensional space
 zero = Point(0.0, 0.0)

@@ -1,7 +1,8 @@
-from dataclasses import asdict
 from pytamaro.color_names import blue, red
+from pytamaro.impl.ffi.specs import to_specs
 from pytamaro.operations import beside
 from pytamaro.primitives import circular_sector, empty_graphic, rectangle
+from pytamaro.point_names import center, center_left, center_right
 
 from tests.testing_utils import HEIGHT, WIDTH
 
@@ -81,28 +82,17 @@ def _enable_skia_impl():
     pytamaro.operations.__impl = pytamaro.impl.skia.operations  # type: ignore
 
 
-def test_asdict():
+def test_to_spec():
     _enable_ffi_impl()
     r = rectangle(WIDTH, HEIGHT, red)
-    d = asdict(r)
-    assert d["type"] == "Rectangle"
-    assert d["width"] == WIDTH
-    assert d["height"] == HEIGHT
-    color = d["color"]
+    specs = to_specs(r)
+    rect_spec = specs[0]
+    assert rect_spec["type"] == "Rectangle"
+    assert rect_spec["width"] == WIDTH
+    assert rect_spec["height"] == HEIGHT
+    color = rect_spec["color"]
     assert color["alpha"] == 1.0
     assert color["red"] == 255
     assert color["green"] == 0
     assert color["blue"] == 0
-    _enable_skia_impl()
-
-
-def test_asdict_recursive():
-    _enable_ffi_impl()
-    r = rectangle(WIDTH, HEIGHT, red)
-    c = circular_sector(WIDTH, HEIGHT, red)
-    g = beside(r, c)
-    d = asdict(g)
-    assert d["type"] == "Beside"
-    assert d["left_graphic"]["type"] == "Rectangle"
-    assert d["right_graphic"]["type"] == "CircularSector"
     _enable_skia_impl()

@@ -28,3 +28,15 @@ class Color:
             return translate(maybe_known_color)
         alpha_repr = "" if self.alpha == 1 else f", {self.alpha}"
         return f"{translate('rgb_color')}({self.red}, {self.green}, {self.blue}{alpha_repr})"
+
+    @property
+    def as_dict(self) -> dict[str, int | float]:
+        """
+        Dictionary representation of this Color.
+        """
+        return {
+            'red': self.red,
+            'green': self.green,
+            'blue': self.blue,
+            'alpha': self.alpha,
+        }

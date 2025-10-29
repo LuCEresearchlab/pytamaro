@@ -2,12 +2,14 @@
 Type `Graphic`, that includes a graphic with a pinning position.
 """
 
-from abc import ABC
-from dataclasses import dataclass, field
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from typing import Any, Self
 
 from pytamaro.color import Color
 from pytamaro.localization import translate
 from pytamaro.point import Point
+from pytamaro.point_names import center, center_left, center_right, bottom_center, top_center
 
 
 @dataclass(frozen=True, eq=False)
@@ -22,10 +24,11 @@ class Graphic(ABC):
       position).
     """
 
-    type: str = field(init=False)
-
-    def __post_init__(self):
-        object.__setattr__(self, "type", self.__class__.__name__)
+    @abstractmethod
+    def deps_and_spec(self) -> tuple[list[Self], dict[str, Any]]:
+        """
+        Create specs to render this graphic
+        """
 
 
 @dataclass(frozen=True, eq=False)
@@ -36,6 +39,11 @@ class Empty(Graphic):
 
     def __repr__(self) -> str:
         return f"{translate('empty_graphic')}()"
+
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        return [], {
+            'type': 'Empty',
+        }
 
 
 @dataclass(frozen=True, eq=False)
@@ -50,6 +58,14 @@ class Rectangle(Graphic):
     def __repr__(self) -> str:
         return f"{translate('rectangle')}({self.width}, {self.height}, {self.color})"
 
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        return [], {
+            'type': 'Rectangle',
+            'width': self.width,
+            'height': self.height,
+            'color': self.color.as_dict,
+        }
+
 
 @dataclass(frozen=True, eq=False)
 class Ellipse(Graphic):
@@ -62,6 +78,14 @@ class Ellipse(Graphic):
 
     def __repr__(self) -> str:
         return f"{translate('ellipse')}({self.width}, {self.height}, {self.color})"
+
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        return [], {
+            'type': 'Ellipse',
+            'width': self.width,
+            'height': self.height,
+            'color': self.color.as_dict,
+        }
 
 
 @dataclass(frozen=True, eq=False)
@@ -76,6 +100,14 @@ class CircularSector(Graphic):
 
     def __repr__(self) -> str:
         return f"{translate('circular_sector')}({self.radius}, {self.angle}, {self.color})"
+
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        return [], {
+            'type': 'CircularSector',
+            'radius': self.radius,
+            'angle': self.angle,
+            'color': self.color.as_dict,
+        }
 
 
 @dataclass(frozen=True, eq=False)
@@ -95,6 +127,15 @@ class Triangle(Graphic):
     def __repr__(self) -> str:
         return f"{translate('triangle')}({self.side1}, {self.side2}, {self.angle}, {self.color})"
 
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        return [], {
+            'type': 'Triangle',
+            'side1': self.side1,
+            'side2': self.side2,
+            'angle': self.angle,
+            'color': self.color.as_dict
+        }
+
 
 @dataclass(frozen=True, eq=False)
 class Text(Graphic):
@@ -111,6 +152,15 @@ class Text(Graphic):
     def __repr__(self) -> str:
         return f"{translate('text')}({self.text!r}, {self.font_name!r}, {self.text_size}, {self.color})"  # pylint: disable=line-too-long
 
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        return [], {
+            'type': 'Text',
+            'text': self.text,
+            'font_name': self.font_name,
+            'text_size': self.text_size,
+            'color': self.color.as_dict
+        }
+
 
 @dataclass(frozen=True, eq=False)
 class Compose(Graphic):
@@ -124,6 +174,26 @@ class Compose(Graphic):
     def __repr__(self) -> str:
         return f"{translate('compose')}({self.foreground}, {self.background})"
 
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        deps: list[Graphic] = []
+        spec: dict[str, Any] = {'type': 'Compose'}
+
+        def flat_child(child: Graphic, key: str):
+            """
+            Inline pinning position of children of type Pin to flatten the tree.
+            """
+            if isinstance(child, Pin):
+                spec[f'{key}_pin'] = child.pinning_point.as_dict
+                # Also flatten nested pins
+                while isinstance(child, Pin):
+                    child = child.graphic
+            deps.append(child)
+
+        flat_child(self.foreground, 'foreground')
+        flat_child(self.background, 'background')
+
+        return deps, spec
+
 
 @dataclass(frozen=True, eq=False)
 class Pin(Graphic):
@@ -135,6 +205,20 @@ class Pin(Graphic):
 
     def __repr__(self) -> str:
         return f"{translate('pin')}({self.pinning_point}, {self.graphic})"
+
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        # Flatten pin(pin(...))
+        child_graphic = self.graphic
+        while isinstance(child_graphic, Pin):
+            # pylint: disable=no-member
+            child_graphic = child_graphic.graphic
+        return (
+            [child_graphic],
+            {
+                'type': 'Pin',
+                'pinning_point': self.pinning_point.as_dict,
+            }
+        )
 
 
 @dataclass(frozen=True, eq=False)
@@ -150,6 +234,15 @@ class Rotate(Graphic):
     def __repr__(self) -> str:
         return f"{translate('rotate')}({self.angle}, {self.graphic})"
 
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        # Optimize away %360-deg rotations
+        if self.angle.is_integer() and int(self.angle) % 360 == 0:
+            return self.graphic.deps_and_spec()
+        return [self.graphic], {
+            'type': 'Rotate',
+            'angle': self.angle,
+        }
+
 
 @dataclass(frozen=True, eq=False)
 class Beside(Graphic):
@@ -162,6 +255,17 @@ class Beside(Graphic):
 
     def __repr__(self) -> str:
         return f"{translate('beside')}({self.left_graphic}, {self.right_graphic})"
+
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        return (
+            [self.left_graphic, self.right_graphic],
+            {
+                'type': 'Compose',
+                'foreground_pin': center_right.as_dict,
+                'background_pin': center_left.as_dict,
+                'own_pin': center.as_dict,
+            },
+        )
 
 
 @dataclass(frozen=True, eq=False)
@@ -176,6 +280,17 @@ class Above(Graphic):
     def __repr__(self) -> str:
         return f"{translate('above')}({self.top_graphic}, {self.bottom_graphic})"
 
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        return (
+            [self.top_graphic, self.bottom_graphic],
+            {
+                'type': 'Compose',
+                'foreground_pin': bottom_center.as_dict,
+                'background_pin': top_center.as_dict,
+                'own_pin': center.as_dict,
+            },
+        )
+
 
 @dataclass(frozen=True, eq=False)
 class Overlay(Graphic):
@@ -188,3 +303,13 @@ class Overlay(Graphic):
 
     def __repr__(self) -> str:
         return f"{translate('overlay')}({self.front_graphic}, {self.back_graphic})"
+
+    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+        return (
+            [self.front_graphic, self.back_graphic],
+            {
+                'type': 'Compose',
+                'foreground_pin': center.as_dict,
+                'background_pin': center.as_dict,
+            },
+        )
