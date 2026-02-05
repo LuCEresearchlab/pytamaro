@@ -5,6 +5,7 @@
 from dataclasses import dataclass
 
 from pytamaro.localization import translate
+from pytamaro.utils import Spec
 
 
 @dataclass(frozen=True)
@@ -30,7 +31,7 @@ class Color:
         return f"{translate('rgb_color')}({self.red}, {self.green}, {self.blue}{alpha_repr})"
 
     @property
-    def as_dict(self) -> dict[str, int | float]:
+    def spec(self) -> Spec:
         """
         Dictionary representation of this Color.
         """

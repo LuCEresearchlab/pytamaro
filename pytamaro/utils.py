@@ -1,9 +1,10 @@
 """
-General utils.
+General utility functions and shared datatypes.
 """
 from dataclasses import dataclass
 import importlib.util
 import sys
+from typing import Any
 
 
 def export(fn):  # pylint: disable=invalid-name
@@ -85,3 +86,7 @@ class Size:
         :returns: ISize with the rounded dimensions
         """
         return ISize(round(self.width), round(self.height))
+
+
+# A specification (Spec) of a graphic is a key-value mapping of its properties.
+Spec = dict[str, Any]

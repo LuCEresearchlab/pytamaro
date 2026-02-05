@@ -6,6 +6,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from pytamaro.localization import translate
+from pytamaro.utils import Spec
 
 
 @dataclass(frozen=True)
@@ -37,9 +38,9 @@ class Point:
         return f"Point({self.x}, {self.y})"
 
     @property
-    def as_dict(self) -> dict[str, float]:
+    def spec(self) -> Spec:
         """
-        Dictionary representation of this point.
+        Dictionary representation of this Point.
         """
         return {
             'x': self.x,

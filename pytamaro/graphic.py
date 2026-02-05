@@ -4,12 +4,13 @@ Type `Graphic`, that includes a graphic with a pinning position.
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, Self
+from typing import Self
 
 from pytamaro.color import Color
 from pytamaro.localization import translate
 from pytamaro.point import Point
 from pytamaro.point_names import center, center_left, center_right, bottom_center, top_center
+from pytamaro.utils import Spec
 
 
 @dataclass(frozen=True, eq=False)
@@ -25,9 +26,12 @@ class Graphic(ABC):
     """
 
     @abstractmethod
-    def deps_and_spec(self) -> tuple[list[Self], dict[str, Any]]:
+    def spec_with_deps(self) -> tuple[Spec, list[Self]]:
         """
-        Create specs to render this graphic
+        Returns a tuple that "declaratively specifies" this graphic.
+        The first is a dictionary with this graphic's properties.
+        The second member is a list of Graphics that this graphic depends on.
+        See :file:`impl/ffi/specs.py` for more information.
         """
 
 
@@ -40,10 +44,10 @@ class Empty(Graphic):
     def __repr__(self) -> str:
         return f"{translate('empty_graphic')}()"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        return [], {
-            'type': 'Empty',
-        }
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        return {
+            't': 'Empty',
+        }, []
 
 
 @dataclass(frozen=True, eq=False)
@@ -58,13 +62,13 @@ class Rectangle(Graphic):
     def __repr__(self) -> str:
         return f"{translate('rectangle')}({self.width}, {self.height}, {self.color})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        return [], {
-            'type': 'Rectangle',
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        return {
+            't': 'Rectangle',
             'width': self.width,
             'height': self.height,
-            'color': self.color.as_dict,
-        }
+            'color': self.color.spec,
+        }, []
 
 
 @dataclass(frozen=True, eq=False)
@@ -79,13 +83,13 @@ class Ellipse(Graphic):
     def __repr__(self) -> str:
         return f"{translate('ellipse')}({self.width}, {self.height}, {self.color})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        return [], {
-            'type': 'Ellipse',
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        return {
+            't': 'Ellipse',
             'width': self.width,
             'height': self.height,
-            'color': self.color.as_dict,
-        }
+            'color': self.color.spec,
+        }, []
 
 
 @dataclass(frozen=True, eq=False)
@@ -101,13 +105,13 @@ class CircularSector(Graphic):
     def __repr__(self) -> str:
         return f"{translate('circular_sector')}({self.radius}, {self.angle}, {self.color})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        return [], {
-            'type': 'CircularSector',
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        return {
+            't': 'CircularSector',
             'radius': self.radius,
             'angle': self.angle,
-            'color': self.color.as_dict,
-        }
+            'color': self.color.spec,
+        }, []
 
 
 @dataclass(frozen=True, eq=False)
@@ -127,14 +131,14 @@ class Triangle(Graphic):
     def __repr__(self) -> str:
         return f"{translate('triangle')}({self.side1}, {self.side2}, {self.angle}, {self.color})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        return [], {
-            'type': 'Triangle',
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        return {
+            't': 'Triangle',
             'side1': self.side1,
             'side2': self.side2,
             'angle': self.angle,
-            'color': self.color.as_dict
-        }
+            'color': self.color.spec
+        }, []
 
 
 @dataclass(frozen=True, eq=False)
@@ -152,14 +156,14 @@ class Text(Graphic):
     def __repr__(self) -> str:
         return f"{translate('text')}({self.text!r}, {self.font_name!r}, {self.text_size}, {self.color})"  # pylint: disable=line-too-long
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        return [], {
-            'type': 'Text',
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        return {
+            't': 'Text',
             'text': self.text,
             'font_name': self.font_name,
             'text_size': self.text_size,
-            'color': self.color.as_dict
-        }
+            'color': self.color.spec,
+        }, []
 
 
 @dataclass(frozen=True, eq=False)
@@ -174,25 +178,25 @@ class Compose(Graphic):
     def __repr__(self) -> str:
         return f"{translate('compose')}({self.foreground}, {self.background})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        spec: Spec = {'t': 'Compose'}
         deps: list[Graphic] = []
-        spec: dict[str, Any] = {'type': 'Compose'}
 
         def flat_child(child: Graphic, key: str):
             """
             Inline pinning position of children of type Pin to flatten the tree.
             """
             if isinstance(child, Pin):
-                spec[f'{key}_pin'] = child.pinning_point.as_dict
+                spec[f'{key}_pin'] = child.pinning_point.spec
                 # Also flatten nested pins
                 while isinstance(child, Pin):
                     child = child.graphic
             deps.append(child)
 
-        flat_child(self.foreground, 'foreground')
-        flat_child(self.background, 'background')
+        flat_child(self.foreground, 'fg')
+        flat_child(self.background, 'bg')
 
-        return deps, spec
+        return spec, deps
 
 
 @dataclass(frozen=True, eq=False)
@@ -206,19 +210,16 @@ class Pin(Graphic):
     def __repr__(self) -> str:
         return f"{translate('pin')}({self.pinning_point}, {self.graphic})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
         # Flatten pin(pin(...))
         child_graphic = self.graphic
         while isinstance(child_graphic, Pin):
             # pylint: disable=no-member
             child_graphic = child_graphic.graphic
-        return (
-            [child_graphic],
-            {
-                'type': 'Pin',
-                'pinning_point': self.pinning_point.as_dict,
-            }
-        )
+        return {
+            't': 'Pin',
+            'pin': self.pinning_point.spec,
+        }, [child_graphic]
 
 
 @dataclass(frozen=True, eq=False)
@@ -234,14 +235,14 @@ class Rotate(Graphic):
     def __repr__(self) -> str:
         return f"{translate('rotate')}({self.angle}, {self.graphic})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        # Optimize away %360-deg rotations
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        # Optimization: skip rotations by multiples of 360 degrees
         if self.angle.is_integer() and int(self.angle) % 360 == 0:
-            return self.graphic.deps_and_spec()
-        return [self.graphic], {
-            'type': 'Rotate',
+            return self.graphic.spec_with_deps()
+        return {
+            't': 'Rotate',
             'angle': self.angle,
-        }
+        }, [self.graphic]
 
 
 @dataclass(frozen=True, eq=False)
@@ -256,16 +257,13 @@ class Beside(Graphic):
     def __repr__(self) -> str:
         return f"{translate('beside')}({self.left_graphic}, {self.right_graphic})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        return (
-            [self.left_graphic, self.right_graphic],
-            {
-                'type': 'Compose',
-                'foreground_pin': center_right.as_dict,
-                'background_pin': center_left.as_dict,
-                'own_pin': center.as_dict,
-            },
-        )
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        return {
+            't': 'Compose',
+            'fg_pin': center_right.spec,
+            'bg_pin': center_left.spec,
+            'pin': center.spec,
+        }, [self.left_graphic, self.right_graphic]
 
 
 @dataclass(frozen=True, eq=False)
@@ -280,16 +278,13 @@ class Above(Graphic):
     def __repr__(self) -> str:
         return f"{translate('above')}({self.top_graphic}, {self.bottom_graphic})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        return (
-            [self.top_graphic, self.bottom_graphic],
-            {
-                'type': 'Compose',
-                'foreground_pin': bottom_center.as_dict,
-                'background_pin': top_center.as_dict,
-                'own_pin': center.as_dict,
-            },
-        )
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        return {
+            't': 'Compose',
+            'fg_pin': bottom_center.spec,
+            'bg_pin': top_center.spec,
+            'pin': center.spec,
+        }, [self.top_graphic, self.bottom_graphic]
 
 
 @dataclass(frozen=True, eq=False)
@@ -304,12 +299,12 @@ class Overlay(Graphic):
     def __repr__(self) -> str:
         return f"{translate('overlay')}({self.front_graphic}, {self.back_graphic})"
 
-    def deps_and_spec(self) -> tuple[list[Graphic], dict[str, Any]]:
-        return (
-            [self.front_graphic, self.back_graphic],
-            {
-                'type': 'Compose',
-                'foreground_pin': center.as_dict,
-                'background_pin': center.as_dict,
-            },
-        )
+    def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        return {
+            't': 'Compose',
+            'fg_pin': center.spec,
+            'bg_pin': center.spec,
+            # When `pin` is absent, it defaults to `bg_pin`.
+            # We omit it here as an optimization.
+            # 'pin': center.spec,
+        }, [self.front_graphic, self.back_graphic]
