@@ -2,19 +2,7 @@
     (that cannot be placed in the main io module to avoid circular dependencies)."""
 
 import sys
-from pytamaro.localization import translate
-
-
-def area_message(error_message_key: str, width: float, height: float) -> str:
-    """
-    Emits a warning indicating that the graphic cannot be shown or saved
-    because of a problem with its area.
-
-    :param error_message_key: key for the error message
-    :param graphic: graphic that cannot be shown or saved
-    :returns: translated error message
-    """
-    return translate(error_message_key, f"{round(width)}x{round(height)}")
+from pytamaro.utils import ISize
 
 
 def print_data_uri(mime_type: str, b64_content: str):
@@ -36,3 +24,17 @@ def print_data_uri(mime_type: str, b64_content: str):
         # > Under some conditions stdin, stdout and stderr as well as the
         # > original values __stdin__, __stdout__ and __stderr__ can be None
         pass
+
+
+def guess_scaling_factor(rounded_size: ISize) -> int:
+    """
+    Makes an educated guess for a reasonable scaling factor (for super-sampling),
+    based on the area of the graphic.
+    """
+    pixels = rounded_size.width * rounded_size.height
+    if pixels <= 300 * 300:
+        return 3
+    if pixels <= 3_000 * 3_000:
+        return 2
+    # No scaling
+    return 1

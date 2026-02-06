@@ -19,12 +19,13 @@ from skia import (Canvas, FILEWStream, FilterMode, Image, MipmapMode, Rect,
                   SamplingOptions, Surface, SVGCanvas, kPNG,
                   kRGBA_8888_ColorType, kUnpremul_AlphaType)
 
+from pytamaro.checks import area_message, check_graphic_size
 from pytamaro.graphic import Graphic
-from pytamaro.impl.shared_io import area_message, print_data_uri
+from pytamaro.impl.shared_io import guess_scaling_factor, print_data_uri
 from pytamaro.impl.skia.debug import add_debug_info
 from pytamaro.impl.skia.graphic import SkiaGraphic
 from pytamaro.localization import translate
-from pytamaro.utils import Size, is_notebook
+from pytamaro.utils import ISize, Size, is_notebook
 
 
 def graphic_size(graphic: Graphic) -> Size:
@@ -85,22 +86,13 @@ def graphic_to_image(graphic: SkiaGraphic) -> Image:
     :param graphic: graphic to be rendered
     :returns: rendered graphic as a Skia image
     """
+    size = graphic.size()
     width, height = graphic.size().toRound()
-    pixels = width * height
-    if pixels <= 300 * 300:
-        scaling_factor = 3
-    elif pixels <= 3_000 * 3_000:
-        scaling_factor = 2
-    else:
-        scaling_factor = 1
-    surface_width = width * scaling_factor
-    surface_height = height * scaling_factor
-    sk_maxs32 = 2 ** 31 - 1
-    bytes_per_pixel = 4
-    surface_size = surface_width * surface_height * bytes_per_pixel
-    if surface_size > sk_maxs32:
-        raise ValueError(area_message("TOO_LARGE_AREA_OUTPUT", width, height))
-    surface = Surface(surface_width, surface_height)
+    rounded_size = ISize(width, height)
+    if rounded_size.too_large_area():
+        raise ValueError(area_message("TOO_LARGE_AREA_OUTPUT", size.width, size.height))
+    scaling_factor = guess_scaling_factor(rounded_size)
+    surface = Surface(width * scaling_factor, height * scaling_factor)
     surface.getCanvas().scale(scaling_factor, scaling_factor)
     _draw_to_canvas(surface.getCanvas(), graphic)
     return surface.makeImageSnapshot().resize(
@@ -114,6 +106,8 @@ def graphic_to_pillow_image(graphic: Graphic) -> PILImage:
     :param graphic: graphic to be rendered and converted
     :returns: rendered graphic as a Pillow image
     """
+    rounded_size = graphic_size(graphic).to_round()
+    check_graphic_size(rounded_size)
     graphic = cast(SkiaGraphic, graphic)
     return PILImageMod.fromarray(graphic_to_image(graphic).convert(
         alphaType=kUnpremul_AlphaType, colorType=kRGBA_8888_ColorType)
@@ -133,9 +127,8 @@ def _save_as_PNG(filename: str, graphic: SkiaGraphic):
 
 def show_graphic(graphic: Graphic, debug: bool):
     graphic = cast(SkiaGraphic, graphic)
-    if graphic.zero_pixels():
-        size = graphic.size()
-        raise ValueError(area_message("EMPTY_AREA_OUTPUT", size.width(), size.height()))
+    rounded_size = graphic_size(graphic).to_round()
+    check_graphic_size(rounded_size)
     to_show = add_debug_info(graphic) if debug else graphic
     pil_image = graphic_to_pillow_image(to_show)
     if is_notebook():
@@ -155,9 +148,8 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool):
     to_show = add_debug_info(graphic) if debug else graphic
     extension = Path(filename).suffix
     if extension == ".png":
-        if graphic.zero_pixels():
-            size = graphic.size()
-            raise ValueError(area_message("EMPTY_AREA_OUTPUT", size.width(), size.height()))
+        rounded_size = graphic_size(graphic).to_round()
+        check_graphic_size(rounded_size)
         _save_as_PNG(filename, to_show)
     elif extension == ".svg":
         _save_as_SVG(filename, to_show)

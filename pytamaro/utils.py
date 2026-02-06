@@ -72,6 +72,16 @@ class ISize:
         """
         return self.width * self.height == 0
 
+    def too_large_area(self) -> bool:
+        """"
+        Check if the size is too large to fit in a 4GB surface,
+        assuming 4 bytes per pixel.
+        """
+        sk_maxs32 = 2 ** 31 - 1
+        bytes_per_pixel = 4
+        surface_size = self.width * self.height * bytes_per_pixel
+        return surface_size > sk_maxs32
+
 
 @dataclass
 class Size:

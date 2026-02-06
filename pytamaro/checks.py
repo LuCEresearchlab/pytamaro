@@ -10,6 +10,7 @@ from pytamaro.color import Color
 from pytamaro.graphic import Graphic
 from pytamaro.localization import translate
 from pytamaro.point import Point
+from pytamaro.utils import ISize
 
 
 def check_angle(angle: Any, lower_bound: float = -inf, upper_bound: float = inf):
@@ -118,3 +119,30 @@ def check_range(value: Any, lower_bound: float, upper_bound: float, parameter_na
                                    translate(parameter_name),
                                    lower_bound,
                                    upper_bound))
+
+
+def area_message(error_message_key: str, width: float, height: float) -> str:
+    """
+    Emits a warning indicating that the graphic cannot be shown or saved
+    because of a problem with its area.
+
+    :param error_message_key: key for the error message
+    :param graphic: graphic that cannot be shown or saved
+    :returns: translated error message
+    """
+    return translate(error_message_key, f"{round(width)}x{round(height)}")
+
+
+def check_graphic_size(rounded_size: ISize):
+    """
+    Raises an exception when the provided size is not valid for a
+    graphic because its area would be empty or too large.
+
+    :param rounded_size: the rounded size to be checked
+    """
+    width = rounded_size.width
+    height = rounded_size.height
+    if rounded_size.empty_area():
+        raise ValueError(area_message("EMPTY_AREA_OUTPUT", width, height))
+    if rounded_size.too_large_area():
+        raise ValueError(area_message("TOO_LARGE_AREA_OUTPUT", width, height))

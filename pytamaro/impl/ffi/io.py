@@ -11,10 +11,10 @@ from PIL.Image import Image as PILImage
 
 from pytamaro_js_ffi import graphic_size as js_graphic_size, render_graphic  # pylint: disable=import-error # type: ignore
 
-from pytamaro.checks import check_graphic, check_type
+from pytamaro.checks import check_graphic, check_graphic_size, check_type
 from pytamaro.graphic import Graphic
 from pytamaro.impl.ffi.specs import to_specs
-from pytamaro.impl.shared_io import area_message, print_data_uri
+from pytamaro.impl.shared_io import guess_scaling_factor, print_data_uri
 from pytamaro.utils import Size
 
 
@@ -33,15 +33,18 @@ def graphic_size(graphic: Graphic):
 def show_graphic(graphic: Graphic, debug: bool):
     check_graphic(graphic)
     check_type(debug, bool, "debug")
-    size = graphic_size(graphic)
-    if size.to_round().empty_area():
-        raise ValueError(area_message("EMPTY_AREA_OUTPUT", size.width, size.height))
-    b64_str = render_graphic(to_specs(graphic), debug)
+    rounded_size = graphic_size(graphic).to_round()
+    check_graphic_size(rounded_size)
+    scaling_factor = guess_scaling_factor(rounded_size)
+    b64_str = render_graphic(to_specs(graphic), scaling_factor, debug)
     print_data_uri("image/png", extract_base64_image_data(b64_str))
 
 
 def graphic_to_pillow_image(graphic: Graphic) -> PILImage:
-    data_uri = render_graphic(to_specs(graphic), False)
+    rounded_size = graphic_size(graphic).to_round()
+    check_graphic_size(rounded_size)
+    scaling_factor = guess_scaling_factor(rounded_size)
+    data_uri = render_graphic(to_specs(graphic), scaling_factor, False)
     data = BytesIO(base64.b64decode(extract_base64_image_data(data_uri)))
     return Image.open(data)
 
