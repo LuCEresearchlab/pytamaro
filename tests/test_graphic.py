@@ -118,10 +118,10 @@ def test_to_specs_beside():
     combined = beside(r1, r2)
     specs = to_specs(combined)
     assert len(specs) == 3
-    assert specs[0]["t"] == "Compose"
-    assert "fg_pin" in specs[0]
-    assert "bg_pin" in specs[0]
-    assert "pin" in specs[0]
+    assert specs[2]["t"] == "Compose"
+    assert "fg_pin" in specs[2]
+    assert "bg_pin" in specs[2]
+    assert "pin" in specs[2]
     rect_specs = [s for s in specs if s["t"] == "Rectangle"]
     assert len(rect_specs) == 2
     _enable_skia_impl()
@@ -131,14 +131,11 @@ def test_to_specs_nested_beside():
     _enable_ffi_impl()
     r1 = rectangle(WIDTH, HEIGHT, red)
     r2 = rectangle(WIDTH, HEIGHT, blue)
-    r3 = rectangle(WIDTH, HEIGHT, green)
+    r3 = ellipse(WIDTH, HEIGHT, green)
     r123 = beside(beside(r1, r2), r3)
     specs = to_specs(r123)
-    assert len(specs) == 5
-    compose_specs = [s for s in specs if s["t"] == "Compose"]
-    rect_specs = [s for s in specs if s["t"] == "Rectangle"]
-    assert len(compose_specs) == 2
-    assert len(rect_specs) == 3
+    types = [s["t"] for s in specs]
+    assert types == ["Ellipse", "Rectangle", "Rectangle", "Compose", "Compose"]
     _enable_skia_impl()
 
 
@@ -148,7 +145,8 @@ def test_to_specs_rotate():
     rotated = rotate(45, r)
     rotated_again = rotate(-720, rotated)
     specs = to_specs(rotated_again)
-    assert len(specs) == 2
+    types = [s["t"] for s in specs]
+    assert types == ["Rectangle", "Rotate"]
     rotate_specs = [s for s in specs if s["t"] == "Rotate"]
     assert len(rotate_specs) == 1
     assert rotate_specs[0]["angle"] == 45
@@ -161,7 +159,7 @@ def test_to_specs_pin_compose():
     combined = compose(pin(center_left, r), pin(center_right, r))
     specs = to_specs(combined)
     types = [s["t"] for s in specs]
-    assert types == ["Compose", "Rectangle", "Rectangle"]
+    assert types == ["Rectangle", "Rectangle", "Compose"]
     _enable_skia_impl()
 
 
@@ -175,5 +173,5 @@ def test_to_specs_nested_compose():
     c2 = compose(g3, g4)
     specs = to_specs(compose(c1, c2))
     types = [s["t"] for s in specs]
-    assert types == ["Compose", "Compose", "Rectangle", "Empty", "Compose", "Ellipse", "Triangle"]
+    assert types == ["Triangle", "Ellipse", "Compose", "Empty", "Rectangle", "Compose", "Compose"]
     _enable_skia_impl()

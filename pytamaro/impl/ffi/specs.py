@@ -25,4 +25,5 @@ def to_specs(graphic: Graphic) -> list[Spec]:
         graphics_to_process.extend(reversed(deps))
         specs.append(spec)
 
+    specs.reverse()
     return specs
