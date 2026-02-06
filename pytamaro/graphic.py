@@ -182,19 +182,20 @@ class Compose(Graphic):
         spec: Spec = {'t': 'Compose'}
         deps: list[Graphic] = []
 
-        def flat_child(child: Graphic, key: str):
+        def optimize_child_pin(child: Graphic, key_prefix: str):
             """
-            Inline pinning position of children of type Pin to flatten the tree.
+            Optimization:
+            If `child` is a `Pin`, directly add the pinning position to the spec
+            of the current graphic, to skip one level in the tree.
             """
             if isinstance(child, Pin):
-                spec[f'{key}_pin'] = child.pinning_point.spec
-                # Also flatten nested pins
-                while isinstance(child, Pin):
-                    child = child.graphic
-            deps.append(child)
+                spec[f'{key_prefix}_pin'] = child.pinning_point.spec
+                deps.append(child.graphic)
+            else:
+                deps.append(child)
 
-        flat_child(self.foreground, 'fg')
-        flat_child(self.background, 'bg')
+        optimize_child_pin(self.foreground, 'fg')
+        optimize_child_pin(self.background, 'bg')
 
         return spec, deps
 
@@ -211,15 +212,10 @@ class Pin(Graphic):
         return f"{translate('pin')}({self.pinning_point}, {self.graphic})"
 
     def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
-        # Flatten pin(pin(...))
-        child_graphic = self.graphic
-        while isinstance(child_graphic, Pin):
-            # pylint: disable=no-member
-            child_graphic = child_graphic.graphic
         return {
             't': 'Pin',
             'pin': self.pinning_point.spec,
-        }, [child_graphic]
+        }, [self.graphic]
 
 
 @dataclass(frozen=True, eq=False)
