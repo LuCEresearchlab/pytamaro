@@ -15,8 +15,7 @@ def print_data_uri(mime_type: str, b64_content: str):
     """
     prefix = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
     suffix = "@@@PYTAMARO_DATA_URI_END@@@"
-    uri = f"data:{mime_type};base64,{b64_content}"
-    print(f"{prefix}{uri}{suffix}", end="")
+    print(f"{prefix}data:{mime_type};base64,{b64_content}{suffix}", end="")
     try:
         sys.stdout.flush()
     except AttributeError:
