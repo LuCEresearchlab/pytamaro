@@ -67,7 +67,7 @@ class Rectangle(Graphic):
             't': 'Rectangle',
             'width': self.width,
             'height': self.height,
-            'color': self.color.spec,
+            'color': self.color.value_for_spec,
         }, []
 
 
@@ -88,7 +88,7 @@ class Ellipse(Graphic):
             't': 'Ellipse',
             'width': self.width,
             'height': self.height,
-            'color': self.color.spec,
+            'color': self.color.value_for_spec,
         }, []
 
 
@@ -110,7 +110,7 @@ class CircularSector(Graphic):
             't': 'CircularSector',
             'radius': self.radius,
             'angle': self.angle,
-            'color': self.color.spec,
+            'color': self.color.value_for_spec,
         }, []
 
 
@@ -137,7 +137,7 @@ class Triangle(Graphic):
             'side1': self.side1,
             'side2': self.side2,
             'angle': self.angle,
-            'color': self.color.spec
+            'color': self.color.value_for_spec
         }, []
 
 
@@ -162,7 +162,7 @@ class Text(Graphic):
             'text': self.text,
             'font_name': self.font_name,
             'text_size': self.text_size,
-            'color': self.color.spec,
+            'color': self.color.value_for_spec,
         }, []
 
 
@@ -189,7 +189,7 @@ class Compose(Graphic):
             of the current graphic, to skip one level in the tree.
             """
             if isinstance(child, Pin):
-                spec[f'{key_prefix}_pin'] = child.pinning_point.spec
+                spec[f'{key_prefix}_pin'] = child.pinning_point.value_for_spec
                 deps.append(child.graphic)
             else:
                 deps.append(child)
@@ -212,9 +212,18 @@ class Pin(Graphic):
         return f"{translate('pin')}({self.pinning_point}, {self.graphic})"
 
     def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
+        if isinstance(self.graphic, Compose):
+            # Optimization: if our direct child is a Compose,
+            # we can directly add the pinning position to the spec of the Compose,
+            # to skip one level in the tree.
+            child_spec, child_deps = self.graphic.spec_with_deps()
+            child_spec['pin'] = self.pinning_point.value_for_spec
+            return child_spec, child_deps
+
+        # Regular case
         return {
             't': 'Pin',
-            'pin': self.pinning_point.spec,
+            'pin': self.pinning_point.value_for_spec,
         }, [self.graphic]
 
 
@@ -256,9 +265,9 @@ class Beside(Graphic):
     def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
         return {
             't': 'Compose',
-            'fg_pin': center_right.spec,
-            'bg_pin': center_left.spec,
-            'pin': center.spec,
+            'fg_pin': center_right.value_for_spec,
+            'bg_pin': center_left.value_for_spec,
+            'pin': center.value_for_spec,
         }, [self.left_graphic, self.right_graphic]
 
 
@@ -277,9 +286,9 @@ class Above(Graphic):
     def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
         return {
             't': 'Compose',
-            'fg_pin': bottom_center.spec,
-            'bg_pin': top_center.spec,
-            'pin': center.spec,
+            'fg_pin': bottom_center.value_for_spec,
+            'bg_pin': top_center.value_for_spec,
+            'pin': center.value_for_spec,
         }, [self.top_graphic, self.bottom_graphic]
 
 
@@ -298,8 +307,8 @@ class Overlay(Graphic):
     def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
         return {
             't': 'Compose',
-            'fg_pin': center.spec,
-            'bg_pin': center.spec,
+            'fg_pin': center.value_for_spec,
+            'bg_pin': center.value_for_spec,
             # When `pin` is absent, it defaults to `bg_pin`.
             # We omit it here as an optimization.
             # 'pin': center.spec,

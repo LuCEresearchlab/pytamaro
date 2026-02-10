@@ -2,7 +2,7 @@ from pytamaro.color_names import blue, green, red
 from pytamaro.impl.ffi.specs import to_specs
 from pytamaro.operations import beside, compose, pin, rotate
 from pytamaro.primitives import ellipse, empty_graphic, rectangle, triangle
-from pytamaro.point_names import center, center_left, center_right
+from pytamaro.point_names import center, center_left, center_right, top_left
 
 from tests.testing_utils import HEIGHT, WIDTH
 
@@ -104,10 +104,31 @@ def test_to_specs_rectangle():
     assert rect_spec["width"] == WIDTH
     assert rect_spec["height"] == HEIGHT
     color = rect_spec["color"]
-    assert color["alpha"] == 1.0
-    assert color["red"] == 255
-    assert color["green"] == 0
-    assert color["blue"] == 0
+    # color is an ARGB 32-word
+    a = (color >> 24) & 0xFF
+    r = (color >> 16) & 0xFF
+    g = (color >> 8) & 0xFF
+    b = color & 0xFF
+    assert a == 1.0 * 255
+    assert r == 255
+    assert g == 0
+    assert b == 0
+    _enable_skia_impl()
+
+
+def test_to_specs_pin():
+    _enable_ffi_impl()
+    r = rectangle(WIDTH, HEIGHT, red)
+    pinned = pin(top_left, r)
+    specs = to_specs(pinned)
+    assert len(specs) == 2
+    assert specs[1]["t"] == "Pin"
+    pin_value = specs[1]["pin"]
+    from struct import pack, unpack
+    x = unpack('>f', pack('>I', (pin_value >> 32) & 0xFFFFFFFF))[0]
+    y = unpack('>f', pack('>I', pin_value & 0xFFFFFFFF))[0]
+    assert x == -1.0
+    assert y == 1.0
     _enable_skia_impl()
 
 

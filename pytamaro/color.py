@@ -5,7 +5,6 @@
 from dataclasses import dataclass
 
 from pytamaro.localization import translate
-from pytamaro.utils import Spec
 
 
 @dataclass(frozen=True)
@@ -31,13 +30,12 @@ class Color:
         return f"{translate('rgb_color')}({self.red}, {self.green}, {self.blue}{alpha_repr})"
 
     @property
-    def spec(self) -> Spec:
+    def value_for_spec(self) -> int:
         """
-        Dictionary representation of this Color.
+        ARGB 32-bit word, to be used in a spec.
         """
-        return {
-            'red': self.red,
-            'green': self.green,
-            'blue': self.blue,
-            'alpha': self.alpha,
-        }
+        a = int(self.alpha * 255) & 0xFF
+        r = self.red & 0xFF
+        g = self.green & 0xFF
+        b = self.blue & 0xFF
+        return (a << 24) | (r << 16) | (g << 8) | b
