@@ -241,7 +241,10 @@ class Rotate(Graphic):
 
     def spec_with_deps(self) -> tuple[Spec, list[Graphic]]:
         # Optimization: skip rotations by multiples of 360 degrees
-        if self.angle.is_integer() and int(self.angle) % 360 == 0:
+        if (
+            (isinstance(self.angle, float) and self.angle.is_integer())
+            or isinstance(self.angle, int)
+        ) and int(self.angle) % 360 == 0:
             return self.graphic.spec_with_deps()
         return {
             't': 'Rotate',
