@@ -8,7 +8,6 @@ import sys
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
 from functools import cached_property
-from typing import override
 
 from skia import (Canvas, Paint, Path, Point, Rect, Size, Matrix, FontMgr, Font, Typeface, Color4f)
 
@@ -106,11 +105,9 @@ class SkiaPrimitive(SkiaGraphic):
                        self.color.blue / 255,
                        self.color.alpha)
 
-    @override
     def draw(self, canvas: Canvas):
         canvas.drawPath(self.path, Paint(Color=self.skia_color, AntiAlias=self.antialias))
 
-    @override
     def _key(self):
         return super()._key(), self.color
 
@@ -121,7 +118,6 @@ class SkiaEmpty(SkiaGraphic, Empty):
     def __init__(self):
         super().__init__(Point(0, 0), Path())
 
-    @override
     def draw(self, canvas: Canvas):
         pass
 
@@ -213,7 +209,6 @@ class SkiaText(SkiaPrimitive, Text):
         super().__init__(text_path, color, Point(0, 0))
 
     @cached_property
-    @override
     def antialias(self) -> bool:
         return True
 
@@ -225,7 +220,6 @@ class SkiaText(SkiaPrimitive, Text):
         return Font(Typeface(self.font_name), self.text_size)
 
     @cached_property
-    @override
     def bounds(self) -> Rect:
         """
         Computes the bounding box of the text, whose width is determined by
@@ -255,7 +249,6 @@ class SkiaCompose(SkiaGraphic, Compose):
                      bg_pin.x() - fg_pin.x(), bg_pin.y() - fg_pin.y())
         super().__init__(pin, path)
 
-    @override
     def draw(self, canvas: Canvas):
         canvas.save()
         self.background.draw(canvas)
@@ -293,7 +286,6 @@ class SkiaPin(SkiaGraphic, Pin):
         pin = Point(h_mapping[pinning_point.x], v_mapping[pinning_point.y])
         super().__init__(pin, graphic.path)
 
-    @override
     def draw(self, canvas: Canvas):
         self.graphic.draw(canvas)
 
@@ -315,7 +307,6 @@ class SkiaRotate(SkiaGraphic, Rotate):
         graphic.path.transform(self.rot_matrix, path)  # type: ignore  # pylint: disable=no-member
         super().__init__(graphic.pin_position, path)
 
-    @override
     def draw(self, canvas: Canvas):
         canvas.save()
         canvas.concat(self.rot_matrix)  # type: ignore  # pylint: disable=no-member
@@ -342,7 +333,6 @@ class SkiaSimpleCompose(SkiaGraphic, ABC):
         object.__setattr__(self, "composed_graphic", composed_graphic)
         super().__init__(composed_graphic.pin_position, composed_graphic.path)
 
-    @override
     def draw(self, canvas: Canvas):
         self.composed_graphic.draw(canvas)  # type: ignore  # pylint: disable=no-member
 

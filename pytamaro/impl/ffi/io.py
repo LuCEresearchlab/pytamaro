@@ -9,7 +9,7 @@ from io import BytesIO
 from PIL import Image
 from PIL.Image import Image as PILImage
 
-from pytamaro_js_ffi import ( # pylint: disable=import-error # type: ignore
+from pytamaro_js_ffi import (  # pylint: disable=import-error # type: ignore
     js_graphic_size,
     js_render_graphic,
     js_save_graphic,
