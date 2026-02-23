@@ -4,7 +4,6 @@ Type `Graphic`, that includes a graphic with a pinning position.
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Self
 
 from pytamaro.color import Color
 from pytamaro.localization import translate
@@ -26,7 +25,7 @@ class Graphic(ABC):
     """
 
     @abstractmethod
-    def spec_with_deps(self) -> tuple[Spec, list[Self]]:
+    def spec_with_deps(self) -> tuple[Spec, list]:
         """
         Returns a tuple that "declaratively specifies" this graphic.
         The first is a dictionary with this graphic's properties.
