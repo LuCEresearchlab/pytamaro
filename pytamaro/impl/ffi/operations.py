@@ -3,7 +3,7 @@ FFI-based implementation of graphic operations.
 
 :meta private:
 """
-from pytamaro_js_ffi import graphic_size  # pylint: disable=import-error # type: ignore
+from pytamaro_js_ffi import js_graphic_size  # pylint: disable=import-error # type: ignore
 
 from pytamaro.graphic import Graphic, Compose, Point, Pin, Overlay, Beside, Above, Rotate
 from pytamaro.impl.ffi.specs import to_specs
@@ -12,11 +12,11 @@ from pytamaro.impl.ffi.specs import to_specs
 
 
 def graphic_width(graphic: Graphic) -> int:
-    return round(graphic_size(to_specs(graphic)).width)
+    return round(js_graphic_size(to_specs(graphic)).width)
 
 
 def graphic_height(graphic: Graphic) -> int:
-    return round(graphic_size(to_specs(graphic)).height)
+    return round(js_graphic_size(to_specs(graphic)).height)
 
 
 def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
