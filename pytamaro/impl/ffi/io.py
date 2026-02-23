@@ -12,7 +12,7 @@ from PIL.Image import Image as PILImage
 from pytamaro_js_ffi import (  # pylint: disable=import-error # type: ignore
     js_graphic_size,
     js_render_graphic,
-    js_save_graphic,
+    js_save,
 )
 
 from pytamaro.checks import check_graphic, check_graphic_size, check_type
@@ -23,6 +23,12 @@ from pytamaro.utils import Size, Spec
 
 
 # pylint: disable=missing-function-docstring
+def _render_graphic_base64(graphic: Graphic, debug: bool) -> str:
+    specs = to_specs(graphic)
+    rounded_size = graphic_size(specs).to_round()
+    check_graphic_size(rounded_size)
+    scaling_factor = guess_scaling_factor(rounded_size)
+    return js_render_graphic(specs, scaling_factor, debug)
 
 
 def extract_base64_image_data(data_uri: str) -> str:
@@ -37,11 +43,7 @@ def graphic_size(specs: list[Spec]):
 def show_graphic(graphic: Graphic, debug: bool):
     check_graphic(graphic)
     check_type(debug, bool, "debug")
-    specs = to_specs(graphic)
-    rounded_size = graphic_size(specs).to_round()
-    check_graphic_size(rounded_size)
-    scaling_factor = guess_scaling_factor(rounded_size)
-    b64_str = js_render_graphic(specs, scaling_factor, debug)
+    b64_str = _render_graphic_base64(graphic, debug)
     print_data_uri("image/png", extract_base64_image_data(b64_str))
 
 
@@ -59,14 +61,17 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool):
     check_type(filename, str, "filename")
     check_graphic(graphic)
     check_type(debug, bool, "debug")
-    specs = to_specs(graphic)
-    rounded_size = graphic_size(specs).to_round()
-    check_graphic_size(rounded_size)
-    scaling_factor = guess_scaling_factor(rounded_size)
-    js_save_graphic(filename, specs, scaling_factor, debug)
+    b64_str = _render_graphic_base64(graphic, debug)
+    js_save(filename, b64_str)
 
 
 def show_animation(filename: str):
     with open(filename, "rb") as stream:
         b64_str = base64.b64encode(stream.read()).decode("utf-8")
         print_data_uri("image/gif", b64_str)
+
+
+def save_animation_extra(filename: str):
+    with open(filename, "rb") as stream:
+        b64_str = f"data:image/gif;base64,{base64.b64encode(stream.read()).decode('utf-8')}"
+        js_save(filename, b64_str)

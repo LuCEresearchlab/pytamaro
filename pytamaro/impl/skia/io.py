@@ -174,3 +174,9 @@ def show_animation(filename: str):
         subprocess.call(["open", "-a", "Safari", filename])
     else:
         subprocess.call(["xdg-open", filename])
+
+
+# pylint: disable-next=unused-argument
+def save_animation_extra(filename: str):
+    # No need to do anything else for the skia implementation
+    pass

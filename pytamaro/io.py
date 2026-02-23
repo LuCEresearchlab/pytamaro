@@ -107,6 +107,7 @@ def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, l
     if len(graphics) == 0:
         raise ValueError(translate("EMPTY_GRAPHICS_LIST"))
     _save_animation(filename, graphics, duration, loop)
+    __impl.save_animation_extra(filename)
 
 
 @export
