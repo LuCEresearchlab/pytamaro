@@ -73,7 +73,7 @@ class ISize:
         return self.width * self.height == 0
 
     def too_large_area(self) -> bool:
-        """"
+        """
         Check if the size is too large to fit in a 4GB surface,
         assuming 4 bytes per pixel.
         """

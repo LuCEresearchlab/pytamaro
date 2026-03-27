@@ -86,11 +86,13 @@ def graphic_to_image(graphic: SkiaGraphic) -> Image:
     :param graphic: graphic to be rendered
     :returns: rendered graphic as a Skia image
     """
-    size = graphic.size()
-    width, height = graphic.size().toRound()
+    skia_size = graphic.size()
+    width, height = skia_size.toRound()
     rounded_size = ISize(width, height)
     if rounded_size.too_large_area():
-        raise ValueError(area_message("TOO_LARGE_AREA_OUTPUT", size.width, size.height))
+        raise ValueError(area_message("TOO_LARGE_AREA_OUTPUT",
+                                      skia_size.width(),
+                                      skia_size.height()))
     scaling_factor = guess_scaling_factor(rounded_size)
     surface = Surface(width * scaling_factor, height * scaling_factor)
     surface.getCanvas().scale(scaling_factor, scaling_factor)

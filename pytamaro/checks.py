@@ -127,7 +127,8 @@ def area_message(error_message_key: str, width: float, height: float) -> str:
     because of a problem with its area.
 
     :param error_message_key: key for the error message
-    :param graphic: graphic that cannot be shown or saved
+    :param width: the width of the graphic
+    :param height: the height of the graphic
     :returns: translated error message
     """
     return translate(error_message_key, f"{round(width)}x{round(height)}")

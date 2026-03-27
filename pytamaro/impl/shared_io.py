@@ -1,5 +1,5 @@
-""""Shared io functions between impl
-    (that cannot be placed in the main io module to avoid circular dependencies)."""
+"""Shared io functions between impl
+   (that cannot be placed in the main io module to avoid circular dependencies)."""
 
 import sys
 from pytamaro.utils import ISize

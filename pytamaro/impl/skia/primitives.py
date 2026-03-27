@@ -1,5 +1,5 @@
 """
-FFI-based implementation of graphic primitives.
+Skia-based implementation of graphic primitives.
 
 :meta private:
 """

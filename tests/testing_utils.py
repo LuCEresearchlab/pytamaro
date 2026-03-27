@@ -8,7 +8,6 @@ from PIL.Image import Image
 from pytamaro.color import Color
 from pytamaro.color_names import transparent
 from pytamaro.graphic import Graphic
-from pytamaro.impl.skia.graphic import Graphic
 from pytamaro.impl.skia.io import graphic_to_image, graphic_to_pillow_image
 from pytamaro.operations import graphic_height, graphic_width
 from pytamaro.point import Point

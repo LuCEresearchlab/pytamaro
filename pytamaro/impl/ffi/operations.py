@@ -5,7 +5,8 @@ FFI-based implementation of graphic operations.
 """
 from pytamaro_js_ffi import js_graphic_size  # pylint: disable=import-error # type: ignore
 
-from pytamaro.graphic import Graphic, Compose, Point, Pin, Overlay, Beside, Above, Rotate
+from pytamaro.graphic import Graphic, Compose, Pin, Overlay, Beside, Above, Rotate
+from pytamaro.point import Point
 from pytamaro.impl.ffi.specs import to_specs
 
 # pylint: disable=missing-function-docstring
