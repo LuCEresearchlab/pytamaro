@@ -69,6 +69,8 @@ def _save_animation(filename: str, graphics: List[Graphic],
     :param loop: whether the GIF should loop indefinitely
     :returns: whether the animation was successfully saved
     """
+    if len(graphics) == 0:
+        raise ValueError(translate("EMPTY_GRAPHICS_LIST"))
     for idx, graphic in enumerate(graphics):
         check_type(graphic, Graphic, "graphics", idx)
     pil_images = list(map(__impl.graphic_to_pillow_image, graphics))
@@ -104,8 +106,6 @@ def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, l
     if Path(filename).suffix != ".gif":
         raise ValueError(translate("INVALID_FILENAME_GIF"))
     check_type(graphics, list, "graphics")
-    if len(graphics) == 0:
-        raise ValueError(translate("EMPTY_GRAPHICS_LIST"))
     _save_animation(filename, graphics, duration, loop)
     __impl.save_animation_extra(filename)
 
