@@ -69,7 +69,7 @@ class SkiaPrimitive(SkiaGraphic):
     """
     color: Color
 
-    def __init__(self, path: Path, color: Color, pin_position: Point = None):
+    def __init__(self, path: Path, color: Color, pin_position: Point | None = None):
         object.__setattr__(self, "color", color)
         if pin_position is None:
             bounds = path.computeTightBounds()
