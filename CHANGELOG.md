@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+- Support Python 3.14 
+- Support the emscripten platform: instead of rendering directly with Skia, produce a "specification of the graphic" and use a JavaScript FFI to render in the browser. `skia-python` is not installed on this platform (using a PEP 508 marker), but the public API of the library remains unchanged.
+
 ## [1.1.4] - 2025-09-24
 
 ### Changed
