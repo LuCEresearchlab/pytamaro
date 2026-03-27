@@ -14,6 +14,8 @@ def test_pin_position():
     assert tuple(img.pin_position) == (semiwidth, semiheight)  # pyright: ignore[reportAttributeAccessIssue]
 
 
+# --------- Equality and hashing, skia impl ---------
+
 def test_equality():
     r1 = rectangle(WIDTH, HEIGHT, red)
     r2 = rectangle(WIDTH, HEIGHT, red)
@@ -56,6 +58,64 @@ def test_hash_empty_graphic():
     s.add(i1)
     s.add(i2)
     assert len(s) == 1
+
+
+# --------- Equality and hashing, ffi impl ---------
+
+def test_equality_ffi():
+    _enable_ffi_impl()
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(WIDTH, HEIGHT, red)
+    assert r1 == r2
+    _enable_skia_impl()
+
+
+def test_equality_empty_graphic_ffi():
+    _enable_ffi_impl()
+    i1 = empty_graphic()
+    i2 = empty_graphic()
+    assert i1 == i2
+    _enable_skia_impl()
+
+
+def test_equality_not_a_graphic_ffi():
+    _enable_ffi_impl()
+    graphic = rectangle(WIDTH, HEIGHT, red)
+    assert graphic != 42
+    _enable_skia_impl()
+
+
+def test_hash_ffi():
+    _enable_ffi_impl()
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(WIDTH, HEIGHT, red)
+    s = set()
+    s.add(r1)
+    s.add(r2)
+    assert len(s) == 1
+    _enable_skia_impl()
+
+
+def test_hash_same_path_different_color_ffi():
+    _enable_ffi_impl()
+    r1 = rectangle(WIDTH, HEIGHT, red)
+    r2 = rectangle(WIDTH, HEIGHT, blue)
+    s = set()
+    s.add(r1)
+    s.add(r2)
+    assert len(s) == 2
+    _enable_skia_impl()
+
+
+def test_hash_empty_graphic_ffi():
+    _enable_ffi_impl()
+    i1 = empty_graphic()
+    i2 = empty_graphic()
+    s = set()
+    s.add(i1)
+    s.add(i2)
+    assert len(s) == 1
+    _enable_skia_impl()
 
 
 def test_empty_area_not_empty_graphic():

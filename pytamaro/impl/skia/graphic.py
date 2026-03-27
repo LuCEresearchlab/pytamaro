@@ -60,18 +60,6 @@ class SkiaGraphic(Graphic, ABC):
         :param canvas: canvas onto which to draw
         """
 
-    def __eq__(self, other: object) -> bool:
-        if isinstance(other, Graphic):
-            return self.__hash__() == other.__hash__()
-        return False
-
-    def __hash__(self) -> int:
-        return hash(self._key())
-
-    def _key(self):
-        return ((self.pin_position.fX, self.pin_position.fY),
-                self.path.serialize().bytes())
-
 
 @dataclass(frozen=True, eq=False)
 class SkiaPrimitive(SkiaGraphic):
@@ -107,9 +95,6 @@ class SkiaPrimitive(SkiaGraphic):
 
     def draw(self, canvas: Canvas):
         canvas.drawPath(self.path, Paint(Color=self.skia_color, AntiAlias=self.antialias))
-
-    def _key(self):
-        return super()._key(), self.color
 
 
 @dataclass(frozen=True, eq=False)

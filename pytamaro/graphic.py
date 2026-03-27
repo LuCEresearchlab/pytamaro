@@ -12,7 +12,7 @@ from pytamaro.point_names import center, center_left, center_right, bottom_cente
 from pytamaro.utils import Spec
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Graphic(ABC):
     """
     A graphic (image) with a position for pinning.
@@ -34,7 +34,7 @@ class Graphic(ABC):
         """
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Empty(Graphic):
     """
     An empty graphic.
@@ -49,7 +49,7 @@ class Empty(Graphic):
         }, []
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Rectangle(Graphic):
     """
     A rectangle.
@@ -70,7 +70,7 @@ class Rectangle(Graphic):
         }, []
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Ellipse(Graphic):
     """
     An ellipse.
@@ -91,7 +91,7 @@ class Ellipse(Graphic):
         }, []
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class CircularSector(Graphic):
     """
     A circular sector (with an angle between 0 and 360).
@@ -113,7 +113,7 @@ class CircularSector(Graphic):
         }, []
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Triangle(Graphic):
     """
     A triangle specified using two sides and the angle between them.
@@ -140,7 +140,7 @@ class Triangle(Graphic):
         }, []
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Text(Graphic):
     """
     Graphic containing text, using a given font with a given typographic size.
@@ -165,7 +165,7 @@ class Text(Graphic):
         }, []
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Compose(Graphic):
     """
     Represents the composition of two graphics, one in the foreground and the
@@ -199,7 +199,7 @@ class Compose(Graphic):
         return spec, deps
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Pin(Graphic):
     """
     Represents the pinning of a graphic in a certain position on its bounds.
@@ -226,7 +226,7 @@ class Pin(Graphic):
         }, [self.graphic]
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Rotate(Graphic):
     """
     Represents the counterclockwise rotation of a graphic
@@ -252,7 +252,7 @@ class Rotate(Graphic):
         }, [self.graphic]
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Beside(Graphic):
     """
     Represents the composition of two graphics one beside the other,
@@ -273,7 +273,7 @@ class Beside(Graphic):
         }, [self.left_graphic, self.right_graphic]
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Above(Graphic):
     """
     Represents the composition of two graphics one above the other,
@@ -294,7 +294,7 @@ class Above(Graphic):
         }, [self.top_graphic, self.bottom_graphic]
 
 
-@dataclass(frozen=True, eq=False)
+@dataclass(frozen=True)
 class Overlay(Graphic):
     """
     Represents the composition of two graphics that one overlay other,
