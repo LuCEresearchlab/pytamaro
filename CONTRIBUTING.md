@@ -16,10 +16,14 @@ We use `pytest` to execute our test suite (written in the `tests` folder). Verif
 uv run pytest tests
 ```
 
-We use `pylint` and `pycodestyle` to uniform our style. Make sure they report no errors by running:
+We use [Ruff](https://docs.astral.sh/ruff/)` both to lint our code and format it automatically. Verify that Ruff reports no errors:
 ```sh
-uv run pylint pytamaro
-uv run pycodestyle .
+uv run ruff check
+```
+
+To automatically format (but you should really set up your editor to do it on save) run:
+```sh
+uv run ruff format
 ```
 
 We use `pyright` to type check our code. Verify that it reports no errors:

@@ -1,13 +1,13 @@
-# pylint: disable=missing-docstring
-# Separated from color.py only in the main English version to avoid circular imports
+"""Separated from color.py only in the main English version to avoid circular imports."""
 
-from pytamaro.color import Color
 from pytamaro.checks import check_range
+from pytamaro.color import Color
+
+# ruff: noqa: D205
 
 
 def rgb_color(red: int, green: int, blue: int, opacity: float = 1.0) -> Color:
-    """
-    Returns a color with the provided components for red (R), green (G) and blue (B) and a
+    """Return a color with the provided components for red (R), green (G) and blue (B) and a
     certain degree of opacity (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/524px-RGBCube_a.svg.png
@@ -31,8 +31,7 @@ def rgb_color(red: int, green: int, blue: int, opacity: float = 1.0) -> Color:
 
 
 def hsv_color(hue: float, saturation: float, value: float, opacity: float = 1.0) -> Color:
-    """
-    Returns a color with the provided hue (H), saturation (S), value (V) and a
+    """Return a color with the provided hue (H), saturation (S), value (V) and a
     certain degree of opacity (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/4/4e/HSV_color_solid_cylinder.png
@@ -72,8 +71,7 @@ def hsv_color(hue: float, saturation: float, value: float, opacity: float = 1.0)
 
 
 def hsl_color(hue: float, saturation: float, lightness: float, opacity: float = 1.0) -> Color:
-    """
-    Returns a color with the provided hue (H), saturation (S), lightness (L) and a
+    """Return a color with the provided hue (H), saturation (S), lightness (L) and a
     certain degree of opacity (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/3/35/HSL_color_solid_cylinder.png

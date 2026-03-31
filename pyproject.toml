@@ -15,11 +15,10 @@ license-files = []
 
 [dependency-groups]
 dev = [
-    "pycodestyle>=2.12.1",
-    "pylint>=3.3.1",
-    "pyright>=1.1.389",
+    "pyright>=1.1.408",
     "pytest-cov>=6.0.0",
     "pytest>=8.3.3",
+    "ruff>=0.15.8",
     "sphinx-rtd-theme>=3.0.2",
     "sphinx-toolbox==3.8.1",
     "sphinx==8.1.3",
@@ -31,6 +30,30 @@ include = ["pytamaro", "tests"]
 [tool.pytest.ini_options]
 python_functions = "test_*"
 
-[tool.pylint.main]
-extension-pkg-allow-list = "skia"
-ignore-long-lines = "^.*https?://\\S+$"
+[tool.ruff.lint]
+select = [
+    # pydocstyle
+    "D",
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+ignore = [
+  "D203",  # keep D211
+  "D213",  # keep D212
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]

@@ -1,7 +1,4 @@
-"""
-Noms de points particuliers, qui peuvent être utilisés comme des points d'ancrage pour des
-graphiques.
-"""
+"""Noms de points particuliers, qui peuvent être utilisés comme des points d'ancrage pour des graphiques."""  # noqa: E501
 
 from __future__ import annotations
 

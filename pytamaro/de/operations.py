@@ -1,6 +1,4 @@
-"""
-Funktionen für Operationen mit Grafiken (hauptsächlich für deren Komposition).
-"""
+"""Funktionen für Operationen mit Grafiken (hauptsächlich für deren Komposition)."""
 
 from __future__ import annotations
 
@@ -8,10 +6,11 @@ import pytamaro as _pytamaro
 from pytamaro.de.graphic import Grafik
 from pytamaro.de.point import Punkt
 
+# ruff: noqa: D205
+
 
 def grafik_breite(grafik: Grafik) -> int:
-    """
-    Gibt die Breite der gegebenen Grafik zurück.
+    """Gibt die Breite der gegebenen Grafik zurück.
 
     :param grafik: Grafik deren Breite gesucht ist
     :returns: Breite der Grafik
@@ -20,8 +19,7 @@ def grafik_breite(grafik: Grafik) -> int:
 
 
 def grafik_hoehe(grafik: Grafik) -> int:
-    """
-    Gibt die Höhe der gegebenen Grafik zurück.
+    """Gibt die Höhe der gegebenen Grafik zurück.
 
     :param grafik: Grafik deren Höhe gesucht ist
     :returns: Höhe der Grafik
@@ -29,10 +27,8 @@ def grafik_hoehe(grafik: Grafik) -> int:
     return _pytamaro.graphic_height(grafik)
 
 
-def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
-        -> Grafik:
-    """
-    Erzeugt eine neue Grafik,
+def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) -> Grafik:
+    """Erzeugt eine neue Grafik,
     die aus der Kombination der zwei gegebenen Grafiken besteht.
     Die erste gegebene Grafik liegt im Vordergrund
     und die zweite im Hintergrund.
@@ -50,8 +46,7 @@ def kombiniere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
 
 
 def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
-    """
-    Erzeugt eine neue Grafik,
+    """Erzeugt eine neue Grafik,
     die der gegebenen Grafik mit einer neuen Fixierposition entspricht.
 
     Jede Grafik liegt in einem rechteckigen Begrenzungsrahmen.
@@ -67,10 +62,8 @@ def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
     return _pytamaro.pin(punkt, grafik)
 
 
-def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
-        -> Grafik:
-    """
-    Erzeugt eine neue Grafik,
+def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) -> Grafik:
+    """Erzeugt eine neue Grafik,
     die aus der zentrierten Überlagerung der zwei gegebenen Grafiken besteht.
     Die erste gegebene Grafik liegt im Vordergrund
     und die zweite im Hintergrund.
@@ -85,8 +78,7 @@ def ueberlagere(vordere_grafik: Grafik, hintere_grafik: Grafik) \
 
 
 def neben(linke_grafik: Grafik, rechte_grafik: Grafik) -> Grafik:
-    """
-    Erzeugt eine neue Grafik,
+    """Erzeugt eine neue Grafik,
     die aus dem Nebeneinanderlegen der zwei gegebenen Grafiken besteht.
     Die zwei Grafiken sind vertikal zentriert.
 
@@ -100,8 +92,7 @@ def neben(linke_grafik: Grafik, rechte_grafik: Grafik) -> Grafik:
 
 
 def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
-    """
-    Erzeugt eine neue Grafik,
+    """Erzeugt eine neue Grafik,
     die aus dem Übereinanderlegen der zwei gegebenen Grafiken besteht.
     Die zwei Grafiken sind horizontal zentriert.
 
@@ -115,8 +106,7 @@ def ueber(obere_grafik: Grafik, untere_grafik: Grafik) -> Grafik:
 
 
 def drehe(winkel: float, grafik: Grafik) -> Grafik:
-    """
-    Erzeugt eine neue Grafik, die einer Rotation der gegebenen Grafik
+    """Erzeugt eine neue Grafik, die einer Rotation der gegebenen Grafik
     um ihre Fixierposition im Gegenuhrzeigersinn
     um den gegebenen Winkel entspricht.
     Negative Winkel entsprechen einer Rotation um Uhrzeigersinn.

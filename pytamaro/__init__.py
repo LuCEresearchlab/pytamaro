@@ -1,8 +1,6 @@
-"""
-(Re-)Export names from this top-level module for the public API.
-"""
+"""(Re-)Export names from this top-level module for the public API."""
 
-
+# ruff: noqa: F403
 from pytamaro.color import *
 from pytamaro.color_functions import *
 from pytamaro.color_names import *

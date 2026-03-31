@@ -1,6 +1,5 @@
-"""
-Functions to do operations on graphics (mainly, to combine them).
-"""
+"""Functions to do operations on graphics (mainly, to combine them)."""
+
 from pytamaro.checks import check_angle, check_graphic, check_point
 from pytamaro.graphic import Graphic
 from pytamaro.point import Point
@@ -14,8 +13,7 @@ else:
 
 @export
 def graphic_width(graphic: Graphic) -> int:
-    """
-    Returns the width of a graphic.
+    """Return the width of a graphic.
 
     :param graphic: graphic to calculate the width of
     :returns: width of the graphic
@@ -26,8 +24,7 @@ def graphic_width(graphic: Graphic) -> int:
 
 @export
 def graphic_height(graphic: Graphic) -> int:
-    """
-    Returns the height of a graphic.
+    """Return the height of a graphic.
 
     :param graphic: graphic to calculate the height of
     :returns: height of the graphic
@@ -38,8 +35,7 @@ def graphic_height(graphic: Graphic) -> int:
 
 @export
 def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by composing the two provided graphics.
+    """Create a new graphic by composing the two provided graphics.
     The first graphic is kept in the foreground, the second one in the
     background.
     The graphics are aligned by superimposing their pinning positions.
@@ -50,7 +46,7 @@ def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
     :param foreground_graphic: graphic in the foreground
     :param background_graphic: graphic in the background
     :returns: the resulting composed graphic
-    """
+    """  # noqa: D205
     check_graphic(foreground_graphic, "foreground_graphic")
     check_graphic(background_graphic, "background_graphic")
     return __impl.compose(foreground_graphic, background_graphic)
@@ -58,9 +54,7 @@ def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
 
 @export
 def pin(point: Point, graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic that corresponds to the provided graphic,
-    with a new pinning position.
+    """Create a new graphic that corresponds to the provided graphic, with a new pinning position.
 
     Each graphic is contained in a rectangular bounding box.
     There are 9 notable points, corresponding to the four corners of this rectangle,
@@ -80,8 +74,7 @@ def pin(point: Point, graphic: Graphic) -> Graphic:
 
 @export
 def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by overlaying the two provided graphics,
+    """Create a new graphic by overlaying the two provided graphics,
     keeping the first one in the foreground and the second one in background.
     The two graphics are overlaid on their centers.
 
@@ -90,7 +83,7 @@ def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
     :param foreground_graphic: graphic in the foreground
     :param background_graphic: graphic in the background
     :returns: the resulting graphic after overlaying the two provided ones
-    """
+    """  # noqa: D205
     check_graphic(foreground_graphic, "foreground_graphic")
     check_graphic(background_graphic, "background_graphic")
     return __impl.overlay(foreground_graphic, background_graphic)
@@ -98,8 +91,7 @@ def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
 
 @export
 def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by placing the two graphics one besides the other.
+    """Create a new graphic by placing the two graphics one besides the other.
     The two graphics are vertically centered.
 
     The pinning position of the new graphic is at its center.
@@ -108,7 +100,7 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
     :param right_graphic: graphic to place on the right
     :returns: the resulting graphic after placing the two graphics one besides
               the other
-    """
+    """  # noqa: D205
     check_graphic(left_graphic, "left_graphic")
     check_graphic(right_graphic, "right_graphic")
     return __impl.beside(left_graphic, right_graphic)
@@ -116,8 +108,7 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
 
 @export
 def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by placing the two graphics one above the other.
+    """Create a new graphic by placing the two graphics one above the other.
     The two graphics are horizontally centered.
 
     The pinning position of the new graphic is at its center.
@@ -126,7 +117,7 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
     :param bottom_graphic: graphic to place on the bottom
     :returns: the resulting graphic after placing the two graphics one above
               the other
-    """
+    """  # noqa: D205
     check_graphic(top_graphic, "top_graphic")
     check_graphic(bottom_graphic, "bottom_graphic")
     return __impl.above(top_graphic, bottom_graphic)
@@ -134,15 +125,14 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
 
 @export
 def rotate(angle: float, graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by rotating counterclockwise the provided graphic
+    """Create a new graphic by rotating counterclockwise the provided graphic
     around its pinning position by the given angle.
     A negative angle corresponds to a clockwise rotation.
 
     :param angle: angle of counterclockwise rotation, in degrees
     :param graphic: the graphic to rotate
     :returns: a new, rotated graphic
-    """
+    """  # noqa: D205
     check_angle(angle)
     check_graphic(graphic)
     return __impl.rotate(angle, graphic)

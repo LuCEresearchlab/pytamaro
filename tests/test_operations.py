@@ -1,12 +1,28 @@
 from pytamaro.color_names import blue, red
-from pytamaro.operations import (above, beside, compose, graphic_height,
-                                 graphic_width, overlay, pin, rotate)
+from pytamaro.operations import (
+    above,
+    beside,
+    compose,
+    graphic_height,
+    graphic_width,
+    overlay,
+    pin,
+    rotate,
+)
 from pytamaro.point_names import bottom_left, bottom_right, top_left
 from pytamaro.primitives import ellipse, rectangle, triangle
-from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_color,
-                                 assert_equals_rendered, assert_pin_tolerance,
-                                 assert_repr, assert_size,
-                                 assert_size_tolerance, assert_unique_color)
+from tests.testing_utils import (
+    HEIGHT,
+    RADIUS,
+    WIDTH,
+    assert_color,
+    assert_equals_rendered,
+    assert_pin_tolerance,
+    assert_repr,
+    assert_size,
+    assert_size_tolerance,
+    assert_unique_color,
+)
 
 # Width and height
 
@@ -69,8 +85,7 @@ def test_rotate_pin_right_bottom():
 
 def test_rotate_pin_triangle():
     t = pin(top_left, triangle(WIDTH, WIDTH, 90, red))
-    assert_size(
-        compose(t, rotate(270, t)), (2 * graphic_width(t), graphic_height(t)))
+    assert_size(compose(t, rotate(270, t)), (2 * graphic_width(t), graphic_height(t)))
 
 
 def test_rotate_pin_circle():

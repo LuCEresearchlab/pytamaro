@@ -1,7 +1,14 @@
 import pytamaro as _pytamaro
-from pytamaro.de.operations import (drehe, fixiere, grafik_breite,
-                                    grafik_hoehe, kombiniere, neben, ueber,
-                                    ueberlagere)
+from pytamaro.de.operations import (
+    drehe,
+    fixiere,
+    grafik_breite,
+    grafik_hoehe,
+    kombiniere,
+    neben,
+    ueber,
+    ueberlagere,
+)
 from pytamaro.de.point_names import mitte, oben_links, unten_rechts
 from tests.testing_utils import HEIGHT, WIDTH, assert_repr
 

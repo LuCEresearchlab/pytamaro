@@ -1,7 +1,6 @@
-"""
-Noms de couleurs particulières qui sont aux coins du cube RGB.
+"""Noms de couleurs particulières qui sont aux coins du cube RGB.
 Ainsi que la couleur complètement transparent.
-"""
+"""  # noqa: D205
 
 from __future__ import annotations
 

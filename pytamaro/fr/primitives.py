@@ -1,6 +1,4 @@
-# pylint:disable=duplicate-code
-"""
-Fonctions pour créer des graphiques primitifs (formes et texte).
+"""Fonctions pour créer des graphiques primitifs (formes et texte).
 À moins d'être spécifié autrement, le point d'ancrage initial est le centre du
 cadre de délimitation (bounding box) du graphique.
 """
@@ -11,10 +9,11 @@ import pytamaro as _pytamaro
 from pytamaro.fr.color import Couleur
 from pytamaro.fr.graphic import Graphique
 
+# ruff: noqa: D205
+
 
 def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
-    """
-    Crée un rectangle de dimensions indiquées et rempli avec la couleur donnée.
+    """Crée un rectangle de dimensions indiquées et rempli avec la couleur donnée.
 
     :param largeur: largeur du rectangle
     :param hauteur: hauteur du rectangle
@@ -25,8 +24,7 @@ def rectangle(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
 
 
 def graphique_vide() -> Graphique:
-    """
-    Crée un graphique vide.
+    """Crée un graphique vide.
     Quand un graphique vide est composé avec n'importe quel autre graphique, il
     se comporte comme l'élément neutre: le résultat est toujours égal à l'autre
     graphique.
@@ -37,8 +35,7 @@ def graphique_vide() -> Graphique:
 
 
 def ellipse(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
-    """
-    Crée une ellipse avec les dimensions indiquées et rempli avec la couleur
+    """Crée une ellipse avec les dimensions indiquées et rempli avec la couleur
     donnée.
 
     Lorsque la largeur et la hauteur coïncident, l'ellipse devient un cercle
@@ -53,8 +50,7 @@ def ellipse(largeur: float, hauteur: float, couleur: Couleur) -> Graphique:
 
 
 def secteur_circulaire(rayon: float, angle: float, couleur: Couleur) -> Graphique:
-    """
-    Crée un secteur circulaire appartenant à un cercle du rayon indiqué, rempli
+    """Crée un secteur circulaire appartenant à un cercle du rayon indiqué, rempli
     d'une couleur.
 
     Un secteur circulaire est une portion de cercle comprise entre deux rayons
@@ -77,8 +73,7 @@ def secteur_circulaire(rayon: float, angle: float, couleur: Couleur) -> Graphiqu
 
 
 def triangle(cote1: float, cote2: float, angle: float, couleur: Couleur) -> Graphique:
-    """
-    Crée un triangle en spécifiant deux côtés et l'angle qui les sépare, rempli
+    """Crée un triangle en spécifiant deux côtés et l'angle qui les sépare, rempli
     d'une couleur.
 
     Le premier côté s'étend horizontalement vers la droite. Le deuxième côté
@@ -99,8 +94,7 @@ def triangle(cote1: float, cote2: float, angle: float, couleur: Couleur) -> Grap
 
 
 def texte(contenu: str, police: str, points: float, couleur: Couleur) -> Graphique:
-    """
-    Crée un graphique avec le texte rendu à l'aide de la police, de la taille et
+    """Crée un graphique avec le texte rendu à l'aide de la police, de la taille et
     de la couleur spécifiées.
 
     Lorsque la police True-Type indiquée n'est pas disponible dans le système,

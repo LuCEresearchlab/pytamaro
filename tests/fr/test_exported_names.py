@@ -1,9 +1,7 @@
-from typing import List
-
-from pytamaro.fr import *
+from pytamaro.fr import *  # noqa: F403
 
 
-def _assert_names(names: List[str]):
+def _assert_names(names: list[str]):
     for name in names:
         assert name in globals()
 
@@ -22,6 +20,16 @@ def test_colors():
 
 
 def test_points():
-    _assert_names(["haut_gauche", "haut_centre", "haut_droite", "centre_gauche",
-                   "centre", "centre_droite", "bas_gauche", "bas_centre",
-                   "bas_droite"])
+    _assert_names(
+        [
+            "haut_gauche",
+            "haut_centre",
+            "haut_droite",
+            "centre_gauche",
+            "centre",
+            "centre_droite",
+            "bas_gauche",
+            "bas_centre",
+            "bas_droite",
+        ]
+    )

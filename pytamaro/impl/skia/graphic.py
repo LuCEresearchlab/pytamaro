@@ -1,23 +1,36 @@
-"""
-Skia-based implementation of graphics.
+"""Skia-based implementation of graphics.
 
 :meta private:
 """
-# pylint: disable=missing-class-docstring
+
 import sys
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from functools import cached_property
 
-from skia import (Canvas, Paint, Path, Point, Rect, Size, Matrix, FontMgr, Font, Typeface, Color4f)
+from skia import Canvas, Color4f, Font, FontMgr, Matrix, Paint, Path, Point, Rect, Size, Typeface
 
 from pytamaro.color import Color
-from pytamaro.graphic import (Graphic, Empty, Rectangle, Ellipse, CircularSector,
-                              Text, Compose, Pin, Rotate, Beside, Above,
-                              Overlay, Triangle)
+from pytamaro.graphic import (
+    Above,
+    Beside,
+    CircularSector,
+    Compose,
+    Ellipse,
+    Empty,
+    Graphic,
+    Overlay,
+    Pin,
+    Rectangle,
+    Rotate,
+    Text,
+    Triangle,
+)
 from pytamaro.localization import translate
 from pytamaro.point import Point as PyTamaroPoint
-from pytamaro.point_names import center, center_right, center_left, bottom_center, top_center
+from pytamaro.point_names import bottom_center, center, center_left, center_right, top_center
+
+# ruff: noqa: D101, D105, D107
 
 
 @dataclass(frozen=True, eq=False)
@@ -26,9 +39,7 @@ class SkiaGraphic(Graphic, ABC):
     path: Path
 
     def size(self) -> Size:
-        """
-        Computes the size of this graphic (x and y axes spanning),
-        using the bounds computed by bounds().
+        """Compute the size of this graphic (x and y axes spanning).
 
         :returns: graphic's size
         """
@@ -36,8 +47,7 @@ class SkiaGraphic(Graphic, ABC):
 
     @cached_property
     def bounds(self) -> Rect:
-        """
-        Computes the (tight) bounds for the path (outline) of this graphic.
+        """Compute the (tight) bounds for the path (outline) of this graphic.
 
         :returns: a rectangle that indicates the bounds of the graphic in the 2D
                   space
@@ -45,8 +55,7 @@ class SkiaGraphic(Graphic, ABC):
         return self.path.computeTightBounds()
 
     def zero_pixels(self) -> bool:
-        """
-        Returns whether this graphic has no pixels to render, because its (rounded) area is 0.
+        """Return whether this graphic has no pixels to render, because its (rounded) area is 0.
 
         :returns: True if the graphic has no pixels, False otherwise
         """
@@ -54,8 +63,7 @@ class SkiaGraphic(Graphic, ABC):
 
     @abstractmethod
     def draw(self, canvas: Canvas):
-        """
-        Draws the current graphic onto the provided canvas.
+        """Draw the current graphic onto the provided canvas.
 
         :param canvas: canvas onto which to draw
         """
@@ -63,10 +71,11 @@ class SkiaGraphic(Graphic, ABC):
 
 @dataclass(frozen=True, eq=False)
 class SkiaPrimitive(SkiaGraphic):
-    """
-    Represents a primitive graphic, which has a uniform color.
+    """Represent a primitive graphic, which has a uniform color.
+
     Geometric shapes and text are primitive graphics.
     """
+
     color: Color
 
     def __init__(self, path: Path, color: Color, pin_position: Point | None = None):
@@ -78,32 +87,26 @@ class SkiaPrimitive(SkiaGraphic):
 
     @cached_property
     def antialias(self) -> bool:
-        """
-        Whether the graphic should be drawn with antialiasing.
-        """
+        """Whether the graphic should be drawn with antialiasing."""
         return False
 
     @cached_property
     def skia_color(self) -> Color4f:
-        """
-        Returns the Skia color representation of this graphic.
-        """
-        return Color4f(self.color.red / 255,
-                       self.color.green / 255,
-                       self.color.blue / 255,
-                       self.color.alpha)
+        """Returns the Skia color representation of this graphic."""
+        return Color4f(
+            self.color.red / 255, self.color.green / 255, self.color.blue / 255, self.color.alpha
+        )
 
-    def draw(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):  # noqa: D102
         canvas.drawPath(self.path, Paint(Color=self.skia_color, AntiAlias=self.antialias))
 
 
 @dataclass(frozen=True, eq=False)
 class SkiaEmpty(SkiaGraphic, Empty):
-
     def __init__(self):
         super().__init__(Point(0, 0), Path())
 
-    def draw(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):  # noqa: D102
         pass
 
     def __repr__(self) -> str:
@@ -112,7 +115,6 @@ class SkiaEmpty(SkiaGraphic, Empty):
 
 @dataclass(frozen=True, eq=False)
 class SkiaRectangle(SkiaPrimitive, Rectangle):
-
     def __init__(self, width: float, height: float, color: Color):
         object.__setattr__(self, "width", width)
         object.__setattr__(self, "height", height)
@@ -125,7 +127,6 @@ class SkiaRectangle(SkiaPrimitive, Rectangle):
 
 @dataclass(frozen=True, eq=False)
 class SkiaEllipse(SkiaPrimitive, Ellipse):
-
     def __init__(self, width: float, height: float, color: Color):
         object.__setattr__(self, "width", width)
         object.__setattr__(self, "height", height)
@@ -138,7 +139,6 @@ class SkiaEllipse(SkiaPrimitive, Ellipse):
 
 @dataclass(frozen=True, eq=False)
 class SkiaCircularSector(SkiaPrimitive, CircularSector):
-
     def __init__(self, radius: float, angle: float, color: Color):
         object.__setattr__(self, "radius", radius)
         object.__setattr__(self, "angle", angle)
@@ -158,7 +158,6 @@ class SkiaCircularSector(SkiaPrimitive, CircularSector):
 
 @dataclass(frozen=True, eq=False)
 class SkiaTriangle(SkiaPrimitive, Triangle):
-
     def __init__(self, side1: float, side2: float, angle: float, color: Color):
         object.__setattr__(self, "side1", side1)
         object.__setattr__(self, "side2", side2)
@@ -175,7 +174,6 @@ class SkiaTriangle(SkiaPrimitive, Triangle):
 
 @dataclass(frozen=True, eq=False)
 class SkiaText(SkiaPrimitive, Text):
-
     def __init__(self, text: str, font_name: str, text_size: float, color: Color):
         object.__setattr__(self, "text", text)
         object.__setattr__(self, "font_name", font_name)
@@ -185,7 +183,7 @@ class SkiaText(SkiaPrimitive, Text):
         glyphs = self.font.textToGlyphs(text)
         offsets = self.font.getXPos(glyphs)
         text_path = Path()
-        for glyph, x_offset in zip(glyphs, offsets):
+        for glyph, x_offset in zip(glyphs, offsets, strict=True):
             path = self.font.getPath(glyph)
             if path is not None:  # some glyphs (e.g., a space) have no outline
                 path.offset(x_offset, 0)
@@ -194,22 +192,19 @@ class SkiaText(SkiaPrimitive, Text):
         super().__init__(text_path, color, Point(0, 0))
 
     @cached_property
-    def antialias(self) -> bool:
+    def antialias(self) -> bool:  # noqa: D102
         return True
 
     @cached_property
     def font(self) -> Font:
-        """
-        The Skia Font used to render the text.
-        """
+        """The Skia Font used to render the text."""
         return Font(Typeface(self.font_name), self.text_size)
 
     @cached_property
     def bounds(self) -> Rect:
-        """
-        Computes the bounding box of the text, whose width is determined by
+        """Compute the bounding box of the text, whose width is determined by
         Font.measureText() to account for leading and trailing glyphs with no outline.
-        """
+        """  # noqa: D205
         path_bounds = super().bounds
         text_length = self.font.measureText(self.text)
         return Rect.MakeLTRB(0, path_bounds.top(), text_length, path_bounds.bottom())
@@ -230,15 +225,16 @@ class SkiaCompose(SkiaGraphic, Compose):
         bg_pin = self.background.pin_position
         pin = Point(bg_pin.x(), bg_pin.y())
         path = Path(self.background.path)
-        path.addPath(self.foreground.path,
-                     bg_pin.x() - fg_pin.x(), bg_pin.y() - fg_pin.y())
+        path.addPath(self.foreground.path, bg_pin.x() - fg_pin.x(), bg_pin.y() - fg_pin.y())
         super().__init__(pin, path)
 
-    def draw(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):  # noqa: D102
         canvas.save()
         self.background.draw(canvas)
-        canvas.translate(self.background.pin_position.x() - self.foreground.pin_position.x(),
-                         self.background.pin_position.y() - self.foreground.pin_position.y())
+        canvas.translate(
+            self.background.pin_position.x() - self.foreground.pin_position.x(),
+            self.background.pin_position.y() - self.foreground.pin_position.y(),
+        )
         self.foreground.draw(canvas)
         canvas.restore()
 
@@ -248,9 +244,8 @@ class SkiaCompose(SkiaGraphic, Compose):
 
 @dataclass(frozen=True, eq=False)
 class SkiaPin(SkiaGraphic, Pin):
-    """
-    Represents the pinning of a graphic in a certain position on its bounds.
-    """
+    """Represents the pinning of a graphic in a certain position on its bounds."""
+
     graphic: SkiaGraphic
     pinning_point: PyTamaroPoint
 
@@ -258,20 +253,12 @@ class SkiaPin(SkiaGraphic, Pin):
         object.__setattr__(self, "graphic", graphic)
         object.__setattr__(self, "pinning_point", pinning_point)
         bounds = graphic.bounds
-        h_mapping = {
-            -1.0: bounds.left(),
-            0.0: bounds.centerX(),
-            1.0: bounds.right()
-        }
-        v_mapping = {
-            1.0: bounds.top(),
-            0.0: bounds.centerY(),
-            -1.0: bounds.bottom()
-        }
+        h_mapping = {-1.0: bounds.left(), 0.0: bounds.centerX(), 1.0: bounds.right()}
+        v_mapping = {1.0: bounds.top(), 0.0: bounds.centerY(), -1.0: bounds.bottom()}
         pin = Point(h_mapping[pinning_point.x], v_mapping[pinning_point.y])
         super().__init__(pin, graphic.path)
 
-    def draw(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):  # noqa: D102
         self.graphic.draw(canvas)
 
     def __repr__(self) -> str:
@@ -289,12 +276,12 @@ class SkiaRotate(SkiaGraphic, Rotate):
         object.__setattr__(self, "rot_matrix", Matrix.RotateDeg(-angle, graphic.pin_position))
         path = Path()
         # transform() mutates the path provided as the second argument
-        graphic.path.transform(self.rot_matrix, path)  # type: ignore  # pylint: disable=no-member
+        graphic.path.transform(self.rot_matrix, path)  # type: ignore
         super().__init__(graphic.pin_position, path)
 
-    def draw(self, canvas: Canvas):
+    def draw(self, canvas: Canvas):  # noqa: D102
         canvas.save()
-        canvas.concat(self.rot_matrix)  # type: ignore  # pylint: disable=no-member
+        canvas.concat(self.rot_matrix)  # type: ignore
         self.graphic.draw(canvas)
         canvas.restore()
 
@@ -304,27 +291,31 @@ class SkiaRotate(SkiaGraphic, Rotate):
 
 @dataclass(frozen=True, eq=False)
 class SkiaSimpleCompose(SkiaGraphic, ABC):
-    """
-    Represents a simple composition operation between two graphics
-    (i.e., beside, above, or overlay).
+    """Represents a simple composition operation between two graphics (i.e., beside, above, or overlay).
+
     These simple compositions pin the two graphics appropriately,
     compose them normally, and then pin the result on its center.
-    """
+    """  # noqa: E501
 
-    def __init__(self, graphic1: SkiaGraphic, graphic2: SkiaGraphic,
-                 point1: PyTamaroPoint, point2: PyTamaroPoint):
-        composed_graphic = SkiaPin(SkiaCompose(SkiaPin(graphic1, point1),
-                                               SkiaPin(graphic2, point2)), center)
+    def __init__(
+        self,
+        graphic1: SkiaGraphic,
+        graphic2: SkiaGraphic,
+        point1: PyTamaroPoint,
+        point2: PyTamaroPoint,
+    ):
+        composed_graphic = SkiaPin(
+            SkiaCompose(SkiaPin(graphic1, point1), SkiaPin(graphic2, point2)), center
+        )
         object.__setattr__(self, "composed_graphic", composed_graphic)
         super().__init__(composed_graphic.pin_position, composed_graphic.path)
 
-    def draw(self, canvas: Canvas):
-        self.composed_graphic.draw(canvas)  # type: ignore  # pylint: disable=no-member
+    def draw(self, canvas: Canvas):  # noqa: D102
+        self.composed_graphic.draw(canvas)  # type: ignore
 
 
 @dataclass(frozen=True, eq=False)
 class SkiaBeside(SkiaSimpleCompose, Beside):
-
     def __init__(self, left_graphic: SkiaGraphic, right_graphic: SkiaGraphic):
         object.__setattr__(self, "left_graphic", left_graphic)
         object.__setattr__(self, "right_graphic", right_graphic)
@@ -336,7 +327,6 @@ class SkiaBeside(SkiaSimpleCompose, Beside):
 
 @dataclass(frozen=True, eq=False)
 class SkiaAbove(SkiaSimpleCompose, Above):
-
     def __init__(self, top_graphic: SkiaGraphic, bottom_graphic: SkiaGraphic):
         object.__setattr__(self, "top_graphic", top_graphic)
         object.__setattr__(self, "bottom_graphic", bottom_graphic)
@@ -348,7 +338,6 @@ class SkiaAbove(SkiaSimpleCompose, Above):
 
 @dataclass(frozen=True, eq=False)
 class SkiaOverlay(SkiaSimpleCompose, Overlay):
-
     def __init__(self, front_graphic: SkiaGraphic, back_graphic: SkiaGraphic):
         object.__setattr__(self, "front_graphic", front_graphic)
         object.__setattr__(self, "back_graphic", back_graphic)

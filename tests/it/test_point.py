@@ -1,8 +1,15 @@
 import pytamaro as _pytamaro
-from pytamaro.it.point_names import (alto_centro, alto_destra, alto_sinistra,
-                                     basso_centro, basso_destra,
-                                     basso_sinistra, centro, centro_destra,
-                                     centro_sinistra)
+from pytamaro.it.point_names import (
+    alto_centro,
+    alto_destra,
+    alto_sinistra,
+    basso_centro,
+    basso_destra,
+    basso_sinistra,
+    centro,
+    centro_destra,
+    centro_sinistra,
+)
 from tests.testing_utils import assert_repr
 
 

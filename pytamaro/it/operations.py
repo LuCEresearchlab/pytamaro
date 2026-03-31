@@ -1,6 +1,4 @@
-"""
-Funzioni per operazioni con grafiche (principlamente per combinarle).
-"""
+"""Funzioni per operazioni con grafiche (principlamente per combinarle)."""
 
 from __future__ import annotations
 
@@ -10,8 +8,7 @@ from pytamaro.it.point import Punto
 
 
 def larghezza_grafica(grafica: Grafica) -> int:
-    """
-    Ritorna la larghezza di una grafica.
+    """Ritorna la larghezza di una grafica.
 
     :param grafica: grafica di cui calcolare la larghezza
     :returns: larghezza della grafica
@@ -20,8 +17,7 @@ def larghezza_grafica(grafica: Grafica) -> int:
 
 
 def altezza_grafica(grafica: Grafica) -> int:
-    """
-    Ritorna l'altezza di una grafica.
+    """Ritorna l'altezza di una grafica.
 
     :param grafica: grafica di cui calcolare l'altezza
     :returns: altezza della grafica
@@ -29,10 +25,8 @@ def altezza_grafica(grafica: Grafica) -> int:
     return _pytamaro.graphic_height(grafica)
 
 
-def componi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
-        -> Grafica:
-    """
-    Crea una nuova grafica componendo le due grafiche fornite.
+def componi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) -> Grafica:
+    """Crea una nuova grafica componendo le due grafiche fornite.
     La prima grafica viene tenuta in primo piano, la seconda sullo sfondo.
     Le grafiche vengono allineate superimponendo le loro posizioni di fissaggio.
 
@@ -42,13 +36,12 @@ def componi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
     :param grafica_primopiano: grafica in primo piano
     :param grafica_secondopiano: grafica sullo sfondo
     :returns: la grafica risultante composta
-    """
+    """  # noqa: D205
     return _pytamaro.compose(grafica_primopiano, grafica_secondopiano)
 
 
 def fissa(punto: Punto, grafica: Grafica) -> Grafica:
-    """
-    Crea una nuova grafica che corrisponde alla grafica fornita,
+    """Crea una nuova grafica che corrisponde alla grafica fornita,
     con una nuova posizione di fissaggio.
 
     Ogni grafica è racchiusa in un rettangolo di delimitazione (bounding box).
@@ -61,14 +54,12 @@ def fissa(punto: Punto, grafica: Grafica) -> Grafica:
     :param punto: il punto indicante la nuova posizione di fissaggio
     :param grafica: grafica originale
     :returns: una nuova grafica con una posizione di fissaggio aggiornata
-    """
+    """  # noqa: D205
     return _pytamaro.pin(punto, grafica)
 
 
-def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
-        -> Grafica:
-    """
-    Crea una nuova grafica sovrapponendo le due grafiche fornite,
+def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) -> Grafica:
+    """Crea una nuova grafica sovrapponendo le due grafiche fornite,
     tenendo la prima in primo piano e la seconda sullo sfondo.
     Le due grafiche vengono sovrapposte sui loro centri.
 
@@ -77,13 +68,12 @@ def sovrapponi(grafica_primopiano: Grafica, grafica_secondopiano: Grafica) \
     :param grafica_primopiano: grafica in primo piano
     :param grafica_secondopiano: grafica sullo sfondo
     :returns: grafica risultante dalla sovrapposizione delle due fornite
-    """
+    """  # noqa: D205
     return _pytamaro.overlay(grafica_primopiano, grafica_secondopiano)
 
 
 def accanto(grafica_sinistra: Grafica, grafica_destra: Grafica) -> Grafica:
-    """
-    Crea una nuova grafica affiancando orizzontalmente le due grafiche fornite.
+    """Crea una nuova grafica affiancando orizzontalmente le due grafiche fornite.
     Le due grafiche vengono centrate verticalmente.
 
     La posizione di fissaggio della grafica risultante è nel suo centro.
@@ -92,13 +82,12 @@ def accanto(grafica_sinistra: Grafica, grafica_destra: Grafica) -> Grafica:
     :param grafica_destra: grafica da posizionare a destra
     :returns: grafica risultante dall'affiancamento orizzontale delle due
               grafiche fornite
-    """
+    """  # noqa: D205
     return _pytamaro.beside(grafica_sinistra, grafica_destra)
 
 
 def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
-    """
-    Crea una nuova grafica posizionando le due grafiche fornite una sopra l'altra.
+    """Crea una nuova grafica posizionando le due grafiche fornite una sopra l'altra.
     Le due grafiche vengono centrate orizzontalmente.
 
     La posizione di fissaggio della grafica risultante è nel suo centro.
@@ -107,18 +96,17 @@ def sopra(grafica_alto: Grafica, grafica_basso: Grafica) -> Grafica:
     :param grafica_basso: grafica da posizionare in basso
     :returns: grafica risultante dall'affiancamento verticale delle due
               grafiche fornite
-    """
+    """  # noqa: D205
     return _pytamaro.above(grafica_alto, grafica_basso)
 
 
 def ruota(angolo: float, grafica: Grafica) -> Grafica:
-    """
-    Crea una nuova grafica ruotando dell'angolo indicato, in senso antiorario,
+    """Crea una nuova grafica ruotando dell'angolo indicato, in senso antiorario,
     una grafica attorno alla sua posizione di fissaggio.
     Un angolo negativo corrisponde a una rotazione in senso orario.
 
     :param angolo: angolo di rotazione in senso antiorario, in gradi
     :param grafica: grafica da ruotare
     :returns: una nuova grafica, ruotata
-    """
+    """  # noqa: D205
     return _pytamaro.rotate(angolo, grafica)

@@ -1,9 +1,8 @@
 from pytamaro.color_names import blue, green, red
 from pytamaro.impl.ffi.specs import to_specs
 from pytamaro.operations import beside, compose, pin, rotate
+from pytamaro.point_names import center_left, center_right, top_left
 from pytamaro.primitives import ellipse, empty_graphic, rectangle, triangle
-from pytamaro.point_names import center, center_left, center_right, top_left
-
 from tests.testing_utils import HEIGHT, WIDTH
 
 
@@ -15,6 +14,7 @@ def test_pin_position():
 
 
 # --------- Equality and hashing, skia impl ---------
+
 
 def test_equality():
     r1 = rectangle(WIDTH, HEIGHT, red)
@@ -61,6 +61,7 @@ def test_hash_empty_graphic():
 
 
 # --------- Equality and hashing, ffi impl ---------
+
 
 def test_equality_ffi():
     _enable_ffi_impl()
@@ -129,8 +130,8 @@ def _enable_ffi_impl():
 
     sys.modules["pytamaro_js_ffi"] = MagicMock()
     import pytamaro
-    import pytamaro.impl.ffi.primitives
     import pytamaro.impl.ffi.operations
+    import pytamaro.impl.ffi.primitives
 
     pytamaro.primitives.__impl = pytamaro.impl.ffi.primitives  # type: ignore
     pytamaro.operations.__impl = pytamaro.impl.ffi.operations  # type: ignore
@@ -138,8 +139,8 @@ def _enable_ffi_impl():
 
 def _enable_skia_impl():
     import pytamaro
-    import pytamaro.impl.skia.primitives
     import pytamaro.impl.skia.operations
+    import pytamaro.impl.skia.primitives
 
     pytamaro.primitives.__impl = pytamaro.impl.skia.primitives  # type: ignore
     pytamaro.operations.__impl = pytamaro.impl.skia.operations  # type: ignore
@@ -185,8 +186,9 @@ def test_to_specs_pin():
     assert specs[1]["t"] == "Pin"
     pin_value = specs[1]["pin"]
     from struct import pack, unpack
-    x = unpack('>f', pack('>I', (pin_value >> 32) & 0xFFFFFFFF))[0]
-    y = unpack('>f', pack('>I', pin_value & 0xFFFFFFFF))[0]
+
+    x = unpack(">f", pack(">I", (pin_value >> 32) & 0xFFFFFFFF))[0]
+    y = unpack(">f", pack(">I", pin_value & 0xFFFFFFFF))[0]
     assert x == -1.0
     assert y == 1.0
     _enable_skia_impl()

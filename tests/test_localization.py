@@ -14,7 +14,8 @@ def test_with_params():
 
 def test_localized_params():
     import sys
-    sys.modules["pytamaro"].LANGUAGE = "it"   # type: ignore
+
+    sys.modules["pytamaro"].LANGUAGE = "it"  # type: ignore
     msg = translate("INVALID_TYPE", translate("graphic"), translate("Graphic"), translate("Point"))
     assert "grafica" in msg
     assert "Grafica" in msg

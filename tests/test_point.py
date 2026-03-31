@@ -1,5 +1,16 @@
 from pytamaro.point import Point
-from pytamaro.point_names import *
+from pytamaro.point_names import (
+    bottom_left,
+    bottom_right,
+    center,
+    center_left,
+    center_right,
+    i_hat,
+    j_hat,
+    top_center,
+    top_left,
+    top_right,
+)
 from tests.testing_utils import assert_repr
 
 
@@ -20,6 +31,7 @@ def test_add():
 
 def test_point_repr():
     from pytamaro.point_names import _known_points
+
     for point in _known_points:
         assert_repr(point, "en")
     assert_repr(Point(42, -42), "en")

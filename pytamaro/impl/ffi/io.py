@@ -1,28 +1,28 @@
-"""
-FFI-based implementation of I/O functions.
+"""FFI-based implementation of I/O functions.
 
 :meta private:
 """
+
 import base64
 from io import BytesIO
 
 from PIL import Image
 from PIL.Image import Image as PILImage
 
-from pytamaro_js_ffi import (  # pylint: disable=import-error # type: ignore
-    js_graphic_size,
-    js_render_graphic,
-    js_save,
-)
-
 from pytamaro.checks import check_graphic, check_graphic_size, check_type
 from pytamaro.graphic import Graphic
 from pytamaro.impl.ffi.specs import to_specs
 from pytamaro.impl.shared_io import guess_scaling_factor, print_data_uri
 from pytamaro.utils import Size, Spec
+from pytamaro_js_ffi import (  # type: ignore
+    js_graphic_size,
+    js_render_graphic,
+    js_save,
+)
+
+# ruff: noqa: D103
 
 
-# pylint: disable=missing-function-docstring
 def _render_graphic_base64(graphic: Graphic, debug: bool) -> str:
     specs = to_specs(graphic)
     rounded_size = graphic_size(specs).to_round()

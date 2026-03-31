@@ -7,10 +7,10 @@
 # ///
 
 
-"""
-Run this script with:
+"""Run this script with:
 > uv run --prerelease=allow judicious_transformer.py
-"""
+"""  # noqa: D205, D400, D415
+
 import ast
 import json
 import os
@@ -32,20 +32,20 @@ subprocess.run(["mkdir", str(OUTPUT_DIR)])
 xslt_transform = ET.XSLT(ET.parse("judicious.xslt"))
 
 
-def plural(element_type):
+def plural(element_type):  # noqa: D103
     return element_type + "s"
 
 
-def postprocessor(path, key, value):
+def postprocessor(path, key, value):  # noqa: D103
     if key == "parameters":
         return key, value["parameter"] if value is not None else []
     if key == "sideEffects":
-        return key, True if value == "true" else False
+        return key, value == "true"
     return key, value
 
 
-def pytamaro_module(folder_name):
-    if folder_name == "English":
+def pytamaro_module(folder_name) -> tuple[str, str]:  # noqa: D103
+    if folder_name == "English":  # noqa: SIM116
         return "pytamaro", "en"
     elif folder_name == "French":
         return "pytamaro.fr", "fr"
@@ -53,17 +53,18 @@ def pytamaro_module(folder_name):
         return "pytamaro.de", "de"
     elif folder_name == "Italian":
         return "pytamaro.it", "it"
+    raise ValueError(f"Unknown folder name: {folder_name}")
 
 
-def localize_code(code, lang):
-    sys.path.append(os.path.join(os.path.dirname(__file__), '../pytamaro'))
-    from localization import translations
+def localize_code(code, lang):  # noqa: D103
+    sys.path.append(os.path.join(os.path.dirname(__file__), "../pytamaro"))
+    from localization import translations  # type: ignore
+
     tree = ast.parse(code)
     # Replace all names in the tree with their localized version
     for node in ast.walk(tree):
-        if isinstance(node, ast.Name):
-            if node.id in translations:
-                node.id = translations[node.id][lang]
+        if isinstance(node, ast.Name) and node.id in translations:
+            node.id = translations[node.id][lang]
     code = ast.unparse(tree)
     return code
 
@@ -71,17 +72,25 @@ def localize_code(code, lang):
 for languagedir in [el for el in Path("_build/xml").iterdir() if el.is_dir()]:
     module_name = pytamaro_module(languagedir.name)[0]
     print("Processing", languagedir)
-    docs = {"module": module_name, "summary": f"PyTamaro graphics ({languagedir.name} API)", "elements": []}
+    docs = {
+        "module": module_name,
+        "summary": f"PyTamaro graphics ({languagedir.name} API)",
+        "elements": [],
+    }
     for filename in languagedir.glob("*.xml"):
         xml = ET.parse(filename)
         new_xml = xslt_transform(xml)
-        new_xml_as_dict = xmltodict.parse(ET.tostring(new_xml, encoding='unicode'), force_list=['element', 'p', 'parameter'], postprocessor=postprocessor)
+        new_xml_as_dict = xmltodict.parse(
+            ET.tostring(new_xml, encoding="unicode"),
+            force_list=["element", "p", "parameter"],
+            postprocessor=postprocessor,
+        )
         maybe_elements = new_xml_as_dict["elements"]
         new_elements = maybe_elements["element"] if maybe_elements is not None else []
         docs["elements"].extend(new_elements)
 
     # Execute code examples for PyTamaro (localizing names) and add the output to the docs
-    with open("examples-pytamaro.json", "r") as f:
+    with open("examples-pytamaro.json") as f:
         examples_dict = json.load(f)
     for element in examples_dict["elements"]:
         lang_code = pytamaro_module(languagedir.name)[1]
@@ -89,8 +98,17 @@ for languagedir in [el for el in Path("_build/xml").iterdir() if el.is_dir()]:
         if "examples" in element:
             for example in element["examples"]:
                 example["code"] = localize_code(example["code"], lang_code)
-                output = subprocess.run([sys.executable, "-c", f'import os; os.chdir("{EXAMPLES_EXECUTION_DIR.name}"); from {module_name} import *; {example["code"]}'],
-                                        capture_output=True, text=True, env={"PYTAMARO_OUTPUT_DATA_URI": "1"}, check=True)
+                output = subprocess.run(
+                    [
+                        sys.executable,
+                        "-c",
+                        f'import os; os.chdir("{EXAMPLES_EXECUTION_DIR.name}"); from {module_name} import *; {example["code"]}',  # noqa: E501
+                    ],  # noqa: E501
+                    capture_output=True,
+                    text=True,
+                    env={"PYTAMARO_OUTPUT_DATA_URI": "1"},
+                    check=True,
+                )
                 example["stdout"] = output.stdout
             for el in docs["elements"]:
                 if el["name"] == element["name"]:

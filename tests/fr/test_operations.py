@@ -1,7 +1,14 @@
 import pytamaro as _pytamaro
-from pytamaro.fr.operations import (ancre, au_dessus, compose, cote_a_cote,
-                                    hauteur_graphique, largeur_graphique,
-                                    pivote, superpose)
+from pytamaro.fr.operations import (
+    ancre,
+    au_dessus,
+    compose,
+    cote_a_cote,
+    hauteur_graphique,
+    largeur_graphique,
+    pivote,
+    superpose,
+)
 from pytamaro.fr.point_names import bas_droite, centre, haut_gauche
 from tests.testing_utils import HEIGHT, WIDTH, assert_repr
 

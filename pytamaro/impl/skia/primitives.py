@@ -1,12 +1,20 @@
-"""
-Skia-based implementation of graphic primitives.
+"""Skia-based implementation of graphic primitives.
 
 :meta private:
 """
-# pylint: disable=missing-function-docstring
+
 from pytamaro.color import Color
-from pytamaro.impl.skia.graphic import (SkiaRectangle, SkiaEmpty, SkiaEllipse,
-                                        SkiaCircularSector, SkiaTriangle, SkiaText, SkiaGraphic)
+from pytamaro.impl.skia.graphic import (
+    SkiaCircularSector,
+    SkiaEllipse,
+    SkiaEmpty,
+    SkiaGraphic,
+    SkiaRectangle,
+    SkiaText,
+    SkiaTriangle,
+)
+
+# ruff: noqa: D103
 
 
 def rectangle(width: float, height: float, color: Color) -> SkiaGraphic:

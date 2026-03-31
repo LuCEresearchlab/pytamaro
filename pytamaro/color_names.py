@@ -1,7 +1,6 @@
-"""
-Names of notable colors because they are at the vertices of the RGB cube,
+"""Names of notable colors because they are at the vertices of the RGB cube,
 plus the fully-transparent one.
-"""
+"""  # noqa: D205
 
 from pytamaro.color import Color
 from pytamaro.color_functions import rgb_color

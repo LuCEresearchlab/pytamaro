@@ -1,6 +1,4 @@
-"""
-Funktionen zur Ausgabe (Anzeigen oder Speichern) von Grafiken.
-"""
+"""Funktionen zur Ausgabe (Anzeigen oder Speichern) von Grafiken."""
 
 from __future__ import annotations
 
@@ -9,8 +7,7 @@ from pytamaro.de.graphic import Grafik
 
 
 def zeige_grafik(grafik: Grafik, debug: bool = False):
-    """
-    Zeige die gegebene Grafik an.
+    """Zeige die gegebene Grafik an.
 
     Eine Grafik ohne Fläche kann nicht angezeigt werden.
 
@@ -27,8 +24,7 @@ def zeige_grafik(grafik: Grafik, debug: bool = False):
 
 
 def speichere_grafik(datei_name: str, grafik: Grafik, debug: bool = False):
-    """
-    Speichere die gegebene Grafik in einer Datei.
+    """Speichere die gegebene Grafik in einer Datei.
 
     Zwei Dateiformate werden unterstützt: PNG (Rastergrafik) und SVG (Vektorgrafik).
     Die Dateinamenerweiterung (entweder ".png" oder ".svg") bestimmt das Dateiformat.
@@ -51,8 +47,7 @@ def speichere_grafik(datei_name: str, grafik: Grafik, debug: bool = False):
 def speichere_animation(
     datei_name: str, grafiken: list[Grafik], dauer: int = 40, loop: bool = True
 ):
-    """
-    Speichere eine Sequenz von Grafiken als Animation (GIF).
+    """Speichere eine Sequenz von Grafiken als Animation (GIF).
 
     Beim Anzeigen des GIFs werden die Grafiken in einer unendlichen Schleife
     animiert (normalerweise mit 25 Grafiken pro Sekunde).
@@ -68,8 +63,7 @@ def speichere_animation(
 
 
 def zeige_animation(grafiken: list[Grafik], dauer: int = 40, loop: bool = True):
-    """
-    Zeige eine Sequenz von Grafiken als Animation (GIF) an.
+    """Zeige eine Sequenz von Grafiken als Animation (GIF) an.
 
     Beim Anzeigen des GIFs werden die Grafiken in einer unendlichen Schleife
     animiert (normalerweise mit 25 Grafiken pro Sekunde).

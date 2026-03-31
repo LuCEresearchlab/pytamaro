@@ -1,8 +1,7 @@
-"""
-Der Typ `Grafik`, kombiniert eine Grafik mit einer Fixierposition.
-"""
+"""Der Typ `Grafik`, kombiniert eine Grafik mit einer Fixierposition."""
 
 from __future__ import annotations
+
 from typing import TypeAlias
 
 import pytamaro as _pytamaro
