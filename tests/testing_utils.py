@@ -1,4 +1,3 @@
-import importlib
 import xml.etree.ElementTree as ET
 from dataclasses import astuple
 from typing import List, Tuple
@@ -9,17 +8,24 @@ from PIL.Image import Image
 from pytamaro.color import Color
 from pytamaro.color_names import transparent
 from pytamaro.graphic import Graphic
-from pytamaro.io import graphic_to_image, graphic_to_pillow_image
+from pytamaro.impl.skia.io import graphic_to_image, graphic_to_pillow_image
 from pytamaro.operations import graphic_height, graphic_width
 from pytamaro.point import Point
+from pytamaro.primitives import rectangle
+
+from skia import Color4f
 
 WIDTH = 10
 HEIGHT = 20
 RADIUS = 20
 
 
+def skia_color(color: Color) -> Color4f:
+    return rectangle(WIDTH, HEIGHT, color).skia_color  # pyright: ignore[reportAttributeAccessIssue]
+
+
 def pixels_colors(g: Graphic) -> List[int]:
-    bitmap = graphic_to_image(g).bitmap()
+    bitmap = graphic_to_image(g).bitmap()  # pyright: ignore[reportArgumentType]
     return [bitmap.getColor(x, y)
             for y in range(bitmap.height()) for x in range(bitmap.width())]
 
@@ -27,13 +33,13 @@ def pixels_colors(g: Graphic) -> List[int]:
 def assert_unique_color(g: Graphic,
                         color: Color):
     all_colors = pixels_colors(g)
-    colors = set(filter(lambda c: c != int(transparent.skia_color), all_colors))
+    colors = set(filter(lambda c: c != int(skia_color(transparent)), all_colors))
     assert len(colors) == 1
-    assert int(color.skia_color) in colors
+    assert int(skia_color(color)) in colors
 
 
 def assert_color(g: Graphic, color: Color):
-    assert int(color.skia_color) in pixels_colors(g)
+    assert int(skia_color(color)) in pixels_colors(g)
 
 
 def assert_size(g: Graphic, expected_size: Tuple[int, int]):
@@ -52,7 +58,7 @@ def assert_size_tolerance(g: Graphic, expected_size: Tuple[int, int],
 
 
 def assert_graphics_equals_tolerance(g1: Graphic, g2: Graphic):
-    diff = ImageChops.difference(graphic_to_pillow_image(g1), graphic_to_pillow_image(g2))
+    diff = ImageChops.difference(graphic_to_pillow_image(g1), graphic_to_pillow_image(g2))  # pyright: ignore[reportArgumentType]
     filtered_diff = diff.filter(ImageFilter.MinFilter())
     colors = filtered_diff.getcolors() or []
     assert len(colors) == 1
@@ -60,13 +66,13 @@ def assert_graphics_equals_tolerance(g1: Graphic, g2: Graphic):
 
 
 def assert_pin_tolerance(g: Graphic, expected_pin: Tuple[int, int]):
-    x_pin, y_pin = g.pin_position
+    x_pin, y_pin = g.pin_position   # pyright: ignore[reportAttributeAccessIssue]
     assert expected_pin[0] - 1 <= x_pin <= expected_pin[0] + 1
     assert expected_pin[1] - 1 <= y_pin <= expected_pin[1] + 1
 
 
 def assert_equals_rendered(g1: Graphic, g2: Graphic):
-    assert graphic_to_image(g1).tobytes() == graphic_to_image(g2).tobytes()
+    assert graphic_to_image(g1).tobytes() == graphic_to_image(g2).tobytes()  # pyright: ignore[reportArgumentType]
 
 
 def assert_SVG_file_width_height(filename: str, width: float, height: float):

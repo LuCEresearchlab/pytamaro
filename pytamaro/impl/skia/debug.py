@@ -6,15 +6,15 @@ from skia import Point
 
 from pytamaro.color import Color
 from pytamaro.color_functions import rgb_color
-from pytamaro.graphic import Graphic
-from pytamaro.operations import (compose, graphic_height, graphic_width,
-                                 overlay, pin, rotate)
+from pytamaro.impl.skia.graphic import SkiaGraphic
+from pytamaro.impl.skia.operations import (compose, graphic_height, graphic_width,
+                                           overlay, pin, rotate)
+from pytamaro.impl.skia.primitives import ellipse, rectangle
 from pytamaro.point_names import (bottom_left, center_left, center_right,
                                   top_left)
-from pytamaro.primitives import ellipse, rectangle
 
 
-def top_left_point(graphic: Graphic) -> Point:
+def top_left_point(graphic: SkiaGraphic) -> Point:
     """
     Returns the top left corner of the bounding box of the graphic.
 
@@ -24,7 +24,7 @@ def top_left_point(graphic: Graphic) -> Point:
     return graphic.bounds.toQuad()[0]
 
 
-def add_debug_info(graphic: Graphic) -> Graphic:
+def add_debug_info(graphic: SkiaGraphic) -> SkiaGraphic:
     """
     Overlays debugging information onto a graphic (a border with the nine
     relevant points on the bounding box and an indicator on the pinning
@@ -45,7 +45,7 @@ def add_debug_info(graphic: Graphic) -> Graphic:
     return show_pin_position(g_with_border, whiteish, blackish)
 
 
-def circle(diameter: float, color: Color) -> Graphic:
+def circle(diameter: float, color: Color) -> SkiaGraphic:
     """
     Creates a circle with the given diameter and color.
 
@@ -56,7 +56,7 @@ def circle(diameter: float, color: Color) -> Graphic:
     return ellipse(diameter, diameter, color)
 
 
-def add_border(graphic: Graphic, light: Color, dark: Color) -> Graphic:
+def add_border(graphic: SkiaGraphic, light: Color, dark: Color) -> SkiaGraphic:
     """
     Adds a dark border around the graphic, and nine "control points" rendered as
     circles at the nine relevant points on the bounding box of the graphic.
@@ -69,7 +69,7 @@ def add_border(graphic: Graphic, light: Color, dark: Color) -> Graphic:
     outer_diameter = min(graphic_width(graphic), graphic_height(graphic), 10)
     control_point = overlay(circle(4 / 5 * outer_diameter, light), circle(outer_diameter, dark))
 
-    def border_with_control_points(length: float) -> Graphic:
+    def border_with_control_points(length: float) -> SkiaGraphic:
         b_with_center = overlay(control_point, rectangle(length, 1, dark))
         b_with_center_left = compose(control_point, pin(center_left, b_with_center))
         return compose(control_point, pin(center_right, b_with_center_left))
@@ -83,7 +83,7 @@ def add_border(graphic: Graphic, light: Color, dark: Color) -> Graphic:
     return overlay(control_point, overlay(border, graphic))
 
 
-def show_pin_position(graphic: Graphic, light: Color, dark: Color) -> Graphic:
+def show_pin_position(graphic: SkiaGraphic, light: Color, dark: Color) -> SkiaGraphic:
     """
     Overlays a dark indicator at the pinning position of the graphic.
 
@@ -93,9 +93,11 @@ def show_pin_position(graphic: Graphic, light: Color, dark: Color) -> Graphic:
 
     :returns: the graphic with the indicator at the pinning position
     """
+
     def indicator(color, padding=0):
         arm = rectangle(15 + padding, 1 + padding, color)
         cross = overlay(rotate(90, arm), arm)
         central_circle = circle(8 + padding, color)
         return overlay(cross, central_circle)
+
     return compose(overlay(indicator(dark), indicator(light, 3)), graphic)

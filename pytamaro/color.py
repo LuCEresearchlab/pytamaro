@@ -3,9 +3,6 @@
 """
 
 from dataclasses import dataclass
-from functools import cached_property
-
-from skia import Color4f
 
 from pytamaro.localization import translate
 
@@ -23,16 +20,6 @@ class Color:
     blue: int     # [0-255]
     alpha: float  # [0-1]
 
-    @cached_property
-    def skia_color(self) -> Color4f:
-        """
-        Returns the current color as a Skia color.
-
-        :meta private:
-        :returns: a Skia color
-        """
-        return Color4f(self.red / 255, self.green / 255, self.blue / 255, self.alpha)
-
     def __repr__(self) -> str:
         from pytamaro.color_names import \
             _known_colors  # pylint: disable=cyclic-import,import-outside-toplevel
@@ -41,3 +28,14 @@ class Color:
             return translate(maybe_known_color)
         alpha_repr = "" if self.alpha == 1 else f", {self.alpha}"
         return f"{translate('rgb_color')}({self.red}, {self.green}, {self.blue}{alpha_repr})"
+
+    @property
+    def value_for_spec(self) -> int:
+        """
+        ARGB 32-bit word, to be used in a spec.
+        """
+        a = int(self.alpha * 255) & 0xFF
+        r = self.red & 0xFF
+        g = self.green & 0xFF
+        b = self.blue & 0xFF
+        return (a << 24) | (r << 16) | (g << 8) | b

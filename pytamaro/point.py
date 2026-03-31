@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from struct import pack, unpack
 
 from pytamaro.localization import translate
 
@@ -13,8 +14,8 @@ class Point:
     """
     Represents a point on a plane.
     """
-    x: float    # pylint: disable=invalid-name
-    y: float    # pylint: disable=invalid-name
+    x: float  # pylint: disable=invalid-name
+    y: float  # pylint: disable=invalid-name
 
     def translate(self, current_vector: Vector) -> Point:
         """
@@ -35,6 +36,18 @@ class Point:
         if maybe_known_point:
             return translate(maybe_known_point)
         return f"Point({self.x}, {self.y})"
+
+    @property
+    def value_for_spec(self) -> int:
+        """
+        64-bit representation of this Point, to be used in a spec.
+        Floats are converted to 32-bit floats, and then into 32-bit integers,
+        which are packed into a 64-bit integer. The first 32 bits represent the
+        x coordinate, and the last 32 bits represent the y coordinate.
+        """
+        x_int = unpack('>I', pack('>f', self.x))[0]
+        y_int = unpack('>I', pack('>f', self.y))[0]
+        return (x_int << 32) | y_int
 
 
 # Center of the 2-dimensional space

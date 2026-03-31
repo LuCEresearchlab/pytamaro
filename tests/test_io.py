@@ -11,6 +11,8 @@ from pytamaro.primitives import empty_graphic, rectangle
 from tests.testing_utils import (HEIGHT, WIDTH, assert_frames_count,
                                  assert_SVG_file_width_height)
 
+import sys
+
 
 def test_show_graphic():
     # Implicitly assert that it does not throw
@@ -45,8 +47,15 @@ def test_gif_no_ext():
 
 
 def test_empty_save_animation():
-    with raises(ValueError):
+    sys.modules["pytamaro"].LANGUAGE = "en"  # type: ignore
+    with raises(ValueError, match="empty"):
         save_animation("foo.gif", [])
+
+
+def test_empty_show_animation():
+    sys.modules["pytamaro"].LANGUAGE = "en"  # type: ignore
+    with raises(ValueError, match="empty"):
+        show_animation([])
 
 
 def test_show_wrong_type():

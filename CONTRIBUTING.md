@@ -2,6 +2,12 @@
 
 This project is managed using [uv](https://docs.astral.sh/uv/).
 
+### Install dependencies
+
+```sh
+uv sync
+```
+
 ## Test, TypeCheck, Style Guidelines
 
 We use `pytest` to execute our test suite (written in the `tests` folder). Verify that all tests pass by calling;

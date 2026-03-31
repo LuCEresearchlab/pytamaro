@@ -7,9 +7,13 @@ graphic's bounding box.
 from pytamaro.checks import (check_angle, check_color, check_length,
                              check_number, check_type)
 from pytamaro.color import Color
-from pytamaro.graphic import (CircularSector, Ellipse, Empty, Graphic,
-                              Rectangle, Text, Triangle)
-from pytamaro.utils import export
+from pytamaro.graphic import Graphic
+from pytamaro.utils import export, has_skia
+
+if has_skia():
+    import pytamaro.impl.skia.primitives as __impl
+else:
+    import pytamaro.impl.ffi.primitives as __impl
 
 
 @export
@@ -25,7 +29,7 @@ def rectangle(width: float, height: float, color: Color) -> Graphic:
     check_length(width, "width")
     check_length(height, "height")
     check_color(color)
-    return Rectangle(width, height, color)
+    return __impl.rectangle(width, height, color)
 
 
 @export
@@ -37,7 +41,7 @@ def empty_graphic() -> Graphic:
 
     :returns: an empty graphic (width and height 0)
     """
-    return Empty()
+    return __impl.empty_graphic()
 
 
 @export
@@ -56,7 +60,7 @@ def ellipse(width: float, height: float, color: Color) -> Graphic:
     check_length(width, "width")
     check_length(height, "height")
     check_color(color)
-    return Ellipse(width, height, color)
+    return __impl.ellipse(width, height, color)
 
 
 @export
@@ -85,7 +89,7 @@ def circular_sector(radius: float, angle: float, color: Color) \
     check_length(radius, "radius")
     check_angle(angle, 0, 360)
     check_color(color)
-    return CircularSector(radius, angle, color)
+    return __impl.circular_sector(radius, angle, color)
 
 
 @export
@@ -111,7 +115,7 @@ def triangle(side1: float, side2: float, angle: float, color: Color) -> Graphic:
     check_length(side2, "side2")
     check_angle(angle, 0, 180)
     check_color(color)
-    return Triangle(side1, side2, angle, color)
+    return __impl.triangle(side1, side2, angle, color)
 
 
 @export
@@ -138,4 +142,4 @@ def text(content: str, font: str, points: float, color: Color) \
     check_type(font, str, "font")
     check_number(points, "points")
     check_color(color)
-    return Text(content, font, points, color)
+    return __impl.text(content, font, points, color)
