@@ -21,7 +21,7 @@ def couleur_rgb(rouge: int, vert: int, bleu: int, opacite: float = 1.0) -> Coule
     """Retourne une couleur avec les composantes indiquant le rouge (R), vert (G) et bleu (B)
     et un certain taux d'opacité (alpha, A).
 
-    .. figure:: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/524px-RGBCube_a.svg.png
+    .. figure:: https://upload.wikimedia.org/wikipedia/commons/b/b4/RGBCube_a.svg
        :height: 120px
        :align: center
 

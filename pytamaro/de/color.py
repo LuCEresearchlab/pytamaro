@@ -21,7 +21,7 @@ def rgb_farbe(rot: int, gruen: int, blau: int, opazitaet: float = 1.0) -> Farbe:
     """Erzeugt eine Farbe mit den gegebenen Anteilen Rot (R), Grün (G) und Blau (B)
     und der gegebenen Opazität (Undurchsichtigkeit, alpha, A).
 
-    .. figure:: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/524px-RGBCube_a.svg.png
+    .. figure:: https://upload.wikimedia.org/wikipedia/commons/b/b4/RGBCube_a.svg
        :height: 120px
        :align: center
 
