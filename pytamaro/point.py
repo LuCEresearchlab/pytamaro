@@ -10,8 +10,9 @@ from pytamaro.localization import translate
 
 @dataclass(frozen=True)
 class Point:
-    """Represents a point on a plane."""
+    """Represents a point of a graphic."""
 
+    # Internally, this is represented as a point on a 2D plane.
     x: float
     y: float
 

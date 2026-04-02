@@ -6,5 +6,5 @@ import pytamaro as _pytamaro
 
 Punkt: TypeAlias = _pytamaro.Point
 """
-Repräsentiert einen Punkt in der Ebene.
+Repräsentiert einen Punkt in einer Grafik.
 """
