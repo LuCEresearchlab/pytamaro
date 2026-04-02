@@ -43,6 +43,8 @@ class Point:
         Floats are converted to 32-bit floats, and then into 32-bit integers,
         which are packed into a 64-bit integer. The first 32 bits represent the
         x coordinate, and the last 32 bits represent the y coordinate.
+
+        :meta private:
         """
         x_int = unpack(">I", pack(">f", self.x))[0]
         y_int = unpack(">I", pack(">f", self.y))[0]

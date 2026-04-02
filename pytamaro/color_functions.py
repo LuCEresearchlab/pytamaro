@@ -1,12 +1,9 @@
-"""Functions for producing colors.
-
-This is separated from `color.py` only in the main English version to avoid circular imports.
-"""
+# This is separated from `color.py` only in the main English version to avoid circular imports.
 
 from pytamaro.checks import check_range
 from pytamaro.color import Color
 
-# ruff: noqa: PLR2004
+# ruff: noqa: PLR2004, D100
 
 
 def rgb_color(red: int, green: int, blue: int, opacity: float = 1.0) -> Color:

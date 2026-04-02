@@ -31,7 +31,10 @@ class Color:
 
     @property
     def value_for_spec(self) -> int:
-        """ARGB 32-bit word, to be used in a spec."""
+        """ARGB 32-bit word, to be used in a spec.
+
+        :meta private:
+        """
         a = int(self.alpha * 255) & 0xFF
         r = self.red & 0xFF
         g = self.green & 0xFF
