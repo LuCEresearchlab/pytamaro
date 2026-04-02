@@ -10,7 +10,7 @@ def rgb_color(red: int, green: int, blue: int, opacity: float = 1.0) -> Color:
     """Returns a color with the provided components for red (R), green (G) and blue (B) and a
     certain degree of opacity (alpha, A).
 
-    .. figure:: https://upload.wikimedia.org/wikipedia/commons/b/b4/RGBCube_a.svg
+    .. figure:: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/500px-RGBCube_a.svg.png
        :height: 120px
        :align: center
 
