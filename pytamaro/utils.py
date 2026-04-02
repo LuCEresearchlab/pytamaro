@@ -2,11 +2,14 @@
 
 import importlib.util
 import sys
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, TypeVar
+
+F = TypeVar("F", bound=Callable[..., Any])
 
 
-def export(fn):
+def export(fn: F) -> F:
     """Use a decorator to avoid retyping function/class names."""
     mod = sys.modules[fn.__module__]
     if hasattr(mod, "__all__"):
