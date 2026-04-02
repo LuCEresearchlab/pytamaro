@@ -1,7 +1,15 @@
 import pytamaro as _pytamaro
-from pytamaro.fr.point_names import (bas_centre, bas_droite, bas_gauche,
-                                     centre, centre_droite, centre_gauche,
-                                     haut_centre, haut_droite, haut_gauche)
+from pytamaro.fr.point_names import (
+    bas_centre,
+    bas_droite,
+    bas_gauche,
+    centre,
+    centre_droite,
+    centre_gauche,
+    haut_centre,
+    haut_droite,
+    haut_gauche,
+)
 
 
 def test_point_names():

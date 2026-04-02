@@ -1,6 +1,4 @@
-"""
-Names of notable points, that can be used as pinning positions for a graphic.
-"""
+"""Names of notable points, that can be used as pinning positions for a graphic."""
 
 from pytamaro.point import Point, i_hat, j_hat, zero
 

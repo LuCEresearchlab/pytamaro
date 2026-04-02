@@ -1,13 +1,14 @@
 """Shared io functions between impl
-   (that cannot be placed in the main io module to avoid circular dependencies)."""
+(that cannot be placed in the main io module to avoid circular dependencies).
+"""
 
 import sys
+
 from pytamaro.utils import ISize
 
 
 def print_data_uri(mime_type: str, b64_content: str):
-    """
-    Prints a data URI to standard output with a special prefix and suffix so
+    """Prints a data URI to standard output with a special prefix and suffix so
     that it can be recognized in the context of a larger output.
 
     :param mime_type: MIME type of the data (e.g., "image/png")
@@ -16,7 +17,7 @@ def print_data_uri(mime_type: str, b64_content: str):
     prefix = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
     suffix = "@@@PYTAMARO_DATA_URI_END@@@"
     print(f"{prefix}data:{mime_type};base64,{b64_content}{suffix}", end="")
-    try:
+    try:  # noqa: SIM105
         sys.stdout.flush()
     except AttributeError:
         # https://docs.python.org/3/library/sys.html#sys.stdout
@@ -26,8 +27,7 @@ def print_data_uri(mime_type: str, b64_content: str):
 
 
 def guess_scaling_factor(rounded_size: ISize) -> int:
-    """
-    Makes an educated guess for a reasonable scaling factor (for super-sampling),
+    """Makes an educated guess for a reasonable scaling factor (for super-sampling),
     based on the area of the graphic.
     """
     pixels = rounded_size.width * rounded_size.height

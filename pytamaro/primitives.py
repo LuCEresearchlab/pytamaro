@@ -1,11 +1,9 @@
-"""
-Functions to create primitive graphics (shapes and text).
+"""Functions to create primitive graphics (shapes and text).
 Unless specified otherwise, the initial pinning position is at the center of the
 graphic's bounding box.
 """
 
-from pytamaro.checks import (check_angle, check_color, check_length,
-                             check_number, check_type)
+from pytamaro.checks import check_angle, check_color, check_length, check_number, check_type
 from pytamaro.color import Color
 from pytamaro.graphic import Graphic
 from pytamaro.utils import export, has_skia
@@ -18,8 +16,7 @@ else:
 
 @export
 def rectangle(width: float, height: float, color: Color) -> Graphic:
-    """
-    Creates a rectangle of the given size, filled with a color.
+    """Creates a rectangle of the given size, filled with a color.
 
     :param width: width of the rectangle
     :param height: height of the rectangle
@@ -34,8 +31,7 @@ def rectangle(width: float, height: float, color: Color) -> Graphic:
 
 @export
 def empty_graphic() -> Graphic:
-    """
-    Creates an empty graphic.
+    """Creates an empty graphic.
     When an empty graphic is composed with any other graphic, it behaves
     as a neutral element: the result is always identical to the other graphic.
 
@@ -46,8 +42,7 @@ def empty_graphic() -> Graphic:
 
 @export
 def ellipse(width: float, height: float, color: Color) -> Graphic:
-    """
-    Creates an ellipse with the given width and height, filled with a color.
+    """Creates an ellipse with the given width and height, filled with a color.
 
     When width and height are the same, the ellipse becomes a circle with a
     diameter equal to the provided size.
@@ -64,10 +59,8 @@ def ellipse(width: float, height: float, color: Color) -> Graphic:
 
 
 @export
-def circular_sector(radius: float, angle: float, color: Color) \
-        -> Graphic:
-    """
-    Creates a circular sector belonging to a circle of the given radius, filled
+def circular_sector(radius: float, angle: float, color: Color) -> Graphic:
+    """Creates a circular sector belonging to a circle of the given radius, filled
     with a color.
 
     A circular sector is a portion of a circle enclosed between two radii and
@@ -94,8 +87,7 @@ def circular_sector(radius: float, angle: float, color: Color) \
 
 @export
 def triangle(side1: float, side2: float, angle: float, color: Color) -> Graphic:
-    """
-    Creates a triangle given two sides and the angle between them, filled with a
+    """Creates a triangle given two sides and the angle between them, filled with a
     color.
 
     The first side extends horizontally to the right. The second side extends
@@ -119,10 +111,8 @@ def triangle(side1: float, side2: float, angle: float, color: Color) -> Graphic:
 
 
 @export
-def text(content: str, font: str, points: float, color: Color) \
-        -> Graphic:
-    """
-    Creates a graphic with the text rendered using the specified font, size and
+def text(content: str, font: str, points: float, color: Color) -> Graphic:
+    """Creates a graphic with the text rendered using the specified font, size and
     color.
 
     When the indicated True-Type Font is not found in the system, a very

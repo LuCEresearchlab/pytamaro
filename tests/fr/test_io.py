@@ -3,8 +3,12 @@ from tempfile import NamedTemporaryFile
 from PIL import Image as ImageMod
 
 from pytamaro.color_names import blue, red
-from pytamaro.fr.io import (montre_animation, montre_graphique,
-                            sauvegarde_animation, sauvegarde_graphique)
+from pytamaro.fr.io import (
+    montre_animation,
+    montre_graphique,
+    sauvegarde_animation,
+    sauvegarde_graphique,
+)
 from pytamaro.primitives import rectangle
 from tests.testing_utils import HEIGHT, WIDTH, assert_frames_count
 

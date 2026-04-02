@@ -1,15 +1,14 @@
-"""
-FFI-based implementation of graphic operations.
+"""FFI-based implementation of graphic operations.
 
 :meta private:
 """
-from pytamaro_js_ffi import js_graphic_size  # pylint: disable=import-error # type: ignore
 
-from pytamaro.graphic import Graphic, Compose, Pin, Overlay, Beside, Above, Rotate
-from pytamaro.point import Point
+from pytamaro.graphic import Above, Beside, Compose, Graphic, Overlay, Pin, Rotate
 from pytamaro.impl.ffi.specs import to_specs
+from pytamaro.point import Point
+from pytamaro_js_ffi import js_graphic_size  # type: ignore
 
-# pylint: disable=missing-function-docstring
+# ruff: noqa: D103
 
 
 def graphic_width(graphic: Graphic) -> int:

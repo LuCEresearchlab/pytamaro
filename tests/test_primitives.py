@@ -3,14 +3,20 @@ from collections import Counter
 from pytest import raises
 
 from pytamaro.color_names import blue, red
-from pytamaro.operations import (above, compose, graphic_height, graphic_width,
-                                 rotate)
-from pytamaro.primitives import (circular_sector, ellipse, empty_graphic,
-                                 rectangle, text, triangle)
-from tests.testing_utils import (HEIGHT, RADIUS, WIDTH, assert_color,
-                                 assert_graphics_equals_tolerance, assert_repr,
-                                 assert_size, assert_unique_color,
-                                 assert_value_tolerance, pixels_colors)
+from pytamaro.operations import above, compose, graphic_height, graphic_width, rotate
+from pytamaro.primitives import circular_sector, ellipse, empty_graphic, rectangle, text, triangle
+from tests.testing_utils import (
+    HEIGHT,
+    RADIUS,
+    WIDTH,
+    assert_color,
+    assert_graphics_equals_tolerance,
+    assert_repr,
+    assert_size,
+    assert_unique_color,
+    assert_value_tolerance,
+    pixels_colors,
+)
 
 
 def test_rectangle():
@@ -111,7 +117,7 @@ def test_circular_sector_pin_position():
 
 
 def test_circular_sector_negative_angle():
-    with raises(ValueError, match='[0, 360]'):
+    with raises(ValueError, match="[0, 360]"):
         circular_sector(RADIUS, -1, red)
 
 

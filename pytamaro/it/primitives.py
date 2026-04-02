@@ -1,5 +1,4 @@
-"""
-Funzioni per creare grafiche primitive (forme e testo).
+"""Funzioni per creare grafiche primitive (forme e testo).
 Tranne quando specificato diversamente, la posizione di fissaggio iniziale è al
 centro del rettangolo di delimitazione (bounding box) della grafica.
 """
@@ -12,8 +11,7 @@ from pytamaro.it.graphic import Grafica
 
 
 def rettangolo(larghezza: float, altezza: float, colore: Colore) -> Grafica:
-    """
-    Crea un rettangolo delle dimensioni indicate, riempito con un colore.
+    """Crea un rettangolo delle dimensioni indicate, riempito con un colore.
 
     :param larghezza: larghezza del rettangolo
     :param altezza: altezza del rettangolo
@@ -24,8 +22,7 @@ def rettangolo(larghezza: float, altezza: float, colore: Colore) -> Grafica:
 
 
 def grafica_vuota() -> Grafica:
-    """
-    Crea una grafica vuota.
+    """Crea una grafica vuota.
     Quando una grafica vuota viene composta con ogni altra grafica, si comporta
     da elemento neutro: il risultato è sempre uguale all'altra grafica.
 
@@ -35,8 +32,7 @@ def grafica_vuota() -> Grafica:
 
 
 def ellisse(larghezza: float, altezza: float, colore: Colore) -> Grafica:
-    """
-    Crea un ellisse delle dimensioni indicate, riempito con un colore.
+    """Crea un ellisse delle dimensioni indicate, riempito con un colore.
 
     Quando larghezza e altezza coincidono, l'ellisse diventa un cerchio di
     diametro pari alla dimensione indicata.
@@ -50,8 +46,7 @@ def ellisse(larghezza: float, altezza: float, colore: Colore) -> Grafica:
 
 
 def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
-    """
-    Crea un settore circolare appartenente a un cerchio del raggio indicato,
+    """Crea un settore circolare appartenente a un cerchio del raggio indicato,
     riempito con un colore.
 
     Un settore circolare è una porzione di cerchio racchiusa tra due raggi e un
@@ -73,8 +68,7 @@ def settore_circolare(raggio: float, angolo: float, colore: Colore) -> Grafica:
 
 
 def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Grafica:
-    """
-    Crea un triangolo dati due lati e l'angolo tra essi compreso,
+    """Crea un triangolo dati due lati e l'angolo tra essi compreso,
     riempito con un colore.
 
     Il primo lato si estende orizzontalmente verso destra. Il secondo lato si
@@ -94,8 +88,7 @@ def triangolo(lato1: float, lato2: float, angolo: float, colore: Colore) -> Graf
 
 
 def testo(contenuto: str, font: str, punti: float, colore: Colore) -> Grafica:
-    """
-    Crea una grafica con il testo renderizzato usando font, dimensione e colore
+    """Crea una grafica con il testo renderizzato usando font, dimensione e colore
     indicati.
 
     Quando il font True-Type indicato non è disponibile nel sistema, al suo

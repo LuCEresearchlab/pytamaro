@@ -1,9 +1,7 @@
-"""
-Functions for output (show or save) of graphics.
-"""
+"""Functions for output (show or save) of graphics."""
+
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from typing import List
 
 from pytamaro.checks import check_graphic, check_type
 from pytamaro.graphic import Graphic
@@ -18,8 +16,7 @@ else:
 
 @export
 def show_graphic(graphic: Graphic, debug: bool = False):
-    """
-    Show a graphic. Graphics with no area cannot be shown.
+    """Show a graphic. Graphics with no area cannot be shown.
 
     When `debug` is `True`, adorns the visualization with useful information
     for debugging: a red border around the bounding box and a yellowish cross
@@ -36,8 +33,7 @@ def show_graphic(graphic: Graphic, debug: bool = False):
 
 @export
 def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
-    """
-    Save a graphic to a file.
+    """Save a graphic to a file.
     Two file formats are supported: PNG (raster graphics) and SVG (vector graphics).
     The extension of the filename (either ".png" or ".svg") determines the format.
 
@@ -58,10 +54,8 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     __impl.save_graphic(filename, graphic, debug)
 
 
-def _save_animation(filename: str, graphics: List[Graphic],
-                    duration: int, loop: bool):
-    """
-    Try to save a sequence of graphics as an animation (GIF).
+def _save_animation(filename: str, graphics: list[Graphic], duration: int, loop: bool):
+    """Try to save a sequence of graphics as an animation (GIF).
 
     :param filename: name of the file to create, including the extension '.gif'
     :param graphics: list of graphics to be saved as an animation
@@ -89,9 +83,8 @@ def _save_animation(filename: str, graphics: List[Graphic],
 
 
 @export
-def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, loop: bool = True):
-    """
-    Save a sequence of graphics as an animation (GIF).
+def save_animation(filename: str, graphics: list[Graphic], duration: int = 40, loop: bool = True):
+    """Save a sequence of graphics as an animation (GIF).
 
     Graphics are sequentially reproduced (normally at 25 frames per second) in
     a loop (unless specificied otherwise).
@@ -111,9 +104,8 @@ def save_animation(filename: str, graphics: List[Graphic], duration: int = 40, l
 
 
 @export
-def show_animation(graphics: List[Graphic], duration: int = 40, loop: bool = True):
-    """
-    Show a sequence of graphics as an animation (GIF).
+def show_animation(graphics: list[Graphic], duration: int = 40, loop: bool = True):
+    """Show a sequence of graphics as an animation (GIF).
 
     Graphics are sequentially reproduced (normally at 25 frames per second) in
     a loop (unless specificied otherwise).

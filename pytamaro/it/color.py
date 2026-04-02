@@ -1,8 +1,7 @@
-"""
-Tipo `Colore`, funzioni per produrre colori e costanti per colori notevoli.
-"""
+"""Tipo `Colore`, funzioni per produrre colori e costanti per colori notevoli."""
 
 from __future__ import annotations
+
 from typing import TypeAlias
 
 import pytamaro as _pytamaro
@@ -17,8 +16,7 @@ a completamente opaco (come il colore `rosso`).
 
 
 def colore_rgb(rosso: int, verde: int, blu: int, opacita: float = 1.0) -> Colore:
-    """
-    Ritorna un colore con le componenti indicate per rosso (R), verde (G) e blu (B) e un
+    """Ritorna un colore con le componenti indicate per rosso (R), verde (G) e blu (B) e un
     certo grado di opacità (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/524px-RGBCube_a.svg.png
@@ -39,8 +37,7 @@ def colore_rgb(rosso: int, verde: int, blu: int, opacita: float = 1.0) -> Colore
 
 
 def colore_hsv(tonalita: float, saturazione: float, valore: float, opacita: float = 1.0) -> Colore:
-    """
-    Ritorna un colore con la tonalità (H), saturazione (S) e valore (V) indicati,
+    """Ritorna un colore con la tonalità (H), saturazione (S) e valore (V) indicati,
     e un certo grado di opacità (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/4/4e/HSV_color_solid_cylinder.png
@@ -61,8 +58,7 @@ def colore_hsv(tonalita: float, saturazione: float, valore: float, opacita: floa
 
 
 def colore_hsl(tonalita: float, saturazione: float, luce: float, opacita: float = 1.0) -> Colore:
-    """
-    Ritorna un colore con la tonalità (H), saturazione (S) e luce (L) indicati,
+    """Ritorna un colore con la tonalità (H), saturazione (S) e luce (L) indicati,
     e un certo grado di opacità (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/3/35/HSL_color_solid_cylinder.png

@@ -1,6 +1,5 @@
-"""
-Functions to do operations on graphics (mainly, to combine them).
-"""
+"""Functions to do operations on graphics (mainly, to combine them)."""
+
 from pytamaro.checks import check_angle, check_graphic, check_point
 from pytamaro.graphic import Graphic
 from pytamaro.point import Point
@@ -14,8 +13,7 @@ else:
 
 @export
 def graphic_width(graphic: Graphic) -> int:
-    """
-    Returns the width of a graphic.
+    """Returns the width of a graphic.
 
     :param graphic: graphic to calculate the width of
     :returns: width of the graphic
@@ -26,8 +24,7 @@ def graphic_width(graphic: Graphic) -> int:
 
 @export
 def graphic_height(graphic: Graphic) -> int:
-    """
-    Returns the height of a graphic.
+    """Returns the height of a graphic.
 
     :param graphic: graphic to calculate the height of
     :returns: height of the graphic
@@ -38,8 +35,7 @@ def graphic_height(graphic: Graphic) -> int:
 
 @export
 def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by composing the two provided graphics.
+    """Creates a new graphic by composing the two provided graphics.
     The first graphic is kept in the foreground, the second one in the
     background.
     The graphics are aligned by superimposing their pinning positions.
@@ -58,8 +54,7 @@ def compose(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
 
 @export
 def pin(point: Point, graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic that corresponds to the provided graphic,
+    """Creates a new graphic that corresponds to the provided graphic,
     with a new pinning position.
 
     Each graphic is contained in a rectangular bounding box.
@@ -80,8 +75,7 @@ def pin(point: Point, graphic: Graphic) -> Graphic:
 
 @export
 def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by overlaying the two provided graphics,
+    """Creates a new graphic by overlaying the two provided graphics,
     keeping the first one in the foreground and the second one in background.
     The two graphics are overlaid on their centers.
 
@@ -98,8 +92,7 @@ def overlay(foreground_graphic: Graphic, background_graphic: Graphic) -> Graphic
 
 @export
 def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by placing the two graphics one besides the other.
+    """Creates a new graphic by placing the two graphics one besides the other.
     The two graphics are vertically centered.
 
     The pinning position of the new graphic is at its center.
@@ -116,8 +109,7 @@ def beside(left_graphic: Graphic, right_graphic: Graphic) -> Graphic:
 
 @export
 def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by placing the two graphics one above the other.
+    """Creates a new graphic by placing the two graphics one above the other.
     The two graphics are horizontally centered.
 
     The pinning position of the new graphic is at its center.
@@ -134,8 +126,7 @@ def above(top_graphic: Graphic, bottom_graphic: Graphic) -> Graphic:
 
 @export
 def rotate(angle: float, graphic: Graphic) -> Graphic:
-    """
-    Creates a new graphic by rotating counterclockwise the provided graphic
+    """Creates a new graphic by rotating counterclockwise the provided graphic
     around its pinning position by the given angle.
     A negative angle corresponds to a clockwise rotation.
 

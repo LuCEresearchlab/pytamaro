@@ -1,5 +1,5 @@
-"""Localization utilities to translate error messages"""
-# pylint: disable=line-too-long
+"""Localization utilities to translate error messages."""
+# ruff: noqa: E501
 
 import sys
 
@@ -15,7 +15,7 @@ translations = {
         "en": "Invalid type for parameter `{}`: expected `{}`, got `{}`",
         "it": "Tipo non valido per il parametro `{}`: previsto `{}`, ricevuto `{}`",
         "de": "Ungültiger Typ für den Parameter `{}`: erwartet `{}`, erhalten `{}`",
-        "fr": "Type invalid pour le paramètre `{}`: attendu `{}`, eu `{}`"
+        "fr": "Type invalid pour le paramètre `{}`: attendu `{}`, eu `{}`",
     },
     "INVALID_ELEMENT_TYPE": {
         "en": "Invalid type for parameter `{0}`: at position {3} expected `{1}`, got `{2}`",

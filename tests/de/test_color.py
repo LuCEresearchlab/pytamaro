@@ -1,7 +1,16 @@
 import pytamaro as _pytamaro
 from pytamaro.de.color import hsl_farbe, hsv_farbe, rgb_farbe
-from pytamaro.de.color_names import (blau, cyan, gelb, gruen, magenta, rot,
-                                     schwarz, transparent, weiss)
+from pytamaro.de.color_names import (
+    blau,
+    cyan,
+    gelb,
+    gruen,
+    magenta,
+    rot,
+    schwarz,
+    transparent,
+    weiss,
+)
 from tests.testing_utils import assert_repr
 
 
@@ -33,7 +42,7 @@ def test_color_names():
 
 
 def test_transparent_color_name():
-    assert transparent == transparent
+    assert transparent == transparent  # noqa: PLR0124
 
 
 def test_color_localized_repr():

@@ -1,6 +1,4 @@
-"""
-Fonctions pour faire des opérations sur des graphiques (principalement pour les combiner).
-"""
+"""Fonctions pour faire des opérations sur des graphiques (principalement pour les combiner)."""
 
 from __future__ import annotations
 
@@ -10,8 +8,7 @@ from pytamaro.fr.point import Point
 
 
 def largeur_graphique(graphique: Graphique) -> int:
-    """
-    Retourne la largeur du graphique.
+    """Retourne la largeur du graphique.
 
     :param graphique: graphique duquel calculer la largeur
     :returns: la largeur du graphique
@@ -20,8 +17,7 @@ def largeur_graphique(graphique: Graphique) -> int:
 
 
 def hauteur_graphique(graphique: Graphique) -> int:
-    """
-    Retourne la hauteur du graphique.
+    """Retourne la hauteur du graphique.
 
     :param graphique: graphique duquel calculer la hauteur
     :returns: la hauteur du graphique
@@ -29,10 +25,8 @@ def hauteur_graphique(graphique: Graphique) -> int:
     return _pytamaro.graphic_height(graphique)
 
 
-def compose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) \
-        -> Graphique:
-    """
-    Crée un nouveau graphique en composant les deux graphiques fournis.
+def compose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) -> Graphique:
+    """Crée un nouveau graphique en composant les deux graphiques fournis.
     Le premier graphique est maintenu au premier plan, le second en arrière plan.
     Les graphiques sont alignés en superposant les points d'ancrage.
 
@@ -46,8 +40,7 @@ def compose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique
 
 
 def ancre(point: Point, graphique: Graphique) -> Graphique:
-    """
-    Créé un nouveau graphique qui correspond au graphique fourni avec un nouveau point d'ancrage.
+    """Créé un nouveau graphique qui correspond au graphique fourni avec un nouveau point d'ancrage.
 
     Chaque graphique est compris dans un cadre de délimitation.
     Il y a 9 points d'ancrages particuliers, qui correspondent aux quatre coins du cadre
@@ -63,11 +56,9 @@ def ancre(point: Point, graphique: Graphique) -> Graphique:
     return _pytamaro.pin(point, graphique)
 
 
-def superpose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) \
-        -> Graphique:
-    """
-    Créé un nouveau graphique en superposant les deux graphiques fournis, en gardant le premier au
-    premier plan et en mettant le second en arrière plan.
+def superpose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique) -> Graphique:
+    """Créé un nouveau graphique en superposant les deux graphiques fournis, en gardant le premier
+    au premier plan et en mettant le second en arrière plan.
     Les graphiques sont superposés par rapport à leur centre.
 
     Le point d'ancrage du nouveau graphique est en son centre.
@@ -80,8 +71,7 @@ def superpose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphiq
 
 
 def cote_a_cote(graphique_gauche: Graphique, graphique_droite: Graphique) -> Graphique:
-    """
-    Créé un graphique en plaçant les deux graphiques fournis côte à côte.
+    """Créé un graphique en plaçant les deux graphiques fournis côte à côte.
     Les deux graphiques sont centrés verticalement.
 
     Le point d'ancrage du nouveau graphique est en son centre.
@@ -94,8 +84,7 @@ def cote_a_cote(graphique_gauche: Graphique, graphique_droite: Graphique) -> Gra
 
 
 def au_dessus(graphique_haut: Graphique, graphique_bas: Graphique) -> Graphique:
-    """
-    Créé un graphique en plaçant les deux graphiques fournis l'un au-dessus de l'autre.
+    """Créé un graphique en plaçant les deux graphiques fournis l'un au-dessus de l'autre.
     Les deux graphiques sont centrés horizontalement.
 
     Le point d'ancrage du nouveau graphique est en son centre.
@@ -108,8 +97,7 @@ def au_dessus(graphique_haut: Graphique, graphique_bas: Graphique) -> Graphique:
 
 
 def pivote(angle: float, graphique: Graphique) -> Graphique:
-    """
-    Crée un nouveau graphique en pivotant dans le sens inverse des aiguilles d'une montre le
+    """Crée un nouveau graphique en pivotant dans le sens inverse des aiguilles d'une montre le
     graphique fourni autour de son point d'ancrage selon l'angle donné. Un angle négatif
     correspond à une rotation dans le sens des aiguilles d'une montre.
 

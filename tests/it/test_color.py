@@ -1,7 +1,16 @@
 import pytamaro as _pytamaro
 from pytamaro.it.color import colore_hsl, colore_hsv, colore_rgb
-from pytamaro.it.color_names import (bianco, blu, ciano, giallo, magenta, nero,
-                                     rosso, trasparente, verde)
+from pytamaro.it.color_names import (
+    bianco,
+    blu,
+    ciano,
+    giallo,
+    magenta,
+    nero,
+    rosso,
+    trasparente,
+    verde,
+)
 from tests.testing_utils import assert_repr
 
 

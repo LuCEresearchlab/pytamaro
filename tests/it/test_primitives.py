@@ -1,7 +1,13 @@
 import pytamaro as _pytamaro
-from pytamaro.it.primitives import (ellisse, grafica_vuota, rettangolo,
-                                    settore_circolare, testo, triangolo)
 from pytamaro.it.color_names import rosso
+from pytamaro.it.primitives import (
+    ellisse,
+    grafica_vuota,
+    rettangolo,
+    settore_circolare,
+    testo,
+    triangolo,
+)
 from tests.testing_utils import HEIGHT, RADIUS, WIDTH, assert_repr
 
 
@@ -22,8 +28,9 @@ def test_text():
 
 
 def test_circular_sector():
-    assert _pytamaro.circular_sector(
-        RADIUS, 360, _pytamaro.red) == settore_circolare(RADIUS, 360, rosso)
+    assert _pytamaro.circular_sector(RADIUS, 360, _pytamaro.red) == settore_circolare(
+        RADIUS, 360, rosso
+    )
 
 
 def test_equilateral_triangle():

@@ -1,11 +1,11 @@
-"""
-FFI-based implementation of graphic primitives.
+"""FFI-based implementation of graphic primitives.
 
 :meta private:
 """
-# pylint: disable=missing-function-docstring
-from pytamaro.graphic import Graphic, Rectangle, Empty, Ellipse, CircularSector, Triangle, Text
+
+# ruff: noqa: D103
 from pytamaro.color import Color
+from pytamaro.graphic import CircularSector, Ellipse, Empty, Graphic, Rectangle, Text, Triangle
 
 
 def rectangle(width: float, height: float, color: Color) -> Graphic:
