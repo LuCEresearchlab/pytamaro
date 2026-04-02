@@ -73,12 +73,15 @@ autodoc_type_aliases = {
     # it
     "Colore": "Colore",
     "Grafica": "Grafica",
+    "Punto": "Punto",
     # de
     "Farbe": "Farbe",
     "Grafik": "Grafik",
+    "Punkt": "Punkt",
     # fr
     "Couleur": "Couleur",
     "Graphique": "Graphique",
+    # "Point": "Point",  # sadly we can't distinguish between English and French here
 }
 
 autodoc_default_options = {
