@@ -1,5 +1,4 @@
-"""
-Noms de points particuliers, qui peuvent être utilisés comme des points d'ancrage pour des
+"""Noms de points particuliers, qui peuvent être utilisés comme des points d'ancrage pour des
 graphiques.
 """
 

@@ -1,9 +1,9 @@
-"""
-Type `Couleur`, ainsi des fonctions pour produire des couleurs et constantes représentants des
+"""Type `Couleur`, ainsi des fonctions pour produire des couleurs et constantes représentants des
 couleurs particulières.
 """
 
 from __future__ import annotations
+
 from typing import TypeAlias
 
 import pytamaro as _pytamaro
@@ -18,8 +18,7 @@ de complètement transparent (comme la couleur `transparent`)
 
 
 def couleur_rgb(rouge: int, vert: int, bleu: int, opacite: float = 1.0) -> Couleur:
-    """
-    Retourne une couleur avec les composantes indiquant le rouge (R), vert (G) et bleu (B)
+    """Retourne une couleur avec les composantes indiquant le rouge (R), vert (G) et bleu (B)
     et un certain taux d'opacité (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/RGBCube_a.svg/524px-RGBCube_a.svg.png
@@ -40,8 +39,7 @@ def couleur_rgb(rouge: int, vert: int, bleu: int, opacite: float = 1.0) -> Coule
 
 
 def couleur_hsv(teinte: float, saturation: float, valeur: float, opacite: float = 1.0) -> Couleur:
-    """
-    Retourne une couleur avec la teinte (H), saturation (S) et valeur (V) données,
+    """Retourne une couleur avec la teinte (H), saturation (S) et valeur (V) données,
     ainsi que le taux d'opacité (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/4/4e/HSV_color_solid_cylinder.png
@@ -62,10 +60,10 @@ def couleur_hsv(teinte: float, saturation: float, valeur: float, opacite: float 
     return _pytamaro.hsv_color(teinte, saturation, valeur, opacite)
 
 
-def couleur_hsl(teinte: float, saturation: float, luminosite: float, opacite: float = 1.0
-                ) -> Couleur:
-    """
-    Retourne une couleur avec la teinte (H), saturation (S) et luminosité (V) données,
+def couleur_hsl(
+    teinte: float, saturation: float, luminosite: float, opacite: float = 1.0
+) -> Couleur:
+    """Retourne une couleur avec la teinte (H), saturation (S) et luminosité (V) données,
     ainsi que le taux d'opacité (alpha, A).
 
     .. figure:: https://upload.wikimedia.org/wikipedia/commons/3/35/HSL_color_solid_cylinder.png

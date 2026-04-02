@@ -1,9 +1,7 @@
-from typing import List
-
-from pytamaro.de import *
+from pytamaro.de import *  # noqa: F403
 
 
-def _assert_names(names: List[str]):
+def _assert_names(names: list[str]):
     for name in names:
         assert name in globals()
 
@@ -22,6 +20,16 @@ def test_colors():
 
 
 def test_positions():
-    _assert_names(["oben_links", "oben_mitte", "oben_rechts",
-                   "mitte_links", "mitte", "mitte_rechts",
-                   "unten_links", "unten_mitte", "unten_rechts"])
+    _assert_names(
+        [
+            "oben_links",
+            "oben_mitte",
+            "oben_rechts",
+            "mitte_links",
+            "mitte",
+            "mitte_rechts",
+            "unten_links",
+            "unten_mitte",
+            "unten_rechts",
+        ]
+    )

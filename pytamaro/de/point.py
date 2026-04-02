@@ -1,8 +1,7 @@
-"""
-Typ `Punkt`.
-"""
+"""Typ `Punkt`."""
 
 from typing import TypeAlias
+
 import pytamaro as _pytamaro
 
 Punkt: TypeAlias = _pytamaro.Point

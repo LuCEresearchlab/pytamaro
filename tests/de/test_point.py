@@ -1,7 +1,15 @@
 import pytamaro as _pytamaro
-from pytamaro.de.point_names import (mitte, mitte_links, mitte_rechts,
-                                     oben_links, oben_mitte, oben_rechts,
-                                     unten_links, unten_mitte, unten_rechts)
+from pytamaro.de.point_names import (
+    mitte,
+    mitte_links,
+    mitte_rechts,
+    oben_links,
+    oben_mitte,
+    oben_rechts,
+    unten_links,
+    unten_mitte,
+    unten_rechts,
+)
 from tests.testing_utils import assert_repr
 
 

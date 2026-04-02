@@ -1,10 +1,8 @@
-"""
-Checks to be performed on the parameters of user-facing functions.
-"""
+"""Checks to be performed on the parameters of user-facing functions."""
 
 from math import inf
 from numbers import Number, Real
-from typing import Any, Optional
+from typing import Any
 
 from pytamaro.color import Color
 from pytamaro.graphic import Graphic
@@ -14,8 +12,7 @@ from pytamaro.utils import ISize
 
 
 def check_angle(angle: Any, lower_bound: float = -inf, upper_bound: float = inf):
-    """
-    Raises an exception when the provided value is not valid for a
+    """Raises an exception when the provided value is not valid for a
     angle, being outside the specified range or not a numeric type.
 
     :param angle: the value for an angle to be checked
@@ -24,8 +21,7 @@ def check_angle(angle: Any, lower_bound: float = -inf, upper_bound: float = inf)
 
 
 def check_length(length: Any, parameter_name: str):
-    """
-    Raises an exception when the provided value is not valid for a
+    """Raises an exception when the provided value is not valid for a
     length, being negative or not a numeric type that is Real.
 
     :param length: the value for a length to be checked
@@ -36,10 +32,10 @@ def check_length(length: Any, parameter_name: str):
         raise ValueError(translate("INVALID_LENGTH", localized_parameter_name))
 
 
-def check_type(value: Any, expected_type: type, parameter_name: str,
-               element_idx: Optional[int] = None):
-    """
-    Raises an exception when the provided value is not valid for a
+def check_type(
+    value: Any, expected_type: type, parameter_name: str, element_idx: int | None = None
+):
+    """Raises an exception when the provided value is not valid for a
     given type.
 
     Subclasses of Graphic are opaquely reported as Graphic.
@@ -55,16 +51,19 @@ def check_type(value: Any, expected_type: type, parameter_name: str,
         actual_type = type(value)
         actual_public_type = Graphic if issubclass(actual_type, Graphic) else actual_type
         actual_type_name: str = actual_public_type.__name__
-        raise TypeError(translate("INVALID_TYPE" if element_idx is None else "INVALID_ELEMENT_TYPE",
-                                  translate(parameter_name),
-                                  translate(expected_type_name),
-                                  translate(actual_type_name),
-                                  element_idx))
+        raise TypeError(
+            translate(
+                "INVALID_TYPE" if element_idx is None else "INVALID_ELEMENT_TYPE",
+                translate(parameter_name),
+                translate(expected_type_name),
+                translate(actual_type_name),
+                element_idx,
+            )
+        )
 
 
 def check_color(color: Any):
-    """
-    Raises an exception when the provided value is not valid for a
+    """Raises an exception when the provided value is not valid for a
     color, not being of type Color.
 
     :param color: the value for a color to be checked
@@ -73,8 +72,7 @@ def check_color(color: Any):
 
 
 def check_graphic(graphic: Any, parameter_name: str = "graphic"):
-    """
-    Raises an exception when the provided value is not valid for a
+    """Raises an exception when the provided value is not valid for a
     graphic, not being of type Graphic.
 
     :param color: the value for a color to be checked
@@ -83,8 +81,7 @@ def check_graphic(graphic: Any, parameter_name: str = "graphic"):
 
 
 def check_point(point: Any):
-    """
-    Raises an exception when the provided value is not valid for a
+    """Raises an exception when the provided value is not valid for a
     point, not being of type Point.
 
     :param point: the value for a point to be checked
@@ -93,8 +90,7 @@ def check_point(point: Any):
 
 
 def check_number(value: Any, parameter_name: str):
-    """
-    Raises an exception when the provided value is not valid for a
+    """Raises an exception when the provided value is not valid for a
     number, not being of type Number.
 
     :param value: the value to be checked
@@ -104,8 +100,7 @@ def check_number(value: Any, parameter_name: str):
 
 
 def check_range(value: Any, lower_bound: float, upper_bound: float, parameter_name: str):
-    """
-    Raises an exception when the provided value is not valid for a range, being
+    """Raises an exception when the provided value is not valid for a range, being
     outside the specified range or not a numeric type that is Real.
 
     :param value: the value to be checked
@@ -113,17 +108,14 @@ def check_range(value: Any, lower_bound: float, upper_bound: float, parameter_na
     :param upper_bound: the upper bound of the range
     """
     check_number(value, parameter_name)
-    if not isinstance(value, Real) or \
-            value < lower_bound or not value <= upper_bound:
-        raise ValueError(translate("INVALID_RANGE",
-                                   translate(parameter_name),
-                                   lower_bound,
-                                   upper_bound))
+    if not isinstance(value, Real) or value < lower_bound or not value <= upper_bound:
+        raise ValueError(
+            translate("INVALID_RANGE", translate(parameter_name), lower_bound, upper_bound)
+        )
 
 
 def area_message(error_message_key: str, width: float, height: float) -> str:
-    """
-    Emits a warning indicating that the graphic cannot be shown or saved
+    """Emits a warning indicating that the graphic cannot be shown or saved
     because of a problem with its area.
 
     :param error_message_key: key for the error message
@@ -135,8 +127,7 @@ def area_message(error_message_key: str, width: float, height: float) -> str:
 
 
 def check_graphic_size(rounded_size: ISize):
-    """
-    Raises an exception when the provided size is not valid for a
+    """Raises an exception when the provided size is not valid for a
     graphic because its area would be empty or too large.
 
     :param rounded_size: the rounded size to be checked

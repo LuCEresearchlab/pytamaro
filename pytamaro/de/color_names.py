@@ -1,5 +1,4 @@
-"""
-Die folgenden nennenswerten Farben sind bereits definiert:
+"""Die folgenden nennenswerten Farben sind bereits definiert:
 Farben an den Ecken des RGB Würfels, komplett durchsichtige Farbe.
 """
 

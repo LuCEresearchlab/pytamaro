@@ -1,6 +1,4 @@
-"""
-Funzioni per output di grafiche (visualizzare o salvare).
-"""
+"""Funzioni per output di grafiche (visualizzare o salvare)."""
 
 from __future__ import annotations
 
@@ -9,8 +7,7 @@ from pytamaro.it.graphic import Grafica
 
 
 def visualizza_grafica(grafica: Grafica, debug: bool = False):
-    """
-    Visualizza una grafica. Grafiche prive di area non possono essere
+    """Visualizza una grafica. Grafiche prive di area non possono essere
     visualizzate.
 
     Quando `debug` è `True`, adorna la visualizzazione con informazioni utili
@@ -25,8 +22,7 @@ def visualizza_grafica(grafica: Grafica, debug: bool = False):
 
 
 def salva_grafica(nome_file: str, grafica: Grafica, debug: bool = False):
-    """
-    Salva una grafica in un file.
+    """Salva una grafica in un file.
     Due formati di file sono supportati: PNG (grafica raster) e SVG (grafica
     vettoriale).
     L'estensione del nome del file (o ".png" o ".svg") determina il formato.
@@ -45,11 +41,8 @@ def salva_grafica(nome_file: str, grafica: Grafica, debug: bool = False):
     _pytamaro.save_graphic(nome_file, grafica, debug)
 
 
-def salva_animazione(
-    nome_file: str, grafiche: list[Grafica], durata: int = 40, loop: bool = True
-):
-    """
-    Salva una sequenza di grafiche come un'animazione (GIF).
+def salva_animazione(nome_file: str, grafiche: list[Grafica], durata: int = 40, loop: bool = True):
+    """Salva una sequenza di grafiche come un'animazione (GIF).
 
     Le grafiche vengono riprodotte sequenzialmente (normalmente a 25 frame al
     secondo) a ciclo continuo.
@@ -64,8 +57,7 @@ def salva_animazione(
 
 
 def visualizza_animazione(grafiche: list[Grafica], durata: int = 40, loop: bool = True):
-    """
-    Visualizza una sequenza di grafiche come un'animazione (GIF).
+    """Visualizza una sequenza di grafiche come un'animazione (GIF).
 
     Le grafiche vengono riprodotte sequenzialmente (normalmente a 25 frame al
     secondo) a ciclo continuo.

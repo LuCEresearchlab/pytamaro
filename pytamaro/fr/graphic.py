@@ -1,8 +1,7 @@
-"""
-Type `Graphique`, qui inclut un graphique avec un point d'ancrage.
-"""
+"""Type `Graphique`, qui inclut un graphique avec un point d'ancrage."""
 
 from __future__ import annotations
+
 from typing import TypeAlias
 
 import pytamaro as _pytamaro

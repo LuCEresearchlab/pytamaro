@@ -1,5 +1,4 @@
-"""
-Names of notable colors because they are at the vertices of the RGB cube,
+"""Names of notable colors because they are at the vertices of the RGB cube,
 plus the fully-transparent one.
 """
 

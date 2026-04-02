@@ -1,17 +1,14 @@
+import sys
 from tempfile import NamedTemporaryFile
 
 from PIL import Image as ImageMod
 from pytest import raises
 
 from pytamaro.color_names import blue, red
-from pytamaro.io import (save_animation, save_graphic, show_animation,
-                         show_graphic)
+from pytamaro.io import save_animation, save_graphic, show_animation, show_graphic
 from pytamaro.operations import above, beside, rotate
 from pytamaro.primitives import empty_graphic, rectangle
-from tests.testing_utils import (HEIGHT, WIDTH, assert_frames_count,
-                                 assert_SVG_file_width_height)
-
-import sys
+from tests.testing_utils import HEIGHT, WIDTH, assert_frames_count, assert_SVG_file_width_height
 
 
 def test_show_graphic():
@@ -131,7 +128,8 @@ def test_save_animation_multiple_empty_graphics(capfd):
 
 
 def test_antialiasing():
-    # Two red squares rotated 45 degrees, one above the other, should have no visible seam in between
+    # Two red squares rotated 45 degrees, one above the other,
+    # should have no visible seam in between
     # (i.e., all pixels should be pure red).
     side = 100
     r = rectangle(side, side, red)
@@ -152,14 +150,14 @@ def test_antialiasing():
         assert all(pixel == (255, 0, 0, 255) for pixel in pixels_seams)
 
 
-DATA_URI_11RED_RECT = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg=="
-DATA_URI_11RED_RECT_GIF = "data:image/gif;base64,R0lGODlhAQABAIEAAP8AAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQIBAAAACwAAAAAAQABAAAIBAABBAQAOw=="
+DATA_URI_11RED_RECT = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg=="  # noqa: E501
+DATA_URI_11RED_RECT_GIF = "data:image/gif;base64,R0lGODlhAQABAIEAAP8AAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQIBAAAACwAAAAAAQABAAAIBAABBAQAOw=="  # noqa: E501
 PREFIX = "@@@PYTAMARO_DATA_URI_BEGIN@@@"
 SUFFIX = "@@@PYTAMARO_DATA_URI_END@@@"
 
 
 def test_data_uri_output(capfd):
-    import os
+    import os  # noqa: PLC0415
 
     VAR = "PYTAMARO_OUTPUT_DATA_URI"
     os.environ[VAR] = "True"
@@ -171,7 +169,7 @@ def test_data_uri_output(capfd):
 
 
 def test_multiple_data_uri_mixed_output(capfd):
-    import os
+    import os  # noqa: PLC0415
 
     VAR = "PYTAMARO_OUTPUT_DATA_URI"
     os.environ[VAR] = "True"
@@ -182,12 +180,15 @@ def test_multiple_data_uri_mixed_output(capfd):
     show_graphic(r)
     print(42)
     out, _ = capfd.readouterr()
-    assert out == f"42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n"
+    assert (
+        out
+        == f"42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n{PREFIX}{DATA_URI_11RED_RECT}{SUFFIX}42\n"
+    )  # noqa: E501
     del os.environ[VAR]
 
 
 def test_data_uri_gif_output(capfd):
-    import os
+    import os  # noqa: PLC0415
 
     VAR = "PYTAMARO_OUTPUT_DATA_URI"
     os.environ[VAR] = "True"
@@ -200,7 +201,7 @@ def test_data_uri_gif_output(capfd):
 
 def test_show_deeply_nested_graphic():
     element = rectangle(WIDTH, HEIGHT, red)
-    from functools import reduce
+    from functools import reduce  # noqa: PLC0415
 
     graphic = reduce(beside, [element] * 1000, empty_graphic())
     # Implicitly assert that it does not throw

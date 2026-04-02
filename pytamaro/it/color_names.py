@@ -1,5 +1,4 @@
-"""
-Nomi di colori notevoli essendo ai vertici del cubo RGB.
+"""Nomi di colori notevoli essendo ai vertici del cubo RGB.
 In aggiunta, il colore completamente trasparente.
 """
 

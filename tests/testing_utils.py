@@ -1,9 +1,9 @@
 import xml.etree.ElementTree as ET
 from dataclasses import astuple
-from typing import List, Tuple
 
 from PIL import ImageChops, ImageFilter
 from PIL.Image import Image
+from skia import Color4f
 
 from pytamaro.color import Color
 from pytamaro.color_names import transparent
@@ -12,8 +12,6 @@ from pytamaro.impl.skia.io import graphic_to_image, graphic_to_pillow_image
 from pytamaro.operations import graphic_height, graphic_width
 from pytamaro.point import Point
 from pytamaro.primitives import rectangle
-
-from skia import Color4f
 
 WIDTH = 10
 HEIGHT = 20
@@ -24,14 +22,12 @@ def skia_color(color: Color) -> Color4f:
     return rectangle(WIDTH, HEIGHT, color).skia_color  # pyright: ignore[reportAttributeAccessIssue]
 
 
-def pixels_colors(g: Graphic) -> List[int]:
+def pixels_colors(g: Graphic) -> list[int]:
     bitmap = graphic_to_image(g).bitmap()  # pyright: ignore[reportArgumentType]
-    return [bitmap.getColor(x, y)
-            for y in range(bitmap.height()) for x in range(bitmap.width())]
+    return [bitmap.getColor(x, y) for y in range(bitmap.height()) for x in range(bitmap.width())]
 
 
-def assert_unique_color(g: Graphic,
-                        color: Color):
+def assert_unique_color(g: Graphic, color: Color):
     all_colors = pixels_colors(g)
     colors = set(filter(lambda c: c != int(skia_color(transparent)), all_colors))
     assert len(colors) == 1
@@ -42,7 +38,7 @@ def assert_color(g: Graphic, color: Color):
     assert int(skia_color(color)) in pixels_colors(g)
 
 
-def assert_size(g: Graphic, expected_size: Tuple[int, int]):
+def assert_size(g: Graphic, expected_size: tuple[int, int]):
     assert_size_tolerance(g, expected_size, tolerance=0)
 
 
@@ -50,8 +46,7 @@ def assert_value_tolerance(actual_value: float, expected_value: float, tolerance
     assert expected_value * (1 - tolerance) <= actual_value <= expected_value * (1 + tolerance)
 
 
-def assert_size_tolerance(g: Graphic, expected_size: Tuple[int, int],
-                          tolerance: float = 0.02):
+def assert_size_tolerance(g: Graphic, expected_size: tuple[int, int], tolerance: float = 0.02):
     # 2% of tolerance by default
     assert_value_tolerance(graphic_width(g), expected_size[0], tolerance)
     assert_value_tolerance(graphic_height(g), expected_size[1], tolerance)
@@ -65,8 +60,8 @@ def assert_graphics_equals_tolerance(g1: Graphic, g2: Graphic):
     assert colors[0][1] == astuple(transparent)
 
 
-def assert_pin_tolerance(g: Graphic, expected_pin: Tuple[int, int]):
-    x_pin, y_pin = g.pin_position   # pyright: ignore[reportAttributeAccessIssue]
+def assert_pin_tolerance(g: Graphic, expected_pin: tuple[int, int]):
+    x_pin, y_pin = g.pin_position  # pyright: ignore[reportAttributeAccessIssue]
     assert expected_pin[0] - 1 <= x_pin <= expected_pin[0] + 1
     assert expected_pin[1] - 1 <= y_pin <= expected_pin[1] + 1
 
@@ -85,12 +80,14 @@ def assert_SVG_file_width_height(filename: str, width: float, height: float):
 
 def assert_repr(obj: Graphic | Point | Color, language: str):
     # Import all the names from pytamaro.{language}, so that eval can work.
-    import importlib
+    import importlib  # noqa: PLC0415
+
     module = importlib.import_module("." if language == "en" else f".{language}", "pytamaro")
     names = [n for n in module.__dict__ if not n.startswith("_")]
     globals().update({n: getattr(module, n) for n in names})
     # Set LANGUAGE so that repr produces a localized string.
-    import sys
+    import sys  # noqa: PLC0415
+
     sys.modules["pytamaro"].LANGUAGE = language  # type: ignore
     # Assert that evaluating the repr yields the same graphic.
     assert eval(repr(obj)) == obj

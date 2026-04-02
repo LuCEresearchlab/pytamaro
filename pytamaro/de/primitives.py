@@ -1,5 +1,4 @@
-"""
-Funktionen zum Erzeugen primitiver Grafiken (Figuren und Texte).
+"""Funktionen zum Erzeugen primitiver Grafiken (Figuren und Texte).
 Falls nicht anders angegeben befindet sich die Fixierposition
 in der Mitte des Begrenzungsrahmens der erzeugten Grafik.
 """
@@ -12,8 +11,7 @@ from pytamaro.de.graphic import Grafik
 
 
 def rechteck(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
-    """
-    Erzeugt ein Rechteck mit der gegebenen Breite und Höhe,
+    """Erzeugt ein Rechteck mit der gegebenen Breite und Höhe,
     gefüllt in der gegebenen Farbe.
 
     :param breite: die Breite des Rechtecks
@@ -25,8 +23,7 @@ def rechteck(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
 
 
 def leere_grafik() -> Grafik:
-    """
-    Erzeugt eine leere Grafik.
+    """Erzeugt eine leere Grafik.
     Wenn eine leere Grafik mit einer anderen Grafik kombiniert wird
     verhält sie sich als neutrales Element:
     das Ergebnis der Komposition ist einfach gleich der anderen Grafik.
@@ -37,8 +34,7 @@ def leere_grafik() -> Grafik:
 
 
 def ellipse(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
-    """
-    Erzeugt eine Ellipse mit der gegebenen Breite und Höhe,
+    """Erzeugt eine Ellipse mit der gegebenen Breite und Höhe,
     gefüllt in der gegebenen Farbe.
 
     Wenn Breite und Höhe gleich gross sind wird die Ellipse zum Kreis
@@ -53,8 +49,7 @@ def ellipse(breite: float, hoehe: float, farbe: Farbe) -> Grafik:
 
 
 def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
-    """
-    Erzeugt einen Kreissektor mit dem gegebenen Radius,
+    """Erzeugt einen Kreissektor mit dem gegebenen Radius,
     der den gegebenen Winkel umspannt,
     gefüllt in der gegebenen Farbe.
 
@@ -78,8 +73,7 @@ def kreis_sektor(radius: float, winkel: float, farbe: Farbe) -> Grafik:
 
 
 def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik:
-    """
-    Erzeugt ein Dreieck mit den gegebenen Seitenlängen und dem gegebenen Winkel,
+    """Erzeugt ein Dreieck mit den gegebenen Seitenlängen und dem gegebenen Winkel,
     gefüllt in der gegebenen Farbe.
 
     Die erste Seite verläuft horizontal nach rechts. Die zweite Seite verläuft
@@ -99,8 +93,7 @@ def dreieck(seite1: float, seite2: float, winkel: float, farbe: Farbe) -> Grafik
 
 
 def text(inhalt: str, schriftart: str, punkte: float, farbe: Farbe) -> Grafik:
-    """
-    Erzeugt einen Text in der gegebenen Schriftart und Schriftgrösse,
+    """Erzeugt einen Text in der gegebenen Schriftart und Schriftgrösse,
     gefüllt in der gegebenen Farbe.
 
     Falls für die gegebene Schriftart auf dem System keine True-Type Schrift

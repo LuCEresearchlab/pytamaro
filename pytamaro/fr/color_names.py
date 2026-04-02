@@ -1,5 +1,4 @@
-"""
-Noms de couleurs particulières qui sont aux coins du cube RGB.
+"""Noms de couleurs particulières qui sont aux coins du cube RGB.
 Ainsi que la couleur complètement transparent.
 """
 

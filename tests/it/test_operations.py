@@ -1,7 +1,14 @@
 import pytamaro as _pytamaro
-from pytamaro.it.operations import (accanto, altezza_grafica, componi, fissa,
-                                    larghezza_grafica, ruota, sopra,
-                                    sovrapponi)
+from pytamaro.it.operations import (
+    accanto,
+    altezza_grafica,
+    componi,
+    fissa,
+    larghezza_grafica,
+    ruota,
+    sopra,
+    sovrapponi,
+)
 from pytamaro.it.point_names import alto_sinistra, basso_destra, centro
 from tests.testing_utils import HEIGHT, WIDTH, assert_repr
 
