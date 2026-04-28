@@ -33,7 +33,7 @@ def compose(graphique_premier_plan: Graphique, graphique_arriere_plan: Graphique
     Le point d'ancrage du graphique résultant est celui utilisé pour la composition.
 
     :param graphique_premier_plan: le graphique au premier plan
-    :param graphique_premier_plan: le graphique en arrière plan
+    :param graphique_arriere_plan: le graphique en arrière plan
     :returns: le graphique qui résulte de la composition
     """
     return _pytamaro.compose(graphique_premier_plan, graphique_arriere_plan)
