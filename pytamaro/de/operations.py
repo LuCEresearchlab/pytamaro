@@ -54,7 +54,7 @@ def fixiere(punkt: Punkt, grafik: Grafik) -> Grafik:
     `mitte_links`, `mitte`, `mitte_rechts`, `unten_links`, `unten_mitte` und `unten_rechts`.
 
     :param punkt: ein Punkt welcher die neue Fixierposition bestimmt
-    :param graphic: die ursprüngliche Grafik
+    :param grafik: die ursprüngliche Grafik
     :returns: eine neue Grafik mit der gegebenen Fixierposition
     """
     return _pytamaro.pin(punkt, grafik)
