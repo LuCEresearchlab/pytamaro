@@ -7,10 +7,8 @@
 import base64
 import io
 import os
-import re
 import subprocess
 import sys
-from pathlib import Path
 from typing import cast
 
 from PIL import Image as PILImageMod
@@ -32,10 +30,9 @@ from skia import (
 
 from pytamaro.checks import area_message, check_graphic_size
 from pytamaro.graphic import Graphic
-from pytamaro.impl.shared_io import guess_scaling_factor, print_data_uri
+from pytamaro.impl.shared_io import guess_scaling_factor, print_data_uri, svg_with_crisp_edges
 from pytamaro.impl.skia.debug import add_debug_info
 from pytamaro.impl.skia.graphic import SkiaGraphic
-from pytamaro.localization import translate
 from pytamaro.utils import ISize, Size, is_notebook
 
 
@@ -74,13 +71,9 @@ def _save_as_SVG(filename: str, graphic: SkiaGraphic):
     del canvas
     stream.flush()
     stream.fsync()
-    # Manually add shape-rendering="crispEdges" to the SVG file.
-    # We don't use the XML parser from the standard library because,
-    # among other aspects, it does not properly maintain the doctype.
     with open(filename, encoding="utf-8") as file:
         content = file.read()
-    # `svg` tag may be self-closing
-    new_content = re.sub("<svg(.*?)(/?)>", r'<svg\1 shape-rendering="crispEdges"\2>', content)
+    new_content = svg_with_crisp_edges(content)
     with open(filename, "w", encoding="utf-8") as file:
         file.write(new_content)
 
@@ -149,18 +142,18 @@ def show_graphic(graphic: Graphic, debug: bool):
         pil_image.show()
 
 
-def save_graphic(filename: str, graphic: Graphic, debug: bool):
+def save_graphic_png(filename: str, graphic: Graphic, debug: bool):
     graphic = cast(SkiaGraphic, graphic)
     to_show = add_debug_info(graphic) if debug else graphic
-    extension = Path(filename).suffix
-    if extension == ".png":
-        rounded_size = graphic_size(graphic).to_round()
-        check_graphic_size(rounded_size)
-        _save_as_PNG(filename, to_show)
-    elif extension == ".svg":
-        _save_as_SVG(filename, to_show)
-    else:
-        raise ValueError(translate("INVALID_FILENAME_EXTENSION"))
+    check_graphic_size(graphic_size(to_show).to_round())
+    _save_as_PNG(filename, to_show)
+
+
+def save_graphic_svg(filename: str, graphic: Graphic, debug: bool):
+    graphic = cast(SkiaGraphic, graphic)
+    to_show = add_debug_info(graphic) if debug else graphic
+    # No graphic size checks because we can save empty graphics with SVG
+    _save_as_SVG(filename, to_show)
 
 
 def show_animation(filename: str):

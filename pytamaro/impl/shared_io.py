@@ -2,6 +2,7 @@
 (that cannot be placed in the main io module to avoid circular dependencies).
 """
 
+import re
 import sys
 
 from pytamaro.utils import ISize
@@ -37,3 +38,15 @@ def guess_scaling_factor(rounded_size: ISize) -> int:
         return 2
     # No scaling
     return 1
+
+
+def svg_with_crisp_edges(svg_content: str) -> str:
+    """Adds `shape-rendering="crispEdges"` to the svg tag of the given SVG content.
+
+    :param svg_content: content of an SVG file
+    :return: modified SVG content with shape-rendering="crispEdges"
+    """
+    # We do it manually, instead of using the XML parser from the standard library,
+    # because the latter does not properly maintain the doctype, among other aspects.
+    # Also handles a possible self-closing `svg` tag.
+    return re.sub("<svg(.*?)(/?)>", r'<svg\1 shape-rendering="crispEdges"\2>', svg_content)

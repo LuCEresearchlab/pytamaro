@@ -12,12 +12,13 @@ from PIL.Image import Image as PILImage
 from pytamaro.checks import check_graphic, check_graphic_size, check_type
 from pytamaro.graphic import Graphic
 from pytamaro.impl.ffi.specs import to_specs
-from pytamaro.impl.shared_io import guess_scaling_factor, print_data_uri
+from pytamaro.impl.shared_io import guess_scaling_factor, print_data_uri, svg_with_crisp_edges
 from pytamaro.utils import Size, Spec
 from pytamaro_js_ffi import (  # type: ignore
     js_graphic_size,
     js_render_graphic,
     js_save,
+    js_svg_graphic,
 )
 
 
@@ -56,11 +57,16 @@ def graphic_to_pillow_image(graphic: Graphic) -> PILImage:
     return Image.open(data)
 
 
-def save_graphic(filename: str, graphic: Graphic, debug: bool):
-    check_type(filename, str, "filename")
-    check_graphic(graphic)
-    check_type(debug, bool, "debug")
+def save_graphic_png(filename: str, graphic: Graphic, debug: bool):
     b64_str = _render_graphic_base64(graphic, debug)
+    js_save(filename, b64_str)
+
+
+def save_graphic_svg(filename: str, graphic: Graphic, debug: bool):
+    specs = to_specs(graphic)
+    content = js_svg_graphic(specs, debug)
+    new_content = svg_with_crisp_edges(content)
+    b64_str = f"data:image/svg+xml;base64,{base64.b64encode(new_content.encode()).decode()}"
     js_save(filename, b64_str)
 
 

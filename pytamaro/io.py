@@ -51,7 +51,13 @@ def save_graphic(filename: str, graphic: Graphic, debug: bool = False):
     check_type(filename, str, "filename")
     check_graphic(graphic)
     check_type(debug, bool, "debug")
-    __impl.save_graphic(filename, graphic, debug)
+    extension = Path(filename).suffix
+    if extension == ".png":
+        __impl.save_graphic_png(filename, graphic, debug)
+    elif extension == ".svg":
+        __impl.save_graphic_svg(filename, graphic, debug)
+    else:
+        raise ValueError(translate("INVALID_FILENAME_EXTENSION"))
 
 
 def _save_animation(filename: str, graphics: list[Graphic], duration: int, loop: bool):
