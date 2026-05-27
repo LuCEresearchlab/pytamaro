@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-05-27
+
+### Added
+- Support saving a graphic as an SVG file also on the emscripten platform ("browser"/"FFI" mode). 
+
+### Fixed
+- Fix typos in the docstrings of `pytamaro.fr.compose` and `pytamaro.de.fixiere`.
+
 ## [2.0.0] - 2026-04-02
 
 ### Added

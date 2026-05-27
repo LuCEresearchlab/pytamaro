@@ -1,6 +1,6 @@
 [project]
 name = "pytamaro"
-version = "2.0.0"
+version = "2.0.1"
 description = "Educational library for Python to teach programming using graphics"
 authors = [
   {name = "Luca Chiodini", email = "luca@chiodini.org"},
