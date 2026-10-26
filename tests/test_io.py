@@ -218,7 +218,8 @@ def test_animation_frames_not_overlaid():
         assert_frames_count(gif, 2)
 
         def non_transparent_pixels(frame):
-            return sum(1 for pixel in frame.convert("RGBA").getdata() if pixel[3] > 0)
+            alpha = frame.convert("RGBA").getchannel("A")
+            return sum(1 for value in alpha.tobytes() if value > 0)
 
         gif.seek(0)
         colored_frame0 = non_transparent_pixels(gif)
